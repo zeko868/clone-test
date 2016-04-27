@@ -1,0 +1,8 @@
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\bin\Debug\kolnikApp.exe.config
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\bin\Debug\kolnikApp.exe
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\bin\Debug\kolnikApp.pdb
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\obj\Debug\kolnikApp.csprojResolveAssemblyReference.cache
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\obj\Debug\kolnikApp.Properties.Resources.resources
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\obj\Debug\kolnikApp.csproj.GenerateResource.Cache
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\obj\Debug\kolnikApp.exe
+c:\users\zeko868\documents\visual studio 2015\Projects\kolnikApp\kolnikApp\obj\Debug\kolnikApp.pdb
