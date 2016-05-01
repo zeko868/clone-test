@@ -87,7 +87,7 @@ namespace kolnikApp
         }
         public Artikl(string idArtikla, string naziv, string jedinicnaCijena, string jedinicaMjere, bool upisiUDatoteku = false)
         {
-            if (!(int.TryParse(idArtikla, out this.idArtikla) && int.TryParse(jedinicaMjere, out this.jedinicaMjere) && double.TryParse(jedinicnaCijena, out this.jedinicnaCijena)))
+            if (!int.TryParse(idArtikla, out this.idArtikla) || !int.TryParse(jedinicaMjere, out this.jedinicaMjere) || !double.TryParse(jedinicnaCijena, out this.jedinicnaCijena))
             {
                 MessageBox.Show("Javila se pogreška prilikom pretvorbe!");
                 return;
@@ -158,7 +158,7 @@ namespace kolnikApp
         }
         public Rabat(string idArtikla, string oibPartnera, string popust, bool upisiUDatoteku = false)
         {
-            if (!(int.TryParse(idArtikla, out this.idArtikla) && double.TryParse(popust, out this.popust)))
+            if (!int.TryParse(idArtikla, out this.idArtikla) || !double.TryParse(popust, out this.popust))
             {
                 MessageBox.Show("Javila se pogreška prilikom pretvorbe!");
                 return;
@@ -492,7 +492,7 @@ namespace kolnikApp
         }
         public NarudzbenicaBitumenskeMjesavine(string idNarudzbenice, string datumIzdavanja, string kolicina, string datumPotrazivanja, string narucitelj, string artikl, string vozac, string vozilo, bool upisiUDatoteku = false)
         {
-            if (!(int.TryParse(idNarudzbenice, out this.idNarudzbenice) && double.TryParse(kolicina, out this.kolicina) && int.TryParse(artikl, out this.artikl)))
+            if (!int.TryParse(idNarudzbenice, out this.idNarudzbenice) || !double.TryParse(kolicina, out this.kolicina) || !int.TryParse(artikl, out this.artikl))
             {
                 MessageBox.Show("Javila se pogreška prilikom pretvorbe!");
                 return;
@@ -603,7 +603,7 @@ namespace kolnikApp
         }
         public NalogZaProizvodnju(string idNaloga, string vrijemeIzdavanja, string kolicina, string gradiliste, string izdavatelj, string artikl, string vozac, string vozilo, bool upisiUDatoteku = false)
         {
-            if (!(int.TryParse(idNaloga, out this.idNaloga) && double.TryParse(kolicina, out this.kolicina) && int.TryParse(gradiliste, out this.gradiliste) && int.TryParse(artikl, out this.artikl)))
+            if (!int.TryParse(idNaloga, out this.idNaloga) || !double.TryParse(kolicina, out this.kolicina) || !int.TryParse(gradiliste, out this.gradiliste) || !int.TryParse(artikl, out this.artikl))
             {
                 MessageBox.Show("Javila se pogreška prilikom pretvorbe!");
                 return;
@@ -887,7 +887,7 @@ namespace kolnikApp
         }
         public Otpremnica(string idOtpremnice, string datumOtpreme, string tipTemeljnice, string temeljnica, string racun, string otpremitelj, bool upisiUDatoteku = false)
         {
-            if (!(int.TryParse(idOtpremnice, out this.idOtpremnice) && char.TryParse(tipTemeljnice, out this.tipTemeljnice) && int.TryParse(temeljnica, out this.temeljnica) && int.TryParse(racun, out this.racun)))
+            if (!int.TryParse(idOtpremnice, out this.idOtpremnice) || !char.TryParse(tipTemeljnice, out this.tipTemeljnice) || !int.TryParse(temeljnica, out this.temeljnica) || !int.TryParse(racun, out this.racun))
             {
                 MessageBox.Show("Javila se pogreška prilikom pretvorbe!");
                 return;
