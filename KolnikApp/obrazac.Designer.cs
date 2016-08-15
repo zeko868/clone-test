@@ -42,6 +42,12 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.KolnikAppHelp = new System.Windows.Forms.HelpProvider();
+            this.LabelaPocetna = new System.Windows.Forms.Label();
+            this.LabelaNatrag = new System.Windows.Forms.Label();
+            this.LabelaNovi = new System.Windows.Forms.Label();
+            this.LabelaUpdate = new System.Windows.Forms.Label();
+            this.LabelaIzbrisi = new System.Windows.Forms.Label();
+            this.LabelaPomoc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
@@ -71,9 +77,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
-            this.panel1.Location = new System.Drawing.Point(223, 69);
+            this.panel1.Location = new System.Drawing.Point(223, 80);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(543, 465);
+            this.panel1.Size = new System.Drawing.Size(543, 454);
             this.panel1.TabIndex = 5;
             // 
             // LogoutButton
@@ -108,6 +114,8 @@
             this.DeleteSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.DeleteSlika.TabIndex = 10;
             this.DeleteSlika.TabStop = false;
+            this.DeleteSlika.MouseEnter += new System.EventHandler(this.DeleteSlika_MouseEnter);
+            this.DeleteSlika.MouseLeave += new System.EventHandler(this.DeleteSlika_MouseLeave);
             // 
             // UpdateSlika
             // 
@@ -119,6 +127,8 @@
             this.UpdateSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UpdateSlika.TabIndex = 9;
             this.UpdateSlika.TabStop = false;
+            this.UpdateSlika.MouseEnter += new System.EventHandler(this.UpdateSlika_MouseEnter);
+            this.UpdateSlika.MouseLeave += new System.EventHandler(this.UpdateSlika_MouseLeave);
             // 
             // CreateSlika
             // 
@@ -130,6 +140,8 @@
             this.CreateSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CreateSlika.TabIndex = 8;
             this.CreateSlika.TabStop = false;
+            this.CreateSlika.MouseEnter += new System.EventHandler(this.CreateSlika_MouseEnter);
+            this.CreateSlika.MouseLeave += new System.EventHandler(this.CreateSlika_MouseLeave);
             // 
             // HelpSlika
             // 
@@ -143,6 +155,8 @@
             this.HelpSlika.TabIndex = 3;
             this.HelpSlika.TabStop = false;
             this.HelpSlika.Click += new System.EventHandler(this.HelpSlika_Click);
+            this.HelpSlika.MouseEnter += new System.EventHandler(this.HelpSlika_MouseEnter);
+            this.HelpSlika.MouseLeave += new System.EventHandler(this.HelpSlika_MouseLeave);
             // 
             // NatragSlika
             // 
@@ -154,6 +168,8 @@
             this.NatragSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.NatragSlika.TabIndex = 2;
             this.NatragSlika.TabStop = false;
+            this.NatragSlika.MouseEnter += new System.EventHandler(this.NatragSlika_MouseEnter);
+            this.NatragSlika.MouseLeave += new System.EventHandler(this.NatragSlika_MouseLeave);
             // 
             // HomeSlika
             // 
@@ -166,6 +182,7 @@
             this.HomeSlika.TabIndex = 1;
             this.HomeSlika.TabStop = false;
             this.HomeSlika.MouseEnter += new System.EventHandler(this.HomeSlika_MouseEnter);
+            this.HomeSlika.MouseLeave += new System.EventHandler(this.HomeSlika_MouseLeave);
             // 
             // pictureBox1
             // 
@@ -190,7 +207,74 @@
             // 
             // KolnikAppHelp
             // 
-            this.KolnikAppHelp.HelpNamespace = "C:\\Users\\Smrad\\Desktop\\Projekt za PI\\r16001.wiki\\KolnikAppHelp.chm";
+            this.KolnikAppHelp.HelpNamespace = "KolnikAppHelp.chm";
+            // 
+            // LabelaPocetna
+            // 
+            this.LabelaPocetna.AutoSize = true;
+            this.LabelaPocetna.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaPocetna.Location = new System.Drawing.Point(220, 66);
+            this.LabelaPocetna.Name = "LabelaPocetna";
+            this.LabelaPocetna.Size = new System.Drawing.Size(47, 13);
+            this.LabelaPocetna.TabIndex = 0;
+            this.LabelaPocetna.Text = "Početna";
+            this.LabelaPocetna.Visible = false;
+            // 
+            // LabelaNatrag
+            // 
+            this.LabelaNatrag.AutoSize = true;
+            this.LabelaNatrag.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaNatrag.Location = new System.Drawing.Point(269, 66);
+            this.LabelaNatrag.Name = "LabelaNatrag";
+            this.LabelaNatrag.Size = new System.Drawing.Size(39, 13);
+            this.LabelaNatrag.TabIndex = 1;
+            this.LabelaNatrag.Text = "Natrag";
+            this.LabelaNatrag.Visible = false;
+            // 
+            // LabelaNovi
+            // 
+            this.LabelaNovi.AutoSize = true;
+            this.LabelaNovi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaNovi.Location = new System.Drawing.Point(340, 66);
+            this.LabelaNovi.Name = "LabelaNovi";
+            this.LabelaNovi.Size = new System.Drawing.Size(29, 13);
+            this.LabelaNovi.TabIndex = 2;
+            this.LabelaNovi.Text = "Novi";
+            this.LabelaNovi.Visible = false;
+            // 
+            // LabelaUpdate
+            // 
+            this.LabelaUpdate.AutoSize = true;
+            this.LabelaUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaUpdate.Location = new System.Drawing.Point(375, 66);
+            this.LabelaUpdate.Name = "LabelaUpdate";
+            this.LabelaUpdate.Size = new System.Drawing.Size(42, 13);
+            this.LabelaUpdate.TabIndex = 3;
+            this.LabelaUpdate.Text = "Update";
+            this.LabelaUpdate.Visible = false;
+            // 
+            // LabelaIzbrisi
+            // 
+            this.LabelaIzbrisi.AutoSize = true;
+            this.LabelaIzbrisi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaIzbrisi.Location = new System.Drawing.Point(428, 66);
+            this.LabelaIzbrisi.Name = "LabelaIzbrisi";
+            this.LabelaIzbrisi.Size = new System.Drawing.Size(33, 13);
+            this.LabelaIzbrisi.TabIndex = 4;
+            this.LabelaIzbrisi.Text = "Izbriši";
+            this.LabelaIzbrisi.Visible = false;
+            // 
+            // LabelaPomoc
+            // 
+            this.LabelaPomoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LabelaPomoc.AutoSize = true;
+            this.LabelaPomoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.LabelaPomoc.Location = new System.Drawing.Point(610, 66);
+            this.LabelaPomoc.Name = "LabelaPomoc";
+            this.LabelaPomoc.Size = new System.Drawing.Size(61, 13);
+            this.LabelaPomoc.TabIndex = 5;
+            this.LabelaPomoc.Text = "Pomoć (F1)";
+            this.LabelaPomoc.Visible = false;
             // 
             // obrazac
             // 
@@ -198,11 +282,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
             this.ClientSize = new System.Drawing.Size(778, 546);
+            this.Controls.Add(this.LabelaPomoc);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelaIzbrisi);
             this.Controls.Add(this.DeleteSlika);
+            this.Controls.Add(this.LabelaUpdate);
             this.Controls.Add(this.UpdateSlika);
+            this.Controls.Add(this.LabelaNovi);
             this.Controls.Add(this.CreateSlika);
+            this.Controls.Add(this.LabelaNatrag);
             this.Controls.Add(this.separator);
+            this.Controls.Add(this.LabelaPocetna);
             this.Controls.Add(this.LogoutButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.MenuLista);
@@ -224,6 +314,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.HomeSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -242,5 +333,11 @@
         private System.Windows.Forms.PictureBox DeleteSlika;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.HelpProvider KolnikAppHelp;
+        private System.Windows.Forms.Label LabelaPomoc;
+        private System.Windows.Forms.Label LabelaIzbrisi;
+        private System.Windows.Forms.Label LabelaUpdate;
+        private System.Windows.Forms.Label LabelaNovi;
+        private System.Windows.Forms.Label LabelaNatrag;
+        private System.Windows.Forms.Label LabelaPocetna;
     }
 }
