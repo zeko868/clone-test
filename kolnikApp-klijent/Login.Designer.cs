@@ -1,4 +1,4 @@
-﻿namespace KolnikApp
+﻿namespace kolnikApp_klijent
 {
     partial class Login
     {

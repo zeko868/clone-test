@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KolnikApp
+namespace kolnikApp_klijent
 {
     public partial class Login : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace KolnikApp
+﻿namespace kolnikApp_klijent
 {
     partial class obrazac
     {
@@ -120,7 +120,7 @@
             // UpdateSlika
             // 
             this.UpdateSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.UpdateSlika.Image = global::KolnikApp.Properties.Resources.update1;
+            this.UpdateSlika.Image = global::kolnikApp_klijent.Properties.Resources.update1;
             this.UpdateSlika.Location = new System.Drawing.Point(375, 21);
             this.UpdateSlika.Name = "UpdateSlika";
             this.UpdateSlika.Size = new System.Drawing.Size(40, 40);
@@ -133,7 +133,7 @@
             // CreateSlika
             // 
             this.CreateSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CreateSlika.Image = global::KolnikApp.Properties.Resources.add;
+            this.CreateSlika.Image = global::kolnikApp_klijent.Properties.Resources.add;
             this.CreateSlika.Location = new System.Drawing.Point(329, 21);
             this.CreateSlika.Name = "CreateSlika";
             this.CreateSlika.Size = new System.Drawing.Size(40, 40);
@@ -147,7 +147,7 @@
             // 
             this.HelpSlika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.HelpSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HelpSlika.Image = global::KolnikApp.Properties.Resources.info;
+            this.HelpSlika.Image = global::kolnikApp_klijent.Properties.Resources.info;
             this.HelpSlika.Location = new System.Drawing.Point(613, 21);
             this.HelpSlika.Name = "HelpSlika";
             this.HelpSlika.Size = new System.Drawing.Size(40, 40);
@@ -161,7 +161,7 @@
             // NatragSlika
             // 
             this.NatragSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.NatragSlika.Image = global::KolnikApp.Properties.Resources.back1;
+            this.NatragSlika.Image = global::kolnikApp_klijent.Properties.Resources.back1;
             this.NatragSlika.Location = new System.Drawing.Point(268, 21);
             this.NatragSlika.Name = "NatragSlika";
             this.NatragSlika.Size = new System.Drawing.Size(40, 40);
@@ -174,7 +174,7 @@
             // HomeSlika
             // 
             this.HomeSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HomeSlika.Image = global::KolnikApp.Properties.Resources.pocetna;
+            this.HomeSlika.Image = global::kolnikApp_klijent.Properties.Resources.pocetna;
             this.HomeSlika.Location = new System.Drawing.Point(222, 21);
             this.HomeSlika.Name = "HomeSlika";
             this.HomeSlika.Size = new System.Drawing.Size(40, 40);

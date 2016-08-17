@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("KolnikApp")]
+[assembly: AssemblyTitle("kolnikApp-server")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("KolnikApp")]
+[assembly: AssemblyProduct("kolnikApp-server")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d077a0b0-365f-4fc5-b0e6-5002c86b928a")]
+[assembly: Guid("2aa984a5-bb59-4e71-b442-35c978371cfe")]
 
 // Version information for an assembly consists of the following four values:
 //

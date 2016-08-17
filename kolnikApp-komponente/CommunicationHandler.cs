@@ -1,0 +1,226 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Linq;
+using System.IO;
+using System.IO.Ports;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace kolnikApp_komponente
+{
+    public class CommunicationHandler
+    {
+        private static Socket netSocket;
+        private static SocketAsyncEventArgs netSocketServerArgs;
+        private static byte[] netSocketBuffer;
+        private bool isServer;
+        private static object thisLock = new object();
+        private const ushort portNumber = 8087;
+        private const int intervalLengthBetweenTimeoutChecksInMsec = 30000;
+        private const short numOfMsecToWaitForTimeoutResponse = 2000;
+        private const byte numOfRepeatsOfTimeoutChecksIfClientDoesNotResponse = 3;
+        private IPEndPoint serverAddress = null;
+
+        private void InitializeObjectsForIPv4NetworkCommunication()
+        {
+            netSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            netSocketServerArgs = new SocketAsyncEventArgs();
+            netSocketBuffer = new byte[1024];
+            netSocket.ExclusiveAddressUse = false;
+            netSocketServerArgs.Completed += netSocketServerArgs_Completed;
+            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, 1024);
+            StartListening();
+            if (this.isServer)
+            {
+                ClientsAddressesList.addressList = new List<ClientsAddress>();
+                Thread HearthbeatCheckingThreadHandle = new Thread(new ThreadStart(CheckIfAnyUserHasTimedOut));
+            }
+        }
+
+        private IPAddress GetIPFromHostnameViaDNS(string hostname)
+        {
+            IPHostEntry hostEntry;
+
+            hostEntry = Dns.GetHostEntry(hostname);
+
+            if (hostEntry.AddressList.Length > 0)
+            {
+                return hostEntry.AddressList[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private bool IsValidIPAddress(string ipAddressAndPort)
+        {
+            return Regex.IsMatch(ipAddressAndPort, @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+        }
+
+        private void CheckIfAnyUserHasTimedOut()
+        {
+            string checkAvailabilityMessageContent;
+            using (DataHandler obj = new DataHandler())
+            {
+                checkAvailabilityMessageContent = obj.CreateMessageForAvailabilityChecking();
+            }
+
+            while (true)
+            {
+                foreach (var zapis in ClientsAddressesList.addressList)
+                {
+                    MessageSend(checkAvailabilityMessageContent, zapis.EndPoint);
+                }
+                Thread.Sleep(numOfMsecToWaitForTimeoutResponse);
+                foreach (var zapis in ClientsAddressesList.addressList)
+                {
+                    if ((DateTime.Now - zapis.TimeOfLastAnswer).TotalMilliseconds > numOfMsecToWaitForTimeoutResponse)
+                    {
+                        ClientsAddressesList.UnregisterUserWithCertainIPAddress(zapis.EndPoint);
+                    }
+                }
+                Thread.Sleep(intervalLengthBetweenTimeoutChecksInMsec - numOfMsecToWaitForTimeoutResponse);
+            }
+        }
+        public CommunicationHandler(bool isServer = true, string remoteServerIdentifier = null, ushort portNum = portNumber)
+        {
+            this.isServer = isServer;
+            IPEndPoint remoteIPAddress = null;
+            if (remoteServerIdentifier != null)
+            {
+                if (IsValidIPAddress(remoteServerIdentifier)) {
+                    remoteIPAddress = new IPEndPoint(IPAddress.Parse(remoteServerIdentifier), portNum);
+                }
+                else
+                {
+                    try
+                    {
+                        remoteIPAddress = new IPEndPoint(GetIPFromHostnameViaDNS(remoteServerIdentifier), portNum);
+                    }
+                    catch (Exception e)
+                    {
+                        System.Windows.Forms.MessageBox.Show(e.Message);
+                        return;
+                    }
+                }
+            }
+            if (remoteIPAddress != null)
+            {
+                serverAddress = remoteIPAddress;
+            }
+            InitializeObjectsForIPv4NetworkCommunication();
+        }
+
+        private void StartListening()
+        {
+            bool success = false;
+            for (ushort i = portNumber; !success; i++)
+            {
+                success = true;
+                try
+                {
+                    netSocket.Bind(new IPEndPoint(IPAddress.Any, i));
+                }
+                catch
+                {
+                    success = false;
+                }
+            }
+            netSocket.ReceiveAsync(netSocketServerArgs);
+        }
+
+        private void netSocketServerArgs_Completed(object sender, SocketAsyncEventArgs e)
+        {
+            if (netSocketServerArgs.LastOperation == SocketAsyncOperation.Receive)
+            {
+                string receivedContent = UTF8Encoding.UTF8.GetString(netSocketServerArgs.Buffer, 0, e.BytesTransferred);
+                netSocket.ReceiveAsync(netSocketServerArgs);
+                DataHandler dataHandlerInstance = new DataHandler();
+                string[] responses = null;
+                lock (thisLock)
+                {
+                    dataHandlerInstance.InitializeDataContext();
+                    IPEndPoint ipAddress = (e.RemoteEndPoint as IPEndPoint);
+                    dataHandlerInstance.InterpretXMLData(receivedContent, ipAddress, !isServer);
+                    if (dataHandlerInstance.HasErrorOccurred)
+                    {
+                        responses = new string[1];
+                        responses[0] = dataHandlerInstance.ConstructErrorMessageContent();
+                    }
+                    else if (dataHandlerInstance.IsConfirmationOfPreviousRequest)
+                    {
+                        return;
+                    }
+                    else if (dataHandlerInstance.SendWhenMessageWillBeReceivedFromMicrocontroller)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        responses = dataHandlerInstance.ResponseForSending;
+                        for (int i = 0; i < responses.Length; i++)
+                        {
+                            responses[i] = dataHandlerInstance.AddWrapperOverXMLDatagroups(responses[i]);
+                        }
+                        //[0]...sadrzaj koji se salje natrag posiljatelju, [1]...sadrzaj koji se salje ostalim klijentima
+                    }
+                    dataHandlerInstance.ClearCurrentDataContext();
+                }
+
+                MessageSend(responses[0], e.RemoteEndPoint);
+                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfOtherDestinations)
+                {
+                    MessageSend(responses[1], ipAddress);
+                }
+            }
+        }
+
+        private static void MessageSend(string message, EndPoint destinationIPAddress)
+        {
+            netSocketBuffer = UTF8Encoding.UTF8.GetBytes(message);
+            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, netSocketBuffer.Length);
+            netSocketServerArgs.RemoteEndPoint = destinationIPAddress;
+            netSocket.SendToAsync(netSocketServerArgs);
+        }
+
+        public static void DataThroughSerialCommunicationHasBeenReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            string primljenaPoruka = ((SerialPort)sender).ReadLine();
+            lock (thisLock)
+            {
+                DataHandler dataHandlerInstance = new DataHandler();
+                dataHandlerInstance.InitializeDataContext();
+                dataHandlerInstance.ProcessReceivedDataOverSerialCommunication(primljenaPoruka);
+                dataHandlerInstance.ClearCurrentDataContext();
+                string response = null;
+                if (dataHandlerInstance.HasErrorOccurred)
+                {
+                    response = dataHandlerInstance.ConstructErrorMessageContent();
+                }
+                else
+                {
+                    response = dataHandlerInstance.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending[0]);
+                }
+                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfOtherDestinations)
+                {
+                    MessageSend(response, ipAddress);
+                }
+            }
+        }
+
+        public void SendRequestForSendingUsedData()
+        {
+            using (DataHandler obj = new DataHandler())
+            {
+                MessageSend(obj.ConstructMessageWithRequestForSendingInstancesOfUsedEntities(), serverAddress);
+            }
+        }
+    }
+
+}

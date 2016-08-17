@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D077A0B0-365F-4FC5-B0E6-5002C86B928A}</ProjectGuid>
+    <ProjectGuid>{3C00CB35-DB81-4ADA-BA71-329959350C54}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KolnikApp</RootNamespace>
-    <AssemblyName>KolnikApp</AssemblyName>
+    <RootNamespace>kolnikApp_klijent</RootNamespace>
+    <AssemblyName>kolnikApp-klijent</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="kolnikApp-komponente">
+      <HintPath>..\kolnikApp-komponente\bin\$(Configuration)\kolnikApp-komponente.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
