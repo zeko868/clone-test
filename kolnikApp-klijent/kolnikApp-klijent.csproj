@@ -49,6 +49,108 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormeZaUnos\frmArtikl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmArtikl.Designer.cs">
+      <DependentUpon>frmArtikl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmGradiliste.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmGradiliste.Designer.cs">
+      <DependentUpon>frmGradiliste.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmKorisnickiRacun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmKorisnickiRacun.Designer.cs">
+      <DependentUpon>frmKorisnickiRacun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmNalogZaProizvodnju.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmNalogZaProizvodnju.Designer.cs">
+      <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmNarudzbenica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmNarudzbenica.Designer.cs">
+      <DependentUpon>frmNarudzbenica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmOtpremnica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmOtpremnica.Designer.cs">
+      <DependentUpon>frmOtpremnica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmPoduzece.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmPoduzece.Designer.cs">
+      <DependentUpon>frmPoduzece.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRabat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRabat.Designer.cs">
+      <DependentUpon>frmRabat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRacun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRacun.Designer.cs">
+      <DependentUpon>frmRacun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRadi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRadi.Designer.cs">
+      <DependentUpon>frmRadi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRadnoMjesto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmRadnoMjesto.Designer.cs">
+      <DependentUpon>frmRadnoMjesto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmTablicaPrivilegija.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmTablicaPrivilegija.Designer.cs">
+      <DependentUpon>frmTablicaPrivilegija.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmTemeljnica.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmTemeljnica.Designer.cs">
+      <DependentUpon>frmTemeljnica.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmVozi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmVozi.Designer.cs">
+      <DependentUpon>frmVozi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmVozilo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmVozilo.Designer.cs">
+      <DependentUpon>frmVozilo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmZaposen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmZaposen.Designer.cs">
+      <DependentUpon>frmZaposen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmZaposlenik.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormeZaUnos\frmZaposlenik.Designer.cs">
+      <DependentUpon>frmZaposlenik.cs</DependentUpon>
+    </Compile>
     <Compile Include="glavnaForma.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,8 +169,64 @@
     <Compile Include="obrazac.Designer.cs">
       <DependentUpon>obrazac.cs</DependentUpon>
     </Compile>
+    <Compile Include="privremeniDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>privremeniDS.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormeZaUnos\frmArtikl.resx">
+      <DependentUpon>frmArtikl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmGradiliste.resx">
+      <DependentUpon>frmGradiliste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmKorisnickiRacun.resx">
+      <DependentUpon>frmKorisnickiRacun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmNalogZaProizvodnju.resx">
+      <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmNarudzbenica.resx">
+      <DependentUpon>frmNarudzbenica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmOtpremnica.resx">
+      <DependentUpon>frmOtpremnica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmPoduzece.resx">
+      <DependentUpon>frmPoduzece.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmRabat.resx">
+      <DependentUpon>frmRabat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmRacun.resx">
+      <DependentUpon>frmRacun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmRadi.resx">
+      <DependentUpon>frmRadi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmRadnoMjesto.resx">
+      <DependentUpon>frmRadnoMjesto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmTablicaPrivilegija.resx">
+      <DependentUpon>frmTablicaPrivilegija.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmTemeljnica.resx">
+      <DependentUpon>frmTemeljnica.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmVozi.resx">
+      <DependentUpon>frmVozi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmVozilo.resx">
+      <DependentUpon>frmVozilo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmZaposen.resx">
+      <DependentUpon>frmZaposen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormeZaUnos\frmZaposlenik.resx">
+      <DependentUpon>frmZaposlenik.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="glavnaForma.resx">
       <DependentUpon>glavnaForma.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +246,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="privremeniDS.xsc">
+      <DependentUpon>privremeniDS.xsd</DependentUpon>
+    </None>
+    <None Include="privremeniDS.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>privremeniDS.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="privremeniDS.xss">
+      <DependentUpon>privremeniDS.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
