@@ -13,14 +13,50 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="MAX6676-library-master">
+    <Filter Include="MAX6675-library-master">
       <UniqueIdentifier>{fb2739e4-38b7-48c4-b202-4b15b044fda7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arduino-IRremote-master">
+      <UniqueIdentifier>{9e50072b-51fc-4e6a-bf70-6d55719dd715}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="kolnikApp-mikrokontroler.ino" />
     <None Include="MAX6675-library-master\library.properties">
-      <Filter>MAX6676-library-master</Filter>
+      <Filter>MAX6675-library-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\.git">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\.gitignore">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\.travis.yml">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\arduino-irremote.sublime-workspace">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\changelog.md">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\Contributing.md">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\Contributors.md">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\ISSUE_TEMPLATE.md">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\library.json">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\library.properties">
+      <Filter>Arduino-IRremote-master</Filter>
+    </None>
+    <None Include="Arduino-IRremote-master\README.md">
+      <Filter>Arduino-IRremote-master</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -28,17 +64,92 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MAX6675-library-master\max6675.h">
-      <Filter>MAX6676-library-master</Filter>
+      <Filter>MAX6675-library-master</Filter>
+    </ClInclude>
+    <ClInclude Include="Arduino-IRremote-master\ir_Lego_PF_BitStreamEncoder.h">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClInclude>
+    <ClInclude Include="Arduino-IRremote-master\IRremote.h">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClInclude>
+    <ClInclude Include="Arduino-IRremote-master\IRremoteInt.h">
+      <Filter>Arduino-IRremote-master</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="MAX6675-library-master\keywords.txt">
-      <Filter>MAX6676-library-master</Filter>
+      <Filter>MAX6675-library-master</Filter>
+    </Text>
+    <Text Include="Arduino-IRremote-master\keywords.txt">
+      <Filter>Arduino-IRremote-master</Filter>
+    </Text>
+    <Text Include="Arduino-IRremote-master\LICENSE.txt">
+      <Filter>Arduino-IRremote-master</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MAX6675-library-master\max6675.cpp">
-      <Filter>MAX6676-library-master</Filter>
+      <Filter>MAX6675-library-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Aiwa.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Denon.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Dish.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_JVC.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Lego_PF.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_LG.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Mitsubishi.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_NEC.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Panasonic.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_RC5_RC6.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Samsung.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Sanyo.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Sharp.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Sony.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Template.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\ir_Whynter.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\irPronto.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\irRecv.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\IRremote.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino-IRremote-master\irSend.cpp">
+      <Filter>Arduino-IRremote-master</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
