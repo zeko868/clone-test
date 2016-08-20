@@ -1,3 +1,6 @@
 [submodule "kolnikApp-mikrokontroler/Arduino-IRremote-master"]
 	path = kolnikApp-mikrokontroler/Arduino-IRremote-master
 	url = git://github.com/z3t0/Arduino-IRremote.git
+[submodule "kolnikApp-mikrokontroler/MAX6675-library-master"]
+	path = kolnikApp-mikrokontroler/MAX6675-library-master
+	url = git://github.com/adafruit/MAX6675-library.git
