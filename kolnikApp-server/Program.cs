@@ -62,55 +62,55 @@ namespace kolnikApp_server
                 Console.WriteLine(ex.Message);
             }
 
-/*            zaposlenik a = new zaposlenik
-            {
-                ime = "sda",
-                prezime = "dsfsdf",
-                oib = "13357421677"
-            };
-            zaposlenik[] sd = new zaposlenik[1];
-            sd[0] = a;
-            List<zaposlenik> df = new List<zaposlenik>();
-            df.Add(a);
-            DataHandler dfdgf = new DataHandler();
-            dfdgf.ConvertObjectsToXMLData(sd);
-            string xmlDATA =
-              @"<data>
-                    <datagroup action=""U"">
-                        <artikl>
-                            <id old=""2"">2</id>
-                            <naziv old=""AC 11 surf 50/70"">AC 11 surf 50/70</naziv>
-                            <jedinicna_cijena old=""120.00"">120.00</jedinicna_cijena>
-                            <jedinica_mjere old=""tona"">tona</jedinica_mjere>
-                        </artikl>
-                    </datagroup>
-                </data>";
-
-            DataHandler.arduinoPort = arduinoPort;
-            DataHandler sth = new DataHandler();
-            sth.InitializeDataContext();
-            sth.InterpretXMLData(xmlDATA, null, false);
-            sth.ClearCurrentDataContext();
-
             CommunicationHandler uticnica = new CommunicationHandler();
 
 
-            List<object> l1 = new List<object>();
-            l1.Add(new zaposlenik()
-            {
-                oib = "43535345325",
-                prezime = "Šestak",
-                ime = "Petar"
-            });
-            Dictionary<string, List<object>> abc = new Dictionary<string, List<object>>();
-            abc["zaposlenik"] = l1;
-            abc["zaposlenik"].Add(new zaposlenik()
-            {
-                oib = "35443634615",
-                prezime = "Jelečki",
-                ime = "Martin"
-            });
-            */
+            /*            zaposlenik a = new zaposlenik
+                        {
+                            ime = "sda",
+                            prezime = "dsfsdf",
+                            oib = "13357421677"
+                        };
+                        zaposlenik[] sd = new zaposlenik[1];
+                        sd[0] = a;
+                        List<zaposlenik> df = new List<zaposlenik>();
+                        df.Add(a);
+                        DataHandler dfdgf = new DataHandler();
+                        dfdgf.ConvertObjectsToXMLData(sd);
+                        string xmlDATA =
+                          @"<data>
+                                <datagroup action=""U"">
+                                    <artikl>
+                                        <id old=""2"">2</id>
+                                        <naziv old=""AC 11 surf 50/70"">AC 11 surf 50/70</naziv>
+                                        <jedinicna_cijena old=""120.00"">120.00</jedinicna_cijena>
+                                        <jedinica_mjere old=""tona"">tona</jedinica_mjere>
+                                    </artikl>
+                                </datagroup>
+                            </data>";
+
+                        DataHandler.arduinoPort = arduinoPort;
+                        DataHandler sth = new DataHandler();
+                        sth.InitializeDataContext();
+                        sth.InterpretXMLData(xmlDATA, null, false);
+                        sth.ClearCurrentDataContext();
+
+                        List<object> l1 = new List<object>();
+                        l1.Add(new zaposlenik()
+                        {
+                            oib = "43535345325",
+                            prezime = "Šestak",
+                            ime = "Petar"
+                        });
+                        Dictionary<string, List<object>> abc = new Dictionary<string, List<object>>();
+                        abc["zaposlenik"] = l1;
+                        abc["zaposlenik"].Add(new zaposlenik()
+                        {
+                            oib = "35443634615",
+                            prezime = "Jelečki",
+                            ime = "Martin"
+                        });
+                        */
 
 
             do

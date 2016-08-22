@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using kolnikApp_komponente;
+using System.Threading;
 
 namespace kolnikApp_klijent
 {
@@ -15,7 +16,11 @@ namespace kolnikApp_klijent
         [STAThread]
         static void Main(string[] parameters)
         {
-            CommunicationHandler sockObj;
+            Thread.Sleep(1000);
+            //kad se server i posluzitelj pokreću istovremeno u Visual Studiju,
+            //tada unatoč postavljanja da se klijentska aplikacija pokreće prije serverske,
+            //klijentska uspije prije zauzeti defaultni port
+            CommunicationHandler sockObj = null;
             switch (parameters.Length)
             {
                 case 0:
@@ -39,7 +44,7 @@ namespace kolnikApp_klijent
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new glavnaForma());
+            Application.Run(new Login(sockObj));
         }
     }
 }

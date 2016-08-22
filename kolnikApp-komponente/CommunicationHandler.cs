@@ -20,7 +20,7 @@ namespace kolnikApp_komponente
         private static byte[] netSocketBuffer;
         private bool isServer;
         private static object thisLock = new object();
-        private const ushort portNumber = 8087;
+        private const ushort defaultPortNumber = 8087;
         private const int intervalLengthBetweenTimeoutChecksInMsec = 30000;
         private const short numOfMsecToWaitForTimeoutResponse = 2000;
         private const byte numOfRepeatsOfTimeoutChecksIfClientDoesNotResponse = 3;
@@ -58,9 +58,9 @@ namespace kolnikApp_komponente
             }
         }
 
-        private bool IsValidIPAddress(string ipAddressAndPort)
+        private bool IsValidIPAddress(string ipAddress)
         {
-            return Regex.IsMatch(ipAddressAndPort, @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+            return Regex.IsMatch(ipAddress, @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
         }
 
         private void CheckIfAnyUserHasTimedOut()
@@ -88,7 +88,7 @@ namespace kolnikApp_komponente
                 Thread.Sleep(intervalLengthBetweenTimeoutChecksInMsec - numOfMsecToWaitForTimeoutResponse);
             }
         }
-        public CommunicationHandler(bool isServer = true, string remoteServerIdentifier = null, ushort portNum = portNumber)
+        public CommunicationHandler(bool isServer = true, string remoteServerIdentifier = null, ushort portNum = defaultPortNumber)
         {
             this.isServer = isServer;
             IPEndPoint remoteIPAddress = null;
@@ -120,7 +120,7 @@ namespace kolnikApp_komponente
         private void StartListening()
         {
             bool success = false;
-            for (ushort i = portNumber; !success; i++)
+            for (ushort i = defaultPortNumber; !success; i++)
             {
                 success = true;
                 try
@@ -138,7 +138,7 @@ namespace kolnikApp_komponente
         private void netSocketServerArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
             if (netSocketServerArgs.LastOperation == SocketAsyncOperation.Receive)
-            {
+            {   //tu postavi breakpoint i pokusaj dohvatiti e.RemoteEndPoint, netSocketServerArgs.RemoteEndPoint,...
                 string receivedContent = UTF8Encoding.UTF8.GetString(netSocketServerArgs.Buffer, 0, e.BytesTransferred);
                 netSocket.ReceiveAsync(netSocketServerArgs);
                 DataHandler dataHandlerInstance = new DataHandler();
@@ -184,9 +184,10 @@ namespace kolnikApp_komponente
         private static void MessageSend(string message, EndPoint destinationIPAddress)
         {
             netSocketBuffer = UTF8Encoding.UTF8.GetBytes(message);
-            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, netSocketBuffer.Length);
-            netSocketServerArgs.RemoteEndPoint = destinationIPAddress;
-            netSocket.SendToAsync(netSocketServerArgs);
+            /*            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, netSocketBuffer.Length);
+                        netSocketServerArgs.RemoteEndPoint = destinationIPAddress;
+                        netSocket.SendToAsync(netSocketServerArgs);*/
+            netSocket.SendTo(netSocketBuffer, destinationIPAddress);
         }
 
         public static void DataThroughSerialCommunicationHasBeenReceived(object sender, SerialDataReceivedEventArgs e)
@@ -220,6 +221,12 @@ namespace kolnikApp_komponente
             {
                 MessageSend(obj.ConstructMessageWithRequestForSendingInstancesOfUsedEntities(), serverAddress);
             }
+        }
+
+        public void SendLoginCredentials(string userIdentity, string password, bool isIdentityUsername)
+        {
+            DataHandler instance = new DataHandler();
+            MessageSend(instance.ConstructLoginMessageContent(userIdentity, password, isIdentityUsername), serverAddress);
         }
     }
 

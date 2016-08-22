@@ -20,6 +20,9 @@ namespace kolnikApp_komponente
 {
     public class DataHandler : IDisposable
     {
+        public static event Action<bool> LoginInfoReturned;
+        public static bool LoginSuccessful;
+
         public static SerialPort arduinoPort;
 
         private DataClasses1DataContext dataContextInstance;
@@ -300,7 +303,7 @@ namespace kolnikApp_komponente
                     case "pristiglo_vozilo":
                         if (isClientSide)
                         {
-
+                            System.Windows.Forms.MessageBox.Show("Pristiglo je novo vozilo pred otpremište!");
                         }
                         break;
                     case "odgovor_na_podatkovni_zahtjev":
@@ -337,18 +340,19 @@ namespace kolnikApp_komponente
                         if (!isClientSide)
                         {
                             SHA1 hash = SHA1.Create();
-                            IQueryable<string> queryResult = from korisnicki_racun in dataContextInstance.korisnicki_racuns
-                                                             where
-                                                             (
-                                                                 korisnicki_racun.korisnicko_ime.Equals(datagroup.Element("korisnicko_ime").Value)
-                                                                 || korisnicki_racun.zaposlenik.Equals(datagroup.Element("oib").Value)
-                                                             )
-                                                             && hash.ComputeHash(Encoding.UTF8.GetBytes(korisnicki_racun.lozinka.ToCharArray())).Equals(
-                                                                datagroup.Element("lozinka").Value)
-                                                             select korisnicki_racun.zaposlenik;
-                            if (queryResult.Count() == 1)
+                            XElement prijavaPodaci = datagroup.Element("prijava");
+                            IQueryable<korisnicki_racun> queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
+                                                              where
+                                                              (
+                                                                  korisnicki_racun.korisnicko_ime.Equals(prijavaPodaci.Element("korisnicko_ime").Value)
+                                                                  || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
+                                                              )
+                                                              select korisnicki_racun);
+                            bool userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count());
+                            if (userWithProvidedUsernameOrOibExists && hash.ComputeHash(Encoding.UTF8.GetBytes(prijavaPodaci.Element("lozinka").Value)).ToString() == queryResult.First().lozinka)
                             {
-                                if (ClientsAddressesList.CheckIfUserWithCertainOibIsAlreadyLoggedIn(queryResult.First()))
+                                string userOib = queryResult.First().zaposlenik;
+                                if (ClientsAddressesList.CheckIfUserWithCertainOibIsAlreadyLoggedIn(userOib))
                                 {
                                     HasErrorOccurred = true;
                                     ErrorInfo = "Korisnik sa navedenim OIB-om je već prijavljen!";
@@ -356,7 +360,7 @@ namespace kolnikApp_komponente
                                 }
                                 else
                                 {
-                                    ClientsAddressesList.RegisterUser(queryResult.First(), address);
+                                    ClientsAddressesList.RegisterUser(userOib, address);
                                     ResponseForSending = new string[1];
                                     ResponseForSending[0] = AddHeaderInfoToXMLData(ConvertNonObjectDataIntoXMLData("prijava", "success"), 'R');
                                 }
@@ -379,23 +383,24 @@ namespace kolnikApp_komponente
                         break;
                     case "registracija":
                         korisnicki_racun noviKorisnickiRacun = new korisnicki_racun();
-                        noviKorisnickiRacun.zaposlenik = datagroup.Element("oib").Value;
+                        XElement registracijaPodaci = datagroup.Element("registracija");
+                        noviKorisnickiRacun.zaposlenik = registracijaPodaci.Element("oib").Value;
                         IQueryable<int> queryResult1 = from zaposlenik in dataContextInstance.zaposleniks
-                                                          where zaposlenik.oib == datagroup.Element("oib").Value
+                                                          where zaposlenik.oib == registracijaPodaci.Element("oib").Value
                                                           select 1;
                         if (queryResult1.Count() == 0)
                         {
                             zaposlenik noviZaposlenik = new zaposlenik()
                             {
-                                oib = datagroup.Element("oib").Value,
-                                ime = datagroup.Element("ime").Value,
-                                prezime = datagroup.Element("prezime").Value
+                                oib = registracijaPodaci.Element("oib").Value,
+                                ime = registracijaPodaci.Element("ime").Value,
+                                prezime = registracijaPodaci.Element("prezime").Value
                             };
                             dataContextInstance.zaposleniks.InsertOnSubmit(noviZaposlenik);
                         }
-                        noviKorisnickiRacun.korisnicko_ime = datagroup.Element("korisnicko_ime").Value;
+                        noviKorisnickiRacun.korisnicko_ime = registracijaPodaci.Element("korisnicko_ime").Value;
                         SHA1 hash1 = SHA1.Create();
-                        noviKorisnickiRacun.lozinka = hash1.ComputeHash(Encoding.UTF8.GetBytes(datagroup.Element("lozinka").Value.ToCharArray())).ToString();
+                        noviKorisnickiRacun.lozinka = hash1.ComputeHash(Encoding.UTF8.GetBytes(registracijaPodaci.Element("lozinka").Value.ToCharArray())).ToString();
                         dataContextInstance.korisnicki_racuns.InsertOnSubmit(noviKorisnickiRacun);
                         try
                         {
@@ -558,6 +563,15 @@ namespace kolnikApp_komponente
                 messageContent += AddHeaderInfoToXMLData(ConvertNonObjectDataIntoXMLData(key), 'R');
             }
             return AddWrapperOverXMLDatagroups(messageContent);
+        }
+
+        public string ConstructLoginMessageContent(string identity, string password, bool isIdentityUsername)
+        {
+            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLData(ConvertNonObjectDataIntoXMLData("prijava",
+                ConvertNonObjectDataIntoXMLData("oib", isIdentityUsername ? "" : identity) +
+                ConvertNonObjectDataIntoXMLData("korisnicko_ime", isIdentityUsername ? identity : "") +
+                ConvertNonObjectDataIntoXMLData("lozinka", password)
+                ), 'R'));
         }
 
         public DataHandler()
