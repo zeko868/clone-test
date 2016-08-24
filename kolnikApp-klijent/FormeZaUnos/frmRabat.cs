@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void rabatBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.rabatBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmRabat_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.rabat' table. You can move, or remove it, as needed.
-            this.rabatTableAdapter.Fill(this.privremeniDS.rabat);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -42,7 +27,76 @@ namespace kolnikApp_klijent.FormeZaUnos
             artiklComboBox.SelectedIndex = -1;
             poslovni_partnerComboBox.SelectedIndex = -1;
             popustTextBox.Text = "";
+            UpozorenjeArtikl.Hide();
+            UpozorenjePopust.Hide();
+            UpozorenjePoslovniPartner.Hide();
         }
 
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja, string VrstaLabele)
+        {
+            string TekstUpozorenja = "Polje mora biti popunjeno";
+            string TekstUpozorenjaComboBox = "Odaberite element";
+            if (VrstaLabele == "ComboBox")
+            {
+                LabelaUpozorenja.Text = TekstUpozorenjaComboBox;
+                LabelaUpozorenja.Show();
+            }
+            else
+            {
+                LabelaUpozorenja.Text = TekstUpozorenja;
+                LabelaUpozorenja.Show();
+            }
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (artiklComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeArtikl, "ComboBox");
+            }
+            if (poslovni_partnerComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjePoslovniPartner, "ComboBox");
+            }
+            if (popustTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjePopust, "TextBox");
+            }
+            float VarijablaZaProvjeru = 0;
+            if (artiklComboBox.SelectedIndex != -1 && poslovni_partnerComboBox.SelectedIndex != -1 && popustTextBox.Text != "" && float.TryParse(popustTextBox.Text,out VarijablaZaProvjeru))
+            {
+                //pohraniti podatke u klase i poslati u BP
+                this.Close();
+            }
+            
+        }
+
+        private void artiklComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeArtikl.Hide();
+        }
+
+        private void poslovni_partnerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjePoslovniPartner.Hide();
+        }
+
+        private void popustTextBox_Leave(object sender, EventArgs e)
+        {
+            float VarijablaZaProvjeru = 0;
+            if (popustTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjePopust, "TextBox");
+            }
+            else if(!float.TryParse(popustTextBox.Text, out VarijablaZaProvjeru))
+            {
+                UpozorenjePopust.Text= "Polje mora sadržavati broj";
+                UpozorenjePopust.Show();
+            }
+            else
+            {
+                UpozorenjePopust.Hide();
+            }
+        }
     }
 }

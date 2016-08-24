@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void zaposlenBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.zaposlenBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmZaposen_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.zaposlen' table. You can move, or remove it, as needed.
-            this.zaposlenTableAdapter.Fill(this.privremeniDS.zaposlen);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -43,6 +28,88 @@ namespace kolnikApp_klijent.FormeZaUnos
             poduzeceComboBox.SelectedIndex = -1;
             datum_pocetkaDateTimePicker.Value = DateTime.Now;
             datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
+            UpozorenjePoduzece.Hide();
+            UpozorenjeRazlikaDatuma.Hide();
+            UpozorenjeZaposlenik.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenjaComboBox = "Odaberite element";
+            LabelaUpozorenja.Text = TekstUpozorenjaComboBox;
+            LabelaUpozorenja.Show();
+        }
+
+        private bool provjeriIspravnostDatuma()
+        {
+            bool IspravanDatum = false;
+            if (datum_zavrsetkaDateTimePicker.Checked)
+            {
+                if (datum_pocetkaDateTimePicker.Value < datum_zavrsetkaDateTimePicker.Value)
+                {
+                    IspravanDatum = true;
+                }
+                else
+                {
+                    popuniLabeleUpozorenja(UpozorenjeRazlikaDatuma);
+                }
+            }
+            return IspravanDatum;
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            
+            if (zaposlenikComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeZaposlenik);
+            }
+            if (poduzeceComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjePoduzece);
+            }
+          
+            if(zaposlenikComboBox.SelectedIndex == -1 && poduzeceComboBox.SelectedIndex == -1 && provjeriIspravnostDatuma())
+            {
+                //pohrani podatke u klasu i pošalji u BP
+                this.Close();
+            }
+        }
+
+        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeZaposlenik.Hide();
+        }
+
+        private void poduzeceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjePoduzece.Hide();
+        }
+
+        private void datum_pocetkaDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            bool IspravnostDatuma=provjeriIspravnostDatuma();
+            if (IspravnostDatuma)
+            {
+                UpozorenjeRazlikaDatuma.Hide();
+            }
+            else
+            {
+                UpozorenjeRazlikaDatuma.Show();
+            }
+        }
+
+        private void datum_zavrsetkaDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            bool IspravnostDatuma = provjeriIspravnostDatuma();
+            if (IspravnostDatuma)
+            {
+                UpozorenjeRazlikaDatuma.Hide();
+            }
+            else
+            {
+                UpozorenjeRazlikaDatuma.Show();
+            }
         }
     }
 }

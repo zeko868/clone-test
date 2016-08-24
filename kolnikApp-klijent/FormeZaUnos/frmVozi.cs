@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void voziBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.voziBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmVozi_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.vozi' table. You can move, or remove it, as needed.
-            this.voziTableAdapter.Fill(this.privremeniDS.vozi);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -43,6 +28,91 @@ namespace kolnikApp_klijent.FormeZaUnos
             vozacComboBox.SelectedIndex = -1;
             datum_pocetkaDateTimePicker.Value = DateTime.Now;
             datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
+            UpozorenjeVozac.Hide();
+            UpozorenjeVozilo.Hide();
+            UpozorenjeDatumi.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenjaComboBox = "Odaberite element";
+            LabelaUpozorenja.Text = TekstUpozorenjaComboBox;
+            LabelaUpozorenja.Show();
+        }
+
+        private bool provjeriIspravnostDatuma()
+        {
+            bool IspravanDatum = false;
+            if (datum_zavrsetkaDateTimePicker.Checked)
+            {
+                if (datum_pocetkaDateTimePicker.Value < datum_zavrsetkaDateTimePicker.Value)
+                {
+                    IspravanDatum = true;
+                }
+                else
+                {
+                    popuniLabeleUpozorenja(UpozorenjeDatumi);
+                }
+            }
+            return IspravanDatum;
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (vozacComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeVozac);
+            }
+            if (voziloComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeVozilo);
+            }
+            if (vozacComboBox.SelectedIndex != -1 && voziloComboBox.SelectedIndex != -1 && provjeriIspravnostDatuma())
+            {
+                //spremiti podatke u klasu i poslati u BP
+                this.Close();
+            }
+                
+        }
+
+        private void voziloComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeVozilo.Hide();
+        }
+
+        private void vozacComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeVozac.Hide();
+        }
+
+        private void datum_pocetkaDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            bool IspravniDatum = provjeriIspravnostDatuma();
+            {
+                if (IspravniDatum)
+                {
+                    UpozorenjeDatumi.Hide();
+                }
+                else
+                {
+                    UpozorenjeDatumi.Show();
+                }
+            }
+        }
+
+        private void datum_zavrsetkaDateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            bool IspravniDatum = provjeriIspravnostDatuma();
+            {
+                if (IspravniDatum)
+                {
+                    UpozorenjeDatumi.Hide();
+                }
+                else
+                {
+                    UpozorenjeDatumi.Show();
+                }
+            }
         }
     }
 }

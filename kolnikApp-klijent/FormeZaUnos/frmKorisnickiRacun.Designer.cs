@@ -28,26 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label zaposlenikLabel;
             System.Windows.Forms.Label korisnicko_imeLabel;
             System.Windows.Forms.Label lozinkaLabel;
             this.NaslovKorisnickiRacun = new System.Windows.Forms.Label();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.korisnicki_racunBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.korisnicki_racunTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.korisnicki_racunTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
-            this.zaposlenikTextBox = new System.Windows.Forms.TextBox();
             this.korisnicko_imeTextBox = new System.Windows.Forms.TextBox();
             this.lozinkaTextBox = new System.Windows.Forms.TextBox();
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
+            this.zaposlenikComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeZaposlenik = new System.Windows.Forms.Label();
+            this.UpozorenjeKorisnickoIme = new System.Windows.Forms.Label();
+            this.UpozorenjeLozinka = new System.Windows.Forms.Label();
             zaposlenikLabel = new System.Windows.Forms.Label();
             korisnicko_imeLabel = new System.Windows.Forms.Label();
             lozinkaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.korisnicki_racunBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // zaposlenikLabel
@@ -87,65 +83,23 @@
             this.NaslovKorisnickiRacun.TabIndex = 8;
             this.NaslovKorisnickiRacun.Text = "Korisnički račun";
             // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // korisnicki_racunBindingSource
-            // 
-            this.korisnicki_racunBindingSource.DataMember = "korisnicki_racun";
-            this.korisnicki_racunBindingSource.DataSource = this.privremeniDS;
-            // 
-            // korisnicki_racunTableAdapter
-            // 
-            this.korisnicki_racunTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = this.korisnicki_racunTableAdapter;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // zaposlenikTextBox
-            // 
-            this.zaposlenikTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.korisnicki_racunBindingSource, "zaposlenik", true));
-            this.zaposlenikTextBox.Location = new System.Drawing.Point(129, 51);
-            this.zaposlenikTextBox.Name = "zaposlenikTextBox";
-            this.zaposlenikTextBox.Size = new System.Drawing.Size(100, 20);
-            this.zaposlenikTextBox.TabIndex = 10;
-            // 
             // korisnicko_imeTextBox
             // 
-            this.korisnicko_imeTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.korisnicki_racunBindingSource, "korisnicko_ime", true));
             this.korisnicko_imeTextBox.Location = new System.Drawing.Point(129, 77);
+            this.korisnicko_imeTextBox.MaxLength = 45;
             this.korisnicko_imeTextBox.Name = "korisnicko_imeTextBox";
-            this.korisnicko_imeTextBox.Size = new System.Drawing.Size(100, 20);
+            this.korisnicko_imeTextBox.Size = new System.Drawing.Size(133, 20);
             this.korisnicko_imeTextBox.TabIndex = 11;
+            this.korisnicko_imeTextBox.Leave += new System.EventHandler(this.korisnicko_imeTextBox_Leave);
             // 
             // lozinkaTextBox
             // 
-            this.lozinkaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.korisnicki_racunBindingSource, "lozinka", true));
             this.lozinkaTextBox.Location = new System.Drawing.Point(129, 103);
+            this.lozinkaTextBox.MaxLength = 40;
             this.lozinkaTextBox.Name = "lozinkaTextBox";
-            this.lozinkaTextBox.Size = new System.Drawing.Size(100, 20);
+            this.lozinkaTextBox.Size = new System.Drawing.Size(133, 20);
             this.lozinkaTextBox.TabIndex = 12;
+            this.lozinkaTextBox.Leave += new System.EventHandler(this.lozinkaTextBox_Leave);
             // 
             // GumbReset
             // 
@@ -176,14 +130,61 @@
             this.GumbPotvrda.TabIndex = 13;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
+            // 
+            // zaposlenikComboBox
+            // 
+            this.zaposlenikComboBox.FormattingEnabled = true;
+            this.zaposlenikComboBox.Location = new System.Drawing.Point(129, 50);
+            this.zaposlenikComboBox.Name = "zaposlenikComboBox";
+            this.zaposlenikComboBox.Size = new System.Drawing.Size(133, 21);
+            this.zaposlenikComboBox.TabIndex = 18;
+            this.zaposlenikComboBox.SelectedIndexChanged += new System.EventHandler(this.zaposlenikComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeZaposlenik
+            // 
+            this.UpozorenjeZaposlenik.AutoSize = true;
+            this.UpozorenjeZaposlenik.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeZaposlenik.Location = new System.Drawing.Point(268, 50);
+            this.UpozorenjeZaposlenik.Name = "UpozorenjeZaposlenik";
+            this.UpozorenjeZaposlenik.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeZaposlenik.TabIndex = 19;
+            this.UpozorenjeZaposlenik.Text = "label1";
+            this.UpozorenjeZaposlenik.Visible = false;
+            // 
+            // UpozorenjeKorisnickoIme
+            // 
+            this.UpozorenjeKorisnickoIme.AutoSize = true;
+            this.UpozorenjeKorisnickoIme.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeKorisnickoIme.Location = new System.Drawing.Point(268, 77);
+            this.UpozorenjeKorisnickoIme.Name = "UpozorenjeKorisnickoIme";
+            this.UpozorenjeKorisnickoIme.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeKorisnickoIme.TabIndex = 20;
+            this.UpozorenjeKorisnickoIme.Text = "label1";
+            this.UpozorenjeKorisnickoIme.Visible = false;
+            // 
+            // UpozorenjeLozinka
+            // 
+            this.UpozorenjeLozinka.AutoSize = true;
+            this.UpozorenjeLozinka.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeLozinka.Location = new System.Drawing.Point(268, 103);
+            this.UpozorenjeLozinka.Name = "UpozorenjeLozinka";
+            this.UpozorenjeLozinka.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeLozinka.TabIndex = 21;
+            this.UpozorenjeLozinka.Text = "label1";
+            this.UpozorenjeLozinka.Visible = false;
             // 
             // frmKorisnickiRacun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 261);
+            this.ClientSize = new System.Drawing.Size(364, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeLozinka);
+            this.Controls.Add(this.UpozorenjeKorisnickoIme);
+            this.Controls.Add(this.UpozorenjeZaposlenik);
+            this.Controls.Add(this.zaposlenikComboBox);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
@@ -192,14 +193,10 @@
             this.Controls.Add(korisnicko_imeLabel);
             this.Controls.Add(this.korisnicko_imeTextBox);
             this.Controls.Add(zaposlenikLabel);
-            this.Controls.Add(this.zaposlenikTextBox);
             this.Controls.Add(this.NaslovKorisnickiRacun);
             this.Name = "frmKorisnickiRacun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmKorisnickiRacun";
-            this.Load += new System.EventHandler(this.frmKorisnickiRacun_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.korisnicki_racunBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,15 +205,14 @@
         #endregion
 
         private System.Windows.Forms.Label NaslovKorisnickiRacun;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource korisnicki_racunBindingSource;
-        private privremeniDSTableAdapters.korisnicki_racunTableAdapter korisnicki_racunTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.TextBox zaposlenikTextBox;
         private System.Windows.Forms.TextBox korisnicko_imeTextBox;
         private System.Windows.Forms.TextBox lozinkaTextBox;
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
+        private System.Windows.Forms.ComboBox zaposlenikComboBox;
+        private System.Windows.Forms.Label UpozorenjeZaposlenik;
+        private System.Windows.Forms.Label UpozorenjeKorisnickoIme;
+        private System.Windows.Forms.Label UpozorenjeLozinka;
     }
 }

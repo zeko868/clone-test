@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void racunBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.racunBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmRacun_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.racun' table. You can move, or remove it, as needed.
-            this.racunTableAdapter.Fill(this.privremeniDS.racun);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -41,6 +26,26 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             datum_izdavanjaDateTimePicker.Value = DateTime.Now;
             izdavateljComboBox.SelectedIndex = -1;
+            UpozorenjeIzdavatelj.Hide();
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (izdavateljComboBox.SelectedIndex == -1)
+            {
+                UpozorenjeIzdavatelj.Text = "Odaberite element";
+                UpozorenjeIzdavatelj.Show();
+            }
+            else
+            {
+                //stavi podatke u klasu i pošalji u BP
+                this.Close();
+            }
+        }
+
+        private void izdavateljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeIzdavatelj.Hide();
         }
     }
 }

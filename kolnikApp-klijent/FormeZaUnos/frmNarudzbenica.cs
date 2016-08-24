@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void narudzbenica_bitumenske_mjesavineBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.narudzbenica_bitumenske_mjesavineBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmNarudzbenica_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.narudzbenica_bitumenske_mjesavine' table. You can move, or remove it, as needed.
-            this.narudzbenica_bitumenske_mjesavineTableAdapter.Fill(this.privremeniDS.narudzbenica_bitumenske_mjesavine);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -39,9 +24,45 @@ namespace kolnikApp_klijent.FormeZaUnos
 
         private void GumbReset_Click(object sender, EventArgs e)
         {
-            temeljnicaTextBox.Text = "";
+            temeljnicaComboBox.SelectedIndex = -1;
             datum_potrazivanjaDateTimePicker.Value = DateTime.Now;
             naruciteljComboBox.SelectedIndex = -1;
+            UpozorenjeTemeljnica.Hide();
+            UpozorenjeNarucitelj.Hide();
+            UpozorenjeDatumPotrazivanja.Hide();
+        }
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenja = "Odaberite element";
+            LabelaUpozorenja.Text = TekstUpozorenja;
+            LabelaUpozorenja.Show();
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (temeljnicaComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeTemeljnica);
+            }
+            if(naruciteljComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeNarucitelj);
+            }
+            if(temeljnicaComboBox.SelectedIndex != -1 && naruciteljComboBox.SelectedIndex != -1)
+            {
+                //pohraniti podatke u klasu i poslati u BP
+                this.Close();
+            }            
+        }
+
+        private void temeljnicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeTemeljnica.Hide();
+        }
+
+        private void naruciteljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeNarucitelj.Hide();
         }
     }
 }

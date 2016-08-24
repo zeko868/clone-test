@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void gradilisteBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.gradilisteBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmGradiliste_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.gradiliste' table. You can move, or remove it, as needed.
-            this.gradilisteTableAdapter.Fill(this.privremeniDS.gradiliste);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -40,6 +25,29 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void GumbReset_Click(object sender, EventArgs e)
         {
             naziv_mjestaTextBox.Text = "";
+        }
+
+        string TekstUpozorenja = "Polje mora biti popunjeno";
+        private void naziv_mjestaTextBox_Leave(object sender, EventArgs e)
+        {
+            if(naziv_mjestaTextBox.Text == "")
+            {
+                UpozorenjeNazivMjesta.Text = TekstUpozorenja;
+                UpozorenjeNazivMjesta.Show();
+            }
+            else
+            {
+                UpozorenjeNazivMjesta.Hide();
+            }
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if(naziv_mjestaTextBox.Text != "")
+            {
+                //napuniti podacima klasu i poslati na server
+                this.Close();
+            }
         }
     }
 }

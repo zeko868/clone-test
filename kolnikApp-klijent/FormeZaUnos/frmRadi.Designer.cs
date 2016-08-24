@@ -28,16 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label zaposlenikLabel;
             System.Windows.Forms.Label radno_mjestoLabel;
             System.Windows.Forms.Label datum_pocetkaLabel;
             System.Windows.Forms.Label datum_zavrsetkaLabel;
             this.NaslovRadi = new System.Windows.Forms.Label();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.radiBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.radiTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.radiTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.zaposlenikComboBox = new System.Windows.Forms.ComboBox();
             this.radno_mjestoComboBox = new System.Windows.Forms.ComboBox();
             this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
@@ -45,12 +40,13 @@
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbReset = new System.Windows.Forms.Button();
+            this.UpozorenjeZaposlenik = new System.Windows.Forms.Label();
+            this.UpozorenjeRadnoMjesto = new System.Windows.Forms.Label();
+            this.UpozorenjeRazlikaDatuma = new System.Windows.Forms.Label();
             zaposlenikLabel = new System.Windows.Forms.Label();
             radno_mjestoLabel = new System.Windows.Forms.Label();
             datum_pocetkaLabel = new System.Windows.Forms.Label();
             datum_zavrsetkaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radiBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // zaposlenikLabel
@@ -58,36 +54,36 @@
             zaposlenikLabel.AutoSize = true;
             zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
             zaposlenikLabel.Name = "zaposlenikLabel";
-            zaposlenikLabel.Size = new System.Drawing.Size(60, 13);
+            zaposlenikLabel.Size = new System.Drawing.Size(62, 13);
             zaposlenikLabel.TabIndex = 16;
-            zaposlenikLabel.Text = "zaposlenik:";
+            zaposlenikLabel.Text = "Zaposlenik:";
             // 
             // radno_mjestoLabel
             // 
             radno_mjestoLabel.AutoSize = true;
             radno_mjestoLabel.Location = new System.Drawing.Point(53, 81);
             radno_mjestoLabel.Name = "radno_mjestoLabel";
-            radno_mjestoLabel.Size = new System.Drawing.Size(70, 13);
+            radno_mjestoLabel.Size = new System.Drawing.Size(75, 13);
             radno_mjestoLabel.TabIndex = 17;
-            radno_mjestoLabel.Text = "radno mjesto:";
+            radno_mjestoLabel.Text = "Radno mjesto:";
             // 
             // datum_pocetkaLabel
             // 
             datum_pocetkaLabel.AutoSize = true;
             datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
             datum_pocetkaLabel.Name = "datum_pocetkaLabel";
-            datum_pocetkaLabel.Size = new System.Drawing.Size(81, 13);
+            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
             datum_pocetkaLabel.TabIndex = 18;
-            datum_pocetkaLabel.Text = "datum pocetka:";
+            datum_pocetkaLabel.Text = "Datum pocetka:";
             // 
             // datum_zavrsetkaLabel
             // 
             datum_zavrsetkaLabel.AutoSize = true;
             datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
             datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
-            datum_zavrsetkaLabel.Size = new System.Drawing.Size(88, 13);
+            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
             datum_zavrsetkaLabel.TabIndex = 19;
-            datum_zavrsetkaLabel.Text = "datum zavrsetka:";
+            datum_zavrsetkaLabel.Text = "Datum zavrsetka:";
             // 
             // NaslovRadi
             // 
@@ -99,75 +95,40 @@
             this.NaslovRadi.TabIndex = 8;
             this.NaslovRadi.Text = "Radno mjesto zaposlenika";
             // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // radiBindingSource
-            // 
-            this.radiBindingSource.DataMember = "radi";
-            this.radiBindingSource.DataSource = this.privremeniDS;
-            // 
-            // radiTableAdapter
-            // 
-            this.radiTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = this.radiTableAdapter;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
             // zaposlenikComboBox
             // 
-            this.zaposlenikComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.radiBindingSource, "zaposlenik", true));
             this.zaposlenikComboBox.FormattingEnabled = true;
             this.zaposlenikComboBox.Location = new System.Drawing.Point(129, 51);
             this.zaposlenikComboBox.Name = "zaposlenikComboBox";
             this.zaposlenikComboBox.Size = new System.Drawing.Size(133, 21);
             this.zaposlenikComboBox.TabIndex = 17;
+            this.zaposlenikComboBox.SelectedIndexChanged += new System.EventHandler(this.zaposlenikComboBox_SelectedIndexChanged);
             // 
             // radno_mjestoComboBox
             // 
-            this.radno_mjestoComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.radiBindingSource, "radno_mjesto", true));
             this.radno_mjestoComboBox.FormattingEnabled = true;
             this.radno_mjestoComboBox.Location = new System.Drawing.Point(129, 78);
             this.radno_mjestoComboBox.Name = "radno_mjestoComboBox";
             this.radno_mjestoComboBox.Size = new System.Drawing.Size(133, 21);
             this.radno_mjestoComboBox.TabIndex = 18;
+            this.radno_mjestoComboBox.SelectedIndexChanged += new System.EventHandler(this.radno_mjestoComboBox_SelectedIndexChanged);
             // 
             // datum_pocetkaDateTimePicker
             // 
-            this.datum_pocetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.radiBindingSource, "datum_pocetka", true));
             this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
             this.datum_pocetkaDateTimePicker.Name = "datum_pocetkaDateTimePicker";
             this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(133, 20);
             this.datum_pocetkaDateTimePicker.TabIndex = 19;
+            this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
             // 
             // datum_zavrsetkaDateTimePicker
             // 
-            this.datum_zavrsetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.radiBindingSource, "datum_zavrsetka", true));
             this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
             this.datum_zavrsetkaDateTimePicker.Name = "datum_zavrsetkaDateTimePicker";
+            this.datum_zavrsetkaDateTimePicker.ShowCheckBox = true;
             this.datum_zavrsetkaDateTimePicker.Size = new System.Drawing.Size(133, 20);
             this.datum_zavrsetkaDateTimePicker.TabIndex = 20;
+            this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
             // 
             // GumbPotvrda
             // 
@@ -177,6 +138,7 @@
             this.GumbPotvrda.TabIndex = 13;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // GumbIzlaz
             // 
@@ -199,13 +161,48 @@
             this.GumbReset.UseVisualStyleBackColor = true;
             this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
+            // UpozorenjeZaposlenik
+            // 
+            this.UpozorenjeZaposlenik.AutoSize = true;
+            this.UpozorenjeZaposlenik.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeZaposlenik.Location = new System.Drawing.Point(268, 51);
+            this.UpozorenjeZaposlenik.Name = "UpozorenjeZaposlenik";
+            this.UpozorenjeZaposlenik.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeZaposlenik.TabIndex = 30;
+            this.UpozorenjeZaposlenik.Text = "label1";
+            this.UpozorenjeZaposlenik.Visible = false;
+            // 
+            // UpozorenjeRadnoMjesto
+            // 
+            this.UpozorenjeRadnoMjesto.AutoSize = true;
+            this.UpozorenjeRadnoMjesto.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeRadnoMjesto.Location = new System.Drawing.Point(269, 78);
+            this.UpozorenjeRadnoMjesto.Name = "UpozorenjeRadnoMjesto";
+            this.UpozorenjeRadnoMjesto.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeRadnoMjesto.TabIndex = 31;
+            this.UpozorenjeRadnoMjesto.Text = "label1";
+            this.UpozorenjeRadnoMjesto.Visible = false;
+            // 
+            // UpozorenjeRazlikaDatuma
+            // 
+            this.UpozorenjeRazlikaDatuma.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeRazlikaDatuma.Location = new System.Drawing.Point(269, 105);
+            this.UpozorenjeRazlikaDatuma.Name = "UpozorenjeRazlikaDatuma";
+            this.UpozorenjeRazlikaDatuma.Size = new System.Drawing.Size(91, 46);
+            this.UpozorenjeRazlikaDatuma.TabIndex = 32;
+            this.UpozorenjeRazlikaDatuma.Text = "Datum početka mora biti manji od datuma završetka";
+            this.UpozorenjeRazlikaDatuma.Visible = false;
+            // 
             // frmRadi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeRazlikaDatuma);
+            this.Controls.Add(this.UpozorenjeRadnoMjesto);
+            this.Controls.Add(this.UpozorenjeZaposlenik);
             this.Controls.Add(datum_zavrsetkaLabel);
             this.Controls.Add(this.datum_zavrsetkaDateTimePicker);
             this.Controls.Add(datum_pocetkaLabel);
@@ -221,9 +218,6 @@
             this.Name = "frmRadi";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRadi";
-            this.Load += new System.EventHandler(this.frmRadi_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radiBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,10 +226,6 @@
         #endregion
 
         private System.Windows.Forms.Label NaslovRadi;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource radiBindingSource;
-        private privremeniDSTableAdapters.radiTableAdapter radiTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.ComboBox zaposlenikComboBox;
         private System.Windows.Forms.ComboBox radno_mjestoComboBox;
         private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
@@ -243,5 +233,8 @@
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbReset;
+        private System.Windows.Forms.Label UpozorenjeZaposlenik;
+        private System.Windows.Forms.Label UpozorenjeRadnoMjesto;
+        private System.Windows.Forms.Label UpozorenjeRazlikaDatuma;
     }
 }

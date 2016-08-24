@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label radno_mjestoLabel;
             System.Windows.Forms.Label naziv_tabliceLabel;
             System.Windows.Forms.Label operacijaLabel;
@@ -36,18 +35,15 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.tablicna_privilegijaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tablicna_privilegijaTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.tablicna_privilegijaTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.radno_mjestoComboBox = new System.Windows.Forms.ComboBox();
             this.naziv_tabliceComboBox = new System.Windows.Forms.ComboBox();
             this.operacijaComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeRadnoMjesto = new System.Windows.Forms.Label();
+            this.UpozorenjeNazivTablice = new System.Windows.Forms.Label();
+            this.UpozorenjeOperacija = new System.Windows.Forms.Label();
             radno_mjestoLabel = new System.Windows.Forms.Label();
             naziv_tabliceLabel = new System.Windows.Forms.Label();
             operacijaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tablicna_privilegijaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // radno_mjestoLabel
@@ -55,27 +51,27 @@
             radno_mjestoLabel.AutoSize = true;
             radno_mjestoLabel.Location = new System.Drawing.Point(53, 54);
             radno_mjestoLabel.Name = "radno_mjestoLabel";
-            radno_mjestoLabel.Size = new System.Drawing.Size(70, 13);
+            radno_mjestoLabel.Size = new System.Drawing.Size(75, 13);
             radno_mjestoLabel.TabIndex = 19;
-            radno_mjestoLabel.Text = "radno mjesto:";
+            radno_mjestoLabel.Text = "Radno mjesto:";
             // 
             // naziv_tabliceLabel
             // 
             naziv_tabliceLabel.AutoSize = true;
             naziv_tabliceLabel.Location = new System.Drawing.Point(54, 81);
             naziv_tabliceLabel.Name = "naziv_tabliceLabel";
-            naziv_tabliceLabel.Size = new System.Drawing.Size(69, 13);
+            naziv_tabliceLabel.Size = new System.Drawing.Size(71, 13);
             naziv_tabliceLabel.TabIndex = 20;
-            naziv_tabliceLabel.Text = "naziv tablice:";
+            naziv_tabliceLabel.Text = "Naziv tablice:";
             // 
             // operacijaLabel
             // 
             operacijaLabel.AutoSize = true;
             operacijaLabel.Location = new System.Drawing.Point(70, 108);
             operacijaLabel.Name = "operacijaLabel";
-            operacijaLabel.Size = new System.Drawing.Size(53, 13);
+            operacijaLabel.Size = new System.Drawing.Size(55, 13);
             operacijaLabel.TabIndex = 21;
-            operacijaLabel.Text = "operacija:";
+            operacijaLabel.Text = "Operacija:";
             // 
             // NaslovTablicaPrivilegija
             // 
@@ -116,77 +112,78 @@
             this.GumbPotvrda.TabIndex = 16;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tablicna_privilegijaBindingSource
-            // 
-            this.tablicna_privilegijaBindingSource.DataMember = "tablicna_privilegija";
-            this.tablicna_privilegijaBindingSource.DataSource = this.privremeniDS;
-            // 
-            // tablicna_privilegijaTableAdapter
-            // 
-            this.tablicna_privilegijaTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = this.tablicna_privilegijaTableAdapter;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // radno_mjestoComboBox
             // 
-            this.radno_mjestoComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tablicna_privilegijaBindingSource, "radno_mjesto", true));
             this.radno_mjestoComboBox.FormattingEnabled = true;
             this.radno_mjestoComboBox.Location = new System.Drawing.Point(129, 51);
             this.radno_mjestoComboBox.Name = "radno_mjestoComboBox";
             this.radno_mjestoComboBox.Size = new System.Drawing.Size(121, 21);
             this.radno_mjestoComboBox.TabIndex = 20;
+            this.radno_mjestoComboBox.SelectedIndexChanged += new System.EventHandler(this.radno_mjestoComboBox_SelectedIndexChanged);
             // 
             // naziv_tabliceComboBox
             // 
-            this.naziv_tabliceComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tablicna_privilegijaBindingSource, "naziv_tablice", true));
             this.naziv_tabliceComboBox.FormattingEnabled = true;
             this.naziv_tabliceComboBox.Location = new System.Drawing.Point(129, 78);
             this.naziv_tabliceComboBox.Name = "naziv_tabliceComboBox";
             this.naziv_tabliceComboBox.Size = new System.Drawing.Size(121, 21);
             this.naziv_tabliceComboBox.TabIndex = 21;
+            this.naziv_tabliceComboBox.SelectedIndexChanged += new System.EventHandler(this.naziv_tabliceComboBox_SelectedIndexChanged);
             // 
             // operacijaComboBox
             // 
-            this.operacijaComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.tablicna_privilegijaBindingSource, "operacija", true));
             this.operacijaComboBox.FormattingEnabled = true;
             this.operacijaComboBox.Location = new System.Drawing.Point(129, 105);
             this.operacijaComboBox.Name = "operacijaComboBox";
             this.operacijaComboBox.Size = new System.Drawing.Size(121, 21);
             this.operacijaComboBox.TabIndex = 22;
+            this.operacijaComboBox.SelectedIndexChanged += new System.EventHandler(this.operacijaComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeRadnoMjesto
+            // 
+            this.UpozorenjeRadnoMjesto.AutoSize = true;
+            this.UpozorenjeRadnoMjesto.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeRadnoMjesto.Location = new System.Drawing.Point(256, 51);
+            this.UpozorenjeRadnoMjesto.Name = "UpozorenjeRadnoMjesto";
+            this.UpozorenjeRadnoMjesto.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeRadnoMjesto.TabIndex = 30;
+            this.UpozorenjeRadnoMjesto.Text = "label1";
+            this.UpozorenjeRadnoMjesto.Visible = false;
+            // 
+            // UpozorenjeNazivTablice
+            // 
+            this.UpozorenjeNazivTablice.AutoSize = true;
+            this.UpozorenjeNazivTablice.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeNazivTablice.Location = new System.Drawing.Point(256, 78);
+            this.UpozorenjeNazivTablice.Name = "UpozorenjeNazivTablice";
+            this.UpozorenjeNazivTablice.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeNazivTablice.TabIndex = 31;
+            this.UpozorenjeNazivTablice.Text = "label1";
+            this.UpozorenjeNazivTablice.Visible = false;
+            // 
+            // UpozorenjeOperacija
+            // 
+            this.UpozorenjeOperacija.AutoSize = true;
+            this.UpozorenjeOperacija.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeOperacija.Location = new System.Drawing.Point(256, 105);
+            this.UpozorenjeOperacija.Name = "UpozorenjeOperacija";
+            this.UpozorenjeOperacija.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeOperacija.TabIndex = 32;
+            this.UpozorenjeOperacija.Text = "label1";
+            this.UpozorenjeOperacija.Visible = false;
             // 
             // frmTablicaPrivilegija
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeOperacija);
+            this.Controls.Add(this.UpozorenjeNazivTablice);
+            this.Controls.Add(this.UpozorenjeRadnoMjesto);
             this.Controls.Add(operacijaLabel);
             this.Controls.Add(this.operacijaComboBox);
             this.Controls.Add(naziv_tabliceLabel);
@@ -200,9 +197,6 @@
             this.Name = "frmTablicaPrivilegija";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmTablicaPrivilegija";
-            this.Load += new System.EventHandler(this.frmTablicaPrivilegija_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tablicna_privilegijaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,12 +208,11 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource tablicna_privilegijaBindingSource;
-        private privremeniDSTableAdapters.tablicna_privilegijaTableAdapter tablicna_privilegijaTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.ComboBox radno_mjestoComboBox;
         private System.Windows.Forms.ComboBox naziv_tabliceComboBox;
         private System.Windows.Forms.ComboBox operacijaComboBox;
+        private System.Windows.Forms.Label UpozorenjeRadnoMjesto;
+        private System.Windows.Forms.Label UpozorenjeNazivTablice;
+        private System.Windows.Forms.Label UpozorenjeOperacija;
     }
 }

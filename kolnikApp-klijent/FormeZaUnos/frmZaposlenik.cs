@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void zaposlenikBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.zaposlenikBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmZaposlenik_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.zaposlenik' table. You can move, or remove it, as needed.
-            this.zaposlenikTableAdapter.Fill(this.privremeniDS.zaposlenik);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -42,6 +27,99 @@ namespace kolnikApp_klijent.FormeZaUnos
             oibTextBox.Text = "";
             imeTextBox.Text = "";
             prezimeTextBox.Text = "";
+            UpozorenjePrezime.Hide();
+            UpozorenjeOib.Hide();
+            UpozorenjeIme.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenja = "Polje mora biti popunjeno";            
+            LabelaUpozorenja.Text = TekstUpozorenja;
+            LabelaUpozorenja.Show();            
+        }
+
+        private bool TestirajPravilonostUnosaZaOib()
+        {
+            bool IspravanOib = false;
+            if (oibTextBox.Text.Length < 11)
+            {
+                UpozorenjeOib.Text = "OIB mora sadržavati 11 brojeva";
+                UpozorenjeOib.Show();
+            }
+            else
+            {
+                UpozorenjeOib.Text = "";
+            }
+            if (oibTextBox.Text.Any(x => !char.IsDigit(x)))
+            {
+                if (UpozorenjeOib.Text != "")
+                {
+                    UpozorenjeOib.Text += "\nOIB mora sadržavati samo brojeve";
+                }
+                else
+                {
+                    UpozorenjeOib.Text = "OIB mora sadržavati samo brojeve";
+                }
+                UpozorenjeOib.Show();
+            }
+            if (oibTextBox.Text.Length == 11 && oibTextBox.Text.All(x => char.IsDigit(x)))
+            {
+                UpozorenjeOib.Hide();
+                IspravanOib = true;
+            }
+            return IspravanOib;
+        }
+        
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            bool IspravanOib = TestirajPravilonostUnosaZaOib();
+            if (imeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeIme);
+            }
+            if (prezimeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjePrezime);
+            }
+            if(IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
+            {
+                //pohrani podatke u klasu i pošalji u BP
+                this.Close();
+            }
+        }
+
+        private void oibTextBox_Leave(object sender, EventArgs e)
+        {
+            bool IspravanOib = TestirajPravilonostUnosaZaOib();
+            if (IspravanOib)
+            {
+                UpozorenjeOib.Hide();
+            }            
+        }
+
+        private void imeTextBox_Leave(object sender, EventArgs e)
+        {
+            if (imeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeIme);
+            }
+            else
+            {
+                UpozorenjeIme.Hide();
+            }
+        }
+
+        private void prezimeTextBox_Leave(object sender, EventArgs e)
+        {
+            if (prezimeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjePrezime);
+            }
+            else
+            {
+                UpozorenjePrezime.Hide();
+            }
         }
     }
 }

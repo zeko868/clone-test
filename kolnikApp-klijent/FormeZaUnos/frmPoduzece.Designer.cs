@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label oibLabel;
             System.Windows.Forms.Label nazivLabel;
             System.Windows.Forms.Label adresaLabel;
@@ -37,20 +36,18 @@
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovPoduzece = new System.Windows.Forms.Label();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.poduzeceBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.poduzeceTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.poduzeceTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.oibTextBox = new System.Windows.Forms.TextBox();
             this.nazivTextBox = new System.Windows.Forms.TextBox();
             this.adresaTextBox = new System.Windows.Forms.TextBox();
             this.ibanTextBox = new System.Windows.Forms.TextBox();
+            this.UpozorenjeOib = new System.Windows.Forms.Label();
+            this.UpozorenjeNaziv = new System.Windows.Forms.Label();
+            this.UpozorenjeAdresa = new System.Windows.Forms.Label();
+            this.UpozorenjeIban = new System.Windows.Forms.Label();
             oibLabel = new System.Windows.Forms.Label();
             nazivLabel = new System.Windows.Forms.Label();
             adresaLabel = new System.Windows.Forms.Label();
             ibanLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.poduzeceBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // oibLabel
@@ -58,36 +55,36 @@
             oibLabel.AutoSize = true;
             oibLabel.Location = new System.Drawing.Point(99, 54);
             oibLabel.Name = "oibLabel";
-            oibLabel.Size = new System.Drawing.Size(24, 13);
+            oibLabel.Size = new System.Drawing.Size(28, 13);
             oibLabel.TabIndex = 14;
-            oibLabel.Text = "oib:";
+            oibLabel.Text = "OIB:";
             // 
             // nazivLabel
             // 
             nazivLabel.AutoSize = true;
             nazivLabel.Location = new System.Drawing.Point(88, 80);
             nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(35, 13);
+            nazivLabel.Size = new System.Drawing.Size(37, 13);
             nazivLabel.TabIndex = 15;
-            nazivLabel.Text = "naziv:";
+            nazivLabel.Text = "Naziv:";
             // 
             // adresaLabel
             // 
             adresaLabel.AutoSize = true;
             adresaLabel.Location = new System.Drawing.Point(81, 106);
             adresaLabel.Name = "adresaLabel";
-            adresaLabel.Size = new System.Drawing.Size(42, 13);
+            adresaLabel.Size = new System.Drawing.Size(43, 13);
             adresaLabel.TabIndex = 16;
-            adresaLabel.Text = "adresa:";
+            adresaLabel.Text = "Adresa:";
             // 
             // ibanLabel
             // 
             ibanLabel.AutoSize = true;
             ibanLabel.Location = new System.Drawing.Point(93, 132);
             ibanLabel.Name = "ibanLabel";
-            ibanLabel.Size = new System.Drawing.Size(30, 13);
+            ibanLabel.Size = new System.Drawing.Size(35, 13);
             ibanLabel.TabIndex = 17;
-            ibanLabel.Text = "iban:";
+            ibanLabel.Text = "IBAN:";
             // 
             // GumbReset
             // 
@@ -118,6 +115,7 @@
             this.GumbPotvrda.TabIndex = 10;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // NaslovPoduzece
             // 
@@ -129,81 +127,97 @@
             this.NaslovPoduzece.TabIndex = 13;
             this.NaslovPoduzece.Text = "Poduzeće";
             // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // poduzeceBindingSource
-            // 
-            this.poduzeceBindingSource.DataMember = "poduzece";
-            this.poduzeceBindingSource.DataSource = this.privremeniDS;
-            // 
-            // poduzeceTableAdapter
-            // 
-            this.poduzeceTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = this.poduzeceTableAdapter;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
             // oibTextBox
             // 
-            this.oibTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.poduzeceBindingSource, "oib", true));
             this.oibTextBox.Location = new System.Drawing.Point(129, 51);
+            this.oibTextBox.MaxLength = 11;
             this.oibTextBox.Name = "oibTextBox";
-            this.oibTextBox.Size = new System.Drawing.Size(100, 20);
+            this.oibTextBox.Size = new System.Drawing.Size(135, 20);
             this.oibTextBox.TabIndex = 15;
+            this.oibTextBox.Leave += new System.EventHandler(this.oibTextBox_Leave);
             // 
             // nazivTextBox
             // 
-            this.nazivTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.poduzeceBindingSource, "naziv", true));
             this.nazivTextBox.Location = new System.Drawing.Point(129, 77);
+            this.nazivTextBox.MaxLength = 100;
             this.nazivTextBox.Name = "nazivTextBox";
-            this.nazivTextBox.Size = new System.Drawing.Size(100, 20);
+            this.nazivTextBox.Size = new System.Drawing.Size(135, 20);
             this.nazivTextBox.TabIndex = 16;
+            this.nazivTextBox.Leave += new System.EventHandler(this.nazivTextBox_Leave);
             // 
             // adresaTextBox
             // 
-            this.adresaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.poduzeceBindingSource, "adresa", true));
             this.adresaTextBox.Location = new System.Drawing.Point(129, 103);
+            this.adresaTextBox.MaxLength = 100;
             this.adresaTextBox.Name = "adresaTextBox";
-            this.adresaTextBox.Size = new System.Drawing.Size(100, 20);
+            this.adresaTextBox.Size = new System.Drawing.Size(135, 20);
             this.adresaTextBox.TabIndex = 17;
+            this.adresaTextBox.Leave += new System.EventHandler(this.adresaTextBox_Leave);
             // 
             // ibanTextBox
             // 
-            this.ibanTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.poduzeceBindingSource, "iban", true));
             this.ibanTextBox.Location = new System.Drawing.Point(129, 129);
+            this.ibanTextBox.MaxLength = 34;
             this.ibanTextBox.Name = "ibanTextBox";
-            this.ibanTextBox.Size = new System.Drawing.Size(100, 20);
+            this.ibanTextBox.Size = new System.Drawing.Size(135, 20);
             this.ibanTextBox.TabIndex = 18;
+            this.ibanTextBox.Leave += new System.EventHandler(this.ibanTextBox_Leave);
+            // 
+            // UpozorenjeOib
+            // 
+            this.UpozorenjeOib.AutoSize = true;
+            this.UpozorenjeOib.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeOib.Location = new System.Drawing.Point(270, 51);
+            this.UpozorenjeOib.Name = "UpozorenjeOib";
+            this.UpozorenjeOib.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeOib.TabIndex = 29;
+            this.UpozorenjeOib.Text = "label1";
+            this.UpozorenjeOib.Visible = false;
+            // 
+            // UpozorenjeNaziv
+            // 
+            this.UpozorenjeNaziv.AutoSize = true;
+            this.UpozorenjeNaziv.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeNaziv.Location = new System.Drawing.Point(270, 77);
+            this.UpozorenjeNaziv.Name = "UpozorenjeNaziv";
+            this.UpozorenjeNaziv.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeNaziv.TabIndex = 30;
+            this.UpozorenjeNaziv.Text = "label1";
+            this.UpozorenjeNaziv.Visible = false;
+            // 
+            // UpozorenjeAdresa
+            // 
+            this.UpozorenjeAdresa.AutoSize = true;
+            this.UpozorenjeAdresa.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeAdresa.Location = new System.Drawing.Point(270, 103);
+            this.UpozorenjeAdresa.Name = "UpozorenjeAdresa";
+            this.UpozorenjeAdresa.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeAdresa.TabIndex = 31;
+            this.UpozorenjeAdresa.Text = "label1";
+            this.UpozorenjeAdresa.Visible = false;
+            // 
+            // UpozorenjeIban
+            // 
+            this.UpozorenjeIban.AutoSize = true;
+            this.UpozorenjeIban.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeIban.Location = new System.Drawing.Point(270, 129);
+            this.UpozorenjeIban.Name = "UpozorenjeIban";
+            this.UpozorenjeIban.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeIban.TabIndex = 32;
+            this.UpozorenjeIban.Text = "label1";
+            this.UpozorenjeIban.Visible = false;
             // 
             // frmPoduzece
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeIban);
+            this.Controls.Add(this.UpozorenjeAdresa);
+            this.Controls.Add(this.UpozorenjeNaziv);
+            this.Controls.Add(this.UpozorenjeOib);
             this.Controls.Add(ibanLabel);
             this.Controls.Add(this.ibanTextBox);
             this.Controls.Add(adresaLabel);
@@ -219,9 +233,6 @@
             this.Name = "frmPoduzece";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmPoduzece";
-            this.Load += new System.EventHandler(this.frmPoduzece_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.poduzeceBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,13 +244,13 @@
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovPoduzece;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource poduzeceBindingSource;
-        private privremeniDSTableAdapters.poduzeceTableAdapter poduzeceTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox oibTextBox;
         private System.Windows.Forms.TextBox nazivTextBox;
         private System.Windows.Forms.TextBox adresaTextBox;
         private System.Windows.Forms.TextBox ibanTextBox;
+        private System.Windows.Forms.Label UpozorenjeOib;
+        private System.Windows.Forms.Label UpozorenjeNaziv;
+        private System.Windows.Forms.Label UpozorenjeAdresa;
+        private System.Windows.Forms.Label UpozorenjeIban;
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label temeljnicaLabel;
             System.Windows.Forms.Label datum_otpremeLabel;
             System.Windows.Forms.Label otpremiteljLabel;
@@ -37,20 +36,17 @@
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovOtpremnica = new System.Windows.Forms.Label();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.otpremnicaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.otpremnicaTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.otpremnicaTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
-            this.temeljnicaTextBox = new System.Windows.Forms.TextBox();
             this.datum_otpremeDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.otpremiteljComboBox = new System.Windows.Forms.ComboBox();
             this.temperaturaTextBox = new System.Windows.Forms.TextBox();
+            this.UpozorenjeTemeljnica = new System.Windows.Forms.Label();
+            this.temeljnicaComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeOtpremitelj = new System.Windows.Forms.Label();
+            this.UpozorenjeTemeperatura = new System.Windows.Forms.Label();
             temeljnicaLabel = new System.Windows.Forms.Label();
             datum_otpremeLabel = new System.Windows.Forms.Label();
             otpremiteljLabel = new System.Windows.Forms.Label();
             temperaturaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.otpremnicaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // temeljnicaLabel
@@ -118,6 +114,7 @@
             this.GumbPotvrda.TabIndex = 16;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // NaslovOtpremnica
             // 
@@ -129,53 +126,8 @@
             this.NaslovOtpremnica.TabIndex = 21;
             this.NaslovOtpremnica.Text = "Otpremnica";
             // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // otpremnicaBindingSource
-            // 
-            this.otpremnicaBindingSource.DataMember = "otpremnica";
-            this.otpremnicaBindingSource.DataSource = this.privremeniDS;
-            // 
-            // otpremnicaTableAdapter
-            // 
-            this.otpremnicaTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = this.otpremnicaTableAdapter;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // temeljnicaTextBox
-            // 
-            this.temeljnicaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.otpremnicaBindingSource, "temeljnica", true));
-            this.temeljnicaTextBox.Location = new System.Drawing.Point(129, 51);
-            this.temeljnicaTextBox.Name = "temeljnicaTextBox";
-            this.temeljnicaTextBox.Size = new System.Drawing.Size(143, 20);
-            this.temeljnicaTextBox.TabIndex = 23;
-            // 
             // datum_otpremeDateTimePicker
             // 
-            this.datum_otpremeDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.otpremnicaBindingSource, "datum_otpreme", true));
             this.datum_otpremeDateTimePicker.Location = new System.Drawing.Point(129, 77);
             this.datum_otpremeDateTimePicker.Name = "datum_otpremeDateTimePicker";
             this.datum_otpremeDateTimePicker.Size = new System.Drawing.Size(143, 20);
@@ -183,28 +135,74 @@
             // 
             // otpremiteljComboBox
             // 
-            this.otpremiteljComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.otpremnicaBindingSource, "otpremitelj", true));
             this.otpremiteljComboBox.FormattingEnabled = true;
             this.otpremiteljComboBox.Location = new System.Drawing.Point(129, 103);
             this.otpremiteljComboBox.Name = "otpremiteljComboBox";
             this.otpremiteljComboBox.Size = new System.Drawing.Size(143, 21);
             this.otpremiteljComboBox.TabIndex = 26;
+            this.otpremiteljComboBox.SelectedIndexChanged += new System.EventHandler(this.otpremiteljComboBox_SelectedIndexChanged);
             // 
             // temperaturaTextBox
             // 
-            this.temperaturaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.otpremnicaBindingSource, "temperatura", true));
             this.temperaturaTextBox.Location = new System.Drawing.Point(129, 130);
             this.temperaturaTextBox.Name = "temperaturaTextBox";
             this.temperaturaTextBox.Size = new System.Drawing.Size(143, 20);
             this.temperaturaTextBox.TabIndex = 27;
+            this.temperaturaTextBox.Leave += new System.EventHandler(this.temperaturaTextBox_Leave);
+            // 
+            // UpozorenjeTemeljnica
+            // 
+            this.UpozorenjeTemeljnica.AutoSize = true;
+            this.UpozorenjeTemeljnica.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeTemeljnica.Location = new System.Drawing.Point(278, 50);
+            this.UpozorenjeTemeljnica.Name = "UpozorenjeTemeljnica";
+            this.UpozorenjeTemeljnica.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeTemeljnica.TabIndex = 28;
+            this.UpozorenjeTemeljnica.Text = "label1";
+            this.UpozorenjeTemeljnica.Visible = false;
+            // 
+            // temeljnicaComboBox
+            // 
+            this.temeljnicaComboBox.FormattingEnabled = true;
+            this.temeljnicaComboBox.Location = new System.Drawing.Point(129, 50);
+            this.temeljnicaComboBox.Name = "temeljnicaComboBox";
+            this.temeljnicaComboBox.Size = new System.Drawing.Size(143, 21);
+            this.temeljnicaComboBox.TabIndex = 29;
+            this.temeljnicaComboBox.SelectedIndexChanged += new System.EventHandler(this.temeljnicaComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeOtpremitelj
+            // 
+            this.UpozorenjeOtpremitelj.AutoSize = true;
+            this.UpozorenjeOtpremitelj.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeOtpremitelj.Location = new System.Drawing.Point(278, 103);
+            this.UpozorenjeOtpremitelj.Name = "UpozorenjeOtpremitelj";
+            this.UpozorenjeOtpremitelj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeOtpremitelj.TabIndex = 30;
+            this.UpozorenjeOtpremitelj.Text = "label1";
+            this.UpozorenjeOtpremitelj.Visible = false;
+            // 
+            // UpozorenjeTemeperatura
+            // 
+            this.UpozorenjeTemeperatura.AutoSize = true;
+            this.UpozorenjeTemeperatura.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeTemeperatura.Location = new System.Drawing.Point(278, 130);
+            this.UpozorenjeTemeperatura.Name = "UpozorenjeTemeperatura";
+            this.UpozorenjeTemeperatura.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeTemeperatura.TabIndex = 31;
+            this.UpozorenjeTemeperatura.Text = "label1";
+            this.UpozorenjeTemeperatura.Visible = false;
             // 
             // frmOtpremnica
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeTemeperatura);
+            this.Controls.Add(this.UpozorenjeOtpremitelj);
+            this.Controls.Add(this.temeljnicaComboBox);
+            this.Controls.Add(this.UpozorenjeTemeljnica);
             this.Controls.Add(temperaturaLabel);
             this.Controls.Add(this.temperaturaTextBox);
             this.Controls.Add(otpremiteljLabel);
@@ -212,7 +210,6 @@
             this.Controls.Add(datum_otpremeLabel);
             this.Controls.Add(this.datum_otpremeDateTimePicker);
             this.Controls.Add(temeljnicaLabel);
-            this.Controls.Add(this.temeljnicaTextBox);
             this.Controls.Add(this.NaslovOtpremnica);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
@@ -220,9 +217,6 @@
             this.Name = "frmOtpremnica";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmOtpremnica";
-            this.Load += new System.EventHandler(this.frmOtpremnica_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.otpremnicaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,13 +228,12 @@
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovOtpremnica;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource otpremnicaBindingSource;
-        private privremeniDSTableAdapters.otpremnicaTableAdapter otpremnicaTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.TextBox temeljnicaTextBox;
         private System.Windows.Forms.DateTimePicker datum_otpremeDateTimePicker;
         private System.Windows.Forms.ComboBox otpremiteljComboBox;
         private System.Windows.Forms.TextBox temperaturaTextBox;
+        private System.Windows.Forms.Label UpozorenjeTemeljnica;
+        private System.Windows.Forms.ComboBox temeljnicaComboBox;
+        private System.Windows.Forms.Label UpozorenjeOtpremitelj;
+        private System.Windows.Forms.Label UpozorenjeTemeperatura;
     }
 }

@@ -28,20 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label nazivLabel;
             this.NaslovRadnoMjesto = new System.Windows.Forms.Label();
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.radno_mjestoBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.radno_mjestoTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.radno_mjestoTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.nazivTextBox = new System.Windows.Forms.TextBox();
+            this.UpozorenjeNaziv = new System.Windows.Forms.Label();
             nazivLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radno_mjestoBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // nazivLabel
@@ -49,9 +43,9 @@
             nazivLabel.AutoSize = true;
             nazivLabel.Location = new System.Drawing.Point(88, 54);
             nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(35, 13);
+            nazivLabel.Size = new System.Drawing.Size(37, 13);
             nazivLabel.TabIndex = 19;
-            nazivLabel.Text = "naziv:";
+            nazivLabel.Text = "Naziv:";
             // 
             // NaslovRadnoMjesto
             // 
@@ -92,58 +86,36 @@
             this.GumbPotvrda.TabIndex = 16;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // radno_mjestoBindingSource
-            // 
-            this.radno_mjestoBindingSource.DataMember = "radno_mjesto";
-            this.radno_mjestoBindingSource.DataSource = this.privremeniDS;
-            // 
-            // radno_mjestoTableAdapter
-            // 
-            this.radno_mjestoTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = this.radno_mjestoTableAdapter;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // nazivTextBox
             // 
-            this.nazivTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.radno_mjestoBindingSource, "naziv", true));
             this.nazivTextBox.Location = new System.Drawing.Point(129, 51);
+            this.nazivTextBox.MaxLength = 45;
             this.nazivTextBox.Name = "nazivTextBox";
             this.nazivTextBox.Size = new System.Drawing.Size(100, 20);
             this.nazivTextBox.TabIndex = 20;
+            this.nazivTextBox.Leave += new System.EventHandler(this.nazivTextBox_Leave);
+            // 
+            // UpozorenjeNaziv
+            // 
+            this.UpozorenjeNaziv.AutoSize = true;
+            this.UpozorenjeNaziv.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeNaziv.Location = new System.Drawing.Point(235, 51);
+            this.UpozorenjeNaziv.Name = "UpozorenjeNaziv";
+            this.UpozorenjeNaziv.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeNaziv.TabIndex = 30;
+            this.UpozorenjeNaziv.Text = "label1";
+            this.UpozorenjeNaziv.Visible = false;
             // 
             // frmRadnoMjesto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeNaziv);
             this.Controls.Add(nazivLabel);
             this.Controls.Add(this.nazivTextBox);
             this.Controls.Add(this.GumbReset);
@@ -153,9 +125,6 @@
             this.Name = "frmRadnoMjesto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRadnoMjesto";
-            this.Load += new System.EventHandler(this.frmRadnoMjesto_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radno_mjestoBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -167,10 +136,7 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource radno_mjestoBindingSource;
-        private privremeniDSTableAdapters.radno_mjestoTableAdapter radno_mjestoTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox nazivTextBox;
+        private System.Windows.Forms.Label UpozorenjeNaziv;
     }
 }

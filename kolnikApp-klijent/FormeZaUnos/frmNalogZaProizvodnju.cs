@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void nalog_za_proizvodnjuBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.nalog_za_proizvodnjuBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmNalogZaProizvodnju_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.nalog_za_proizvodnju' table. You can move, or remove it, as needed.
-            this.nalog_za_proizvodnjuTableAdapter.Fill(this.privremeniDS.nalog_za_proizvodnju);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -39,9 +24,56 @@ namespace kolnikApp_klijent.FormeZaUnos
 
         private void GumbReset_Click(object sender, EventArgs e)
         {
-            temeljnicaTextBox.Text = "";
+            temeljnicaComboBox.SelectedIndex = -1;
             gradilisteComboBox.SelectedIndex = -1;
             izdavateljComboBox.SelectedIndex = -1;
+            UpozorenjeTemeljnica.Hide();
+            UpozorenjeGradiliste.Hide();
+            UpozorenjeIzdavatelj.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenja = "Odaberite element";
+            LabelaUpozorenja.Text = TekstUpozorenja;
+            LabelaUpozorenja.Show();
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (temeljnicaComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeTemeljnica);
+            }
+            if(gradilisteComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeGradiliste);
+            }
+            if (izdavateljComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeIzdavatelj);
+            }
+            if(temeljnicaComboBox.SelectedIndex != -1 && gradilisteComboBox.SelectedIndex != -1 && izdavateljComboBox.SelectedIndex != -1)
+            {
+                //pohraniti podatke u klasu i poslati na BP
+                this.Close();
+            }
+            
+        }
+
+        private void temeljnicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeTemeljnica.Hide();
+        }
+
+        private void gradilisteComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeGradiliste.Hide();
+        }
+
+        private void izdavateljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeIzdavatelj.Hide();
         }
     }
 }

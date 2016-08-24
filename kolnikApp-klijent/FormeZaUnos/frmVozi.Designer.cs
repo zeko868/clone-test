@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label voziloLabel;
             System.Windows.Forms.Label vozacLabel;
             System.Windows.Forms.Label datum_pocetkaLabel;
@@ -36,22 +35,55 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.voziBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.voziTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.voziTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.voziloComboBox = new System.Windows.Forms.ComboBox();
             this.vozacComboBox = new System.Windows.Forms.ComboBox();
             this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.datum_zavrsetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.NaslovVozi = new System.Windows.Forms.Label();
+            this.UpozorenjeVozilo = new System.Windows.Forms.Label();
+            this.UpozorenjeVozac = new System.Windows.Forms.Label();
+            this.UpozorenjeDatumi = new System.Windows.Forms.Label();
             voziloLabel = new System.Windows.Forms.Label();
             vozacLabel = new System.Windows.Forms.Label();
             datum_pocetkaLabel = new System.Windows.Forms.Label();
             datum_zavrsetkaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.voziBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // voziloLabel
+            // 
+            voziloLabel.AutoSize = true;
+            voziloLabel.Location = new System.Drawing.Point(86, 54);
+            voziloLabel.Name = "voziloLabel";
+            voziloLabel.Size = new System.Drawing.Size(38, 13);
+            voziloLabel.TabIndex = 25;
+            voziloLabel.Text = "Vozilo:";
+            // 
+            // vozacLabel
+            // 
+            vozacLabel.AutoSize = true;
+            vozacLabel.Location = new System.Drawing.Point(84, 81);
+            vozacLabel.Name = "vozacLabel";
+            vozacLabel.Size = new System.Drawing.Size(40, 13);
+            vozacLabel.TabIndex = 26;
+            vozacLabel.Text = "Vozac:";
+            // 
+            // datum_pocetkaLabel
+            // 
+            datum_pocetkaLabel.AutoSize = true;
+            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
+            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
+            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
+            datum_pocetkaLabel.TabIndex = 27;
+            datum_pocetkaLabel.Text = "Datum pocetka:";
+            // 
+            // datum_zavrsetkaLabel
+            // 
+            datum_zavrsetkaLabel.AutoSize = true;
+            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
+            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
+            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
+            datum_zavrsetkaLabel.TabIndex = 28;
+            datum_zavrsetkaLabel.Text = "Datum zavrsetka:";
             // 
             // GumbReset
             // 
@@ -82,112 +114,42 @@
             this.GumbPotvrda.TabIndex = 22;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // voziBindingSource
-            // 
-            this.voziBindingSource.DataMember = "vozi";
-            this.voziBindingSource.DataSource = this.privremeniDS;
-            // 
-            // voziTableAdapter
-            // 
-            this.voziTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = this.voziTableAdapter;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // voziloLabel
-            // 
-            voziloLabel.AutoSize = true;
-            voziloLabel.Location = new System.Drawing.Point(86, 54);
-            voziloLabel.Name = "voziloLabel";
-            voziloLabel.Size = new System.Drawing.Size(37, 13);
-            voziloLabel.TabIndex = 25;
-            voziloLabel.Text = "vozilo:";
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // voziloComboBox
             // 
-            this.voziloComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.voziBindingSource, "vozilo", true));
             this.voziloComboBox.FormattingEnabled = true;
             this.voziloComboBox.Location = new System.Drawing.Point(129, 51);
             this.voziloComboBox.Name = "voziloComboBox";
             this.voziloComboBox.Size = new System.Drawing.Size(137, 21);
             this.voziloComboBox.TabIndex = 26;
-            // 
-            // vozacLabel
-            // 
-            vozacLabel.AutoSize = true;
-            vozacLabel.Location = new System.Drawing.Point(84, 81);
-            vozacLabel.Name = "vozacLabel";
-            vozacLabel.Size = new System.Drawing.Size(39, 13);
-            vozacLabel.TabIndex = 26;
-            vozacLabel.Text = "vozac:";
+            this.voziloComboBox.SelectedIndexChanged += new System.EventHandler(this.voziloComboBox_SelectedIndexChanged);
             // 
             // vozacComboBox
             // 
-            this.vozacComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.voziBindingSource, "vozac", true));
             this.vozacComboBox.FormattingEnabled = true;
             this.vozacComboBox.Location = new System.Drawing.Point(129, 78);
             this.vozacComboBox.Name = "vozacComboBox";
             this.vozacComboBox.Size = new System.Drawing.Size(137, 21);
             this.vozacComboBox.TabIndex = 27;
-            // 
-            // datum_pocetkaLabel
-            // 
-            datum_pocetkaLabel.AutoSize = true;
-            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
-            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
-            datum_pocetkaLabel.Size = new System.Drawing.Size(81, 13);
-            datum_pocetkaLabel.TabIndex = 27;
-            datum_pocetkaLabel.Text = "datum pocetka:";
+            this.vozacComboBox.SelectedIndexChanged += new System.EventHandler(this.vozacComboBox_SelectedIndexChanged);
             // 
             // datum_pocetkaDateTimePicker
             // 
-            this.datum_pocetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.voziBindingSource, "datum_pocetka", true));
             this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
             this.datum_pocetkaDateTimePicker.Name = "datum_pocetkaDateTimePicker";
             this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
             this.datum_pocetkaDateTimePicker.TabIndex = 28;
+            this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
             // 
             // datum_zavrsetkaDateTimePicker
             // 
-            this.datum_zavrsetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.voziBindingSource, "datum_zavrsetka", true));
             this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
             this.datum_zavrsetkaDateTimePicker.Name = "datum_zavrsetkaDateTimePicker";
+            this.datum_zavrsetkaDateTimePicker.ShowCheckBox = true;
             this.datum_zavrsetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
             this.datum_zavrsetkaDateTimePicker.TabIndex = 29;
-            // 
-            // datum_zavrsetkaLabel
-            // 
-            datum_zavrsetkaLabel.AutoSize = true;
-            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
-            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
-            datum_zavrsetkaLabel.Size = new System.Drawing.Size(88, 13);
-            datum_zavrsetkaLabel.TabIndex = 28;
-            datum_zavrsetkaLabel.Text = "datum zavrsetka:";
+            this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
             // 
             // NaslovVozi
             // 
@@ -199,13 +161,48 @@
             this.NaslovVozi.TabIndex = 11;
             this.NaslovVozi.Text = "Dodjela vozila vozaču";
             // 
+            // UpozorenjeVozilo
+            // 
+            this.UpozorenjeVozilo.AutoSize = true;
+            this.UpozorenjeVozilo.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeVozilo.Location = new System.Drawing.Point(272, 51);
+            this.UpozorenjeVozilo.Name = "UpozorenjeVozilo";
+            this.UpozorenjeVozilo.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeVozilo.TabIndex = 30;
+            this.UpozorenjeVozilo.Text = "label1";
+            this.UpozorenjeVozilo.Visible = false;
+            // 
+            // UpozorenjeVozac
+            // 
+            this.UpozorenjeVozac.AutoSize = true;
+            this.UpozorenjeVozac.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeVozac.Location = new System.Drawing.Point(272, 78);
+            this.UpozorenjeVozac.Name = "UpozorenjeVozac";
+            this.UpozorenjeVozac.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeVozac.TabIndex = 31;
+            this.UpozorenjeVozac.Text = "label1";
+            this.UpozorenjeVozac.Visible = false;
+            // 
+            // UpozorenjeDatumi
+            // 
+            this.UpozorenjeDatumi.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeDatumi.Location = new System.Drawing.Point(272, 105);
+            this.UpozorenjeDatumi.Name = "UpozorenjeDatumi";
+            this.UpozorenjeDatumi.Size = new System.Drawing.Size(90, 46);
+            this.UpozorenjeDatumi.TabIndex = 32;
+            this.UpozorenjeDatumi.Text = "Datum završetka mora biti veći od datuma početka";
+            this.UpozorenjeDatumi.Visible = false;
+            // 
             // frmVozi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeDatumi);
+            this.Controls.Add(this.UpozorenjeVozac);
+            this.Controls.Add(this.UpozorenjeVozilo);
             this.Controls.Add(datum_zavrsetkaLabel);
             this.Controls.Add(this.datum_zavrsetkaDateTimePicker);
             this.Controls.Add(datum_pocetkaLabel);
@@ -221,9 +218,6 @@
             this.Name = "frmVozi";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVozi";
-            this.Load += new System.EventHandler(this.frmVozi_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.voziBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,14 +227,13 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource voziBindingSource;
-        private privremeniDSTableAdapters.voziTableAdapter voziTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.ComboBox voziloComboBox;
         private System.Windows.Forms.ComboBox vozacComboBox;
         private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
         private System.Windows.Forms.DateTimePicker datum_zavrsetkaDateTimePicker;
         private System.Windows.Forms.Label NaslovVozi;
+        private System.Windows.Forms.Label UpozorenjeVozilo;
+        private System.Windows.Forms.Label UpozorenjeVozac;
+        private System.Windows.Forms.Label UpozorenjeDatumi;
     }
 }

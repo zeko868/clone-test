@@ -71,6 +71,7 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.loadingTraka);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "glavnaForma";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KolnikApp";
