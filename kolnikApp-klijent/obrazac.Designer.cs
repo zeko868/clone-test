@@ -140,6 +140,7 @@
             this.CreateSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CreateSlika.TabIndex = 8;
             this.CreateSlika.TabStop = false;
+            this.CreateSlika.Click += new System.EventHandler(this.CreateSlika_Click);
             this.CreateSlika.MouseEnter += new System.EventHandler(this.CreateSlika_MouseEnter);
             this.CreateSlika.MouseLeave += new System.EventHandler(this.CreateSlika_MouseLeave);
             // 

@@ -22,5 +22,16 @@ namespace kolnikApp_klijent.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=31.147.204.119;Initial Catalog=16001_DB;Persist Security Info=True;Us" +
+            "er ID=16001_User;Password=eY4PSzGY")]
+        public string _16001_DBConnectionString {
+            get {
+                return ((string)(this["_16001_DBConnectionString"]));
+            }
+        }
     }
 }

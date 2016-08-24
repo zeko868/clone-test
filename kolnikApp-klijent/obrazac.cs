@@ -99,5 +99,13 @@ namespace kolnikApp_klijent
         {
             LabelaPomoc.Hide();
         }
+
+        private void CreateSlika_Click(object sender, EventArgs e)
+        {
+            /*FormeZaUnos.frmArtikl frmUnosArtikl = new FormeZaUnos.frmArtikl();
+            frmUnosArtikl.ShowDialog();*/
+            FormeZaUnos.frmNalogZaProizvodnju frmUnosNalog = new FormeZaUnos.frmNalogZaProizvodnju();
+            frmUnosNalog.ShowDialog();
+        }
     }
 }
