@@ -17,20 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
         string[] Operacije = new string[4] { "C", "R", "U", "D" };
-        private void tablicna_privilegijaBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.tablicna_privilegijaBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmTablicaPrivilegija_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.tablicna_privilegija' table. You can move, or remove it, as needed.
-            this.tablicna_privilegijaTableAdapter.Fill(this.privremeniDS.tablicna_privilegija);
-
-        }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
@@ -42,6 +28,53 @@ namespace kolnikApp_klijent.FormeZaUnos
             radno_mjestoComboBox.SelectedIndex = -1;
             naziv_tabliceComboBox.SelectedIndex = -1;
             operacijaComboBox.SelectedIndex = -1;
+            UpozorenjeNazivTablice.Hide();
+            UpozorenjeOperacija.Hide();
+            UpozorenjeRadnoMjesto.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenjaComboBox = "Odaberite element";
+            LabelaUpozorenja.Text = TekstUpozorenjaComboBox;
+            LabelaUpozorenja.Show();
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (radno_mjestoComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeRadnoMjesto);
+            }
+            if (naziv_tabliceComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeNazivTablice);
+            }
+            if (operacijaComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeOperacija);
+            }
+            if(radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1 && operacijaComboBox.SelectedIndex != -1)
+            {
+                //pohrani podatke u klasu i pošalji u BP
+                this.Close();
+            }
+            
+        }
+
+        private void radno_mjestoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeRadnoMjesto.Hide();
+        }
+
+        private void naziv_tabliceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeNazivTablice.Hide();
+        }
+
+        private void operacijaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeOperacija.Hide();
         }
     }
 }

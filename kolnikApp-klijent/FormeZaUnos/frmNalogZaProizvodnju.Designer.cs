@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label temeljnicaLabel;
             System.Windows.Forms.Label izdavateljLabel;
             System.Windows.Forms.Label gradilisteLabel;
@@ -36,18 +35,15 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.nalog_za_proizvodnjuBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.nalog_za_proizvodnjuTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.nalog_za_proizvodnjuTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
-            this.temeljnicaTextBox = new System.Windows.Forms.TextBox();
             this.izdavateljComboBox = new System.Windows.Forms.ComboBox();
             this.gradilisteComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeTemeljnica = new System.Windows.Forms.Label();
+            this.UpozorenjeGradiliste = new System.Windows.Forms.Label();
+            this.UpozorenjeIzdavatelj = new System.Windows.Forms.Label();
+            this.temeljnicaComboBox = new System.Windows.Forms.ComboBox();
             temeljnicaLabel = new System.Windows.Forms.Label();
             izdavateljLabel = new System.Windows.Forms.Label();
             gradilisteLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nalog_za_proizvodnjuBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // temeljnicaLabel
@@ -55,27 +51,27 @@
             temeljnicaLabel.AutoSize = true;
             temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
             temeljnicaLabel.Name = "temeljnicaLabel";
-            temeljnicaLabel.Size = new System.Drawing.Size(57, 13);
+            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
             temeljnicaLabel.TabIndex = 13;
-            temeljnicaLabel.Text = "temeljnica:";
+            temeljnicaLabel.Text = "Temeljnica:";
             // 
             // izdavateljLabel
             // 
             izdavateljLabel.AutoSize = true;
             izdavateljLabel.Location = new System.Drawing.Point(69, 106);
             izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(54, 13);
+            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
             izdavateljLabel.TabIndex = 15;
-            izdavateljLabel.Text = "izdavatelj:";
+            izdavateljLabel.Text = "Izdavatelj:";
             // 
             // gradilisteLabel
             // 
             gradilisteLabel.AutoSize = true;
             gradilisteLabel.Location = new System.Drawing.Point(72, 80);
             gradilisteLabel.Name = "gradilisteLabel";
-            gradilisteLabel.Size = new System.Drawing.Size(51, 13);
+            gradilisteLabel.Size = new System.Drawing.Size(53, 13);
             gradilisteLabel.TabIndex = 16;
-            gradilisteLabel.Text = "gradiliste:";
+            gradilisteLabel.Text = "Gradiliste:";
             // 
             // NaslovNalogZaProizvodnju
             // 
@@ -116,82 +112,84 @@
             this.GumbPotvrda.TabIndex = 10;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // nalog_za_proizvodnjuBindingSource
-            // 
-            this.nalog_za_proizvodnjuBindingSource.DataMember = "nalog_za_proizvodnju";
-            this.nalog_za_proizvodnjuBindingSource.DataSource = this.privremeniDS;
-            // 
-            // nalog_za_proizvodnjuTableAdapter
-            // 
-            this.nalog_za_proizvodnjuTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = this.nalog_za_proizvodnjuTableAdapter;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // temeljnicaTextBox
-            // 
-            this.temeljnicaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.nalog_za_proizvodnjuBindingSource, "temeljnica", true));
-            this.temeljnicaTextBox.Location = new System.Drawing.Point(129, 51);
-            this.temeljnicaTextBox.Name = "temeljnicaTextBox";
-            this.temeljnicaTextBox.Size = new System.Drawing.Size(121, 20);
-            this.temeljnicaTextBox.TabIndex = 14;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // izdavateljComboBox
             // 
-            this.izdavateljComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.nalog_za_proizvodnjuBindingSource, "izdavatelj", true));
             this.izdavateljComboBox.FormattingEnabled = true;
             this.izdavateljComboBox.Location = new System.Drawing.Point(129, 103);
             this.izdavateljComboBox.Name = "izdavateljComboBox";
             this.izdavateljComboBox.Size = new System.Drawing.Size(121, 21);
             this.izdavateljComboBox.TabIndex = 16;
+            this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
             // 
             // gradilisteComboBox
             // 
-            this.gradilisteComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.nalog_za_proizvodnjuBindingSource, "gradiliste", true));
             this.gradilisteComboBox.FormattingEnabled = true;
             this.gradilisteComboBox.Location = new System.Drawing.Point(129, 77);
             this.gradilisteComboBox.Name = "gradilisteComboBox";
             this.gradilisteComboBox.Size = new System.Drawing.Size(121, 21);
             this.gradilisteComboBox.TabIndex = 17;
+            this.gradilisteComboBox.SelectedIndexChanged += new System.EventHandler(this.gradilisteComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeTemeljnica
+            // 
+            this.UpozorenjeTemeljnica.AutoSize = true;
+            this.UpozorenjeTemeljnica.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeTemeljnica.Location = new System.Drawing.Point(256, 51);
+            this.UpozorenjeTemeljnica.Name = "UpozorenjeTemeljnica";
+            this.UpozorenjeTemeljnica.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeTemeljnica.TabIndex = 20;
+            this.UpozorenjeTemeljnica.Text = "label1";
+            this.UpozorenjeTemeljnica.Visible = false;
+            // 
+            // UpozorenjeGradiliste
+            // 
+            this.UpozorenjeGradiliste.AutoSize = true;
+            this.UpozorenjeGradiliste.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeGradiliste.Location = new System.Drawing.Point(256, 77);
+            this.UpozorenjeGradiliste.Name = "UpozorenjeGradiliste";
+            this.UpozorenjeGradiliste.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeGradiliste.TabIndex = 21;
+            this.UpozorenjeGradiliste.Text = "label1";
+            this.UpozorenjeGradiliste.Visible = false;
+            // 
+            // UpozorenjeIzdavatelj
+            // 
+            this.UpozorenjeIzdavatelj.AutoSize = true;
+            this.UpozorenjeIzdavatelj.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(256, 103);
+            this.UpozorenjeIzdavatelj.Name = "UpozorenjeIzdavatelj";
+            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeIzdavatelj.TabIndex = 22;
+            this.UpozorenjeIzdavatelj.Text = "label1";
+            this.UpozorenjeIzdavatelj.Visible = false;
+            // 
+            // temeljnicaComboBox
+            // 
+            this.temeljnicaComboBox.FormattingEnabled = true;
+            this.temeljnicaComboBox.Location = new System.Drawing.Point(129, 51);
+            this.temeljnicaComboBox.Name = "temeljnicaComboBox";
+            this.temeljnicaComboBox.Size = new System.Drawing.Size(121, 21);
+            this.temeljnicaComboBox.TabIndex = 23;
+            this.temeljnicaComboBox.SelectedIndexChanged += new System.EventHandler(this.temeljnicaComboBox_SelectedIndexChanged);
             // 
             // frmNalogZaProizvodnju
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.temeljnicaComboBox);
+            this.Controls.Add(this.UpozorenjeIzdavatelj);
+            this.Controls.Add(this.UpozorenjeGradiliste);
+            this.Controls.Add(this.UpozorenjeTemeljnica);
             this.Controls.Add(gradilisteLabel);
             this.Controls.Add(this.gradilisteComboBox);
             this.Controls.Add(izdavateljLabel);
             this.Controls.Add(this.izdavateljComboBox);
             this.Controls.Add(temeljnicaLabel);
-            this.Controls.Add(this.temeljnicaTextBox);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
@@ -199,9 +197,6 @@
             this.Name = "frmNalogZaProizvodnju";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNalogZaProizvodnju";
-            this.Load += new System.EventHandler(this.frmNalogZaProizvodnju_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nalog_za_proizvodnjuBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,12 +208,11 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource nalog_za_proizvodnjuBindingSource;
-        private privremeniDSTableAdapters.nalog_za_proizvodnjuTableAdapter nalog_za_proizvodnjuTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.TextBox temeljnicaTextBox;
         private System.Windows.Forms.ComboBox izdavateljComboBox;
         private System.Windows.Forms.ComboBox gradilisteComboBox;
+        private System.Windows.Forms.Label UpozorenjeTemeljnica;
+        private System.Windows.Forms.Label UpozorenjeGradiliste;
+        private System.Windows.Forms.Label UpozorenjeIzdavatelj;
+        private System.Windows.Forms.ComboBox temeljnicaComboBox;
     }
 }

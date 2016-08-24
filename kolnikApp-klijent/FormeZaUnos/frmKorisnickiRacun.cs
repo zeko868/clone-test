@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void korisnicki_racunBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.korisnicki_racunBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmKorisnickiRacun_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.korisnicki_racun' table. You can move, or remove it, as needed.
-            this.korisnicki_racunTableAdapter.Fill(this.privremeniDS.korisnicki_racun);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -39,9 +24,70 @@ namespace kolnikApp_klijent.FormeZaUnos
 
         private void GumbReset_Click(object sender, EventArgs e)
         {
-            zaposlenikTextBox.Text = "";
+            zaposlenikComboBox.SelectedIndex = -1;
             korisnicko_imeTextBox.Text = "";
             lozinkaTextBox.Text = "";
+            UpozorenjeKorisnickoIme.Hide();
+            UpozorenjeLozinka.Hide();
+            UpozorenjeZaposlenik.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenja = "Polje mora biti popunjeno";
+            LabelaUpozorenja.Text = TekstUpozorenja;
+            LabelaUpozorenja.Show();
+        }
+
+        private void korisnicko_imeTextBox_Leave(object sender, EventArgs e)
+        {
+            if (korisnicko_imeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorisnickoIme);
+            }
+            else
+            {
+                UpozorenjeKorisnickoIme.Hide();
+            }
+        }
+
+        private void lozinkaTextBox_Leave(object sender, EventArgs e)
+        {
+            if(lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            else
+            {
+                UpozorenjeLozinka.Hide();
+            }
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (korisnicko_imeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorisnickoIme);
+            }
+            if (lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            if (zaposlenikComboBox.SelectedIndex == -1)
+            {
+                UpozorenjeZaposlenik.Text = "Odaberite zaposlenika";
+                UpozorenjeZaposlenik.Show();
+            }
+            if(korisnicko_imeTextBox.Text != "" && lozinkaTextBox.Text != "" && zaposlenikComboBox.SelectedIndex != -1)
+            {
+                //unesti podatke u klasu i pohraniti u bazu podatka
+                this.Close();
+            }
+        }
+
+        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeZaposlenik.Hide();
         }
     }
 }

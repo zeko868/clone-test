@@ -28,24 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label datum_izdavanjaLabel;
             System.Windows.Forms.Label izdavateljLabel;
             this.NaslovRacun = new System.Windows.Forms.Label();
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.racunBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.racunTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.racunTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.datum_izdavanjaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.izdavateljComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeDatumIzdavanja = new System.Windows.Forms.Label();
+            this.UpozorenjeIzdavatelj = new System.Windows.Forms.Label();
             datum_izdavanjaLabel = new System.Windows.Forms.Label();
             izdavateljLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.racunBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // datum_izdavanjaLabel
+            // 
+            datum_izdavanjaLabel.AutoSize = true;
+            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
+            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
+            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
+            datum_izdavanjaLabel.TabIndex = 13;
+            datum_izdavanjaLabel.Text = "Datum izdavanja:";
+            // 
+            // izdavateljLabel
+            // 
+            izdavateljLabel.AutoSize = true;
+            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
+            izdavateljLabel.Name = "izdavateljLabel";
+            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
+            izdavateljLabel.TabIndex = 14;
+            izdavateljLabel.Text = "Izdavatelj:";
             // 
             // NaslovRacun
             // 
@@ -86,85 +99,55 @@
             this.GumbPotvrda.TabIndex = 10;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // racunBindingSource
-            // 
-            this.racunBindingSource.DataMember = "racun";
-            this.racunBindingSource.DataSource = this.privremeniDS;
-            // 
-            // racunTableAdapter
-            // 
-            this.racunTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = this.racunTableAdapter;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // datum_izdavanjaLabel
-            // 
-            datum_izdavanjaLabel.AutoSize = true;
-            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
-            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
-            datum_izdavanjaLabel.Size = new System.Drawing.Size(87, 13);
-            datum_izdavanjaLabel.TabIndex = 13;
-            datum_izdavanjaLabel.Text = "datum izdavanja:";
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // datum_izdavanjaDateTimePicker
             // 
-            this.datum_izdavanjaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.racunBindingSource, "datum_izdavanja", true));
             this.datum_izdavanjaDateTimePicker.Location = new System.Drawing.Point(129, 51);
             this.datum_izdavanjaDateTimePicker.Name = "datum_izdavanjaDateTimePicker";
             this.datum_izdavanjaDateTimePicker.Size = new System.Drawing.Size(131, 20);
             this.datum_izdavanjaDateTimePicker.TabIndex = 14;
             // 
-            // izdavateljLabel
-            // 
-            izdavateljLabel.AutoSize = true;
-            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
-            izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(54, 13);
-            izdavateljLabel.TabIndex = 14;
-            izdavateljLabel.Text = "izdavatelj:";
-            // 
             // izdavateljComboBox
             // 
-            this.izdavateljComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.racunBindingSource, "izdavatelj", true));
             this.izdavateljComboBox.FormattingEnabled = true;
             this.izdavateljComboBox.Location = new System.Drawing.Point(129, 77);
             this.izdavateljComboBox.Name = "izdavateljComboBox";
             this.izdavateljComboBox.Size = new System.Drawing.Size(131, 21);
             this.izdavateljComboBox.TabIndex = 15;
+            this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeDatumIzdavanja
+            // 
+            this.UpozorenjeDatumIzdavanja.AutoSize = true;
+            this.UpozorenjeDatumIzdavanja.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeDatumIzdavanja.Location = new System.Drawing.Point(266, 51);
+            this.UpozorenjeDatumIzdavanja.Name = "UpozorenjeDatumIzdavanja";
+            this.UpozorenjeDatumIzdavanja.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeDatumIzdavanja.TabIndex = 30;
+            this.UpozorenjeDatumIzdavanja.Text = "label1";
+            this.UpozorenjeDatumIzdavanja.Visible = false;
+            // 
+            // UpozorenjeIzdavatelj
+            // 
+            this.UpozorenjeIzdavatelj.AutoSize = true;
+            this.UpozorenjeIzdavatelj.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(266, 77);
+            this.UpozorenjeIzdavatelj.Name = "UpozorenjeIzdavatelj";
+            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeIzdavatelj.TabIndex = 31;
+            this.UpozorenjeIzdavatelj.Text = "label1";
+            this.UpozorenjeIzdavatelj.Visible = false;
             // 
             // frmRacun
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeIzdavatelj);
+            this.Controls.Add(this.UpozorenjeDatumIzdavanja);
             this.Controls.Add(izdavateljLabel);
             this.Controls.Add(this.izdavateljComboBox);
             this.Controls.Add(datum_izdavanjaLabel);
@@ -176,9 +159,6 @@
             this.Name = "frmRacun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRacun";
-            this.Load += new System.EventHandler(this.frmRacun_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.racunBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,11 +170,9 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource racunBindingSource;
-        private privremeniDSTableAdapters.racunTableAdapter racunTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.DateTimePicker datum_izdavanjaDateTimePicker;
         private System.Windows.Forms.ComboBox izdavateljComboBox;
+        private System.Windows.Forms.Label UpozorenjeDatumIzdavanja;
+        private System.Windows.Forms.Label UpozorenjeIzdavatelj;
     }
 }

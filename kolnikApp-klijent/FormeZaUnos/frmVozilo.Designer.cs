@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label registracijski_brojLabel;
             System.Windows.Forms.Label proizvodjacLabel;
             System.Windows.Forms.Label modelLabel;
@@ -36,18 +35,15 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.voziloBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.voziloTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.voziloTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.registracijski_brojTextBox = new System.Windows.Forms.TextBox();
             this.proizvodjacTextBox = new System.Windows.Forms.TextBox();
             this.modelTextBox = new System.Windows.Forms.TextBox();
+            this.UpozorenjeRegistracijskiBroj = new System.Windows.Forms.Label();
+            this.UpozorenjeProizvodac = new System.Windows.Forms.Label();
+            this.UpozorenjeModel = new System.Windows.Forms.Label();
             registracijski_brojLabel = new System.Windows.Forms.Label();
             proizvodjacLabel = new System.Windows.Forms.Label();
             modelLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.voziloBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // registracijski_brojLabel
@@ -55,9 +51,9 @@
             registracijski_brojLabel.AutoSize = true;
             registracijski_brojLabel.Location = new System.Drawing.Point(36, 54);
             registracijski_brojLabel.Name = "registracijski_brojLabel";
-            registracijski_brojLabel.Size = new System.Drawing.Size(87, 13);
+            registracijski_brojLabel.Size = new System.Drawing.Size(92, 13);
             registracijski_brojLabel.TabIndex = 25;
-            registracijski_brojLabel.Text = "registracijski broj:";
+            registracijski_brojLabel.Text = "Registracijski broj:";
             // 
             // proizvodjacLabel
             // 
@@ -66,16 +62,16 @@
             proizvodjacLabel.Name = "proizvodjacLabel";
             proizvodjacLabel.Size = new System.Drawing.Size(64, 13);
             proizvodjacLabel.TabIndex = 26;
-            proizvodjacLabel.Text = "proizvodjac:";
+            proizvodjacLabel.Text = "Proizvođač:";
             // 
             // modelLabel
             // 
             modelLabel.AutoSize = true;
             modelLabel.Location = new System.Drawing.Point(85, 106);
             modelLabel.Name = "modelLabel";
-            modelLabel.Size = new System.Drawing.Size(38, 13);
+            modelLabel.Size = new System.Drawing.Size(39, 13);
             modelLabel.TabIndex = 27;
-            modelLabel.Text = "model:";
+            modelLabel.Text = "Model:";
             // 
             // NaslovVozilo
             // 
@@ -116,74 +112,78 @@
             this.GumbPotvrda.TabIndex = 22;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // voziloBindingSource
-            // 
-            this.voziloBindingSource.DataMember = "vozilo";
-            this.voziloBindingSource.DataSource = this.privremeniDS;
-            // 
-            // voziloTableAdapter
-            // 
-            this.voziloTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = this.voziloTableAdapter;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // registracijski_brojTextBox
             // 
-            this.registracijski_brojTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.voziloBindingSource, "registracijski_broj", true));
             this.registracijski_brojTextBox.Location = new System.Drawing.Point(129, 51);
+            this.registracijski_brojTextBox.MaxLength = 8;
             this.registracijski_brojTextBox.Name = "registracijski_brojTextBox";
             this.registracijski_brojTextBox.Size = new System.Drawing.Size(127, 20);
             this.registracijski_brojTextBox.TabIndex = 26;
+            this.registracijski_brojTextBox.Leave += new System.EventHandler(this.registracijski_brojTextBox_Leave);
             // 
             // proizvodjacTextBox
             // 
-            this.proizvodjacTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.voziloBindingSource, "proizvodjac", true));
             this.proizvodjacTextBox.Location = new System.Drawing.Point(129, 77);
+            this.proizvodjacTextBox.MaxLength = 45;
             this.proizvodjacTextBox.Name = "proizvodjacTextBox";
             this.proizvodjacTextBox.Size = new System.Drawing.Size(127, 20);
             this.proizvodjacTextBox.TabIndex = 27;
+            this.proizvodjacTextBox.Leave += new System.EventHandler(this.proizvodjacTextBox_Leave);
             // 
             // modelTextBox
             // 
-            this.modelTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.voziloBindingSource, "model", true));
             this.modelTextBox.Location = new System.Drawing.Point(129, 103);
+            this.modelTextBox.MaxLength = 45;
             this.modelTextBox.Name = "modelTextBox";
             this.modelTextBox.Size = new System.Drawing.Size(127, 20);
             this.modelTextBox.TabIndex = 28;
+            this.modelTextBox.Leave += new System.EventHandler(this.modelTextBox_Leave);
+            // 
+            // UpozorenjeRegistracijskiBroj
+            // 
+            this.UpozorenjeRegistracijskiBroj.AutoSize = true;
+            this.UpozorenjeRegistracijskiBroj.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeRegistracijskiBroj.Location = new System.Drawing.Point(262, 51);
+            this.UpozorenjeRegistracijskiBroj.Name = "UpozorenjeRegistracijskiBroj";
+            this.UpozorenjeRegistracijskiBroj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeRegistracijskiBroj.TabIndex = 30;
+            this.UpozorenjeRegistracijskiBroj.Text = "label1";
+            this.UpozorenjeRegistracijskiBroj.Visible = false;
+            // 
+            // UpozorenjeProizvodac
+            // 
+            this.UpozorenjeProizvodac.AutoSize = true;
+            this.UpozorenjeProizvodac.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeProizvodac.Location = new System.Drawing.Point(262, 77);
+            this.UpozorenjeProizvodac.Name = "UpozorenjeProizvodac";
+            this.UpozorenjeProizvodac.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeProizvodac.TabIndex = 31;
+            this.UpozorenjeProizvodac.Text = "label1";
+            this.UpozorenjeProizvodac.Visible = false;
+            // 
+            // UpozorenjeModel
+            // 
+            this.UpozorenjeModel.AutoSize = true;
+            this.UpozorenjeModel.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeModel.Location = new System.Drawing.Point(262, 103);
+            this.UpozorenjeModel.Name = "UpozorenjeModel";
+            this.UpozorenjeModel.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeModel.TabIndex = 32;
+            this.UpozorenjeModel.Text = "label1";
+            this.UpozorenjeModel.Visible = false;
             // 
             // frmVozilo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeModel);
+            this.Controls.Add(this.UpozorenjeProizvodac);
+            this.Controls.Add(this.UpozorenjeRegistracijskiBroj);
             this.Controls.Add(modelLabel);
             this.Controls.Add(this.modelTextBox);
             this.Controls.Add(proizvodjacLabel);
@@ -197,9 +197,6 @@
             this.Name = "frmVozilo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVozilo";
-            this.Load += new System.EventHandler(this.frmVozilo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.voziloBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -211,12 +208,11 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource voziloBindingSource;
-        private privremeniDSTableAdapters.voziloTableAdapter voziloTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox registracijski_brojTextBox;
         private System.Windows.Forms.TextBox proizvodjacTextBox;
         private System.Windows.Forms.TextBox modelTextBox;
+        private System.Windows.Forms.Label UpozorenjeRegistracijskiBroj;
+        private System.Windows.Forms.Label UpozorenjeProizvodac;
+        private System.Windows.Forms.Label UpozorenjeModel;
     }
 }

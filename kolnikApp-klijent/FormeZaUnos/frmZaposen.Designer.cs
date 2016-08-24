@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label zaposlenikLabel;
             System.Windows.Forms.Label poduzeceLabel;
             System.Windows.Forms.Label datum_pocetkaLabel;
@@ -37,20 +36,17 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.zaposlenBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.zaposlenTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.zaposlenTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.zaposlenikComboBox = new System.Windows.Forms.ComboBox();
             this.poduzeceComboBox = new System.Windows.Forms.ComboBox();
             this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.datum_zavrsetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.UpozorenjeZaposlenik = new System.Windows.Forms.Label();
+            this.UpozorenjePoduzece = new System.Windows.Forms.Label();
+            this.UpozorenjeRazlikaDatuma = new System.Windows.Forms.Label();
             zaposlenikLabel = new System.Windows.Forms.Label();
             poduzeceLabel = new System.Windows.Forms.Label();
             datum_pocetkaLabel = new System.Windows.Forms.Label();
             datum_zavrsetkaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zaposlenBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // zaposlenikLabel
@@ -58,36 +54,36 @@
             zaposlenikLabel.AutoSize = true;
             zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
             zaposlenikLabel.Name = "zaposlenikLabel";
-            zaposlenikLabel.Size = new System.Drawing.Size(60, 13);
+            zaposlenikLabel.Size = new System.Drawing.Size(62, 13);
             zaposlenikLabel.TabIndex = 28;
-            zaposlenikLabel.Text = "zaposlenik:";
+            zaposlenikLabel.Text = "Zaposlenik:";
             // 
             // poduzeceLabel
             // 
             poduzeceLabel.AutoSize = true;
             poduzeceLabel.Location = new System.Drawing.Point(66, 81);
             poduzeceLabel.Name = "poduzeceLabel";
-            poduzeceLabel.Size = new System.Drawing.Size(57, 13);
+            poduzeceLabel.Size = new System.Drawing.Size(58, 13);
             poduzeceLabel.TabIndex = 29;
-            poduzeceLabel.Text = "poduzece:";
+            poduzeceLabel.Text = "Poduzeće:";
             // 
             // datum_pocetkaLabel
             // 
             datum_pocetkaLabel.AutoSize = true;
             datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
             datum_pocetkaLabel.Name = "datum_pocetkaLabel";
-            datum_pocetkaLabel.Size = new System.Drawing.Size(81, 13);
+            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
             datum_pocetkaLabel.TabIndex = 30;
-            datum_pocetkaLabel.Text = "datum pocetka:";
+            datum_pocetkaLabel.Text = "Datum početka:";
             // 
             // datum_zavrsetkaLabel
             // 
             datum_zavrsetkaLabel.AutoSize = true;
             datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
             datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
-            datum_zavrsetkaLabel.Size = new System.Drawing.Size(88, 13);
+            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
             datum_zavrsetkaLabel.TabIndex = 31;
-            datum_zavrsetkaLabel.Text = "datum zavrsetka:";
+            datum_zavrsetkaLabel.Text = "Datum završetka:";
             // 
             // NaslovZaposlen
             // 
@@ -128,84 +124,85 @@
             this.GumbPotvrda.TabIndex = 25;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // zaposlenBindingSource
-            // 
-            this.zaposlenBindingSource.DataMember = "zaposlen";
-            this.zaposlenBindingSource.DataSource = this.privremeniDS;
-            // 
-            // zaposlenTableAdapter
-            // 
-            this.zaposlenTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = this.zaposlenTableAdapter;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // zaposlenikComboBox
             // 
-            this.zaposlenikComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.zaposlenBindingSource, "zaposlenik", true));
             this.zaposlenikComboBox.FormattingEnabled = true;
             this.zaposlenikComboBox.Location = new System.Drawing.Point(129, 51);
             this.zaposlenikComboBox.Name = "zaposlenikComboBox";
             this.zaposlenikComboBox.Size = new System.Drawing.Size(134, 21);
             this.zaposlenikComboBox.TabIndex = 29;
+            this.zaposlenikComboBox.SelectedIndexChanged += new System.EventHandler(this.zaposlenikComboBox_SelectedIndexChanged);
             // 
             // poduzeceComboBox
             // 
-            this.poduzeceComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.zaposlenBindingSource, "poduzece", true));
             this.poduzeceComboBox.FormattingEnabled = true;
             this.poduzeceComboBox.Location = new System.Drawing.Point(129, 78);
             this.poduzeceComboBox.Name = "poduzeceComboBox";
             this.poduzeceComboBox.Size = new System.Drawing.Size(134, 21);
             this.poduzeceComboBox.TabIndex = 30;
+            this.poduzeceComboBox.SelectedIndexChanged += new System.EventHandler(this.poduzeceComboBox_SelectedIndexChanged);
             // 
             // datum_pocetkaDateTimePicker
             // 
-            this.datum_pocetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.zaposlenBindingSource, "datum_pocetka", true));
             this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
             this.datum_pocetkaDateTimePicker.Name = "datum_pocetkaDateTimePicker";
             this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this.datum_pocetkaDateTimePicker.TabIndex = 31;
+            this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
             // 
             // datum_zavrsetkaDateTimePicker
             // 
-            this.datum_zavrsetkaDateTimePicker.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.zaposlenBindingSource, "datum_zavrsetka", true));
             this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
             this.datum_zavrsetkaDateTimePicker.Name = "datum_zavrsetkaDateTimePicker";
+            this.datum_zavrsetkaDateTimePicker.ShowCheckBox = true;
             this.datum_zavrsetkaDateTimePicker.Size = new System.Drawing.Size(134, 20);
             this.datum_zavrsetkaDateTimePicker.TabIndex = 32;
+            this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
+            // 
+            // UpozorenjeZaposlenik
+            // 
+            this.UpozorenjeZaposlenik.AutoSize = true;
+            this.UpozorenjeZaposlenik.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeZaposlenik.Location = new System.Drawing.Point(269, 51);
+            this.UpozorenjeZaposlenik.Name = "UpozorenjeZaposlenik";
+            this.UpozorenjeZaposlenik.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeZaposlenik.TabIndex = 33;
+            this.UpozorenjeZaposlenik.Text = "label1";
+            this.UpozorenjeZaposlenik.Visible = false;
+            // 
+            // UpozorenjePoduzece
+            // 
+            this.UpozorenjePoduzece.AutoSize = true;
+            this.UpozorenjePoduzece.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjePoduzece.Location = new System.Drawing.Point(269, 78);
+            this.UpozorenjePoduzece.Name = "UpozorenjePoduzece";
+            this.UpozorenjePoduzece.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjePoduzece.TabIndex = 34;
+            this.UpozorenjePoduzece.Text = "label1";
+            this.UpozorenjePoduzece.Visible = false;
+            // 
+            // UpozorenjeRazlikaDatuma
+            // 
+            this.UpozorenjeRazlikaDatuma.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeRazlikaDatuma.Location = new System.Drawing.Point(269, 105);
+            this.UpozorenjeRazlikaDatuma.Name = "UpozorenjeRazlikaDatuma";
+            this.UpozorenjeRazlikaDatuma.Size = new System.Drawing.Size(92, 43);
+            this.UpozorenjeRazlikaDatuma.TabIndex = 35;
+            this.UpozorenjeRazlikaDatuma.Text = "Datum završetka mora biti veći od datuma početka";
+            this.UpozorenjeRazlikaDatuma.Visible = false;
             // 
             // frmZaposen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeRazlikaDatuma);
+            this.Controls.Add(this.UpozorenjePoduzece);
+            this.Controls.Add(this.UpozorenjeZaposlenik);
             this.Controls.Add(datum_zavrsetkaLabel);
             this.Controls.Add(this.datum_zavrsetkaDateTimePicker);
             this.Controls.Add(datum_pocetkaLabel);
@@ -221,9 +218,6 @@
             this.Name = "frmZaposen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmZaposen";
-            this.Load += new System.EventHandler(this.frmZaposen_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zaposlenBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,13 +229,12 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource zaposlenBindingSource;
-        private privremeniDSTableAdapters.zaposlenTableAdapter zaposlenTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.ComboBox zaposlenikComboBox;
         private System.Windows.Forms.ComboBox poduzeceComboBox;
         private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
         private System.Windows.Forms.DateTimePicker datum_zavrsetkaDateTimePicker;
+        private System.Windows.Forms.Label UpozorenjeZaposlenik;
+        private System.Windows.Forms.Label UpozorenjePoduzece;
+        private System.Windows.Forms.Label UpozorenjeRazlikaDatuma;
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label oibLabel;
             System.Windows.Forms.Label imeLabel;
             System.Windows.Forms.Label prezimeLabel;
@@ -36,19 +35,43 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.zaposlenikBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.zaposlenikTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.zaposlenikTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.oibTextBox = new System.Windows.Forms.TextBox();
             this.imeTextBox = new System.Windows.Forms.TextBox();
             this.prezimeTextBox = new System.Windows.Forms.TextBox();
+            this.UpozorenjeOib = new System.Windows.Forms.Label();
+            this.UpozorenjeIme = new System.Windows.Forms.Label();
+            this.UpozorenjePrezime = new System.Windows.Forms.Label();
             oibLabel = new System.Windows.Forms.Label();
             imeLabel = new System.Windows.Forms.Label();
             prezimeLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zaposlenikBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // oibLabel
+            // 
+            oibLabel.AutoSize = true;
+            oibLabel.Location = new System.Drawing.Point(99, 54);
+            oibLabel.Name = "oibLabel";
+            oibLabel.Size = new System.Drawing.Size(28, 13);
+            oibLabel.TabIndex = 28;
+            oibLabel.Text = "OIB:";
+            // 
+            // imeLabel
+            // 
+            imeLabel.AutoSize = true;
+            imeLabel.Location = new System.Drawing.Point(97, 80);
+            imeLabel.Name = "imeLabel";
+            imeLabel.Size = new System.Drawing.Size(27, 13);
+            imeLabel.TabIndex = 29;
+            imeLabel.Text = "Ime:";
+            // 
+            // prezimeLabel
+            // 
+            prezimeLabel.AutoSize = true;
+            prezimeLabel.Location = new System.Drawing.Point(77, 106);
+            prezimeLabel.Name = "prezimeLabel";
+            prezimeLabel.Size = new System.Drawing.Size(47, 13);
+            prezimeLabel.TabIndex = 30;
+            prezimeLabel.Text = "Prezime:";
             // 
             // NaslovZaposlenik
             // 
@@ -90,101 +113,78 @@
             this.GumbPotvrda.TabIndex = 25;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // zaposlenikBindingSource
-            // 
-            this.zaposlenikBindingSource.DataMember = "zaposlenik";
-            this.zaposlenikBindingSource.DataSource = this.privremeniDS;
-            // 
-            // zaposlenikTableAdapter
-            // 
-            this.zaposlenikTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = this.zaposlenikTableAdapter;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
-            // 
-            // oibLabel
-            // 
-            oibLabel.AutoSize = true;
-            oibLabel.Location = new System.Drawing.Point(99, 54);
-            oibLabel.Name = "oibLabel";
-            oibLabel.Size = new System.Drawing.Size(24, 13);
-            oibLabel.TabIndex = 28;
-            oibLabel.Text = "oib:";
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // oibTextBox
             // 
-            this.oibTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.zaposlenikBindingSource, "oib", true));
             this.oibTextBox.Location = new System.Drawing.Point(129, 51);
+            this.oibTextBox.MaxLength = 11;
             this.oibTextBox.Name = "oibTextBox";
             this.oibTextBox.Size = new System.Drawing.Size(126, 20);
             this.oibTextBox.TabIndex = 29;
-            // 
-            // imeLabel
-            // 
-            imeLabel.AutoSize = true;
-            imeLabel.Location = new System.Drawing.Point(97, 80);
-            imeLabel.Name = "imeLabel";
-            imeLabel.Size = new System.Drawing.Size(26, 13);
-            imeLabel.TabIndex = 29;
-            imeLabel.Text = "ime:";
+            this.oibTextBox.Leave += new System.EventHandler(this.oibTextBox_Leave);
             // 
             // imeTextBox
             // 
-            this.imeTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.zaposlenikBindingSource, "ime", true));
             this.imeTextBox.Location = new System.Drawing.Point(129, 77);
+            this.imeTextBox.MaxLength = 45;
             this.imeTextBox.Name = "imeTextBox";
             this.imeTextBox.Size = new System.Drawing.Size(126, 20);
             this.imeTextBox.TabIndex = 30;
-            // 
-            // prezimeLabel
-            // 
-            prezimeLabel.AutoSize = true;
-            prezimeLabel.Location = new System.Drawing.Point(77, 106);
-            prezimeLabel.Name = "prezimeLabel";
-            prezimeLabel.Size = new System.Drawing.Size(46, 13);
-            prezimeLabel.TabIndex = 30;
-            prezimeLabel.Text = "prezime:";
+            this.imeTextBox.Leave += new System.EventHandler(this.imeTextBox_Leave);
             // 
             // prezimeTextBox
             // 
-            this.prezimeTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.zaposlenikBindingSource, "prezime", true));
             this.prezimeTextBox.Location = new System.Drawing.Point(129, 103);
+            this.prezimeTextBox.MaxLength = 45;
             this.prezimeTextBox.Name = "prezimeTextBox";
             this.prezimeTextBox.Size = new System.Drawing.Size(126, 20);
             this.prezimeTextBox.TabIndex = 31;
+            this.prezimeTextBox.Leave += new System.EventHandler(this.prezimeTextBox_Leave);
+            // 
+            // UpozorenjeOib
+            // 
+            this.UpozorenjeOib.AutoSize = true;
+            this.UpozorenjeOib.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeOib.Location = new System.Drawing.Point(261, 51);
+            this.UpozorenjeOib.Name = "UpozorenjeOib";
+            this.UpozorenjeOib.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeOib.TabIndex = 32;
+            this.UpozorenjeOib.Text = "label1";
+            this.UpozorenjeOib.Visible = false;
+            // 
+            // UpozorenjeIme
+            // 
+            this.UpozorenjeIme.AutoSize = true;
+            this.UpozorenjeIme.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeIme.Location = new System.Drawing.Point(261, 77);
+            this.UpozorenjeIme.Name = "UpozorenjeIme";
+            this.UpozorenjeIme.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeIme.TabIndex = 33;
+            this.UpozorenjeIme.Text = "label1";
+            this.UpozorenjeIme.Visible = false;
+            // 
+            // UpozorenjePrezime
+            // 
+            this.UpozorenjePrezime.AutoSize = true;
+            this.UpozorenjePrezime.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjePrezime.Location = new System.Drawing.Point(261, 103);
+            this.UpozorenjePrezime.Name = "UpozorenjePrezime";
+            this.UpozorenjePrezime.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjePrezime.TabIndex = 34;
+            this.UpozorenjePrezime.Text = "label1";
+            this.UpozorenjePrezime.Visible = false;
             // 
             // frmZaposlenik
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbPotvrda;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjePrezime);
+            this.Controls.Add(this.UpozorenjeIme);
+            this.Controls.Add(this.UpozorenjeOib);
             this.Controls.Add(prezimeLabel);
             this.Controls.Add(this.prezimeTextBox);
             this.Controls.Add(imeLabel);
@@ -198,9 +198,6 @@
             this.Name = "frmZaposlenik";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmZaposlenik";
-            this.Load += new System.EventHandler(this.frmZaposlenik_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.zaposlenikBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,12 +209,11 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource zaposlenikBindingSource;
-        private privremeniDSTableAdapters.zaposlenikTableAdapter zaposlenikTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox oibTextBox;
         private System.Windows.Forms.TextBox imeTextBox;
         private System.Windows.Forms.TextBox prezimeTextBox;
+        private System.Windows.Forms.Label UpozorenjeOib;
+        private System.Windows.Forms.Label UpozorenjeIme;
+        private System.Windows.Forms.Label UpozorenjePrezime;
     }
 }

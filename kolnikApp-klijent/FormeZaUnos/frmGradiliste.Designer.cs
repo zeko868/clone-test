@@ -28,20 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label naziv_mjestaLabel;
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.gradilisteBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gradilisteTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.gradilisteTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.naziv_mjestaTextBox = new System.Windows.Forms.TextBox();
             this.NaslovGradiliste = new System.Windows.Forms.Label();
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
+            this.UpozorenjeNazivMjesta = new System.Windows.Forms.Label();
             naziv_mjestaLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradilisteBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // naziv_mjestaLabel
@@ -49,53 +43,18 @@
             naziv_mjestaLabel.AutoSize = true;
             naziv_mjestaLabel.Location = new System.Drawing.Point(48, 57);
             naziv_mjestaLabel.Name = "naziv_mjestaLabel";
-            naziv_mjestaLabel.Size = new System.Drawing.Size(68, 13);
+            naziv_mjestaLabel.Size = new System.Drawing.Size(70, 13);
             naziv_mjestaLabel.TabIndex = 1;
-            naziv_mjestaLabel.Text = "naziv mjesta:";
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // gradilisteBindingSource
-            // 
-            this.gradilisteBindingSource.DataMember = "gradiliste";
-            this.gradilisteBindingSource.DataSource = this.privremeniDS;
-            // 
-            // gradilisteTableAdapter
-            // 
-            this.gradilisteTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = this.gradilisteTableAdapter;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = null;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
+            naziv_mjestaLabel.Text = "Naziv mjesta:";
             // 
             // naziv_mjestaTextBox
             // 
-            this.naziv_mjestaTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.gradilisteBindingSource, "naziv_mjesta", true));
             this.naziv_mjestaTextBox.Location = new System.Drawing.Point(122, 54);
+            this.naziv_mjestaTextBox.MaxLength = 45;
             this.naziv_mjestaTextBox.Name = "naziv_mjestaTextBox";
-            this.naziv_mjestaTextBox.Size = new System.Drawing.Size(100, 20);
+            this.naziv_mjestaTextBox.Size = new System.Drawing.Size(114, 20);
             this.naziv_mjestaTextBox.TabIndex = 2;
+            this.naziv_mjestaTextBox.Leave += new System.EventHandler(this.naziv_mjestaTextBox_Leave);
             // 
             // NaslovGradiliste
             // 
@@ -136,6 +95,18 @@
             this.GumbPotvrda.TabIndex = 10;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
+            // 
+            // UpozorenjeNazivMjesta
+            // 
+            this.UpozorenjeNazivMjesta.AutoSize = true;
+            this.UpozorenjeNazivMjesta.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeNazivMjesta.Location = new System.Drawing.Point(242, 54);
+            this.UpozorenjeNazivMjesta.Name = "UpozorenjeNazivMjesta";
+            this.UpozorenjeNazivMjesta.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeNazivMjesta.TabIndex = 13;
+            this.UpozorenjeNazivMjesta.Text = "label1";
+            this.UpozorenjeNazivMjesta.Visible = false;
             // 
             // frmGradiliste
             // 
@@ -143,8 +114,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeNazivMjesta);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
@@ -154,24 +126,17 @@
             this.Name = "frmGradiliste";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmGradiliste";
-            this.Load += new System.EventHandler(this.frmGradiliste_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradilisteBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource gradilisteBindingSource;
-        private privremeniDSTableAdapters.gradilisteTableAdapter gradilisteTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox naziv_mjestaTextBox;
         private System.Windows.Forms.Label NaslovGradiliste;
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
+        private System.Windows.Forms.Label UpozorenjeNazivMjesta;
     }
 }

@@ -17,20 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void radno_mjestoBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.radno_mjestoBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmRadnoMjesto_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.radno_mjesto' table. You can move, or remove it, as needed.
-            this.radno_mjestoTableAdapter.Fill(this.privremeniDS.radno_mjesto);
-
-        }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
@@ -40,6 +26,39 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void GumbReset_Click(object sender, EventArgs e)
         {
             nazivTextBox.Text = "";
+            UpozorenjeNaziv.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
+        {
+            string TekstUpozorenja = "Polje mora biti popunjeno";
+            LabelaUpozorenja.Text = TekstUpozorenja;
+            LabelaUpozorenja.Show();
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            if (nazivTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeNaziv);
+            }
+            if (nazivTextBox.Text != "")
+            {
+                //spremi podatke u klasu i pošalji u BP
+                this.Close();
+            }
+        }
+
+        private void nazivTextBox_Leave(object sender, EventArgs e)
+        {
+            if (nazivTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeNaziv);
+            }
+            else
+            {
+                UpozorenjeNaziv.Hide();
+            }
         }
     }
 }

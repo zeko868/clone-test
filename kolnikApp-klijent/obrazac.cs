@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace kolnikApp_klijent
 {
@@ -17,15 +18,28 @@ namespace kolnikApp_klijent
         {
             InitializeComponent();
         }       
-        string[] tablice = new string[17] { "Artikl", "Rabat", "Zaposlen", "Poduzeće", "Vozi", "Vozilo", "Temeljnica", "Narudžbenica", "Zaposlenik", "Radi", "Korisnički račun", "Račun", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
 
+        string[] tablice = new string[17] { "Artikl", "Rabat", "Zaposlen", "Poduzeće", "Vozi", "Vozilo", "Temeljnica", "Narudžbenica", "Zaposlenik", "Radi", "Korisnički račun", "Račun", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
+        
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         private void HelpSlika_Click(object sender, EventArgs e)
         {
+            LogoutButton.Hide();
             String HelpFilepath = "file://" + Path.Combine(exeDirectory, "KolnikAppHelp.chm");
             Help.ShowHelp(this, HelpFilepath);     
         }
+
+        //pomicanje forme
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImportAttribute("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd,
+                         int Msg, int wParam, int lParam);
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
 
         private void izgradiMeni()
         {
@@ -48,16 +62,6 @@ namespace kolnikApp_klijent
         private void HomeSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaPocetna.Hide();
-        }
-
-        private void NatragSlika_MouseEnter(object sender, EventArgs e)
-        {
-            LabelaNatrag.Show();
-        }
-
-        private void NatragSlika_MouseLeave(object sender, EventArgs e)
-        {
-            LabelaNatrag.Hide();
         }
 
         private void CreateSlika_MouseEnter(object sender, EventArgs e)
@@ -102,10 +106,132 @@ namespace kolnikApp_klijent
 
         private void CreateSlika_Click(object sender, EventArgs e)
         {
-            /*FormeZaUnos.frmArtikl frmUnosArtikl = new FormeZaUnos.frmArtikl();
-            frmUnosArtikl.ShowDialog();*/
-            FormeZaUnos.frmNalogZaProizvodnju frmUnosNalog = new FormeZaUnos.frmNalogZaProizvodnju();
-            frmUnosNalog.ShowDialog();
+            LogoutButton.Hide();
+            FormeZaUnos.frmPoduzece frmUnosArtikl = new FormeZaUnos.frmPoduzece();
+            frmUnosArtikl.ShowDialog();
+            /*FormeZaUnos.frmNalogZaProizvodnju frmUnosNalog = new FormeZaUnos.frmNalogZaProizvodnju();
+            frmUnosNalog.ShowDialog();*/
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Minimize_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void RestoreDown_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void ImeKorisnika_Click(object sender, EventArgs e)
+        {
+            if (LogoutButton.Visible)
+            {
+                LogoutButton.Hide();
+            }
+            else
+            {
+                LogoutButton.Show();
+            }            
+        }
+
+        private void obrazac_MouseClick(object sender, MouseEventArgs e)
+        {
+            LogoutButton.Hide();
+        }
+
+        private void MenuLista_MouseClick(object sender, MouseEventArgs e)
+        {
+            LogoutButton.Hide();
+        }
+
+        private void HomeSlika_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+        }
+
+        private void UpdateSlika_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+        }
+
+        private void DeleteSlika_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+        }
+
+        private void obrazac_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void LijeviIzbornik_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void Header_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            if (LogoutButton.Visible)
+            {
+                LogoutButton.Hide();
+            }
+        }
+
+        private void LijeviIzbornik_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (LogoutButton.Visible)
+            {
+                LogoutButton.Hide();
+            }
+        }
+
+        private void Header_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (LogoutButton.Visible)
+            {
+                LogoutButton.Hide();
+            }
         }
     }
 }

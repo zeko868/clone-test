@@ -17,21 +17,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
         }
 
-        private void otpremnicaBindingNavigatorSaveItem_Click(object sender, EventArgs e)
-        {
-            this.Validate();
-            this.otpremnicaBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.privremeniDS);
-
-        }
-
-        private void frmOtpremnica_Load(object sender, EventArgs e)
-        {
-            // TODO: This line of code loads data into the 'privremeniDS.otpremnica' table. You can move, or remove it, as needed.
-            this.otpremnicaTableAdapter.Fill(this.privremeniDS.otpremnica);
-
-        }
-
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -39,10 +24,85 @@ namespace kolnikApp_klijent.FormeZaUnos
 
         private void GumbReset_Click(object sender, EventArgs e)
         {
-            temeljnicaTextBox.Text = "";
+            temeljnicaComboBox.SelectedIndex = -1;
             datum_otpremeDateTimePicker.Value = DateTime.Now;
             otpremiteljComboBox.SelectedIndex = -1;
             temperaturaTextBox.Text = "";
+            UpozorenjeOtpremitelj.Hide();
+            UpozorenjeTemeljnica.Hide();
+            UpozorenjeTemeperatura.Hide();
+        }
+
+        private void popuniLabeleUpozorenja(Label LabelaUpozorenja, string VrstaLabele)
+        {
+            string TekstUpozorenja = "Polje mora biti popunjeno";
+            string TekstUpozorenjaComboBox = "Odaberite element";
+            if(VrstaLabele == "ComboBox")
+            {
+                LabelaUpozorenja.Text = TekstUpozorenjaComboBox;
+                LabelaUpozorenja.Show();
+            }
+            else
+            {
+                LabelaUpozorenja.Text = TekstUpozorenja;
+                LabelaUpozorenja.Show();
+            }
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            float VarijablaZaProvjeru = 0;
+            if (temeljnicaComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeTemeljnica, "ComboBox");
+            }
+            if (temperaturaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeTemeperatura, "TextBox");
+            }
+            else if (float.TryParse(temperaturaTextBox.Text, out VarijablaZaProvjeru))
+            {
+                UpozorenjeTemeperatura.Text = "Polje mora sadržavati broj";
+                UpozorenjeTemeperatura.Show();
+            }
+            if (otpremiteljComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeOtpremitelj, "ComboBox");
+            }
+            if(temeljnicaComboBox.SelectedIndex != -1 && temperaturaTextBox.Text != "" && float.TryParse(temperaturaTextBox.Text,out VarijablaZaProvjeru) && otpremiteljComboBox.SelectedIndex != -1)
+            {
+                //popuniti klasu podacima i poslati u BP
+                this.Close();
+            }
+            
+        }
+
+        private void temeljnicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeTemeljnica.Hide();
+        }
+
+        private void otpremiteljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeOtpremitelj.Hide();
+        }
+
+        private void temperaturaTextBox_Leave(object sender, EventArgs e)
+        {
+            float VarijablaZaProvjeru = 0;
+            if (temperaturaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeTemeperatura, "TextBox");
+            }
+            else if (float.TryParse(temperaturaTextBox.Text,out VarijablaZaProvjeru))
+            {
+                UpozorenjeTemeperatura.Text= "Polje mora sadržavati broj";
+                UpozorenjeTemeperatura.Show();
+            }
+            else
+            {
+                UpozorenjeTemeperatura.Hide();
+            }
         }
     }
 }

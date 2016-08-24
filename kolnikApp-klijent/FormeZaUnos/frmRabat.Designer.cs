@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label popustLabel;
             System.Windows.Forms.Label artiklLabel;
             System.Windows.Forms.Label poslovni_partnerLabel;
@@ -36,18 +35,15 @@
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
-            this.privremeniDS = new kolnikApp_klijent.privremeniDS();
-            this.rabatBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.rabatTableAdapter = new kolnikApp_klijent.privremeniDSTableAdapters.rabatTableAdapter();
-            this.tableAdapterManager = new kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager();
             this.popustTextBox = new System.Windows.Forms.TextBox();
             this.artiklComboBox = new System.Windows.Forms.ComboBox();
             this.poslovni_partnerComboBox = new System.Windows.Forms.ComboBox();
+            this.UpozorenjeArtikl = new System.Windows.Forms.Label();
+            this.UpozorenjePoslovniPartner = new System.Windows.Forms.Label();
+            this.UpozorenjePopust = new System.Windows.Forms.Label();
             popustLabel = new System.Windows.Forms.Label();
             artiklLabel = new System.Windows.Forms.Label();
             poslovni_partnerLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rabatBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // popustLabel
@@ -55,27 +51,27 @@
             popustLabel.AutoSize = true;
             popustLabel.Location = new System.Drawing.Point(81, 108);
             popustLabel.Name = "popustLabel";
-            popustLabel.Size = new System.Drawing.Size(42, 13);
+            popustLabel.Size = new System.Drawing.Size(43, 13);
             popustLabel.TabIndex = 20;
-            popustLabel.Text = "popust:";
+            popustLabel.Text = "Popust:";
             // 
             // artiklLabel
             // 
             artiklLabel.AutoSize = true;
             artiklLabel.Location = new System.Drawing.Point(91, 54);
             artiklLabel.Name = "artiklLabel";
-            artiklLabel.Size = new System.Drawing.Size(32, 13);
+            artiklLabel.Size = new System.Drawing.Size(33, 13);
             artiklLabel.TabIndex = 21;
-            artiklLabel.Text = "artikl:";
+            artiklLabel.Text = "Artikl:";
             // 
             // poslovni_partnerLabel
             // 
             poslovni_partnerLabel.AutoSize = true;
             poslovni_partnerLabel.Location = new System.Drawing.Point(38, 81);
             poslovni_partnerLabel.Name = "poslovni_partnerLabel";
-            poslovni_partnerLabel.Size = new System.Drawing.Size(85, 13);
+            poslovni_partnerLabel.Size = new System.Drawing.Size(86, 13);
             poslovni_partnerLabel.TabIndex = 22;
-            poslovni_partnerLabel.Text = "poslovni partner:";
+            poslovni_partnerLabel.Text = "Poslovni partner:";
             // 
             // NaslovRabat
             // 
@@ -116,76 +112,78 @@
             this.GumbPotvrda.TabIndex = 15;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
-            // 
-            // privremeniDS
-            // 
-            this.privremeniDS.DataSetName = "privremeniDS";
-            this.privremeniDS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // rabatBindingSource
-            // 
-            this.rabatBindingSource.DataMember = "rabat";
-            this.rabatBindingSource.DataSource = this.privremeniDS;
-            // 
-            // rabatTableAdapter
-            // 
-            this.rabatTableAdapter.ClearBeforeFill = true;
-            // 
-            // tableAdapterManager
-            // 
-            this.tableAdapterManager.artiklTableAdapter = null;
-            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
-            this.tableAdapterManager.gradilisteTableAdapter = null;
-            this.tableAdapterManager.korisnicki_racunTableAdapter = null;
-            this.tableAdapterManager.nalog_za_proizvodnjuTableAdapter = null;
-            this.tableAdapterManager.narudzbenica_bitumenske_mjesavineTableAdapter = null;
-            this.tableAdapterManager.otpremnicaTableAdapter = null;
-            this.tableAdapterManager.poduzeceTableAdapter = null;
-            this.tableAdapterManager.rabatTableAdapter = this.rabatTableAdapter;
-            this.tableAdapterManager.racunTableAdapter = null;
-            this.tableAdapterManager.radiTableAdapter = null;
-            this.tableAdapterManager.radno_mjestoTableAdapter = null;
-            this.tableAdapterManager.tablicna_privilegijaTableAdapter = null;
-            this.tableAdapterManager.temeljnicaTableAdapter = null;
-            this.tableAdapterManager.UpdateOrder = kolnikApp_klijent.privremeniDSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-            this.tableAdapterManager.voziloTableAdapter = null;
-            this.tableAdapterManager.voziTableAdapter = null;
-            this.tableAdapterManager.zaposlenikTableAdapter = null;
-            this.tableAdapterManager.zaposlenTableAdapter = null;
+            this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
             // popustTextBox
             // 
-            this.popustTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.rabatBindingSource, "popust", true));
             this.popustTextBox.Location = new System.Drawing.Point(129, 105);
+            this.popustTextBox.MaxLength = 6;
             this.popustTextBox.Name = "popustTextBox";
             this.popustTextBox.Size = new System.Drawing.Size(121, 20);
             this.popustTextBox.TabIndex = 21;
+            this.popustTextBox.Leave += new System.EventHandler(this.popustTextBox_Leave);
             // 
             // artiklComboBox
             // 
-            this.artiklComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.rabatBindingSource, "artikl", true));
             this.artiklComboBox.FormattingEnabled = true;
             this.artiklComboBox.Location = new System.Drawing.Point(129, 51);
             this.artiklComboBox.Name = "artiklComboBox";
             this.artiklComboBox.Size = new System.Drawing.Size(121, 21);
             this.artiklComboBox.TabIndex = 22;
+            this.artiklComboBox.SelectedIndexChanged += new System.EventHandler(this.artiklComboBox_SelectedIndexChanged);
             // 
             // poslovni_partnerComboBox
             // 
-            this.poslovni_partnerComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.rabatBindingSource, "poslovni_partner", true));
             this.poslovni_partnerComboBox.FormattingEnabled = true;
             this.poslovni_partnerComboBox.Location = new System.Drawing.Point(129, 78);
             this.poslovni_partnerComboBox.Name = "poslovni_partnerComboBox";
             this.poslovni_partnerComboBox.Size = new System.Drawing.Size(121, 21);
             this.poslovni_partnerComboBox.TabIndex = 23;
+            this.poslovni_partnerComboBox.SelectedIndexChanged += new System.EventHandler(this.poslovni_partnerComboBox_SelectedIndexChanged);
+            // 
+            // UpozorenjeArtikl
+            // 
+            this.UpozorenjeArtikl.AutoSize = true;
+            this.UpozorenjeArtikl.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeArtikl.Location = new System.Drawing.Point(256, 51);
+            this.UpozorenjeArtikl.Name = "UpozorenjeArtikl";
+            this.UpozorenjeArtikl.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeArtikl.TabIndex = 29;
+            this.UpozorenjeArtikl.Text = "label1";
+            this.UpozorenjeArtikl.Visible = false;
+            // 
+            // UpozorenjePoslovniPartner
+            // 
+            this.UpozorenjePoslovniPartner.AutoSize = true;
+            this.UpozorenjePoslovniPartner.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjePoslovniPartner.Location = new System.Drawing.Point(256, 78);
+            this.UpozorenjePoslovniPartner.Name = "UpozorenjePoslovniPartner";
+            this.UpozorenjePoslovniPartner.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjePoslovniPartner.TabIndex = 30;
+            this.UpozorenjePoslovniPartner.Text = "label1";
+            this.UpozorenjePoslovniPartner.Visible = false;
+            // 
+            // UpozorenjePopust
+            // 
+            this.UpozorenjePopust.AutoSize = true;
+            this.UpozorenjePopust.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjePopust.Location = new System.Drawing.Point(256, 105);
+            this.UpozorenjePopust.Name = "UpozorenjePopust";
+            this.UpozorenjePopust.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjePopust.TabIndex = 31;
+            this.UpozorenjePopust.Text = "label1";
+            this.UpozorenjePopust.Visible = false;
             // 
             // frmRabat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjePopust);
+            this.Controls.Add(this.UpozorenjePoslovniPartner);
+            this.Controls.Add(this.UpozorenjeArtikl);
             this.Controls.Add(poslovni_partnerLabel);
             this.Controls.Add(this.poslovni_partnerComboBox);
             this.Controls.Add(artiklLabel);
@@ -199,9 +197,6 @@
             this.Name = "frmRabat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRabat";
-            this.Load += new System.EventHandler(this.frmRabat_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.privremeniDS)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rabatBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,12 +208,11 @@
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
-        private privremeniDS privremeniDS;
-        private System.Windows.Forms.BindingSource rabatBindingSource;
-        private privremeniDSTableAdapters.rabatTableAdapter rabatTableAdapter;
-        private privremeniDSTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.TextBox popustTextBox;
         private System.Windows.Forms.ComboBox artiklComboBox;
         private System.Windows.Forms.ComboBox poslovni_partnerComboBox;
+        private System.Windows.Forms.Label UpozorenjeArtikl;
+        private System.Windows.Forms.Label UpozorenjePoslovniPartner;
+        private System.Windows.Forms.Label UpozorenjePopust;
     }
 }
