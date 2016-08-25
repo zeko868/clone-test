@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(obrazac));
-            this.MenuLista = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.DeleteSlika = new System.Windows.Forms.PictureBox();
@@ -50,6 +49,7 @@
             this.Minimize = new System.Windows.Forms.PictureBox();
             this.RestoreDown = new System.Windows.Forms.PictureBox();
             this.closeButton = new System.Windows.Forms.PictureBox();
+            this.MeniPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
@@ -62,21 +62,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.closeButton)).BeginInit();
             this.SuspendLayout();
-            // 
-            // MenuLista
-            // 
-            this.MenuLista.BackColor = System.Drawing.Color.LightSlateGray;
-            this.MenuLista.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.MenuLista.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.MenuLista.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.MenuLista.ForeColor = System.Drawing.SystemColors.Menu;
-            this.MenuLista.FormattingEnabled = true;
-            this.MenuLista.ItemHeight = 20;
-            this.MenuLista.Location = new System.Drawing.Point(12, 125);
-            this.MenuLista.Name = "MenuLista";
-            this.MenuLista.Size = new System.Drawing.Size(195, 360);
-            this.MenuLista.TabIndex = 4;
-            this.MenuLista.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MenuLista_MouseClick);
             // 
             // panel1
             // 
@@ -245,7 +230,7 @@
             // 
             // LijeviIzbornik
             // 
-            this.LijeviIzbornik.Controls.Add(this.MenuLista);
+            this.LijeviIzbornik.Controls.Add(this.MeniPanel);
             this.LijeviIzbornik.Controls.Add(this.pictureBox1);
             this.LijeviIzbornik.Dock = System.Windows.Forms.DockStyle.Left;
             this.LijeviIzbornik.Location = new System.Drawing.Point(0, 0);
@@ -334,6 +319,13 @@
             this.closeButton.TabStop = false;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // MeniPanel
+            // 
+            this.MeniPanel.Location = new System.Drawing.Point(0, 113);
+            this.MeniPanel.Name = "MeniPanel";
+            this.MeniPanel.Size = new System.Drawing.Size(214, 421);
+            this.MeniPanel.TabIndex = 1;
+            // 
             // obrazac
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -373,7 +365,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox HomeSlika;
         private System.Windows.Forms.PictureBox HelpSlika;
-        private System.Windows.Forms.ListBox MenuLista;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.PictureBox CreateSlika;
@@ -391,5 +382,6 @@
         private System.Windows.Forms.PictureBox RestoreDown;
         private System.Windows.Forms.PictureBox closeButton;
         private System.Windows.Forms.Label ImeKorisnika;
+        private System.Windows.Forms.Panel MeniPanel;
     }
 }

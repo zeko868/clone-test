@@ -46,19 +46,177 @@ namespace kolnikApp_klijent
         public static extern bool ReleaseCapture();
 
 
-        private void izgradiMeni()
+        private void obrazac_Load(object sender, EventArgs e)
         {
-            foreach (var item in tablice)
+            //dohvatiti broj tablica nad kojima korisnik ima pravo raditi
+            //napraviti buttone za te tablice
+            //--------------------------------------------
+            //inicijalno rješenje za sve tablice
+            for (int i = 0; i < 17; i++)
             {
-                MenuLista.Items.Add(item);
+                Button GumbMenija = new Button();
+                GumbMenija.Location = new Point(0, 30 * i);
+                GumbMenija.Height = 30;
+                GumbMenija.Width = panel1.Width - 5;
+                GumbMenija.ForeColor = Color.White;
+                GumbMenija.BackColor = Color.Black;
+                GumbMenija.FlatStyle = FlatStyle.Flat;
+
+                switch (i)
+                {
+                    case 0:
+                        GumbMenija.Text = "Artikl";
+                        GumbMenija.Click += new EventHandler(ButtonClick1);
+                        break;
+                    case 1:
+                        GumbMenija.Text = "Gradilište";
+                        GumbMenija.Click += new EventHandler(ButtonClick2);
+                        break;
+                    case 2:
+                        GumbMenija.Text = "Korisnički račun";
+                        GumbMenija.Click += new EventHandler(ButtonClick3);
+                        break;
+                    case 3:
+                        GumbMenija.Text = "Nalog za proizvodnju";
+                        GumbMenija.Click += new EventHandler(ButtonClick4);
+                        break;
+                    case 4:
+                        GumbMenija.Text = "Narudžbenica";
+                        GumbMenija.Click += new EventHandler(ButtonClick5);
+                        break;
+                    case 5:
+                        GumbMenija.Text = "Otpremnica";
+                        GumbMenija.Click += new EventHandler(ButtonClick6);
+                        break;
+                    case 6:
+                        GumbMenija.Text = "Poduzeće";
+                        GumbMenija.Click += new EventHandler(ButtonClick7);
+                        break;
+                    case 7:
+                        GumbMenija.Text = "Rabat";
+                        GumbMenija.Click += new EventHandler(ButtonClick8);
+                        break;
+                    case 8:
+                        GumbMenija.Text = "Račun";
+                        GumbMenija.Click += new EventHandler(ButtonClick9);
+                        break;
+                    case 9:
+                        GumbMenija.Text = "Radi";
+                        GumbMenija.Click += new EventHandler(ButtonClick10);
+                        break;
+                    case 10:
+                        GumbMenija.Text = "Radno mjesto";
+                        GumbMenija.Click += new EventHandler(ButtonClick11);
+                        break;
+                    case 11:
+                        GumbMenija.Text = "Tablica privilegija";
+                        GumbMenija.Click += new EventHandler(ButtonClick12);
+                        break;
+                    case 12:
+                        GumbMenija.Text = "Temeljnica";
+                        GumbMenija.Click += new EventHandler(ButtonClick13);
+                        break;
+                    case 13:
+                        GumbMenija.Text = "Vozi";
+                        GumbMenija.Click += new EventHandler(ButtonClick14);
+                        break;
+                    case 14:
+                        GumbMenija.Text = "Vozilo";
+                        GumbMenija.Click += new EventHandler(ButtonClick15);
+                        break;
+                    case 15:
+                        GumbMenija.Text = "Zaposlen";
+                        GumbMenija.Click += new EventHandler(ButtonClick16);
+                        break;
+                    case 16:
+                        GumbMenija.Text = "Zaposlenik";
+                        GumbMenija.Click += new EventHandler(ButtonClick17);
+                        break;
+                }
+                this.MeniPanel.Controls.Add(GumbMenija);
             }
         }
 
-        private void obrazac_Load(object sender, EventArgs e)
+        private void oznaciGumb(object sender)
         {
-            izgradiMeni();
+            foreach (Control Gumb in this.MeniPanel.Controls)
+            {
+                Gumb.ForeColor = Color.White;
+            }
+            Button Gumbic = sender as Button;
+            Gumbic.ForeColor = Color.Orange;
+        }
+    
+        private void ButtonClick1(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick2(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick3(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick4(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick5(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick6(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick7(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick8(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick9(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick10(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick11(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick12(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick13(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick14(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick15(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick16(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
+        }
+        private void ButtonClick17(object sender, EventArgs e)
+        {
+            oznaciGumb(sender);
         }
 
+        //prikazivanje i skrivanje naziva ikona
         private void HomeSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaPocetna.Show();
