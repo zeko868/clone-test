@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using kolnikApp_komponente;
+using System.Threading;
 
 namespace kolnikApp_klijent
 {
@@ -15,21 +16,11 @@ namespace kolnikApp_klijent
     {
         CommunicationHandler sockObj;
         bool loginUsingUsername;
-        List<object> prijavaLista;
         public Login(CommunicationHandler sockObj)
         {
             InitializeComponent();
             this.sockObj = sockObj;
             loginUsingUsername = true;
-            prijavaLista = new List<object>();
-            DataHandler.entityNamesWithReferencesToBelongingDataStores = new Dictionary<string, List<object>>();
-            DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"] = prijavaLista;
-            DataHandler.LoginInfoReturned += DataHandler_LoginInfoReturned;
-        }
-
-        private void DataHandler_LoginInfoReturned(bool obj)
-        {
-            MessageBox.Show("Okinut je dogadjaj o primitku podataka za prijavu! ");
         }
 
         private void loginType_Click(object sender, EventArgs e)
@@ -50,6 +41,23 @@ namespace kolnikApp_klijent
         private void loginGumb_Click(object sender, EventArgs e)
         {
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
+
+            Thread.Sleep(1000);
+            Nullable<bool> loginState = DataHandler.LoginState;
+            if (!loginState.HasValue)
+            {
+                MessageBox.Show("Pogreška sa kontaktiranjem poslužitelja. Provjerite jeste li spojeni na mrežu ili je li poslužitelj dostupan");
+            }
+            else
+            {
+                if (loginState.Value == true)
+                {
+                    glavnaForma newForm = new glavnaForma(sockObj, DataHandler.UserOib);
+                    newForm.Show();
+                    this.Hide();
+                }
+            }
+
         }
     }
 }

@@ -41,7 +41,7 @@ namespace kolnikApp_klijent
                     break;
             }
 
-
+            DataHandler.entityNamesWithReferencesToBelongingDataStores = new Dictionary<string, List<object>>();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login(sockObj));

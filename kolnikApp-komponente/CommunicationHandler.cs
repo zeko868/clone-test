@@ -29,6 +29,7 @@ namespace kolnikApp_komponente
         private void InitializeObjectsForIPv4NetworkCommunication()
         {
             netSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            netSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
             netSocketServerArgs = new SocketAsyncEventArgs();
             netSocketBuffer = new byte[1024];
             netSocket.ExclusiveAddressUse = false;
@@ -132,15 +133,16 @@ namespace kolnikApp_komponente
                     success = false;
                 }
             }
-            netSocket.ReceiveAsync(netSocketServerArgs);
+            netSocketServerArgs.RemoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            netSocket.ReceiveMessageFromAsync(netSocketServerArgs);
         }
 
         private void netSocketServerArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
-            if (netSocketServerArgs.LastOperation == SocketAsyncOperation.Receive)
-            {   //tu postavi breakpoint i pokusaj dohvatiti e.RemoteEndPoint, netSocketServerArgs.RemoteEndPoint,...
+            if (netSocketServerArgs.LastOperation == SocketAsyncOperation.ReceiveMessageFrom)
+            {
                 string receivedContent = UTF8Encoding.UTF8.GetString(netSocketServerArgs.Buffer, 0, e.BytesTransferred);
-                netSocket.ReceiveAsync(netSocketServerArgs);
+                netSocket.ReceiveMessageFromAsync(netSocketServerArgs);
                 DataHandler dataHandlerInstance = new DataHandler();
                 string[] responses = null;
                 lock (thisLock)
@@ -148,6 +150,7 @@ namespace kolnikApp_komponente
                     dataHandlerInstance.InitializeDataContext();
                     IPEndPoint ipAddress = (e.RemoteEndPoint as IPEndPoint);
                     dataHandlerInstance.InterpretXMLData(receivedContent, ipAddress, !isServer);
+                    dataHandlerInstance.ClearCurrentDataContext();
                     if (dataHandlerInstance.HasErrorOccurred)
                     {
                         responses = new string[1];
@@ -164,13 +167,16 @@ namespace kolnikApp_komponente
                     else
                     {
                         responses = dataHandlerInstance.ResponseForSending;
+                        if (responses == null)
+                        {
+                            return;
+                        }
                         for (int i = 0; i < responses.Length; i++)
                         {
                             responses[i] = dataHandlerInstance.AddWrapperOverXMLDatagroups(responses[i]);
                         }
                         //[0]...sadrzaj koji se salje natrag posiljatelju, [1]...sadrzaj koji se salje ostalim klijentima
                     }
-                    dataHandlerInstance.ClearCurrentDataContext();
                 }
 
                 MessageSend(responses[0], e.RemoteEndPoint);

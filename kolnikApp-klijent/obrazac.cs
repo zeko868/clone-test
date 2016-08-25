@@ -8,16 +8,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent
 {
     public partial class obrazac : Form
     {
-        public obrazac()
+        private CommunicationHandler sockObj;
+        private string userOib;
+        public obrazac(CommunicationHandler sockObj, string userOib, string[] tableNames)
         {
+            this.sockObj = sockObj;
+            this.userOib = userOib;
+            this.tablice = tableNames;
             InitializeComponent();
-        }       
-        string[] tablice = new string[17] { "Artikl", "Rabat", "Zaposlen", "Poduzeće", "Vozi", "Vozilo", "Temeljnica", "Narudžbenica", "Zaposlenik", "Radi", "Korisnički račun", "Račun", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
+        }
+        string[] tablice;// = new string[17] { "Artikl", "Rabat", "Zaposlen", "Poduzeće", "Vozi", "Vozilo", "Temeljnica", "Narudžbenica", "Zaposlenik", "Radi", "Korisnički račun", "Račun", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
 
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
