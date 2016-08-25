@@ -26,7 +26,8 @@ namespace kolnikApp_klijent
         }
 
         string[] tablice;
-        
+        string[] forme = new string[17] { "Korisnički račun", "Račun", "Artikl", "Radi", "Rabat", "Zaposlenik", "Temeljnica", "Narudžbenica", "Vozilo","Zaposlen", "Poduzeće", "Vozi", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
+
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         private void HelpSlika_Click(object sender, EventArgs e)
@@ -62,7 +63,7 @@ namespace kolnikApp_klijent
                 case "vozi": PravoIme = "Vozi";
                     break;
                 case "vozilo": PravoIme = "Vozilo";
-                    break;
+                    break;                        
                 case "temeljnica": PravoIme = "Temeljnica";
                     break;
                 case "narudzbenica_bitumenske_mjesavine": PravoIme = "Narudžbenica";
@@ -123,7 +124,11 @@ namespace kolnikApp_klijent
     
         private void ButtonClick1(object sender, EventArgs e)
         {
+            LogoutButton.Hide();
+            Button Gumb = sender as Button;
             oznaciGumb(sender);
+            NaslovTablice.Text = Gumb.Text;
+            NaslovTablice.Tag = Gumb.Tag;
         }
 
         //prikazivanje i skrivanje naziva ikona
@@ -177,13 +182,29 @@ namespace kolnikApp_klijent
             LabelaPomoc.Hide();
         }
 
+        private string pretvoriUImeForme(string vrsta)
+        {
+            string ImeForme = "frm";
+            char Separator = '_';
+            string[] dijelovi = NaslovTablice.Tag.ToString().Split(Separator);
+            foreach (var item in dijelovi)
+            {
+                ImeForme += item.First().ToString().ToUpper() + item.Substring(1);
+            }
+            if (vrsta == "Update")
+            {
+                ImeForme += "Update";
+            }
+            return ImeForme;
+        }
         private void CreateSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
-            FormeZaUnos.frmPoduzece frmUnosArtikl = new FormeZaUnos.frmPoduzece();
-            frmUnosArtikl.ShowDialog();
-            /*FormeZaUnos.frmNalogZaProizvodnju frmUnosNalog = new FormeZaUnos.frmNalogZaProizvodnju();
-            frmUnosNalog.ShowDialog();*/
+            string ImeForme=pretvoriUImeForme("Create");
+            Type TipForme = Type.GetType("kolnikApp_klijent.FormeZaUnos." + ImeForme);
+            Form nextForm2 = (Form)Activator.CreateInstance(TipForme);
+            nextForm2.ShowDialog();
+
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -240,6 +261,11 @@ namespace kolnikApp_klijent
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
+            string ImeForme = pretvoriUImeForme("Update");
+            Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
+            Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme);
+            FormaZaUpdate.ShowDialog();
+
         }
 
         private void DeleteSlika_Click(object sender, EventArgs e)

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace kolnikApp_klijent.FormeZaUpdate
+namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmNarudzbenicaUpdate : Form
+    public partial class frmNarudzbenicaBitumenskeMjesavine : Form
     {
-        public frmNarudzbenicaUpdate()
+        public frmNarudzbenicaBitumenskeMjesavine()
         {
             InitializeComponent();
         }
@@ -44,15 +44,15 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 popuniLabeleUpozorenja(UpozorenjeTemeljnica);
             }
-            if (naruciteljComboBox.SelectedIndex == -1)
+            if(naruciteljComboBox.SelectedIndex == -1)
             {
                 popuniLabeleUpozorenja(UpozorenjeNarucitelj);
             }
-            if (temeljnicaComboBox.SelectedIndex != -1 && naruciteljComboBox.SelectedIndex != -1)
+            if(temeljnicaComboBox.SelectedIndex != -1 && naruciteljComboBox.SelectedIndex != -1)
             {
                 //pohraniti podatke u klasu i poslati u BP
                 this.Close();
-            }
+            }            
         }
 
         private void temeljnicaComboBox_SelectedIndexChanged(object sender, EventArgs e)

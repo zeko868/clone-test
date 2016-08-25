@@ -73,11 +73,11 @@
     <Compile Include="FormeZaUnos\frmNalogZaProizvodnju.Designer.cs">
       <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUnos\frmNarudzbenica.cs">
+    <Compile Include="FormeZaUnos\frmNarudzbenicaBitumenskeMjesavine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUnos\frmNarudzbenica.Designer.cs">
-      <DependentUpon>frmNarudzbenica.cs</DependentUpon>
+    <Compile Include="FormeZaUnos\frmNarudzbenicaBitumenskeMjesavine.Designer.cs">
+      <DependentUpon>frmNarudzbenicaBitumenskeMjesavine.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUnos\frmOtpremnica.cs">
       <SubType>Form</SubType>
@@ -175,11 +175,11 @@
     <Compile Include="FormeZaUpdate\frmNalogZaProizvodnjuUpdate.Designer.cs">
       <DependentUpon>frmNalogZaProizvodnjuUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmNarudzbenicaUpdate.cs">
+    <Compile Include="FormeZaUpdate\frmNarudzbenicaBitumenskeMjesavineUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmNarudzbenicaUpdate.Designer.cs">
-      <DependentUpon>frmNarudzbenicaUpdate.cs</DependentUpon>
+    <Compile Include="FormeZaUpdate\frmNarudzbenicaBitumenskeMjesavineUpdate.Designer.cs">
+      <DependentUpon>frmNarudzbenicaBitumenskeMjesavineUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUpdate\frmOtpremnicaUpdate.cs">
       <SubType>Form</SubType>
@@ -271,6 +271,12 @@
     <Compile Include="obrazac.Designer.cs">
       <DependentUpon>obrazac.cs</DependentUpon>
     </Compile>
+    <Compile Include="PanelZaSadrzaj.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PanelZaSadrzaj.Designer.cs">
+      <DependentUpon>PanelZaSadrzaj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormeZaUnos\frmArtikl.resx">
@@ -285,8 +291,8 @@
     <EmbeddedResource Include="FormeZaUnos\frmNalogZaProizvodnju.resx">
       <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmNarudzbenica.resx">
-      <DependentUpon>frmNarudzbenica.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUnos\frmNarudzbenicaBitumenskeMjesavine.resx">
+      <DependentUpon>frmNarudzbenicaBitumenskeMjesavine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmOtpremnica.resx">
       <DependentUpon>frmOtpremnica.cs</DependentUpon>
@@ -336,8 +342,8 @@
     <EmbeddedResource Include="FormeZaUpdate\frmNalogZaProizvodnjuUpdate.resx">
       <DependentUpon>frmNalogZaProizvodnjuUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmNarudzbenicaUpdate.resx">
-      <DependentUpon>frmNarudzbenicaUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUpdate\frmNarudzbenicaBitumenskeMjesavineUpdate.resx">
+      <DependentUpon>frmNarudzbenicaBitumenskeMjesavineUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmOtpremnicaUpdate.resx">
       <DependentUpon>frmOtpremnicaUpdate.cs</DependentUpon>
@@ -383,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="obrazac.resx">
       <DependentUpon>obrazac.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PanelZaSadrzaj.resx">
+      <DependentUpon>PanelZaSadrzaj.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

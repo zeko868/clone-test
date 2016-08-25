@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(obrazac));
-            this.panel1 = new System.Windows.Forms.Panel();
             this.LogoutButton = new System.Windows.Forms.Button();
             this.DeleteSlika = new System.Windows.Forms.PictureBox();
             this.UpdateSlika = new System.Windows.Forms.PictureBox();
@@ -50,6 +49,10 @@
             this.Minimize = new System.Windows.Forms.PictureBox();
             this.RestoreDown = new System.Windows.Forms.PictureBox();
             this.closeButton = new System.Windows.Forms.PictureBox();
+            this.PanelZaSadrzaj = new System.Windows.Forms.Panel();
+            this.Separator = new System.Windows.Forms.Label();
+            this.NaslovTablice = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
@@ -61,18 +64,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.closeButton)).BeginInit();
+            this.PanelZaSadrzaj.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.LightSlateGray;
-            this.panel1.Location = new System.Drawing.Point(223, 113);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(543, 421);
-            this.panel1.TabIndex = 5;
             // 
             // LogoutButton
             // 
@@ -326,6 +319,47 @@
             this.closeButton.TabStop = false;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
+            // PanelZaSadrzaj
+            // 
+            this.PanelZaSadrzaj.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PanelZaSadrzaj.BackColor = System.Drawing.Color.LightSlateGray;
+            this.PanelZaSadrzaj.Controls.Add(this.listBox1);
+            this.PanelZaSadrzaj.Controls.Add(this.Separator);
+            this.PanelZaSadrzaj.Controls.Add(this.NaslovTablice);
+            this.PanelZaSadrzaj.Location = new System.Drawing.Point(223, 116);
+            this.PanelZaSadrzaj.Name = "PanelZaSadrzaj";
+            this.PanelZaSadrzaj.Size = new System.Drawing.Size(543, 418);
+            this.PanelZaSadrzaj.TabIndex = 5;
+            // 
+            // Separator
+            // 
+            this.Separator.BackColor = System.Drawing.Color.Black;
+            this.Separator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Separator.Location = new System.Drawing.Point(5, 48);
+            this.Separator.Name = "Separator";
+            this.Separator.Size = new System.Drawing.Size(535, 2);
+            this.Separator.TabIndex = 3;
+            // 
+            // NaslovTablice
+            // 
+            this.NaslovTablice.AutoSize = true;
+            this.NaslovTablice.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.NaslovTablice.ForeColor = System.Drawing.Color.White;
+            this.NaslovTablice.Location = new System.Drawing.Point(3, 9);
+            this.NaslovTablice.Name = "NaslovTablice";
+            this.NaslovTablice.Size = new System.Drawing.Size(0, 29);
+            this.NaslovTablice.TabIndex = 2;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(45, 115);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(413, 251);
+            this.listBox1.TabIndex = 4;
+            // 
             // obrazac
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,7 +368,7 @@
             this.ClientSize = new System.Drawing.Size(778, 546);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.LijeviIzbornik);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.PanelZaSadrzaj);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KolnikAppHelp.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.Topic);
             this.Name = "obrazac";
@@ -356,6 +390,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.closeButton)).EndInit();
+            this.PanelZaSadrzaj.ResumeLayout(false);
+            this.PanelZaSadrzaj.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -365,7 +401,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox HomeSlika;
         private System.Windows.Forms.PictureBox HelpSlika;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.PictureBox CreateSlika;
         private System.Windows.Forms.PictureBox UpdateSlika;
@@ -383,5 +418,9 @@
         private System.Windows.Forms.PictureBox closeButton;
         private System.Windows.Forms.Label ImeKorisnika;
         private System.Windows.Forms.Panel MeniPanel;
+        private System.Windows.Forms.Panel PanelZaSadrzaj;
+        private System.Windows.Forms.Label Separator;
+        private System.Windows.Forms.Label NaslovTablice;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }

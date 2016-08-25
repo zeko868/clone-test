@@ -60,5 +60,13 @@ namespace kolnikApp_klijent
             }
 
         }
+
+        private void Login_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

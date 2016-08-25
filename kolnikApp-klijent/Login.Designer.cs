@@ -39,6 +39,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox1.Location = new System.Drawing.Point(267, 144);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(232, 20);
@@ -46,6 +47,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox2.Location = new System.Drawing.Point(267, 206);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(232, 20);
@@ -54,8 +56,10 @@
             // 
             // korisnickoIme
             // 
+            this.korisnickoIme.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.korisnickoIme.AutoSize = true;
             this.korisnickoIme.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.korisnickoIme.ForeColor = System.Drawing.Color.White;
             this.korisnickoIme.Location = new System.Drawing.Point(267, 128);
             this.korisnickoIme.Name = "korisnickoIme";
             this.korisnickoIme.Size = new System.Drawing.Size(98, 16);
@@ -64,8 +68,10 @@
             // 
             // lozinka
             // 
+            this.lozinka.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lozinka.AutoSize = true;
             this.lozinka.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lozinka.ForeColor = System.Drawing.Color.White;
             this.lozinka.Location = new System.Drawing.Point(267, 190);
             this.lozinka.Name = "lozinka";
             this.lozinka.Size = new System.Drawing.Size(57, 16);
@@ -74,8 +80,10 @@
             // 
             // kolnikApp
             // 
+            this.kolnikApp.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.kolnikApp.AutoSize = true;
             this.kolnikApp.Font = new System.Drawing.Font("Segoe UI Symbol", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kolnikApp.ForeColor = System.Drawing.Color.White;
             this.kolnikApp.Location = new System.Drawing.Point(302, 59);
             this.kolnikApp.Name = "kolnikApp";
             this.kolnikApp.Size = new System.Drawing.Size(157, 40);
@@ -84,6 +92,8 @@
             // 
             // loginGumb
             // 
+            this.loginGumb.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.loginGumb.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.loginGumb.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.loginGumb.Location = new System.Drawing.Point(309, 266);
             this.loginGumb.Name = "loginGumb";
@@ -95,6 +105,7 @@
             // 
             // loginTypeLabel
             // 
+            this.loginTypeLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.loginTypeLabel.AutoSize = true;
             this.loginTypeLabel.Location = new System.Drawing.Point(268, 165);
             this.loginTypeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -119,9 +130,13 @@
             this.Controls.Add(this.loginGumb);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Login_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

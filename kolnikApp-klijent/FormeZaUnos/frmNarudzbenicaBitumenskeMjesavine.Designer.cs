@@ -1,6 +1,6 @@
 ﻿namespace kolnikApp_klijent.FormeZaUnos
 {
-    partial class frmNarudzbenica
+    partial class frmNarudzbenicaBitumenskeMjesavine
     {
         /// <summary>
         /// Required designer variable.
