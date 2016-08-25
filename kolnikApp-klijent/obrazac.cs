@@ -22,9 +22,10 @@ namespace kolnikApp_klijent
             this.sockObj = sockObj;
             this.userOib = userOib;
             this.tablice = tableNames;
-            InitializeComponent();
+            InitializeComponent();  
         }
-        string[] tablice;// = new string[17] { "Artikl", "Rabat", "Zaposlen", "Poduzeće", "Vozi", "Vozilo", "Temeljnica", "Narudžbenica", "Zaposlenik", "Radi", "Korisnički račun", "Račun", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
+
+        string[] tablice;
         
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
@@ -45,94 +46,67 @@ namespace kolnikApp_klijent
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        private string UrediImeGumba(string NazivTablice)
+        {
+            string PravoIme = "";
+            switch (NazivTablice)
+            {
+                case "artikl": PravoIme = "Artikl";
+                    break;
+                case "rabat": PravoIme = "Rabat";
+                    break;
+                case "zaposlen": PravoIme = "Zaposlen";
+                    break;
+                case "poduzece": PravoIme = "Poduzeće";
+                    break;
+                case "vozi": PravoIme = "Vozi";
+                    break;
+                case "vozilo": PravoIme = "Vozilo";
+                    break;
+                case "temeljnica": PravoIme = "Temeljnica";
+                    break;
+                case "narudzbenica_bitumenske_mjesavine": PravoIme = "Narudžbenica";
+                    break;
+                case "zaposlenik": PravoIme = "Zaposlenik";
+                    break;
+                case "radi": PravoIme = "Radi";
+                    break;
+                case "korisnicki_racun": PravoIme = "Korisnički račun";
+                    break;
+                case "racun": PravoIme = "Račun";
+                    break;
+                case "otpremnica": PravoIme = "Otpremnica";
+                    break;
+                case "tablicna_privilegija": PravoIme = "Tablična privilegija";
+                    break;
+                case "gradiliste": PravoIme = "Gradilište";
+                    break;
+                case "nalog_za_proizvodnju": PravoIme = "Nalog za proizvodnju";
+                    break;
+                case "radno_mjesto":PravoIme = "Radno mjesto";
+                    break;
+                default: PravoIme = "Krivi podaci";
+                    break;
+            }
+            return PravoIme;
+        }
 
         private void obrazac_Load(object sender, EventArgs e)
         {
-            //dohvatiti broj tablica nad kojima korisnik ima pravo raditi
-            //napraviti buttone za te tablice
-            //--------------------------------------------
-            //inicijalno rješenje za sve tablice
-            for (int i = 0; i < 17; i++)
+            //gradi meni
+            for (int i = 0; i < tablice.Length; i++)
             {
                 Button GumbMenija = new Button();
+                GumbMenija.Text = UrediImeGumba(tablice[i]);
+                GumbMenija.Tag = tablice[i];
                 GumbMenija.Location = new Point(0, 30 * i);
                 GumbMenija.Height = 30;
-                GumbMenija.Width = panel1.Width - 5;
-                GumbMenija.ForeColor = Color.White;
+                GumbMenija.Width = MeniPanel.Width - 7;
                 GumbMenija.BackColor = Color.Black;
+                GumbMenija.ForeColor = Color.White;
                 GumbMenija.FlatStyle = FlatStyle.Flat;
+                GumbMenija.Click += new EventHandler(ButtonClick1);
 
-                switch (i)
-                {
-                    case 0:
-                        GumbMenija.Text = "Artikl";
-                        GumbMenija.Click += new EventHandler(ButtonClick1);
-                        break;
-                    case 1:
-                        GumbMenija.Text = "Gradilište";
-                        GumbMenija.Click += new EventHandler(ButtonClick2);
-                        break;
-                    case 2:
-                        GumbMenija.Text = "Korisnički račun";
-                        GumbMenija.Click += new EventHandler(ButtonClick3);
-                        break;
-                    case 3:
-                        GumbMenija.Text = "Nalog za proizvodnju";
-                        GumbMenija.Click += new EventHandler(ButtonClick4);
-                        break;
-                    case 4:
-                        GumbMenija.Text = "Narudžbenica";
-                        GumbMenija.Click += new EventHandler(ButtonClick5);
-                        break;
-                    case 5:
-                        GumbMenija.Text = "Otpremnica";
-                        GumbMenija.Click += new EventHandler(ButtonClick6);
-                        break;
-                    case 6:
-                        GumbMenija.Text = "Poduzeće";
-                        GumbMenija.Click += new EventHandler(ButtonClick7);
-                        break;
-                    case 7:
-                        GumbMenija.Text = "Rabat";
-                        GumbMenija.Click += new EventHandler(ButtonClick8);
-                        break;
-                    case 8:
-                        GumbMenija.Text = "Račun";
-                        GumbMenija.Click += new EventHandler(ButtonClick9);
-                        break;
-                    case 9:
-                        GumbMenija.Text = "Radi";
-                        GumbMenija.Click += new EventHandler(ButtonClick10);
-                        break;
-                    case 10:
-                        GumbMenija.Text = "Radno mjesto";
-                        GumbMenija.Click += new EventHandler(ButtonClick11);
-                        break;
-                    case 11:
-                        GumbMenija.Text = "Tablica privilegija";
-                        GumbMenija.Click += new EventHandler(ButtonClick12);
-                        break;
-                    case 12:
-                        GumbMenija.Text = "Temeljnica";
-                        GumbMenija.Click += new EventHandler(ButtonClick13);
-                        break;
-                    case 13:
-                        GumbMenija.Text = "Vozi";
-                        GumbMenija.Click += new EventHandler(ButtonClick14);
-                        break;
-                    case 14:
-                        GumbMenija.Text = "Vozilo";
-                        GumbMenija.Click += new EventHandler(ButtonClick15);
-                        break;
-                    case 15:
-                        GumbMenija.Text = "Zaposlen";
-                        GumbMenija.Click += new EventHandler(ButtonClick16);
-                        break;
-                    case 16:
-                        GumbMenija.Text = "Zaposlenik";
-                        GumbMenija.Click += new EventHandler(ButtonClick17);
-                        break;
-                }
                 this.MeniPanel.Controls.Add(GumbMenija);
             }
         }
@@ -148,70 +122,6 @@ namespace kolnikApp_klijent
         }
     
         private void ButtonClick1(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick2(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick3(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick4(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick5(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick6(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick7(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick8(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick9(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick10(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick11(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick12(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick13(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick14(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick15(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick16(object sender, EventArgs e)
-        {
-            oznaciGumb(sender);
-        }
-        private void ButtonClick17(object sender, EventArgs e)
         {
             oznaciGumb(sender);
         }

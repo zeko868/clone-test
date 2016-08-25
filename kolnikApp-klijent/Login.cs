@@ -52,9 +52,10 @@ namespace kolnikApp_klijent
             {
                 if (loginState.Value == true)
                 {
-                    glavnaForma newForm = new glavnaForma(sockObj, DataHandler.UserOib);
-                    newForm.Show();
                     this.Hide();
+                    glavnaForma newForm = new glavnaForma(sockObj, DataHandler.UserOib);                   
+                    newForm.Closed += (s, args) => this.Close();
+                    newForm.Show();
                 }
             }
 

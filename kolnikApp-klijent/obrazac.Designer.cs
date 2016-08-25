@@ -44,12 +44,12 @@
             this.LabelaIzbrisi = new System.Windows.Forms.Label();
             this.LabelaPomoc = new System.Windows.Forms.Label();
             this.LijeviIzbornik = new System.Windows.Forms.Panel();
+            this.MeniPanel = new System.Windows.Forms.Panel();
             this.Header = new System.Windows.Forms.Panel();
             this.ImeKorisnika = new System.Windows.Forms.Label();
             this.Minimize = new System.Windows.Forms.PictureBox();
             this.RestoreDown = new System.Windows.Forms.PictureBox();
             this.closeButton = new System.Windows.Forms.PictureBox();
-            this.MeniPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
@@ -240,6 +240,13 @@
             this.LijeviIzbornik.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LijeviIzbornik_MouseClick);
             this.LijeviIzbornik.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LijeviIzbornik_MouseDown);
             // 
+            // MeniPanel
+            // 
+            this.MeniPanel.Location = new System.Drawing.Point(0, 116);
+            this.MeniPanel.Name = "MeniPanel";
+            this.MeniPanel.Size = new System.Drawing.Size(214, 421);
+            this.MeniPanel.TabIndex = 1;
+            // 
             // Header
             // 
             this.Header.BackColor = System.Drawing.Color.DarkSlateGray;
@@ -318,13 +325,6 @@
             this.closeButton.TabIndex = 11;
             this.closeButton.TabStop = false;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // MeniPanel
-            // 
-            this.MeniPanel.Location = new System.Drawing.Point(0, 113);
-            this.MeniPanel.Name = "MeniPanel";
-            this.MeniPanel.Size = new System.Drawing.Size(214, 421);
-            this.MeniPanel.TabIndex = 1;
             // 
             // obrazac
             // 

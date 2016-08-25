@@ -43,10 +43,11 @@ namespace kolnikApp_klijent
             if (loadingTraka.Value == loadingTraka.Maximum)
             {
                 timerLoading.Stop();
-                obrazac formaObrazac = new obrazac(sockObj, userOib, tableNames.OfType<string>().ToArray());
-                formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
-                formaObrazac.Show();
                 this.Hide();
+                obrazac formaObrazac = new obrazac(sockObj, userOib, tableNames.OfType<string>().ToArray());
+                //formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
+                formaObrazac.Closed += (s, args) => this.Close();
+                formaObrazac.Show();
             }
             else
             {
