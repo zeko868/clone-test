@@ -25,8 +25,7 @@ namespace kolnikApp_klijent
         }
 
         string[] tablice;
-        string[] forme = new string[17] { "Korisnički račun", "Račun", "Artikl", "Radi", "Rabat", "Zaposlenik", "Temeljnica", "Narudžbenica", "Vozilo","Zaposlen", "Poduzeće", "Vozi", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
-
+        
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         private void HelpSlika_Click(object sender, EventArgs e)
@@ -97,6 +96,7 @@ namespace kolnikApp_klijent
             for (int i = 0; i < tablice.Length; i++)
             {
                 Button GumbMenija = new Button();
+                GumbMenija.Name = tablice[i];
                 GumbMenija.Text = UrediImeGumba(tablice[i]);
                 GumbMenija.Tag = tablice[i];
                 GumbMenija.Location = new Point(0, 30 * i);
@@ -120,14 +120,32 @@ namespace kolnikApp_klijent
             Button Gumbic = sender as Button;
             Gumbic.ForeColor = Color.Orange;
         }
-    
+
+        Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
         private void ButtonClick1(object sender, EventArgs e)
         {
             LogoutButton.Hide();
             Button Gumb = sender as Button;
             oznaciGumb(sender);
+            if (NaslovTablice.Text != "Naslov")
+            {
+                StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
+            }            
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
+        }
+
+        private void NatragSlika_Click(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
+            if(StogZaVracanjeUnatrag.Count > 0)
+            {
+                string ImeStranice = StogZaVracanjeUnatrag.Pop();
+                Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
+                oznaciGumb(GumbMenija);
+                NaslovTablice.Text = GumbMenija.Text;
+                NaslovTablice.Tag = GumbMenija.Tag;
+            }          
         }
 
         //prikazivanje i skrivanje naziva ikona
@@ -250,12 +268,7 @@ namespace kolnikApp_klijent
         private void MenuLista_MouseClick(object sender, MouseEventArgs e)
         {
             LogoutButton.Hide();
-        }
-
-        private void HomeSlika_Click(object sender, EventArgs e)
-        {
-            LogoutButton.Hide();
-        }
+        }       
 
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
@@ -337,5 +350,7 @@ namespace kolnikApp_klijent
             sockObj.SendLogoutRequest();
             Application.Restart();
         }
+
+        
     }
 }

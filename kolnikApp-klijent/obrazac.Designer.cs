@@ -34,7 +34,7 @@
             this.UpdateSlika = new System.Windows.Forms.PictureBox();
             this.CreateSlika = new System.Windows.Forms.PictureBox();
             this.HelpSlika = new System.Windows.Forms.PictureBox();
-            this.HomeSlika = new System.Windows.Forms.PictureBox();
+            this.NatragSlika = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.KolnikAppHelp = new System.Windows.Forms.HelpProvider();
             this.LabelaPocetna = new System.Windows.Forms.Label();
@@ -57,7 +57,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HelpSlika)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeSlika)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NatragSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.LijeviIzbornik.SuspendLayout();
             this.Header.SuspendLayout();
@@ -71,10 +71,9 @@
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LogoutButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogoutButton.Location = new System.Drawing.Point(551, 36);
-            this.LogoutButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LogoutButton.Location = new System.Drawing.Point(413, 29);
             this.LogoutButton.Name = "LogoutButton";
-            this.LogoutButton.Size = new System.Drawing.Size(72, 31);
+            this.LogoutButton.Size = new System.Drawing.Size(54, 25);
             this.LogoutButton.TabIndex = 6;
             this.LogoutButton.Text = "Logout";
             this.LogoutButton.UseVisualStyleBackColor = true;
@@ -85,10 +84,9 @@
             // 
             this.DeleteSlika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.DeleteSlika.Image = ((System.Drawing.Image)(resources.GetObject("DeleteSlika.Image")));
-            this.DeleteSlika.Location = new System.Drawing.Point(195, 58);
-            this.DeleteSlika.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DeleteSlika.Location = new System.Drawing.Point(146, 47);
             this.DeleteSlika.Name = "DeleteSlika";
-            this.DeleteSlika.Size = new System.Drawing.Size(53, 49);
+            this.DeleteSlika.Size = new System.Drawing.Size(40, 40);
             this.DeleteSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.DeleteSlika.TabIndex = 10;
             this.DeleteSlika.TabStop = false;
@@ -100,10 +98,9 @@
             // 
             this.UpdateSlika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.UpdateSlika.Image = global::kolnikApp_klijent.Properties.Resources.update1;
-            this.UpdateSlika.Location = new System.Drawing.Point(133, 58);
-            this.UpdateSlika.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.UpdateSlika.Location = new System.Drawing.Point(100, 47);
             this.UpdateSlika.Name = "UpdateSlika";
-            this.UpdateSlika.Size = new System.Drawing.Size(53, 49);
+            this.UpdateSlika.Size = new System.Drawing.Size(40, 40);
             this.UpdateSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UpdateSlika.TabIndex = 9;
             this.UpdateSlika.TabStop = false;
@@ -115,10 +112,9 @@
             // 
             this.CreateSlika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CreateSlika.Image = global::kolnikApp_klijent.Properties.Resources.add;
-            this.CreateSlika.Location = new System.Drawing.Point(72, 58);
-            this.CreateSlika.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CreateSlika.Location = new System.Drawing.Point(54, 47);
             this.CreateSlika.Name = "CreateSlika";
-            this.CreateSlika.Size = new System.Drawing.Size(53, 49);
+            this.CreateSlika.Size = new System.Drawing.Size(40, 40);
             this.CreateSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.CreateSlika.TabIndex = 8;
             this.CreateSlika.TabStop = false;
@@ -130,10 +126,9 @@
             // 
             this.HelpSlika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.HelpSlika.Image = global::kolnikApp_klijent.Properties.Resources.info;
-            this.HelpSlika.Location = new System.Drawing.Point(256, 58);
-            this.HelpSlika.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.HelpSlika.Location = new System.Drawing.Point(192, 47);
             this.HelpSlika.Name = "HelpSlika";
-            this.HelpSlika.Size = new System.Drawing.Size(53, 49);
+            this.HelpSlika.Size = new System.Drawing.Size(40, 40);
             this.HelpSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.HelpSlika.TabIndex = 3;
             this.HelpSlika.TabStop = false;
@@ -141,29 +136,27 @@
             this.HelpSlika.MouseEnter += new System.EventHandler(this.HelpSlika_MouseEnter);
             this.HelpSlika.MouseLeave += new System.EventHandler(this.HelpSlika_MouseLeave);
             // 
-            // HomeSlika
+            // NatragSlika
             // 
-            this.HomeSlika.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HomeSlika.Image = global::kolnikApp_klijent.Properties.Resources.pocetna;
-            this.HomeSlika.Location = new System.Drawing.Point(11, 58);
-            this.HomeSlika.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.HomeSlika.Name = "HomeSlika";
-            this.HomeSlika.Size = new System.Drawing.Size(53, 49);
-            this.HomeSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.HomeSlika.TabIndex = 1;
-            this.HomeSlika.TabStop = false;
-            this.HomeSlika.Click += new System.EventHandler(this.HomeSlika_Click);
-            this.HomeSlika.MouseEnter += new System.EventHandler(this.HomeSlika_MouseEnter);
-            this.HomeSlika.MouseLeave += new System.EventHandler(this.HomeSlika_MouseLeave);
+            this.NatragSlika.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.NatragSlika.Image = global::kolnikApp_klijent.Properties.Resources.back;
+            this.NatragSlika.Location = new System.Drawing.Point(8, 47);
+            this.NatragSlika.Name = "NatragSlika";
+            this.NatragSlika.Size = new System.Drawing.Size(40, 40);
+            this.NatragSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.NatragSlika.TabIndex = 1;
+            this.NatragSlika.TabStop = false;
+            this.NatragSlika.Click += new System.EventHandler(this.NatragSlika_Click);
+            this.NatragSlika.MouseEnter += new System.EventHandler(this.HomeSlika_MouseEnter);
+            this.NatragSlika.MouseLeave += new System.EventHandler(this.HomeSlika_MouseLeave);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(285, 132);
+            this.pictureBox1.Size = new System.Drawing.Size(214, 107);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -178,22 +171,20 @@
             // 
             this.LabelaPocetna.AutoSize = true;
             this.LabelaPocetna.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LabelaPocetna.Location = new System.Drawing.Point(8, 113);
-            this.LabelaPocetna.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelaPocetna.Location = new System.Drawing.Point(6, 92);
             this.LabelaPocetna.Name = "LabelaPocetna";
-            this.LabelaPocetna.Size = new System.Drawing.Size(60, 17);
+            this.LabelaPocetna.Size = new System.Drawing.Size(39, 13);
             this.LabelaPocetna.TabIndex = 0;
-            this.LabelaPocetna.Text = "Početna";
+            this.LabelaPocetna.Text = "Natrag";
             this.LabelaPocetna.Visible = false;
             // 
             // LabelaNovi
             // 
             this.LabelaNovi.AutoSize = true;
             this.LabelaNovi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LabelaNovi.Location = new System.Drawing.Point(87, 113);
-            this.LabelaNovi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelaNovi.Location = new System.Drawing.Point(65, 92);
             this.LabelaNovi.Name = "LabelaNovi";
-            this.LabelaNovi.Size = new System.Drawing.Size(36, 17);
+            this.LabelaNovi.Size = new System.Drawing.Size(29, 13);
             this.LabelaNovi.TabIndex = 2;
             this.LabelaNovi.Text = "Novi";
             this.LabelaNovi.Visible = false;
@@ -202,10 +193,9 @@
             // 
             this.LabelaUpdate.AutoSize = true;
             this.LabelaUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LabelaUpdate.Location = new System.Drawing.Point(133, 113);
-            this.LabelaUpdate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelaUpdate.Location = new System.Drawing.Point(100, 92);
             this.LabelaUpdate.Name = "LabelaUpdate";
-            this.LabelaUpdate.Size = new System.Drawing.Size(54, 17);
+            this.LabelaUpdate.Size = new System.Drawing.Size(42, 13);
             this.LabelaUpdate.TabIndex = 3;
             this.LabelaUpdate.Text = "Update";
             this.LabelaUpdate.Visible = false;
@@ -214,10 +204,9 @@
             // 
             this.LabelaIzbrisi.AutoSize = true;
             this.LabelaIzbrisi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LabelaIzbrisi.Location = new System.Drawing.Point(204, 113);
-            this.LabelaIzbrisi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelaIzbrisi.Location = new System.Drawing.Point(153, 92);
             this.LabelaIzbrisi.Name = "LabelaIzbrisi";
-            this.LabelaIzbrisi.Size = new System.Drawing.Size(44, 17);
+            this.LabelaIzbrisi.Size = new System.Drawing.Size(33, 13);
             this.LabelaIzbrisi.TabIndex = 4;
             this.LabelaIzbrisi.Text = "Izbriši";
             this.LabelaIzbrisi.Visible = false;
@@ -226,10 +215,9 @@
             // 
             this.LabelaPomoc.AutoSize = true;
             this.LabelaPomoc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.LabelaPomoc.Location = new System.Drawing.Point(256, 113);
-            this.LabelaPomoc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LabelaPomoc.Location = new System.Drawing.Point(192, 92);
             this.LabelaPomoc.Name = "LabelaPomoc";
-            this.LabelaPomoc.Size = new System.Drawing.Size(81, 17);
+            this.LabelaPomoc.Size = new System.Drawing.Size(61, 13);
             this.LabelaPomoc.TabIndex = 5;
             this.LabelaPomoc.Text = "Pomoć (F1)";
             this.LabelaPomoc.Visible = false;
@@ -240,19 +228,17 @@
             this.LijeviIzbornik.Controls.Add(this.pictureBox1);
             this.LijeviIzbornik.Dock = System.Windows.Forms.DockStyle.Left;
             this.LijeviIzbornik.Location = new System.Drawing.Point(0, 0);
-            this.LijeviIzbornik.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LijeviIzbornik.Name = "LijeviIzbornik";
-            this.LijeviIzbornik.Size = new System.Drawing.Size(285, 672);
+            this.LijeviIzbornik.Size = new System.Drawing.Size(214, 546);
             this.LijeviIzbornik.TabIndex = 12;
             this.LijeviIzbornik.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LijeviIzbornik_MouseClick);
             this.LijeviIzbornik.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LijeviIzbornik_MouseDown);
             // 
             // MeniPanel
             // 
-            this.MeniPanel.Location = new System.Drawing.Point(0, 143);
-            this.MeniPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MeniPanel.Location = new System.Drawing.Point(0, 116);
             this.MeniPanel.Name = "MeniPanel";
-            this.MeniPanel.Size = new System.Drawing.Size(285, 518);
+            this.MeniPanel.Size = new System.Drawing.Size(214, 421);
             this.MeniPanel.TabIndex = 1;
             // 
             // Header
@@ -263,7 +249,7 @@
             this.Header.Controls.Add(this.RestoreDown);
             this.Header.Controls.Add(this.closeButton);
             this.Header.Controls.Add(this.LogoutButton);
-            this.Header.Controls.Add(this.HomeSlika);
+            this.Header.Controls.Add(this.NatragSlika);
             this.Header.Controls.Add(this.LabelaPomoc);
             this.Header.Controls.Add(this.HelpSlika);
             this.Header.Controls.Add(this.LabelaIzbrisi);
@@ -274,10 +260,9 @@
             this.Header.Controls.Add(this.LabelaNovi);
             this.Header.Controls.Add(this.UpdateSlika);
             this.Header.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Header.Location = new System.Drawing.Point(285, 0);
-            this.Header.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Header.Location = new System.Drawing.Point(214, 0);
             this.Header.Name = "Header";
-            this.Header.Size = new System.Drawing.Size(752, 132);
+            this.Header.Size = new System.Drawing.Size(564, 107);
             this.Header.TabIndex = 13;
             this.Header.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Header_MouseClick);
             this.Header.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Header_MouseDown);
@@ -288,10 +273,9 @@
             this.ImeKorisnika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ImeKorisnika.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ImeKorisnika.ForeColor = System.Drawing.Color.White;
-            this.ImeKorisnika.Location = new System.Drawing.Point(420, 9);
-            this.ImeKorisnika.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ImeKorisnika.Location = new System.Drawing.Point(315, 7);
             this.ImeKorisnika.Name = "ImeKorisnika";
-            this.ImeKorisnika.Size = new System.Drawing.Size(200, 20);
+            this.ImeKorisnika.Size = new System.Drawing.Size(150, 16);
             this.ImeKorisnika.TabIndex = 14;
             this.ImeKorisnika.Text = "Korisnik";
             this.ImeKorisnika.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -302,10 +286,9 @@
             this.Minimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Minimize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Minimize.Image = ((System.Drawing.Image)(resources.GetObject("Minimize.Image")));
-            this.Minimize.Location = new System.Drawing.Point(632, 4);
-            this.Minimize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Minimize.Location = new System.Drawing.Point(474, 3);
             this.Minimize.Name = "Minimize";
-            this.Minimize.Size = new System.Drawing.Size(33, 31);
+            this.Minimize.Size = new System.Drawing.Size(25, 25);
             this.Minimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Minimize.TabIndex = 13;
             this.Minimize.TabStop = false;
@@ -316,10 +299,9 @@
             this.RestoreDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RestoreDown.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RestoreDown.Image = ((System.Drawing.Image)(resources.GetObject("RestoreDown.Image")));
-            this.RestoreDown.Location = new System.Drawing.Point(673, 4);
-            this.RestoreDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RestoreDown.Location = new System.Drawing.Point(505, 3);
             this.RestoreDown.Name = "RestoreDown";
-            this.RestoreDown.Size = new System.Drawing.Size(33, 31);
+            this.RestoreDown.Size = new System.Drawing.Size(25, 25);
             this.RestoreDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.RestoreDown.TabIndex = 12;
             this.RestoreDown.TabStop = false;
@@ -330,10 +312,9 @@
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.closeButton.Image = ((System.Drawing.Image)(resources.GetObject("closeButton.Image")));
-            this.closeButton.Location = new System.Drawing.Point(715, 4);
-            this.closeButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.closeButton.Location = new System.Drawing.Point(536, 3);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(33, 31);
+            this.closeButton.Size = new System.Drawing.Size(25, 25);
             this.closeButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.closeButton.TabIndex = 11;
             this.closeButton.TabStop = false;
@@ -348,30 +329,26 @@
             this.PanelZaSadrzaj.Controls.Add(this.listBox1);
             this.PanelZaSadrzaj.Controls.Add(this.Separator);
             this.PanelZaSadrzaj.Controls.Add(this.NaslovTablice);
-            this.PanelZaSadrzaj.Location = new System.Drawing.Point(297, 143);
-            this.PanelZaSadrzaj.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanelZaSadrzaj.Location = new System.Drawing.Point(223, 116);
             this.PanelZaSadrzaj.Name = "PanelZaSadrzaj";
-            this.PanelZaSadrzaj.Size = new System.Drawing.Size(724, 514);
+            this.PanelZaSadrzaj.Size = new System.Drawing.Size(543, 418);
             this.PanelZaSadrzaj.TabIndex = 5;
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(60, 142);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.Location = new System.Drawing.Point(57, 82);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(549, 308);
+            this.listBox1.Size = new System.Drawing.Size(363, 225);
             this.listBox1.TabIndex = 4;
             // 
             // Separator
             // 
             this.Separator.BackColor = System.Drawing.Color.Black;
             this.Separator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Separator.Location = new System.Drawing.Point(7, 59);
-            this.Separator.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.Separator.Location = new System.Drawing.Point(5, 48);
             this.Separator.Name = "Separator";
-            this.Separator.Size = new System.Drawing.Size(713, 2);
+            this.Separator.Size = new System.Drawing.Size(535, 2);
             this.Separator.TabIndex = 3;
             // 
             // NaslovTablice
@@ -379,24 +356,23 @@
             this.NaslovTablice.AutoSize = true;
             this.NaslovTablice.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.NaslovTablice.ForeColor = System.Drawing.Color.White;
-            this.NaslovTablice.Location = new System.Drawing.Point(4, 11);
-            this.NaslovTablice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.NaslovTablice.Location = new System.Drawing.Point(3, 9);
             this.NaslovTablice.Name = "NaslovTablice";
-            this.NaslovTablice.Size = new System.Drawing.Size(0, 36);
+            this.NaslovTablice.Size = new System.Drawing.Size(93, 29);
             this.NaslovTablice.TabIndex = 2;
+            this.NaslovTablice.Text = "Naslov";
             // 
             // obrazac
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
-            this.ClientSize = new System.Drawing.Size(1037, 672);
+            this.ClientSize = new System.Drawing.Size(778, 546);
             this.Controls.Add(this.Header);
             this.Controls.Add(this.LijeviIzbornik);
             this.Controls.Add(this.PanelZaSadrzaj);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KolnikAppHelp.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.Topic);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "obrazac";
             this.KolnikAppHelp.SetShowHelp(this, true);
             this.Text = "obrazac";
@@ -408,7 +384,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HelpSlika)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.HomeSlika)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.NatragSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.LijeviIzbornik.ResumeLayout(false);
             this.Header.ResumeLayout(false);
@@ -425,7 +401,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox HomeSlika;
+        private System.Windows.Forms.PictureBox NatragSlika;
         private System.Windows.Forms.PictureBox HelpSlika;
         private System.Windows.Forms.Button LogoutButton;
         private System.Windows.Forms.PictureBox CreateSlika;
