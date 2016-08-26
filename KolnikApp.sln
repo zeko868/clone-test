@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kolnikApp-server", "kolnikApp-server\kolnikApp-server.csproj", "{2AA984A5-BB59-4E71-B442-35C978371CFE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32B02A1C-0FF5-43A5-9FE8-D6E40E628098} = {32B02A1C-0FF5-43A5-9FE8-D6E40E628098}
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88} = {C5F80730-F44F-4478-BDAE-6634EFC2CA88}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kolnikApp-klijent", "kolnikApp-klijent\kolnikApp-klijent.csproj", "{3C00CB35-DB81-4ADA-BA71-329959350C54}"
+	ProjectSection(ProjectDependencies) = postProject
+		{32B02A1C-0FF5-43A5-9FE8-D6E40E628098} = {32B02A1C-0FF5-43A5-9FE8-D6E40E628098}
+		{2AA984A5-BB59-4E71-B442-35C978371CFE} = {2AA984A5-BB59-4E71-B442-35C978371CFE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kolnikApp-komponente", "kolnikApp-komponente\kolnikApp-komponente.csproj", "{32B02A1C-0FF5-43A5-9FE8-D6E40E628098}"
 EndProject

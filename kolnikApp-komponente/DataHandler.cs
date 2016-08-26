@@ -35,17 +35,17 @@ namespace kolnikApp_komponente
                 loginState = value;
             }
         }
-        private static string userOib;
+        private static zaposlenik loggedUser;
 
-        public static string UserOib
+        public static zaposlenik LoggedUser
         {
             get
             {
-                return userOib;
+                return loggedUser;
             }
             private set
             {
-                userOib = value;
+                loggedUser = value;
             }
         }
 
@@ -123,7 +123,7 @@ namespace kolnikApp_komponente
             return "<data>" + XMLData + "</data>";
         }
 
-        private string AddHeaderInfoToXMLDatagroup(string XMLData, char action)
+        private string AddHeaderInfoToXMLDatagroup(string XMLData, char action = 'R')
         {
             return "<datagroup action=\"" + action + "\">" + XMLData + "</datagroup>";
         }
@@ -135,11 +135,11 @@ namespace kolnikApp_komponente
 
         public string CreateMessageForAvailabilityChecking()
         {
-            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost"), 'R'));
+            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost")));
         }
         public string ConstructErrorMessageContent()
         {
-            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData(EntityOnWhichErrorRefers, ErrorInfo), 'R'));
+            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData(EntityOnWhichErrorRefers, ErrorInfo)));
         }
         private string GenerateCommandForUpdatingRecord(Type tip, object sth, object oldValIfUpdating)
         {
@@ -238,7 +238,7 @@ namespace kolnikApp_komponente
 
         private void AssignObjectsProperties(object a, XElement KeyValuePairsOfEntity, bool assignOldValues = false)
         {
-            foreach (var KeyValuePair in KeyValuePairsOfEntity.Descendants())
+            foreach (var KeyValuePair in KeyValuePairsOfEntity.Elements())
             {
                 if (assignOldValues)
                 {
@@ -299,7 +299,7 @@ namespace kolnikApp_komponente
         {
             XDocument doc = XDocument.Parse(XMLData);
 
-            var datagroups = doc.Descendants("data").Elements();
+            var datagroups = doc.Element("data").Elements();
             foreach (var datagroup in datagroups)
             {
                 char action = datagroup.Attribute("action").Value[0];
@@ -358,7 +358,7 @@ namespace kolnikApp_komponente
                         {
                             //VratiPaketPosluziteljuSPotvrdomOAktivnosti
                             ResponseForSending = new string[1];
-                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost", "active"), 'R');
+                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost", "active"));
                         }
                         else
                         {
@@ -370,17 +370,19 @@ namespace kolnikApp_komponente
                         if (!isClientSide)
                         {
                             XElement prijavaPodaci = datagroup.Element("prijava");
-                            IQueryable<korisnicki_racun> queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
+                            var queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
+                                                              join zaposlenik in dataContextInstance.zaposleniks
+                                                              on korisnicki_racun.zaposlenik equals zaposlenik.oib
                                                               where
                                                               (
                                                                   korisnicki_racun.korisnicko_ime.Equals(prijavaPodaci.Element("korisnicko_ime").Value)
                                                                   || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
                                                               )
-                                                              select korisnicki_racun);
+                                                              select new { zaposlenik , korisnicki_racun.lozinka });
                             bool userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count());
                             if (userWithProvidedUsernameOrOibExists && HashPasswordUsingSHA1Algorithm(prijavaPodaci.Element("lozinka").Value) == queryResult.First().lozinka.TrimEnd(' '))
                             {
-                                string userOib = queryResult.First().zaposlenik;
+                                string userOib = queryResult.First().zaposlenik.oib;
                                 if (ClientsAddressesList.CheckIfUserWithCertainOibIsAlreadyLoggedIn(userOib))
                                 {
                                     HasErrorOccurred = true;
@@ -393,7 +395,7 @@ namespace kolnikApp_komponente
                                     ResponseForSending = new string[1];
                                     Dictionary<string, string> attributes = new Dictionary<string, string>();
                                     attributes["success"] = "success";
-                                    ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", userOib, attributes), 'R');
+                                    ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", ConvertObjectsToXMLData(queryResult.First().zaposlenik), attributes));
                                 }
                             }
                             else
@@ -405,17 +407,21 @@ namespace kolnikApp_komponente
                         }
                         else
                         {
-                            string infoAboutLoginAttempt = datagroup.Element("prijava").Value;
+                            XElement infoAboutLoginAttempt = datagroup.Element("prijava");
                             if (datagroup.Element("prijava").Attribute("success") != null)
                             {
-                                loginState = true;
-                                UserOib = infoAboutLoginAttempt;
+                                LoggedUser = new zaposlenik()
+                                {
+                                    oib = infoAboutLoginAttempt.Element("zaposlenik").Element("oib").Value,
+                                    ime = infoAboutLoginAttempt.Element("zaposlenik").Element("ime").Value,
+                                    prezime = infoAboutLoginAttempt.Element("zaposlenik").Element("prezime").Value
+                                };
+                                LoginState = true;
                                 IsConfirmationOfPreviousRequest = true;
                             }
                             else
                             {
-                                loginState = false;
-                                System.Windows.Forms.MessageBox.Show(infoAboutLoginAttempt);
+                                LoginState = false;
                             }
                         }
                         break;
@@ -423,44 +429,46 @@ namespace kolnikApp_komponente
                         if (!isClientSide)
                         {
                             ClientsAddressesList.UnregisterUserWithCertainIPAddress(address);
-                            ResponseForSending = new string[1];
-                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odjava", "success"), 'R');
+                            IsConfirmationOfPreviousRequest = true;
                         }
                         break;
                     case "registracija":
-                        korisnicki_racun noviKorisnickiRacun = new korisnicki_racun();
-                        XElement registracijaPodaci = datagroup.Element("registracija");
-                        noviKorisnickiRacun.zaposlenik = registracijaPodaci.Element("oib").Value;
-                        IQueryable<int> queryResult1 = from zaposlenik in dataContextInstance.zaposleniks
-                                                          where zaposlenik.oib == registracijaPodaci.Element("oib").Value
-                                                          select 1;
-                        if (queryResult1.Count() == 0)
+                        if (!isClientSide)
                         {
-                            zaposlenik noviZaposlenik = new zaposlenik()
+                            korisnicki_racun noviKorisnickiRacun = new korisnicki_racun();
+                            XElement registracijaPodaci = datagroup.Element("registracija");
+                            noviKorisnickiRacun.zaposlenik = registracijaPodaci.Element("oib").Value;
+                            IQueryable<int> queryResult = from zaposlenik in dataContextInstance.zaposleniks
+                                                           where zaposlenik.oib == registracijaPodaci.Element("oib").Value
+                                                           select 1;
+                            if (queryResult.Count() == 0)
                             {
-                                oib = registracijaPodaci.Element("oib").Value,
-                                ime = registracijaPodaci.Element("ime").Value,
-                                prezime = registracijaPodaci.Element("prezime").Value
-                            };
-                            dataContextInstance.zaposleniks.InsertOnSubmit(noviZaposlenik);
+                                zaposlenik noviZaposlenik = new zaposlenik()
+                                {
+                                    oib = registracijaPodaci.Element("oib").Value,
+                                    ime = registracijaPodaci.Element("ime").Value,
+                                    prezime = registracijaPodaci.Element("prezime").Value
+                                };
+                                dataContextInstance.zaposleniks.InsertOnSubmit(noviZaposlenik);
+                            }
+                            noviKorisnickiRacun.korisnicko_ime = registracijaPodaci.Element("korisnicko_ime").Value;
+                            noviKorisnickiRacun.lozinka = HashPasswordUsingSHA1Algorithm(registracijaPodaci.Element("lozinka").Value);
+                            dataContextInstance.korisnicki_racuns.InsertOnSubmit(noviKorisnickiRacun);
+                            try
+                            {
+                                dataContextInstance.SubmitChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.Message);
+                            }
                         }
-                        noviKorisnickiRacun.korisnicko_ime = registracijaPodaci.Element("korisnicko_ime").Value;
-                        noviKorisnickiRacun.lozinka = HashPasswordUsingSHA1Algorithm(registracijaPodaci.Element("lozinka").Value);
-                        dataContextInstance.korisnicki_racuns.InsertOnSubmit(noviKorisnickiRacun);
-                        try
-                        {
-                            dataContextInstance.SubmitChanges();
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine(e.Message);
-                        }
-                    break;
+                        break;
                     case "tablica":
                         if (!isClientSide)
                         {
                             ResponseForSending = new string[1];
-                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(String.Join("", GetListOfAccessibleEntityTypes(address).Select(x => ConvertNonObjectDataIntoXMLData("tablica", x))), 'R');
+                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(String.Join("", GetListOfAccessibleEntityTypes(address).Select(x => ConvertNonObjectDataIntoXMLData("tablica", x))));
                         }
                         else
                         {
@@ -574,7 +582,7 @@ namespace kolnikApp_komponente
             ResponseForSending = new string[2];
             Dictionary<string, string> resultDescriptors = new Dictionary<string, string>();
             resultDescriptors["state"] = "success";
-            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odgovor_na_podatkovni_zahtjev", "", resultDescriptors), 'R');
+            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odgovor_na_podatkovni_zahtjev", "", resultDescriptors));
             ResponseForSending[1] = XMLData;
             //select radi.zaposlenik,tablicna_privilegija.naziv_tablice from radi
             //join tablicna_privilegija on radi.radno_mjesto = tablicna_privilegija.radno_mjesto
@@ -630,7 +638,12 @@ namespace kolnikApp_komponente
                 ConvertNonObjectDataIntoXMLData("oib", isIdentityUsername ? "" : identity) +
                 ConvertNonObjectDataIntoXMLData("korisnicko_ime", isIdentityUsername ? identity : "") +
                 ConvertNonObjectDataIntoXMLData("lozinka", password)
-                ), 'R'));
+                )));
+        }
+
+        public string ConstructLogoutMessageContent()
+        {
+            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odjava")));
         }
 
         public DataHandler()
@@ -661,7 +674,7 @@ namespace kolnikApp_komponente
                     return;
                 }
                 ResponseForSending = new string[1];
-                ResponseForSending[0] = ConvertNonObjectDataIntoXMLData("senzor_temperature", temperatura.ToString());
+                ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature", temperatura.ToString()));
             }
             else if (primljenaPoruka.StartsWith("NOTIFY"))
             {
@@ -674,7 +687,7 @@ namespace kolnikApp_komponente
                                    select ip_adresar.EndPoint;
                 IPAddressesOfOtherDestinations = otpremnicari.ToArray();
                 ResponseForSending = new string[1];
-                ResponseForSending[0] = ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", "");
+                ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", ""));
             }
         }
 

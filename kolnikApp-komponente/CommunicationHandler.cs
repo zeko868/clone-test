@@ -190,9 +190,6 @@ namespace kolnikApp_komponente
         private static void MessageSend(string message, EndPoint destinationIPAddress)
         {
             netSocketBuffer = UTF8Encoding.UTF8.GetBytes(message);
-            /*            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, netSocketBuffer.Length);
-                        netSocketServerArgs.RemoteEndPoint = destinationIPAddress;
-                        netSocket.SendToAsync(netSocketServerArgs);*/
             netSocket.SendTo(netSocketBuffer, destinationIPAddress);
         }
 
@@ -233,6 +230,12 @@ namespace kolnikApp_komponente
         {
             DataHandler instance = new DataHandler();
             MessageSend(instance.ConstructLoginMessageContent(userIdentity, password, isIdentityUsername), serverAddress);
+        }
+
+        public void SendLogoutRequest()
+        {
+            DataHandler instance = new DataHandler();
+            MessageSend(instance.ConstructLogoutMessageContent(), serverAddress);
         }
     }
 

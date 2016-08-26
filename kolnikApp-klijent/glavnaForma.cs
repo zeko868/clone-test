@@ -14,12 +14,10 @@ namespace kolnikApp_klijent
     public partial class glavnaForma : Form
     {
         private CommunicationHandler sockObj;
-        private string userOib;
         private List<object> tableNames = new List<object>();
-        public glavnaForma(CommunicationHandler sockObj, string userOib)
+        public glavnaForma(CommunicationHandler sockObj)
         {
             this.sockObj = sockObj;
-            this.userOib = userOib;
             InitializeComponent();
 
             DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
@@ -44,7 +42,7 @@ namespace kolnikApp_klijent
             {
                 timerLoading.Stop();
                 this.Hide();
-                obrazac formaObrazac = new obrazac(sockObj, userOib, tableNames.OfType<string>().ToArray());
+                obrazac formaObrazac = new obrazac(sockObj, tableNames.OfType<string>().ToArray());
                 //formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
                 formaObrazac.Closed += (s, args) => this.Close();
                 formaObrazac.Show();

@@ -53,9 +53,13 @@ namespace kolnikApp_klijent
                 if (loginState.Value == true)
                 {
                     this.Hide();
-                    glavnaForma newForm = new glavnaForma(sockObj, DataHandler.UserOib);                   
+                    glavnaForma newForm = new glavnaForma(sockObj);
                     newForm.Closed += (s, args) => this.Close();
                     newForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Pogrešno uneseni podaci za prijavu!");
                 }
             }
 

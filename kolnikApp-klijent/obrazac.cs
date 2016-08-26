@@ -16,13 +16,12 @@ namespace kolnikApp_klijent
     public partial class obrazac : Form
     {
         private CommunicationHandler sockObj;
-        private string userOib;
-        public obrazac(CommunicationHandler sockObj, string userOib, string[] tableNames)
+        public obrazac(CommunicationHandler sockObj, string[] tableNames)
         {
             this.sockObj = sockObj;
-            this.userOib = userOib;
             this.tablice = tableNames;
-            InitializeComponent();  
+            InitializeComponent();
+            ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
         }
 
         string[] tablice;
@@ -331,6 +330,12 @@ namespace kolnikApp_klijent
             {
                 LogoutButton.Hide();
             }
+        }
+
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            sockObj.SendLogoutRequest();
+            Application.Restart();
         }
     }
 }
