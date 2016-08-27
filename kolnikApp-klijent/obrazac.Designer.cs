@@ -35,7 +35,7 @@
             this.CreateSlika = new System.Windows.Forms.PictureBox();
             this.HelpSlika = new System.Windows.Forms.PictureBox();
             this.NatragSlika = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.LogoSlika = new System.Windows.Forms.PictureBox();
             this.KolnikAppHelp = new System.Windows.Forms.HelpProvider();
             this.LabelaPocetna = new System.Windows.Forms.Label();
             this.LabelaNovi = new System.Windows.Forms.Label();
@@ -50,7 +50,7 @@
             this.RestoreDown = new System.Windows.Forms.PictureBox();
             this.closeButton = new System.Windows.Forms.PictureBox();
             this.PanelZaSadrzaj = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.PodaciIzTablica = new System.Windows.Forms.DataGridView();
             this.Separator = new System.Windows.Forms.Label();
             this.NaslovTablice = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).BeginInit();
@@ -58,13 +58,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HelpSlika)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NatragSlika)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoSlika)).BeginInit();
             this.LijeviIzbornik.SuspendLayout();
             this.Header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.closeButton)).BeginInit();
             this.PanelZaSadrzaj.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PodaciIzTablica)).BeginInit();
             this.SuspendLayout();
             // 
             // LogoutButton
@@ -150,18 +151,18 @@
             this.NatragSlika.MouseEnter += new System.EventHandler(this.HomeSlika_MouseEnter);
             this.NatragSlika.MouseLeave += new System.EventHandler(this.HomeSlika_MouseLeave);
             // 
-            // pictureBox1
+            // LogoSlika
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(214, 107);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.LogoSlika.Dock = System.Windows.Forms.DockStyle.Top;
+            this.LogoSlika.Image = ((System.Drawing.Image)(resources.GetObject("LogoSlika.Image")));
+            this.LogoSlika.Location = new System.Drawing.Point(0, 0);
+            this.LogoSlika.Name = "LogoSlika";
+            this.LogoSlika.Size = new System.Drawing.Size(214, 107);
+            this.LogoSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.LogoSlika.TabIndex = 0;
+            this.LogoSlika.TabStop = false;
+            this.LogoSlika.Click += new System.EventHandler(this.LogoSlika_Click);
+            this.LogoSlika.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
             // KolnikAppHelp
             // 
@@ -225,7 +226,7 @@
             // LijeviIzbornik
             // 
             this.LijeviIzbornik.Controls.Add(this.MeniPanel);
-            this.LijeviIzbornik.Controls.Add(this.pictureBox1);
+            this.LijeviIzbornik.Controls.Add(this.LogoSlika);
             this.LijeviIzbornik.Dock = System.Windows.Forms.DockStyle.Left;
             this.LijeviIzbornik.Location = new System.Drawing.Point(0, 0);
             this.LijeviIzbornik.Name = "LijeviIzbornik";
@@ -326,7 +327,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelZaSadrzaj.BackColor = System.Drawing.Color.LightSlateGray;
-            this.PanelZaSadrzaj.Controls.Add(this.listBox1);
+            this.PanelZaSadrzaj.Controls.Add(this.PodaciIzTablica);
             this.PanelZaSadrzaj.Controls.Add(this.Separator);
             this.PanelZaSadrzaj.Controls.Add(this.NaslovTablice);
             this.PanelZaSadrzaj.Location = new System.Drawing.Point(223, 116);
@@ -334,13 +335,13 @@
             this.PanelZaSadrzaj.Size = new System.Drawing.Size(543, 418);
             this.PanelZaSadrzaj.TabIndex = 5;
             // 
-            // listBox1
+            // PodaciIzTablica
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(57, 82);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(363, 225);
-            this.listBox1.TabIndex = 4;
+            this.PodaciIzTablica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PodaciIzTablica.Location = new System.Drawing.Point(4, 54);
+            this.PodaciIzTablica.Name = "PodaciIzTablica";
+            this.PodaciIzTablica.Size = new System.Drawing.Size(536, 361);
+            this.PodaciIzTablica.TabIndex = 4;
             // 
             // Separator
             // 
@@ -385,7 +386,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HelpSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NatragSlika)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoSlika)).EndInit();
             this.LijeviIzbornik.ResumeLayout(false);
             this.Header.ResumeLayout(false);
             this.Header.PerformLayout();
@@ -394,13 +395,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.closeButton)).EndInit();
             this.PanelZaSadrzaj.ResumeLayout(false);
             this.PanelZaSadrzaj.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PodaciIzTablica)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox LogoSlika;
         private System.Windows.Forms.PictureBox NatragSlika;
         private System.Windows.Forms.PictureBox HelpSlika;
         private System.Windows.Forms.Button LogoutButton;
@@ -423,6 +425,6 @@
         private System.Windows.Forms.Panel PanelZaSadrzaj;
         private System.Windows.Forms.Label Separator;
         private System.Windows.Forms.Label NaslovTablice;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.DataGridView PodaciIzTablica;
     }
 }

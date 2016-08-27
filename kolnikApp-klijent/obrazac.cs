@@ -22,20 +22,24 @@ namespace kolnikApp_klijent
             this.tablice = tableNames;
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
+            
         }
-
+        //popis svih tablica kojima korisnik ima pravo pristupati
         string[] tablice;
-        
+        //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
+        //Event handler za klik na ikonicu "Help"
         private void HelpSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
+            //koristimo exeDirectory gdje je spremljena putanja i dodajemo naziv help file-a 
             String HelpFilepath = "file://" + Path.Combine(exeDirectory, "KolnikAppHelp.chm");
             Help.ShowHelp(this, HelpFilepath);     
         }
 
-        //pomicanje forme
+        //Maknuli smo boarder pa omogućujemo micanje aplikacije
+        //detaljnije komentirati!!!!!!!!!!!!!
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -45,6 +49,7 @@ namespace kolnikApp_klijent
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        //funkcija koja vraća uljepšani naziv za ime tablice koje je prosljeđeno
         private string UrediImeGumba(string NazivTablice)
         {
             string PravoIme = "";
@@ -92,11 +97,12 @@ namespace kolnikApp_klijent
 
         private void obrazac_Load(object sender, EventArgs e)
         {
-            //gradi meni
+            //dinamički se stvaraju gumbi na temelju broja tablica kojima korisnik ima pravo pristupa
             for (int i = 0; i < tablice.Length; i++)
             {
                 Button GumbMenija = new Button();
                 GumbMenija.Name = tablice[i];
+                //šalje se ime tablice na "uljepšavanje"
                 GumbMenija.Text = UrediImeGumba(tablice[i]);
                 GumbMenija.Tag = tablice[i];
                 GumbMenija.Location = new Point(0, 30 * i);
@@ -111,6 +117,7 @@ namespace kolnikApp_klijent
             }
         }
 
+        //sve gumbe resetiramo na početni dizajn, označvamo kliknuti gumb
         private void oznaciGumb(object sender)
         {
             foreach (Control Gumb in this.MeniPanel.Controls)
@@ -121,7 +128,10 @@ namespace kolnikApp_klijent
             Gumbic.ForeColor = Color.Orange;
         }
 
+        //inicijalizacija stoga za omogućavanje povratka unatrag kroz aplikaciju
         Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
+
+        //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
         private void ButtonClick1(object sender, EventArgs e)
         {
             LogoutButton.Hide();
@@ -130,11 +140,12 @@ namespace kolnikApp_klijent
             if (NaslovTablice.Text != "Naslov")
             {
                 StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
-            }            
+            }
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
         }
 
+        //vraćamo se unatrag za jednu "stranicu"
         private void NatragSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
@@ -198,7 +209,9 @@ namespace kolnikApp_klijent
         {
             LabelaPomoc.Hide();
         }
+        //kraj prikazivanja i skrivanja naziva ikona
 
+        //funkcija koja iz naziva tablice stvara ime forme i stavlja ga u string
         private string pretvoriUImeForme(string vrsta)
         {
             string ImeForme = "frm";
@@ -214,6 +227,7 @@ namespace kolnikApp_klijent
             }
             return ImeForme;
         }
+        //otvaranje nove forme za "Create" na temelju dobivenog imena
         private void CreateSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
@@ -224,17 +238,20 @@ namespace kolnikApp_klijent
 
         }
 
+        //zatvaranje aplikacije klikom na "X"
         private void closeButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        //minimiziranje aplikacije klikom na "_"
         private void Minimize_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
             this.WindowState = FormWindowState.Minimized;
         }
 
+        //stavljanje aplikacije u "window" mode
         private void RestoreDown_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
@@ -248,6 +265,7 @@ namespace kolnikApp_klijent
             }
         }
 
+        //vidljivost gumba logout
         private void ImeKorisnika_Click(object sender, EventArgs e)
         {
             if (LogoutButton.Visible)
@@ -260,16 +278,18 @@ namespace kolnikApp_klijent
             }            
         }
 
+        //skrivanje logout gumba
         private void obrazac_MouseClick(object sender, MouseEventArgs e)
         {
             LogoutButton.Hide();
         }
-
+        //skrivanje logout gumba
         private void MenuLista_MouseClick(object sender, MouseEventArgs e)
         {
             LogoutButton.Hide();
-        }       
+        }
 
+        //otvaranje nove forme za "Update" na temelju dobivenog imena
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
@@ -280,11 +300,14 @@ namespace kolnikApp_klijent
 
         }
 
+        //skrivanje logout gumba
         private void DeleteSlika_Click(object sender, EventArgs e)
         {
             LogoutButton.Hide();
         }
 
+        //omogućavanje micanje forme po ekranu ako smo pozicionirani na formi
+        //i držimo pritisnutu tipku miša 
         private void obrazac_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -294,6 +317,8 @@ namespace kolnikApp_klijent
             }
         }
 
+        //omogućavanje micanje forme po ekranu ako smo pozicionirani na lijevom panelu
+        //i držimo pritisnutu tipku miša 
         private void LijeviIzbornik_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -303,6 +328,8 @@ namespace kolnikApp_klijent
             }
         }
 
+        //omogućavanje micanje forme po ekranu ako smo pozicionirani na logu
+        //i držimo pritisnutu tipku miša 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -311,7 +338,8 @@ namespace kolnikApp_klijent
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-
+        //omogućavanje micanje forme po ekranu ako smo pozicionirani na panelu s ikonama
+        //i držimo pritisnutu tipku miša 
         private void Header_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -321,14 +349,15 @@ namespace kolnikApp_klijent
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        //skirvanje logout gumba
+        private void LogoSlika_Click(object sender, EventArgs e)
         {
             if (LogoutButton.Visible)
             {
                 LogoutButton.Hide();
             }
         }
-
+        //skirvanje logout gumba
         private void LijeviIzbornik_MouseClick(object sender, MouseEventArgs e)
         {
             if (LogoutButton.Visible)
@@ -336,7 +365,7 @@ namespace kolnikApp_klijent
                 LogoutButton.Hide();
             }
         }
-
+        //skirvanje logout gumba
         private void Header_MouseClick(object sender, MouseEventArgs e)
         {
             if (LogoutButton.Visible)
@@ -345,6 +374,7 @@ namespace kolnikApp_klijent
             }
         }
 
+        //logout
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             sockObj.SendLogoutRequest();
