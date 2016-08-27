@@ -33,7 +33,11 @@ namespace kolnikApp_klijent
 
         void ProcessChanges (object obj, ListChangedEventArgs e)
         {
-            //if (e.ListChangedType == ListChangedType.ItemAdded)
+            if (DataHandler.ChangesCommited)
+            {
+                Console.Beep(300,300);
+                //refresh controls and perform queries on lists in which data is stored
+            }
         }
 
         string[] tablice;

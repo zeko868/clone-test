@@ -37,6 +37,27 @@ namespace kolnikApp_komponente
                 loginState = value;
             }
         }
+
+        private static bool changesCommited = false;
+
+        public static bool ChangesCommited
+        {
+            get
+            {
+                if (changesCommited)
+                {
+                    bool tmp = changesCommited;
+                    changesCommited = false;
+                    return tmp;
+                }
+                return false;
+            }
+            private set
+            {
+                changesCommited = value;
+            }
+        }
+
         private static zaposlenik loggedUser;
 
         public static zaposlenik LoggedUser
@@ -570,6 +591,7 @@ namespace kolnikApp_komponente
             }
             else
             {
+                ChangesCommited = true;
                 IsConfirmationOfPreviousRequest = true;
             }
         }
