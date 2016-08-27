@@ -31,10 +31,10 @@ namespace kolnikApp_komponente
             netSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             netSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.PacketInformation, true);
             netSocketServerArgs = new SocketAsyncEventArgs();
-            netSocketBuffer = new byte[1024];
+            netSocketBuffer = new byte[102400];
             netSocket.ExclusiveAddressUse = false;
             netSocketServerArgs.Completed += netSocketServerArgs_Completed;
-            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, 1024);
+            netSocketServerArgs.SetBuffer(netSocketBuffer, 0, 102400);
             StartListening();
             if (this.isServer)
             {
@@ -144,7 +144,7 @@ namespace kolnikApp_komponente
                 string receivedContent = UTF8Encoding.UTF8.GetString(netSocketServerArgs.Buffer, 0, e.BytesTransferred);
                 netSocket.ReceiveMessageFromAsync(netSocketServerArgs);
                 DataHandler dataHandlerInstance = new DataHandler();
-                string[] responses = null;
+                string response;
                 lock (thisLock)
                 {
                     dataHandlerInstance.InitializeDataContext();
@@ -153,8 +153,7 @@ namespace kolnikApp_komponente
                     dataHandlerInstance.ClearCurrentDataContext();
                     if (dataHandlerInstance.HasErrorOccurred)
                     {
-                        responses = new string[1];
-                        responses[0] = dataHandlerInstance.ConstructErrorMessageContent();
+                        response = dataHandlerInstance.ConstructErrorMessageContent();
                     }
                     else if (dataHandlerInstance.IsConfirmationOfPreviousRequest)
                     {
@@ -166,23 +165,18 @@ namespace kolnikApp_komponente
                     }
                     else
                     {
-                        responses = dataHandlerInstance.ResponseForSending;
-                        if (responses == null)
+                        response = dataHandlerInstance.ResponseForSending;
+                        if (response == null)
                         {
                             return;
                         }
-                        for (int i = 0; i < responses.Length; i++)
-                        {
-                            responses[i] = dataHandlerInstance.AddWrapperOverXMLDatagroups(responses[i]);
-                        }
-                        //[0]...sadrzaj koji se salje natrag posiljatelju, [1]...sadrzaj koji se salje ostalim klijentima
+                        response = dataHandlerInstance.AddWrapperOverXMLDatagroups(response);
                     }
                 }
 
-                MessageSend(responses[0], e.RemoteEndPoint);
-                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfOtherDestinations)
+                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfDestinations)
                 {
-                    MessageSend(responses[1], ipAddress);
+                    MessageSend(response, ipAddress);
                 }
             }
         }
@@ -209,9 +203,9 @@ namespace kolnikApp_komponente
                 }
                 else
                 {
-                    response = dataHandlerInstance.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending[0]);
+                    response = dataHandlerInstance.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending);
                 }
-                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfOtherDestinations)
+                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfDestinations)
                 {
                     MessageSend(response, ipAddress);
                 }

@@ -1983,6 +1983,7 @@ namespace kolnikApp_komponente
         }
     }
 
+    [DataContract(Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.rabat")]
     public partial class rabat : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -2365,6 +2366,7 @@ namespace kolnikApp_komponente
         }
     }
 
+    [DataContract(Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.radi")]
     public partial class radi : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -2734,6 +2736,7 @@ namespace kolnikApp_komponente
         }
     }
 
+    [DataContract(Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.tablicna_privilegija")]
     public partial class tablicna_privilegija : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -3270,6 +3273,7 @@ namespace kolnikApp_komponente
         }
     }
 
+    [DataContract(Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.vozi")]
     public partial class vozi : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -3743,6 +3747,7 @@ namespace kolnikApp_komponente
         }
     }
 
+    [DataContract(Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.zaposlen")]
     public partial class zaposlen : INotifyPropertyChanging, INotifyPropertyChanged
     {

@@ -59,7 +59,7 @@ namespace kolnikApp_klijent
                 }
                 else
                 {
-                    MessageBox.Show("Pogrešno uneseni podaci za prijavu!");
+                    MessageBox.Show("Pogrešno uneseni podaci za prijavu ili je već netko s navedenim korisničkim imenom je već prijavljen!");
                 }
             }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using kolnikApp_komponente;
 using System.Threading;
+using System.ComponentModel;
 
 namespace kolnikApp_klijent
 {
@@ -41,7 +42,7 @@ namespace kolnikApp_klijent
                     break;
             }
 
-            DataHandler.entityNamesWithReferencesToBelongingDataStores = new Dictionary<string, List<object>>();
+            DataHandler.entityNamesWithReferencesToBelongingDataStores = new Dictionary<string, BindingList<object>>();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login(sockObj));

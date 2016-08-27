@@ -20,11 +20,31 @@ namespace kolnikApp_klijent
         {
             this.sockObj = sockObj;
             this.tablice = tableNames;
+            DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
+            foreach (string nazivTablice in tablice)
+            {
+                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
+                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
+            }
+            sockObj.SendRequestForSendingUsedData();
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
             
         }
+<<<<<<< HEAD
         //popis svih tablica kojima korisnik ima pravo pristupati
+=======
+
+        void ProcessChanges (object obj, ListChangedEventArgs e)
+        {
+            if (DataHandler.ChangesCommited)
+            {
+                Console.Beep(300,300);
+                //refresh controls and perform queries on lists in which data is stored
+            }
+        }
+
+>>>>>>> origin/master
         string[] tablice;
         //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);

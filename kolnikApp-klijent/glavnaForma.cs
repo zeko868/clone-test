@@ -14,7 +14,7 @@ namespace kolnikApp_klijent
     public partial class glavnaForma : Form
     {
         private CommunicationHandler sockObj;
-        private List<object> tableNames = new List<object>();
+        private BindingList<object> tableNames = new BindingList<object>();
         public glavnaForma(CommunicationHandler sockObj)
         {
             this.sockObj = sockObj;
