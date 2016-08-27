@@ -20,8 +20,20 @@ namespace kolnikApp_klijent
         {
             this.sockObj = sockObj;
             this.tablice = tableNames;
+            DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
+            foreach (string nazivTablice in tablice)
+            {
+                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
+                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
+            }
+            sockObj.SendRequestForSendingUsedData();
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
+        }
+
+        void ProcessChanges (object obj, ListChangedEventArgs e)
+        {
+            //if (e.ListChangedType == ListChangedType.ItemAdded)
         }
 
         string[] tablice;

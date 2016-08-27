@@ -20,6 +20,8 @@ namespace kolnikApp_komponente
 {
     public class DataHandler : IDisposable
     {
+        private bool sendToAll = false;
+
         private static Nullable<bool> loginState = null;
 
         public static Nullable<bool> LoginState
@@ -58,10 +60,10 @@ namespace kolnikApp_komponente
         public string EntityOnWhichErrorRefers = null;
         public bool IsConfirmationOfPreviousRequest = false;
         public bool SendWhenMessageWillBeReceivedFromMicrocontroller = false;
-        public string[] ResponseForSending = null;
-        public System.Net.IPEndPoint[] IPAddressesOfOtherDestinations = null;
+        public string ResponseForSending;
+        public System.Net.IPEndPoint[] IPAddressesOfDestinations = null;
 
-        public static Dictionary<string, List<object>> entityNamesWithReferencesToBelongingDataStores = null;
+        public static Dictionary<string, BindingList<object>> entityNamesWithReferencesToBelongingDataStores = null;
         public static Dictionary<string, System.Windows.Forms.Control> entityNamesWithBelongingContainers = null;
 
         public static Nullable<T> TypeToNullableType<T>(string s) where T : struct
@@ -115,7 +117,7 @@ namespace kolnikApp_komponente
                 int offset = xmlOutput.IndexOf('>') + 1;
                 xmlOutput = xmlOutput.Substring(offset, xmlOutput.LastIndexOf('<') - offset);
             }
-            return xmlOutput;
+            return Regex.Replace(xmlOutput.Replace("xmlns:z=\"http://schemas.microsoft.com/2003/10/Serialization/\"", "").Replace(" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" ", "").Replace(" i:nil=\"true\"", ""), @" z:Id=""i\d+""", "");
         }
 
         public string AddWrapperOverXMLDatagroups(string XMLData)
@@ -264,7 +266,14 @@ namespace kolnikApp_komponente
                     else
                     {
                         TypeConverter conv = TypeDescriptor.GetConverter(info.PropertyType);
-                        info.SetValue(p, conv.ConvertFrom(value));
+                        if (info.PropertyType.Name == "Char")
+                        {
+                            info.SetValue(p, (char)byte.Parse((string)value));
+                        }
+                        else
+                        {
+                            info.SetValue(p, conv.ConvertFrom(value));
+                        }
                     }
                 }
             }
@@ -336,29 +345,17 @@ namespace kolnikApp_komponente
                             System.Windows.Forms.MessageBox.Show("Pristiglo je novo vozilo pred otpremište!");
                         }
                         break;
-                    case "odgovor_na_podatkovni_zahtjev":
+                    case "pogreska_o_podatkovnom_zahtjevu":
                         if (isClientSide)
                         {
-                            var stateAttribute = datagroup.Element(entityName).Attribute("state");
-                            if (stateAttribute != null)
-                            {
-                                if (stateAttribute.Value == "success")
-                                {
-                                    
-                                }
-                            }
-                            else
-                            {
-                                System.Windows.Forms.MessageBox.Show(datagroup.Element(entityName).Value);
-                            }
+                            System.Windows.Forms.MessageBox.Show(datagroup.Element(entityName).Value);
                         }
                         break;
                     case "provjeri_dostupnost":
                         if (isClientSide)
                         {
                             //VratiPaketPosluziteljuSPotvrdomOAktivnosti
-                            ResponseForSending = new string[1];
-                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost", "active"));
+                            ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost", "active"));
                         }
                         else
                         {
@@ -392,10 +389,9 @@ namespace kolnikApp_komponente
                                 else
                                 {
                                     ClientsAddressesList.RegisterUser(userOib, address);
-                                    ResponseForSending = new string[1];
                                     Dictionary<string, string> attributes = new Dictionary<string, string>();
                                     attributes["success"] = "success";
-                                    ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", ConvertObjectsToXMLData(queryResult.First().zaposlenik), attributes));
+                                    ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", ConvertObjectsToXMLData(queryResult.First().zaposlenik), attributes));
                                 }
                             }
                             else
@@ -467,8 +463,7 @@ namespace kolnikApp_komponente
                     case "tablica":
                         if (!isClientSide)
                         {
-                            ResponseForSending = new string[1];
-                            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(String.Join("", GetListOfAccessibleEntityTypes(address).Select(x => ConvertNonObjectDataIntoXMLData("tablica", x))));
+                            ResponseForSending = AddHeaderInfoToXMLDatagroup(String.Join("", GetListOfAccessibleEntityTypes(address).Select(x => ConvertNonObjectDataIntoXMLData("tablica", x))));
                         }
                         else
                         {
@@ -479,7 +474,7 @@ namespace kolnikApp_komponente
                         }
                         break;
                 default:
-                        if (IsUserPrivilegedToDoAnAction(address, entityName, action))
+                        if (isClientSide || IsUserPrivilegedToDoAnAction(address, entityName, action))
                         {
                             foreach (var redak in datagroup.Elements())
                             {
@@ -505,11 +500,6 @@ namespace kolnikApp_komponente
                                     else
                                     {
                                         var recordSet = dataContextInstance.ExecuteQuery(type, "SELECT * FROM " + type.Name);
-                                        if (ResponseForSending == null)
-                                        {
-                                            ResponseForSending = new string[1];
-                                            ResponseForSending[0] = "";
-                                        }
 
                                         var listType = typeof(List<>);
                                         var constructedListType = listType.MakeGenericType(type);
@@ -519,11 +509,12 @@ namespace kolnikApp_komponente
                                         {
                                             instance.Add(record);
                                         }
-                                        ResponseForSending[0] += AddHeaderInfoToXMLDatagroup(ConvertObjectsToXMLData(instance), 'C');
+                                        ResponseForSending += AddHeaderInfoToXMLDatagroup(ConvertObjectsToXMLData(instance), 'C');
                                     }
                                 }
                                 else
                                 {
+                                    AssignObjectsProperties(sth, redak);
                                     object oldValIfUpdating = null;
                                     if (action == 'U')
                                     {
@@ -553,14 +544,13 @@ namespace kolnikApp_komponente
                         {
                             HasErrorOccurred = true;
                             ErrorInfo = ex.Message;
-                            EntityOnWhichErrorRefers = "odgovor_na_podatkovni_zahtjev";
+                            EntityOnWhichErrorRefers = "pogreska_o_podatkovnom_zahtjevu";
                         }
                         else
                         {
                             ConstructBaseOfMessageContentForSending(XMLData, address);
                             string changesPerformedByTrigger = ex.Message.Substring(successIdentifier.Length);
-                            ResponseForSending[0] += changesPerformedByTrigger;
-                            ResponseForSending[1] += changesPerformedByTrigger;
+                            ResponseForSending += changesPerformedByTrigger;
                         }
                     }
                 }
@@ -568,7 +558,19 @@ namespace kolnikApp_komponente
             }
             if (!isClientSide)
             {
-                IPAddressesOfOtherDestinations = ClientsAddressesList.addressList.Where(x => !x.EndPoint.Equals(address)).Select(x => x.EndPoint).ToArray();
+                if (sendToAll)
+                {
+                    IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => !x.EndPoint.Equals(address)).Select(x => x.EndPoint).ToArray();
+                }
+                else
+                {
+                    IPAddressesOfDestinations = new System.Net.IPEndPoint[1];
+                    IPAddressesOfDestinations[0] = address;
+                }
+            }
+            else
+            {
+                IsConfirmationOfPreviousRequest = true;
             }
         }
 
@@ -579,11 +581,8 @@ namespace kolnikApp_komponente
 
         private void ConstructBaseOfMessageContentForSending(string XMLData, System.Net.IPEndPoint senderIP)
         {
-            ResponseForSending = new string[2];
-            Dictionary<string, string> resultDescriptors = new Dictionary<string, string>();
-            resultDescriptors["state"] = "success";
-            ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odgovor_na_podatkovni_zahtjev", "", resultDescriptors));
-            ResponseForSending[1] = XMLData;
+            ResponseForSending += XMLData;
+            sendToAll = true;
             //select radi.zaposlenik,tablicna_privilegija.naziv_tablice from radi
             //join tablicna_privilegija on radi.radno_mjesto = tablicna_privilegija.radno_mjesto
             //group by radi.zaposlenik, tablicna_privilegija.naziv_tablice having count(*) > 0;
@@ -601,29 +600,35 @@ namespace kolnikApp_komponente
         public void StoreReceivedDataIntoFormsLists(char action, object obj, object oldObjIfUpdate = null)
         {
             string objectTypename = obj.GetType().Name;
-            switch (action)
+            if (entityNamesWithReferencesToBelongingDataStores.ContainsKey(objectTypename))
             {
-                case 'C':
-                    entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
-                    break;
-                case 'D':
-                    entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(obj);
-                    break;
-                case 'U':
-                    entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(oldObjIfUpdate);
-                    entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
-                    break;
-            }
+                switch (action)
+                {
+                    case 'C':
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
+                        break;
+                    case 'D':
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(obj);
+                        break;
+                    case 'U':
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(oldObjIfUpdate);
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
+                        break;
+                }
 
-            string controlTypename = entityNamesWithBelongingContainers[objectTypename].GetType().Name;
-            switch (controlTypename)
-            {
-                case "DataGridView":
-                    ((System.Windows.Forms.DataGridView)entityNamesWithBelongingContainers[objectTypename]).Refresh();
-                    break;
-                case "ComboBox":
-                    ((System.Windows.Forms.ComboBox)entityNamesWithBelongingContainers[objectTypename]).Refresh();
-                    break;
+                if (entityNamesWithBelongingContainers != null && entityNamesWithBelongingContainers.ContainsKey(objectTypename))
+                {
+                    string controlTypename = entityNamesWithBelongingContainers[objectTypename].GetType().Name;
+                    switch (controlTypename)
+                    {
+                        case "DataGridView":
+                            ((System.Windows.Forms.DataGridView)entityNamesWithBelongingContainers[objectTypename]).Refresh();
+                            break;
+                        case "ComboBox":
+                            ((System.Windows.Forms.ComboBox)entityNamesWithBelongingContainers[objectTypename]).Refresh();
+                            break;
+                    }
+                }
             }
         }
 
@@ -668,13 +673,12 @@ namespace kolnikApp_komponente
                 }
                 string oibIdentifier = "OIB=";
                 string oibPrimatelja = primljenaPoruka.Substring(primljenaPoruka.IndexOf(oibIdentifier) + oibIdentifier.Length);
-                IPAddressesOfOtherDestinations = ClientsAddressesList.addressList.Where(x => x.Oib == oibPrimatelja).Select(x => x.EndPoint).ToArray();
+                IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => x.Oib == oibPrimatelja).Select(x => x.EndPoint).ToArray();
                 if (HasErrorOccurred)
                 {
                     return;
                 }
-                ResponseForSending = new string[1];
-                ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature", temperatura.ToString()));
+                ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature", temperatura.ToString()));
             }
             else if (primljenaPoruka.StartsWith("NOTIFY"))
             {
@@ -685,9 +689,8 @@ namespace kolnikApp_komponente
                                    on radi.zaposlenik equals ip_adresar.Oib
                                    where radi.datum_zavrsetka == null && radno_mjesto.naziv == "otpremitelj"
                                    select ip_adresar.EndPoint;
-                IPAddressesOfOtherDestinations = otpremnicari.ToArray();
-                ResponseForSending = new string[1];
-                ResponseForSending[0] = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", ""));
+                IPAddressesOfDestinations = otpremnicari.ToArray();
+                ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", ""));
             }
         }
 
