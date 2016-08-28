@@ -28,12 +28,8 @@ namespace kolnikApp_klijent
             }
             sockObj.SendRequestForSendingUsedData();
             InitializeComponent();
-            ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
-            
-        }
-<<<<<<< HEAD
-        //popis svih tablica kojima korisnik ima pravo pristupati
-=======
+            ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;            
+        }     
 
         void ProcessChanges (object obj, ListChangedEventArgs e)
         {
@@ -44,7 +40,7 @@ namespace kolnikApp_klijent
             }
         }
 
->>>>>>> origin/master
+        //popis svih tablica kojima korisnik ima pravo pristupati
         string[] tablice;
         //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
@@ -151,18 +147,135 @@ namespace kolnikApp_klijent
         //inicijalizacija stoga za omogućavanje povratka unatrag kroz aplikaciju
         Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
 
+        private void SakrijNebitneStupceUDataGridView(string NaslovTablice)
+        {
+            switch (NaslovTablice)
+            {
+                case "Korisnički račun":
+                    for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                    break;
+                case "Nalog za proizvodnju":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                         {
+                        if (this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik" || this.PodaciIzTablica.Columns[i].HeaderText == "gradiliste1" || this.PodaciIzTablica.Columns[i].HeaderText == "temeljnica1")
+                        {
+                                 this.PodaciIzTablica.Columns[i].Visible = false;
+                             }
+                         }
+                         break;
+                     case "Narudžbenica":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "poduzece")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Otpremnica":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if (this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik" || this.PodaciIzTablica.Columns[i].HeaderText == "racun1" || this.PodaciIzTablica.Columns[i].HeaderText == "temeljnica1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Rabat":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "artikl1" || this.PodaciIzTablica.Columns[i].HeaderText == "poduzece")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Račun":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Radi":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik1" || this.PodaciIzTablica.Columns[i].HeaderText == "radno_mjesto1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Tablična privilegija":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "radno_mjesto1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Temeljnica":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if(this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik" || this.PodaciIzTablica.Columns[i].HeaderText == "vozilo1" || this.PodaciIzTablica.Columns[i].HeaderText == "artikl1" || this.PodaciIzTablica.Columns[i].HeaderText == "otpremnica" || this.PodaciIzTablica.Columns[i].HeaderText == "nalog_za_proizvodnju")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;
+                     case "Vozi":
+                         for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if (this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik" || this.PodaciIzTablica.Columns[i].HeaderText == "vozilo1" || this.PodaciIzTablica.Columns[i].HeaderText == "vozi2" || this.PodaciIzTablica.Columns[i].HeaderText == "vozi1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                         break;                    
+                    case "Zaposlenik":
+                    for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if (this.PodaciIzTablica.Columns[i].HeaderText == "korisnicki_racun")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                    break;
+                case "Zaposlen":
+                    for (int i = 0; i < PodaciIzTablica.ColumnCount; i++)
+                    {
+                        if (this.PodaciIzTablica.Columns[i].HeaderText == "zaposlenik1" || this.PodaciIzTablica.Columns[i].HeaderText == "poduzece1")
+                        {
+                            this.PodaciIzTablica.Columns[i].Visible = false;
+                        }
+                    }
+                    break;
+            }
+        }
         //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
         private void ButtonClick1(object sender, EventArgs e)
         {
             LogoutButton.Hide();
             Button Gumb = sender as Button;
             oznaciGumb(sender);
-            if (NaslovTablice.Text != "Naslov")
+            if (NaslovTablice.Text != "Dobro došli!")
             {
                 StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
             }
+            PodaciIzTablica.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[Gumb.Tag.ToString()];
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
+            SakrijNebitneStupceUDataGridView(Gumb.Text);
+            this.PodaciIzTablica.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.AllCells;
         }
 
         //vraćamo se unatrag za jednu "stranicu"
@@ -174,6 +287,8 @@ namespace kolnikApp_klijent
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
                 Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
                 oznaciGumb(GumbMenija);
+                PodaciIzTablica.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[GumbMenija.Tag.ToString()];
+                SakrijNebitneStupceUDataGridView(GumbMenija.Text);
                 NaslovTablice.Text = GumbMenija.Text;
                 NaslovTablice.Tag = GumbMenija.Tag;
             }          

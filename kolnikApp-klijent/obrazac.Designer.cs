@@ -237,9 +237,11 @@
             // 
             // MeniPanel
             // 
+            this.MeniPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.MeniPanel.Location = new System.Drawing.Point(0, 116);
             this.MeniPanel.Name = "MeniPanel";
-            this.MeniPanel.Size = new System.Drawing.Size(214, 421);
+            this.MeniPanel.Size = new System.Drawing.Size(214, 430);
             this.MeniPanel.TabIndex = 1;
             // 
             // Header
@@ -337,6 +339,9 @@
             // 
             // PodaciIzTablica
             // 
+            this.PodaciIzTablica.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PodaciIzTablica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.PodaciIzTablica.Location = new System.Drawing.Point(4, 54);
             this.PodaciIzTablica.Name = "PodaciIzTablica";
@@ -359,9 +364,9 @@
             this.NaslovTablice.ForeColor = System.Drawing.Color.White;
             this.NaslovTablice.Location = new System.Drawing.Point(3, 9);
             this.NaslovTablice.Name = "NaslovTablice";
-            this.NaslovTablice.Size = new System.Drawing.Size(93, 29);
+            this.NaslovTablice.Size = new System.Drawing.Size(156, 29);
             this.NaslovTablice.TabIndex = 2;
-            this.NaslovTablice.Text = "Naslov";
+            this.NaslovTablice.Text = "Dobro došli!";
             // 
             // obrazac
             // 
