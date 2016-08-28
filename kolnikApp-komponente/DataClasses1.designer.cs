@@ -265,10 +265,6 @@ namespace kolnikApp_komponente
 
         private string _jedinica_mjere;
 
-        private EntitySet<rabat> _rabats;
-
-        private EntitySet<temeljnica> _temeljnicas;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -285,8 +281,6 @@ namespace kolnikApp_komponente
 
         public artikl()
         {
-            this._rabats = new EntitySet<rabat>(new Action<rabat>(this.attach_rabats), new Action<rabat>(this.detach_rabats));
-            this._temeljnicas = new EntitySet<temeljnica>(new Action<temeljnica>(this.attach_temeljnicas), new Action<temeljnica>(this.detach_temeljnicas));
             OnCreated();
         }
 
@@ -374,34 +368,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "artikl_rabat", Storage = "_rabats", ThisKey = "id", OtherKey = "artikl")]
-        public EntitySet<rabat> rabats
-        {
-            get
-            {
-                return this._rabats;
-            }
-            set
-            {
-                this._rabats.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "artikl_temeljnica", Storage = "_temeljnicas", ThisKey = "id", OtherKey = "artikl")]
-        public EntitySet<temeljnica> temeljnicas
-        {
-            get
-            {
-                return this._temeljnicas;
-            }
-            set
-            {
-                this._temeljnicas.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -421,33 +387,9 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_rabats(rabat entity)
-        {
-            this.SendPropertyChanging();
-            entity.artikl1 = this;
-        }
-
-        private void detach_rabats(rabat entity)
-        {
-            this.SendPropertyChanging();
-            entity.artikl1 = null;
-        }
-
-        private void attach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.artikl1 = this;
-        }
-
-        private void detach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.artikl1 = null;
-        }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.gradiliste")]
     public partial class gradiliste : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -457,8 +399,6 @@ namespace kolnikApp_komponente
         private int _id;
 
         private string _naziv_mjesta;
-
-        private EntitySet<nalog_za_proizvodnju> _nalog_za_proizvodnjus;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -472,7 +412,6 @@ namespace kolnikApp_komponente
 
         public gradiliste()
         {
-            this._nalog_za_proizvodnjus = new EntitySet<nalog_za_proizvodnju>(new Action<nalog_za_proizvodnju>(this.attach_nalog_za_proizvodnjus), new Action<nalog_za_proizvodnju>(this.detach_nalog_za_proizvodnjus));
             OnCreated();
         }
 
@@ -518,20 +457,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "gradiliste_nalog_za_proizvodnju", Storage = "_nalog_za_proizvodnjus", ThisKey = "id", OtherKey = "gradiliste")]
-        public EntitySet<nalog_za_proizvodnju> nalog_za_proizvodnjus
-        {
-            get
-            {
-                return this._nalog_za_proizvodnjus;
-            }
-            set
-            {
-                this._nalog_za_proizvodnjus.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -551,21 +476,9 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_nalog_za_proizvodnjus(nalog_za_proizvodnju entity)
-        {
-            this.SendPropertyChanging();
-            entity.gradiliste1 = this;
-        }
-
-        private void detach_nalog_za_proizvodnjus(nalog_za_proizvodnju entity)
-        {
-            this.SendPropertyChanging();
-            entity.gradiliste1 = null;
-        }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.zaposlenik")]
     public partial class zaposlenik : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -577,22 +490,6 @@ namespace kolnikApp_komponente
         private string _ime;
 
         private string _prezime;
-
-        private EntityRef<korisnicki_racun> _korisnicki_racun;
-
-        private EntitySet<nalog_za_proizvodnju> _nalog_za_proizvodnjus;
-
-        private EntitySet<otpremnica> _otpremnicas;
-
-        private EntitySet<racun> _racuns;
-
-        private EntitySet<radi> _radis;
-
-        private EntitySet<temeljnica> _temeljnicas;
-
-        private EntitySet<vozi> _vozis;
-
-        private EntitySet<zaposlen> _zaposlens;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -608,14 +505,6 @@ namespace kolnikApp_komponente
 
         public zaposlenik()
         {
-            this._korisnicki_racun = default(EntityRef<korisnicki_racun>);
-            this._nalog_za_proizvodnjus = new EntitySet<nalog_za_proizvodnju>(new Action<nalog_za_proizvodnju>(this.attach_nalog_za_proizvodnjus), new Action<nalog_za_proizvodnju>(this.detach_nalog_za_proizvodnjus));
-            this._otpremnicas = new EntitySet<otpremnica>(new Action<otpremnica>(this.attach_otpremnicas), new Action<otpremnica>(this.detach_otpremnicas));
-            this._racuns = new EntitySet<racun>(new Action<racun>(this.attach_racuns), new Action<racun>(this.detach_racuns));
-            this._radis = new EntitySet<radi>(new Action<radi>(this.attach_radis), new Action<radi>(this.detach_radis));
-            this._temeljnicas = new EntitySet<temeljnica>(new Action<temeljnica>(this.attach_temeljnicas), new Action<temeljnica>(this.detach_temeljnicas));
-            this._vozis = new EntitySet<vozi>(new Action<vozi>(this.attach_vozis), new Action<vozi>(this.detach_vozis));
-            this._zaposlens = new EntitySet<zaposlen>(new Action<zaposlen>(this.attach_zaposlens), new Action<zaposlen>(this.detach_zaposlens));
             OnCreated();
         }
 
@@ -682,134 +571,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_korisnicki_racun", Storage = "_korisnicki_racun", ThisKey = "oib", OtherKey = "zaposlenik", IsUnique = true, IsForeignKey = false)]
-        public korisnicki_racun korisnicki_racun
-        {
-            get
-            {
-                return this._korisnicki_racun.Entity;
-            }
-            set
-            {
-                korisnicki_racun previousValue = this._korisnicki_racun.Entity;
-                if (((previousValue != value)
-                            || (this._korisnicki_racun.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._korisnicki_racun.Entity = null;
-                        previousValue.zaposlenik1 = null;
-                    }
-                    this._korisnicki_racun.Entity = value;
-                    if ((value != null))
-                    {
-                        value.zaposlenik1 = this;
-                    }
-                    this.SendPropertyChanged("korisnicki_racun");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_nalog_za_proizvodnju", Storage = "_nalog_za_proizvodnjus", ThisKey = "oib", OtherKey = "izdavatelj")]
-        public EntitySet<nalog_za_proizvodnju> nalog_za_proizvodnjus
-        {
-            get
-            {
-                return this._nalog_za_proizvodnjus;
-            }
-            set
-            {
-                this._nalog_za_proizvodnjus.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_otpremnica", Storage = "_otpremnicas", ThisKey = "oib", OtherKey = "otpremitelj")]
-        public EntitySet<otpremnica> otpremnicas
-        {
-            get
-            {
-                return this._otpremnicas;
-            }
-            set
-            {
-                this._otpremnicas.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_racun", Storage = "_racuns", ThisKey = "oib", OtherKey = "izdavatelj")]
-        public EntitySet<racun> racuns
-        {
-            get
-            {
-                return this._racuns;
-            }
-            set
-            {
-                this._racuns.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_radi", Storage = "_radis", ThisKey = "oib", OtherKey = "zaposlenik")]
-        public EntitySet<radi> radis
-        {
-            get
-            {
-                return this._radis;
-            }
-            set
-            {
-                this._radis.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_temeljnica", Storage = "_temeljnicas", ThisKey = "oib", OtherKey = "vozac")]
-        public EntitySet<temeljnica> temeljnicas
-        {
-            get
-            {
-                return this._temeljnicas;
-            }
-            set
-            {
-                this._temeljnicas.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_vozi", Storage = "_vozis", ThisKey = "oib", OtherKey = "vozac")]
-        public EntitySet<vozi> vozis
-        {
-            get
-            {
-                return this._vozis;
-            }
-            set
-            {
-                this._vozis.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_zaposlen", Storage = "_zaposlens", ThisKey = "oib", OtherKey = "zaposlenik")]
-        public EntitySet<zaposlen> zaposlens
-        {
-            get
-            {
-                return this._zaposlens;
-            }
-            set
-            {
-                this._zaposlens.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -829,93 +590,9 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_nalog_za_proizvodnjus(nalog_za_proizvodnju entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = this;
-        }
-
-        private void detach_nalog_za_proizvodnjus(nalog_za_proizvodnju entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = null;
-        }
-
-        private void attach_otpremnicas(otpremnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = this;
-        }
-
-        private void detach_otpremnicas(otpremnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = null;
-        }
-
-        private void attach_racuns(racun entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = this;
-        }
-
-        private void detach_racuns(racun entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = null;
-        }
-
-        private void attach_radis(radi entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik1 = this;
-        }
-
-        private void detach_radis(radi entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik1 = null;
-        }
-
-        private void attach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = this;
-        }
-
-        private void detach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = null;
-        }
-
-        private void attach_vozis(vozi entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = this;
-        }
-
-        private void detach_vozis(vozi entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik = null;
-        }
-
-        private void attach_zaposlens(zaposlen entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik1 = this;
-        }
-
-        private void detach_zaposlens(zaposlen entity)
-        {
-            this.SendPropertyChanging();
-            entity.zaposlenik1 = null;
-        }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.korisnicki_racun")]
     public partial class korisnicki_racun : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -927,8 +604,6 @@ namespace kolnikApp_komponente
         private string _korisnicko_ime;
 
         private string _lozinka;
-
-        private EntityRef<zaposlenik> _zaposlenik1;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -944,7 +619,6 @@ namespace kolnikApp_komponente
 
         public korisnicki_racun()
         {
-            this._zaposlenik1 = default(EntityRef<zaposlenik>);
             OnCreated();
         }
 
@@ -960,10 +634,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._zaposlenik != value))
                 {
-                    if (this._zaposlenik1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnzaposlenikChanging(value);
                     this.SendPropertyChanging();
                     this._zaposlenik = value;
@@ -1015,41 +685,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_korisnicki_racun", Storage = "_zaposlenik1", ThisKey = "zaposlenik", OtherKey = "oib", IsForeignKey = true, DeleteOnNull = true, DeleteRule = "CASCADE")]
-        public zaposlenik zaposlenik1
-        {
-            get
-            {
-                return this._zaposlenik1.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik1.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik1.Entity = null;
-                        previousValue.korisnicki_racun = null;
-                    }
-                    this._zaposlenik1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.korisnicki_racun = this;
-                        this._zaposlenik = value.oib;
-                    }
-                    else
-                    {
-                        this._zaposlenik = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik1");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1071,7 +706,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.nalog_za_proizvodnju")]
     public partial class nalog_za_proizvodnju : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -1083,12 +718,6 @@ namespace kolnikApp_komponente
         private int _gradiliste;
 
         private string _izdavatelj;
-
-        private EntityRef<gradiliste> _gradiliste1;
-
-        private EntityRef<zaposlenik> _zaposlenik;
-
-        private EntityRef<temeljnica> _temeljnica1;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -1104,9 +733,6 @@ namespace kolnikApp_komponente
 
         public nalog_za_proizvodnju()
         {
-            this._gradiliste1 = default(EntityRef<gradiliste>);
-            this._zaposlenik = default(EntityRef<zaposlenik>);
-            this._temeljnica1 = default(EntityRef<temeljnica>);
             OnCreated();
         }
 
@@ -1122,10 +748,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._temeljnica != value))
                 {
-                    if (this._temeljnica1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OntemeljnicaChanging(value);
                     this.SendPropertyChanging();
                     this._temeljnica = value;
@@ -1147,10 +769,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._gradiliste != value))
                 {
-                    if (this._gradiliste1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OngradilisteChanging(value);
                     this.SendPropertyChanging();
                     this._gradiliste = value;
@@ -1172,120 +790,11 @@ namespace kolnikApp_komponente
             {
                 if ((this._izdavatelj != value))
                 {
-                    if (this._zaposlenik.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnizdavateljChanging(value);
                     this.SendPropertyChanging();
                     this._izdavatelj = value;
                     this.SendPropertyChanged("izdavatelj");
                     this.OnizdavateljChanged();
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "gradiliste_nalog_za_proizvodnju", Storage = "_gradiliste1", ThisKey = "gradiliste", OtherKey = "id", IsForeignKey = true)]
-        public gradiliste gradiliste1
-        {
-            get
-            {
-                return this._gradiliste1.Entity;
-            }
-            set
-            {
-                gradiliste previousValue = this._gradiliste1.Entity;
-                if (((previousValue != value)
-                            || (this._gradiliste1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._gradiliste1.Entity = null;
-                        previousValue.nalog_za_proizvodnjus.Remove(this);
-                    }
-                    this._gradiliste1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.nalog_za_proizvodnjus.Add(this);
-                        this._gradiliste = value.id;
-                    }
-                    else
-                    {
-                        this._gradiliste = default(int);
-                    }
-                    this.SendPropertyChanged("gradiliste1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_nalog_za_proizvodnju", Storage = "_zaposlenik", ThisKey = "izdavatelj", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik.Entity = null;
-                        previousValue.nalog_za_proizvodnjus.Remove(this);
-                    }
-                    this._zaposlenik.Entity = value;
-                    if ((value != null))
-                    {
-                        value.nalog_za_proizvodnjus.Add(this);
-                        this._izdavatelj = value.oib;
-                    }
-                    else
-                    {
-                        this._izdavatelj = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "temeljnica_nalog_za_proizvodnju", Storage = "_temeljnica1", ThisKey = "temeljnica", OtherKey = "id", IsForeignKey = true)]
-        public temeljnica temeljnica1
-        {
-            get
-            {
-                return this._temeljnica1.Entity;
-            }
-            set
-            {
-                temeljnica previousValue = this._temeljnica1.Entity;
-                if (((previousValue != value)
-                            || (this._temeljnica1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._temeljnica1.Entity = null;
-                        previousValue.nalog_za_proizvodnju = null;
-                    }
-                    this._temeljnica1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.nalog_za_proizvodnju = this;
-                        this._temeljnica = value.id;
-                    }
-                    else
-                    {
-                        this._temeljnica = default(int);
-                    }
-                    this.SendPropertyChanged("temeljnica1");
                 }
             }
         }
@@ -1311,7 +820,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.narudzbenica_bitumenske_mjesavine")]
     public partial class narudzbenica_bitumenske_mjesavine : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -1323,8 +832,6 @@ namespace kolnikApp_komponente
         private System.DateTime _datum_potrazivanja;
 
         private string _narucitelj;
-
-        private EntityRef<poduzece> _poduzece;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -1340,7 +847,6 @@ namespace kolnikApp_komponente
 
         public narudzbenica_bitumenske_mjesavine()
         {
-            this._poduzece = default(EntityRef<poduzece>);
             OnCreated();
         }
 
@@ -1398,50 +904,11 @@ namespace kolnikApp_komponente
             {
                 if ((this._narucitelj != value))
                 {
-                    if (this._poduzece.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnnaruciteljChanging(value);
                     this.SendPropertyChanging();
                     this._narucitelj = value;
                     this.SendPropertyChanged("narucitelj");
                     this.OnnaruciteljChanged();
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_narudzbenica_bitumenske_mjesavine", Storage = "_poduzece", ThisKey = "narucitelj", OtherKey = "oib", IsForeignKey = true)]
-        public poduzece poduzece
-        {
-            get
-            {
-                return this._poduzece.Entity;
-            }
-            set
-            {
-                poduzece previousValue = this._poduzece.Entity;
-                if (((previousValue != value)
-                            || (this._poduzece.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._poduzece.Entity = null;
-                        previousValue.narudzbenica_bitumenske_mjesavines.Remove(this);
-                    }
-                    this._poduzece.Entity = value;
-                    if ((value != null))
-                    {
-                        value.narudzbenica_bitumenske_mjesavines.Add(this);
-                        this._narucitelj = value.oib;
-                    }
-                    else
-                    {
-                        this._narucitelj = default(string);
-                    }
-                    this.SendPropertyChanged("poduzece");
                 }
             }
         }
@@ -1467,7 +934,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.otpremnica")]
     public partial class otpremnica : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -1483,12 +950,6 @@ namespace kolnikApp_komponente
         private string _otpremitelj;
 
         private int _temperatura;
-
-        private EntityRef<zaposlenik> _zaposlenik;
-
-        private EntityRef<racun> _racun1;
-
-        private EntityRef<temeljnica> _temeljnica1;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -1508,9 +969,6 @@ namespace kolnikApp_komponente
 
         public otpremnica()
         {
-            this._zaposlenik = default(EntityRef<zaposlenik>);
-            this._racun1 = default(EntityRef<racun>);
-            this._temeljnica1 = default(EntityRef<temeljnica>);
             OnCreated();
         }
 
@@ -1526,10 +984,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._temeljnica != value))
                 {
-                    if (this._temeljnica1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OntemeljnicaChanging(value);
                     this.SendPropertyChanging();
                     this._temeljnica = value;
@@ -1572,10 +1026,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._racun != value))
                 {
-                    if (this._racun1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnracunChanging(value);
                     this.SendPropertyChanging();
                     this._racun = value;
@@ -1597,10 +1047,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._otpremitelj != value))
                 {
-                    if (this._zaposlenik.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnotpremiteljChanging(value);
                     this.SendPropertyChanging();
                     this._otpremitelj = value;
@@ -1631,111 +1077,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_otpremnica", Storage = "_zaposlenik", ThisKey = "otpremitelj", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik.Entity = null;
-                        previousValue.otpremnicas.Remove(this);
-                    }
-                    this._zaposlenik.Entity = value;
-                    if ((value != null))
-                    {
-                        value.otpremnicas.Add(this);
-                        this._otpremitelj = value.oib;
-                    }
-                    else
-                    {
-                        this._otpremitelj = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "racun_otpremnica", Storage = "_racun1", ThisKey = "racun", OtherKey = "id", IsForeignKey = true)]
-        public racun racun1
-        {
-            get
-            {
-                return this._racun1.Entity;
-            }
-            set
-            {
-                racun previousValue = this._racun1.Entity;
-                if (((previousValue != value)
-                            || (this._racun1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._racun1.Entity = null;
-                        previousValue.otpremnicas.Remove(this);
-                    }
-                    this._racun1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.otpremnicas.Add(this);
-                        this._racun = value.id;
-                    }
-                    else
-                    {
-                        this._racun = default(Nullable<int>);
-                    }
-                    this.SendPropertyChanged("racun1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "temeljnica_otpremnica", Storage = "_temeljnica1", ThisKey = "temeljnica", OtherKey = "id", IsForeignKey = true)]
-        public temeljnica temeljnica1
-        {
-            get
-            {
-                return this._temeljnica1.Entity;
-            }
-            set
-            {
-                temeljnica previousValue = this._temeljnica1.Entity;
-                if (((previousValue != value)
-                            || (this._temeljnica1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._temeljnica1.Entity = null;
-                        previousValue.otpremnica = null;
-                    }
-                    this._temeljnica1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.otpremnica = this;
-                        this._temeljnica = value.id;
-                    }
-                    else
-                    {
-                        this._temeljnica = default(int);
-                    }
-                    this.SendPropertyChanged("temeljnica1");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1757,7 +1098,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.poduzece")]
     public partial class poduzece : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -1771,12 +1112,6 @@ namespace kolnikApp_komponente
         private string _adresa;
 
         private string _iban;
-
-        private EntitySet<narudzbenica_bitumenske_mjesavine> _narudzbenica_bitumenske_mjesavines;
-
-        private EntitySet<rabat> _rabats;
-
-        private EntitySet<zaposlen> _zaposlens;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -1794,9 +1129,6 @@ namespace kolnikApp_komponente
 
         public poduzece()
         {
-            this._narudzbenica_bitumenske_mjesavines = new EntitySet<narudzbenica_bitumenske_mjesavine>(new Action<narudzbenica_bitumenske_mjesavine>(this.attach_narudzbenica_bitumenske_mjesavines), new Action<narudzbenica_bitumenske_mjesavine>(this.detach_narudzbenica_bitumenske_mjesavines));
-            this._rabats = new EntitySet<rabat>(new Action<rabat>(this.attach_rabats), new Action<rabat>(this.detach_rabats));
-            this._zaposlens = new EntitySet<zaposlen>(new Action<zaposlen>(this.attach_zaposlens), new Action<zaposlen>(this.detach_zaposlens));
             OnCreated();
         }
 
@@ -1884,48 +1216,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_narudzbenica_bitumenske_mjesavine", Storage = "_narudzbenica_bitumenske_mjesavines", ThisKey = "oib", OtherKey = "narucitelj")]
-        public EntitySet<narudzbenica_bitumenske_mjesavine> narudzbenica_bitumenske_mjesavines
-        {
-            get
-            {
-                return this._narudzbenica_bitumenske_mjesavines;
-            }
-            set
-            {
-                this._narudzbenica_bitumenske_mjesavines.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_rabat", Storage = "_rabats", ThisKey = "oib", OtherKey = "poslovni_partner")]
-        public EntitySet<rabat> rabats
-        {
-            get
-            {
-                return this._rabats;
-            }
-            set
-            {
-                this._rabats.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_zaposlen", Storage = "_zaposlens", ThisKey = "oib", OtherKey = "poduzece")]
-        public EntitySet<zaposlen> zaposlens
-        {
-            get
-            {
-                return this._zaposlens;
-            }
-            set
-            {
-                this._zaposlens.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1945,42 +1235,6 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_narudzbenica_bitumenske_mjesavines(narudzbenica_bitumenske_mjesavine entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece = this;
-        }
-
-        private void detach_narudzbenica_bitumenske_mjesavines(narudzbenica_bitumenske_mjesavine entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece = null;
-        }
-
-        private void attach_rabats(rabat entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece = this;
-        }
-
-        private void detach_rabats(rabat entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece = null;
-        }
-
-        private void attach_zaposlens(zaposlen entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece1 = this;
-        }
-
-        private void detach_zaposlens(zaposlen entity)
-        {
-            this.SendPropertyChanging();
-            entity.poduzece1 = null;
-        }
     }
 
     [DataContract(Namespace = "")]
@@ -1996,10 +1250,6 @@ namespace kolnikApp_komponente
 
         private decimal _popust;
 
-        private EntityRef<artikl> _artikl1;
-
-        private EntityRef<poduzece> _poduzece;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2014,8 +1264,6 @@ namespace kolnikApp_komponente
 
         public rabat()
         {
-            this._artikl1 = default(EntityRef<artikl>);
-            this._poduzece = default(EntityRef<poduzece>);
             OnCreated();
         }
 
@@ -2031,10 +1279,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._artikl != value))
                 {
-                    if (this._artikl1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnartiklChanging(value);
                     this.SendPropertyChanging();
                     this._artikl = value;
@@ -2056,10 +1300,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._poslovni_partner != value))
                 {
-                    if (this._poduzece.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.Onposlovni_partnerChanging(value);
                     this.SendPropertyChanging();
                     this._poslovni_partner = value;
@@ -2090,76 +1330,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "artikl_rabat", Storage = "_artikl1", ThisKey = "artikl", OtherKey = "id", IsForeignKey = true, DeleteOnNull = true, DeleteRule = "CASCADE")]
-        public artikl artikl1
-        {
-            get
-            {
-                return this._artikl1.Entity;
-            }
-            set
-            {
-                artikl previousValue = this._artikl1.Entity;
-                if (((previousValue != value)
-                            || (this._artikl1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._artikl1.Entity = null;
-                        previousValue.rabats.Remove(this);
-                    }
-                    this._artikl1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.rabats.Add(this);
-                        this._artikl = value.id;
-                    }
-                    else
-                    {
-                        this._artikl = default(int);
-                    }
-                    this.SendPropertyChanged("artikl1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_rabat", Storage = "_poduzece", ThisKey = "poslovni_partner", OtherKey = "oib", IsForeignKey = true, DeleteOnNull = true, DeleteRule = "CASCADE")]
-        public poduzece poduzece
-        {
-            get
-            {
-                return this._poduzece.Entity;
-            }
-            set
-            {
-                poduzece previousValue = this._poduzece.Entity;
-                if (((previousValue != value)
-                            || (this._poduzece.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._poduzece.Entity = null;
-                        previousValue.rabats.Remove(this);
-                    }
-                    this._poduzece.Entity = value;
-                    if ((value != null))
-                    {
-                        value.rabats.Add(this);
-                        this._poslovni_partner = value.oib;
-                    }
-                    else
-                    {
-                        this._poslovni_partner = default(string);
-                    }
-                    this.SendPropertyChanged("poduzece");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -2181,7 +1351,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.racun")]
     public partial class racun : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -2193,10 +1363,6 @@ namespace kolnikApp_komponente
         private System.DateTime _datum_izdavanja;
 
         private string _izdavatelj;
-
-        private EntitySet<otpremnica> _otpremnicas;
-
-        private EntityRef<zaposlenik> _zaposlenik;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -2212,8 +1378,6 @@ namespace kolnikApp_komponente
 
         public racun()
         {
-            this._otpremnicas = new EntitySet<otpremnica>(new Action<otpremnica>(this.attach_otpremnicas), new Action<otpremnica>(this.detach_otpremnicas));
-            this._zaposlenik = default(EntityRef<zaposlenik>);
             OnCreated();
         }
 
@@ -2271,64 +1435,11 @@ namespace kolnikApp_komponente
             {
                 if ((this._izdavatelj != value))
                 {
-                    if (this._zaposlenik.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnizdavateljChanging(value);
                     this.SendPropertyChanging();
                     this._izdavatelj = value;
                     this.SendPropertyChanged("izdavatelj");
                     this.OnizdavateljChanged();
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "racun_otpremnica", Storage = "_otpremnicas", ThisKey = "id", OtherKey = "racun")]
-        public EntitySet<otpremnica> otpremnicas
-        {
-            get
-            {
-                return this._otpremnicas;
-            }
-            set
-            {
-                this._otpremnicas.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_racun", Storage = "_zaposlenik", ThisKey = "izdavatelj", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik.Entity = null;
-                        previousValue.racuns.Remove(this);
-                    }
-                    this._zaposlenik.Entity = value;
-                    if ((value != null))
-                    {
-                        value.racuns.Add(this);
-                        this._izdavatelj = value.oib;
-                    }
-                    else
-                    {
-                        this._izdavatelj = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik");
                 }
             }
         }
@@ -2352,18 +1463,6 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_otpremnicas(otpremnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.racun1 = this;
-        }
-
-        private void detach_otpremnicas(otpremnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.racun1 = null;
-        }
     }
 
     [DataContract(Namespace = "")]
@@ -2381,10 +1480,6 @@ namespace kolnikApp_komponente
 
         private System.Nullable<System.DateTime> _datum_zavrsetka;
 
-        private EntityRef<zaposlenik> _zaposlenik1;
-
-        private EntityRef<radno_mjesto> _radno_mjesto1;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2401,8 +1496,6 @@ namespace kolnikApp_komponente
 
         public radi()
         {
-            this._zaposlenik1 = default(EntityRef<zaposlenik>);
-            this._radno_mjesto1 = default(EntityRef<radno_mjesto>);
             OnCreated();
         }
 
@@ -2418,10 +1511,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._zaposlenik != value))
                 {
-                    if (this._zaposlenik1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnzaposlenikChanging(value);
                     this.SendPropertyChanging();
                     this._zaposlenik = value;
@@ -2443,10 +1532,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._radno_mjesto != value))
                 {
-                    if (this._radno_mjesto1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.Onradno_mjestoChanging(value);
                     this.SendPropertyChanging();
                     this._radno_mjesto = value;
@@ -2498,76 +1583,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_radi", Storage = "_zaposlenik1", ThisKey = "zaposlenik", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik1
-        {
-            get
-            {
-                return this._zaposlenik1.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik1.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik1.Entity = null;
-                        previousValue.radis.Remove(this);
-                    }
-                    this._zaposlenik1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.radis.Add(this);
-                        this._zaposlenik = value.oib;
-                    }
-                    else
-                    {
-                        this._zaposlenik = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "radno_mjesto_radi", Storage = "_radno_mjesto1", ThisKey = "radno_mjesto", OtherKey = "id", IsForeignKey = true)]
-        public radno_mjesto radno_mjesto1
-        {
-            get
-            {
-                return this._radno_mjesto1.Entity;
-            }
-            set
-            {
-                radno_mjesto previousValue = this._radno_mjesto1.Entity;
-                if (((previousValue != value)
-                            || (this._radno_mjesto1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._radno_mjesto1.Entity = null;
-                        previousValue.radis.Remove(this);
-                    }
-                    this._radno_mjesto1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.radis.Add(this);
-                        this._radno_mjesto = value.id;
-                    }
-                    else
-                    {
-                        this._radno_mjesto = default(int);
-                    }
-                    this.SendPropertyChanged("radno_mjesto1");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -2589,7 +1604,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.radno_mjesto")]
     public partial class radno_mjesto : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -2599,10 +1614,6 @@ namespace kolnikApp_komponente
         private int _id;
 
         private string _naziv;
-
-        private EntitySet<radi> _radis;
-
-        private EntitySet<tablicna_privilegija> _tablicna_privilegijas;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -2616,8 +1627,6 @@ namespace kolnikApp_komponente
 
         public radno_mjesto()
         {
-            this._radis = new EntitySet<radi>(new Action<radi>(this.attach_radis), new Action<radi>(this.detach_radis));
-            this._tablicna_privilegijas = new EntitySet<tablicna_privilegija>(new Action<tablicna_privilegija>(this.attach_tablicna_privilegijas), new Action<tablicna_privilegija>(this.detach_tablicna_privilegijas));
             OnCreated();
         }
 
@@ -2663,34 +1672,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "radno_mjesto_radi", Storage = "_radis", ThisKey = "id", OtherKey = "radno_mjesto")]
-        public EntitySet<radi> radis
-        {
-            get
-            {
-                return this._radis;
-            }
-            set
-            {
-                this._radis.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "radno_mjesto_tablicna_privilegija", Storage = "_tablicna_privilegijas", ThisKey = "id", OtherKey = "radno_mjesto")]
-        public EntitySet<tablicna_privilegija> tablicna_privilegijas
-        {
-            get
-            {
-                return this._tablicna_privilegijas;
-            }
-            set
-            {
-                this._tablicna_privilegijas.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -2710,30 +1691,6 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_radis(radi entity)
-        {
-            this.SendPropertyChanging();
-            entity.radno_mjesto1 = this;
-        }
-
-        private void detach_radis(radi entity)
-        {
-            this.SendPropertyChanging();
-            entity.radno_mjesto1 = null;
-        }
-
-        private void attach_tablicna_privilegijas(tablicna_privilegija entity)
-        {
-            this.SendPropertyChanging();
-            entity.radno_mjesto1 = this;
-        }
-
-        private void detach_tablicna_privilegijas(tablicna_privilegija entity)
-        {
-            this.SendPropertyChanging();
-            entity.radno_mjesto1 = null;
-        }
     }
 
     [DataContract(Namespace = "")]
@@ -2749,8 +1706,6 @@ namespace kolnikApp_komponente
 
         private char _operacija;
 
-        private EntityRef<radno_mjesto> _radno_mjesto1;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2765,7 +1720,6 @@ namespace kolnikApp_komponente
 
         public tablicna_privilegija()
         {
-            this._radno_mjesto1 = default(EntityRef<radno_mjesto>);
             OnCreated();
         }
 
@@ -2781,10 +1735,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._radno_mjesto != value))
                 {
-                    if (this._radno_mjesto1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.Onradno_mjestoChanging(value);
                     this.SendPropertyChanging();
                     this._radno_mjesto = value;
@@ -2836,41 +1786,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "radno_mjesto_tablicna_privilegija", Storage = "_radno_mjesto1", ThisKey = "radno_mjesto", OtherKey = "id", IsForeignKey = true, DeleteOnNull = true, DeleteRule = "CASCADE")]
-        public radno_mjesto radno_mjesto1
-        {
-            get
-            {
-                return this._radno_mjesto1.Entity;
-            }
-            set
-            {
-                radno_mjesto previousValue = this._radno_mjesto1.Entity;
-                if (((previousValue != value)
-                            || (this._radno_mjesto1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._radno_mjesto1.Entity = null;
-                        previousValue.tablicna_privilegijas.Remove(this);
-                    }
-                    this._radno_mjesto1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.tablicna_privilegijas.Add(this);
-                        this._radno_mjesto = value.id;
-                    }
-                    else
-                    {
-                        this._radno_mjesto = default(int);
-                    }
-                    this.SendPropertyChanged("radno_mjesto1");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -2892,7 +1807,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.temeljnica")]
     public partial class temeljnica : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -2910,16 +1825,6 @@ namespace kolnikApp_komponente
         private string _vozac;
 
         private int _artikl;
-
-        private EntityRef<nalog_za_proizvodnju> _nalog_za_proizvodnju;
-
-        private EntityRef<otpremnica> _otpremnica;
-
-        private EntityRef<artikl> _artikl1;
-
-        private EntityRef<zaposlenik> _zaposlenik;
-
-        private EntityRef<vozilo> _vozilo1;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -2941,11 +1846,6 @@ namespace kolnikApp_komponente
 
         public temeljnica()
         {
-            this._nalog_za_proizvodnju = default(EntityRef<nalog_za_proizvodnju>);
-            this._otpremnica = default(EntityRef<otpremnica>);
-            this._artikl1 = default(EntityRef<artikl>);
-            this._zaposlenik = default(EntityRef<zaposlenik>);
-            this._vozilo1 = default(EntityRef<vozilo>);
             OnCreated();
         }
 
@@ -3024,10 +1924,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._vozilo != value))
                 {
-                    if (this._vozilo1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnvoziloChanging(value);
                     this.SendPropertyChanging();
                     this._vozilo = value;
@@ -3049,10 +1945,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._vozac != value))
                 {
-                    if (this._zaposlenik.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnvozacChanging(value);
                     this.SendPropertyChanging();
                     this._vozac = value;
@@ -3074,180 +1966,11 @@ namespace kolnikApp_komponente
             {
                 if ((this._artikl != value))
                 {
-                    if (this._artikl1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnartiklChanging(value);
                     this.SendPropertyChanging();
                     this._artikl = value;
                     this.SendPropertyChanged("artikl");
                     this.OnartiklChanged();
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "temeljnica_nalog_za_proizvodnju", Storage = "_nalog_za_proizvodnju", ThisKey = "id", OtherKey = "temeljnica", IsUnique = true, IsForeignKey = false)]
-        public nalog_za_proizvodnju nalog_za_proizvodnju
-        {
-            get
-            {
-                return this._nalog_za_proizvodnju.Entity;
-            }
-            set
-            {
-                nalog_za_proizvodnju previousValue = this._nalog_za_proizvodnju.Entity;
-                if (((previousValue != value)
-                            || (this._nalog_za_proizvodnju.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._nalog_za_proizvodnju.Entity = null;
-                        previousValue.temeljnica1 = null;
-                    }
-                    this._nalog_za_proizvodnju.Entity = value;
-                    if ((value != null))
-                    {
-                        value.temeljnica1 = this;
-                    }
-                    this.SendPropertyChanged("nalog_za_proizvodnju");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "temeljnica_otpremnica", Storage = "_otpremnica", ThisKey = "id", OtherKey = "temeljnica", IsUnique = true, IsForeignKey = false)]
-        public otpremnica otpremnica
-        {
-            get
-            {
-                return this._otpremnica.Entity;
-            }
-            set
-            {
-                otpremnica previousValue = this._otpremnica.Entity;
-                if (((previousValue != value)
-                            || (this._otpremnica.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._otpremnica.Entity = null;
-                        previousValue.temeljnica1 = null;
-                    }
-                    this._otpremnica.Entity = value;
-                    if ((value != null))
-                    {
-                        value.temeljnica1 = this;
-                    }
-                    this.SendPropertyChanged("otpremnica");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "artikl_temeljnica", Storage = "_artikl1", ThisKey = "artikl", OtherKey = "id", IsForeignKey = true)]
-        public artikl artikl1
-        {
-            get
-            {
-                return this._artikl1.Entity;
-            }
-            set
-            {
-                artikl previousValue = this._artikl1.Entity;
-                if (((previousValue != value)
-                            || (this._artikl1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._artikl1.Entity = null;
-                        previousValue.temeljnicas.Remove(this);
-                    }
-                    this._artikl1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.temeljnicas.Add(this);
-                        this._artikl = value.id;
-                    }
-                    else
-                    {
-                        this._artikl = default(int);
-                    }
-                    this.SendPropertyChanged("artikl1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_temeljnica", Storage = "_zaposlenik", ThisKey = "vozac", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik.Entity = null;
-                        previousValue.temeljnicas.Remove(this);
-                    }
-                    this._zaposlenik.Entity = value;
-                    if ((value != null))
-                    {
-                        value.temeljnicas.Add(this);
-                        this._vozac = value.oib;
-                    }
-                    else
-                    {
-                        this._vozac = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozilo_temeljnica", Storage = "_vozilo1", ThisKey = "vozilo", OtherKey = "registracijski_broj", IsForeignKey = true)]
-        public vozilo vozilo1
-        {
-            get
-            {
-                return this._vozilo1.Entity;
-            }
-            set
-            {
-                vozilo previousValue = this._vozilo1.Entity;
-                if (((previousValue != value)
-                            || (this._vozilo1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._vozilo1.Entity = null;
-                        previousValue.temeljnicas.Remove(this);
-                    }
-                    this._vozilo1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.temeljnicas.Add(this);
-                        this._vozilo = value.registracijski_broj;
-                    }
-                    else
-                    {
-                        this._vozilo = default(string);
-                    }
-                    this.SendPropertyChanged("vozilo1");
                 }
             }
         }
@@ -3288,14 +2011,6 @@ namespace kolnikApp_komponente
 
         private System.Nullable<System.DateTime> _datum_zavrsetka;
 
-        private EntityRef<vozi> _vozi2;
-
-        private EntityRef<zaposlenik> _zaposlenik;
-
-        private EntityRef<vozi> _vozi1;
-
-        private EntityRef<vozilo> _vozilo1;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3312,10 +2027,6 @@ namespace kolnikApp_komponente
 
         public vozi()
         {
-            this._vozi2 = default(EntityRef<vozi>);
-            this._zaposlenik = default(EntityRef<zaposlenik>);
-            this._vozi1 = default(EntityRef<vozi>);
-            this._vozilo1 = default(EntityRef<vozilo>);
             OnCreated();
         }
 
@@ -3331,10 +2042,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._vozilo != value))
                 {
-                    if ((this._vozi1.HasLoadedOrAssignedValue || this._vozilo1.HasLoadedOrAssignedValue))
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnvoziloChanging(value);
                     this.SendPropertyChanging();
                     this._vozilo = value;
@@ -3356,10 +2063,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._vozac != value))
                 {
-                    if ((this._zaposlenik.HasLoadedOrAssignedValue || this._vozi1.HasLoadedOrAssignedValue))
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnvozacChanging(value);
                     this.SendPropertyChanging();
                     this._vozac = value;
@@ -3381,10 +2084,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._datum_pocetka != value))
                 {
-                    if (this._vozi1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.Ondatum_pocetkaChanging(value);
                     this.SendPropertyChanging();
                     this._datum_pocetka = value;
@@ -3415,145 +2114,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozi_vozi", Storage = "_vozi2", ThisKey = "vozilo,vozac,datum_pocetka", OtherKey = "vozilo,vozac,datum_pocetka", IsUnique = true, IsForeignKey = false)]
-        public vozi vozi2
-        {
-            get
-            {
-                return this._vozi2.Entity;
-            }
-            set
-            {
-                vozi previousValue = this._vozi2.Entity;
-                if (((previousValue != value)
-                            || (this._vozi2.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._vozi2.Entity = null;
-                        previousValue.vozi1 = null;
-                    }
-                    this._vozi2.Entity = value;
-                    if ((value != null))
-                    {
-                        value.vozi1 = this;
-                    }
-                    this.SendPropertyChanged("vozi2");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_vozi", Storage = "_zaposlenik", ThisKey = "vozac", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik.Entity = null;
-                        previousValue.vozis.Remove(this);
-                    }
-                    this._zaposlenik.Entity = value;
-                    if ((value != null))
-                    {
-                        value.vozis.Add(this);
-                        this._vozac = value.oib;
-                    }
-                    else
-                    {
-                        this._vozac = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozi_vozi", Storage = "_vozi1", ThisKey = "vozilo,vozac,datum_pocetka", OtherKey = "vozilo,vozac,datum_pocetka", IsForeignKey = true)]
-        public vozi vozi1
-        {
-            get
-            {
-                return this._vozi1.Entity;
-            }
-            set
-            {
-                vozi previousValue = this._vozi1.Entity;
-                if (((previousValue != value)
-                            || (this._vozi1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._vozi1.Entity = null;
-                        previousValue.vozi2 = null;
-                    }
-                    this._vozi1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.vozi2 = this;
-                        this._vozilo = value.vozilo;
-                        this._vozac = value.vozac;
-                        this._datum_pocetka = value.datum_pocetka;
-                    }
-                    else
-                    {
-                        this._vozilo = default(string);
-                        this._vozac = default(string);
-                        this._datum_pocetka = default(System.DateTime);
-                    }
-                    this.SendPropertyChanged("vozi1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozilo_vozi", Storage = "_vozilo1", ThisKey = "vozilo", OtherKey = "registracijski_broj", IsForeignKey = true)]
-        public vozilo vozilo1
-        {
-            get
-            {
-                return this._vozilo1.Entity;
-            }
-            set
-            {
-                vozilo previousValue = this._vozilo1.Entity;
-                if (((previousValue != value)
-                            || (this._vozilo1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._vozilo1.Entity = null;
-                        previousValue.vozis.Remove(this);
-                    }
-                    this._vozilo1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.vozis.Add(this);
-                        this._vozilo = value.registracijski_broj;
-                    }
-                    else
-                    {
-                        this._vozilo = default(string);
-                    }
-                    this.SendPropertyChanged("vozilo1");
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -3575,7 +2135,7 @@ namespace kolnikApp_komponente
         }
     }
 
-        [DataContract(IsReference = true, Namespace = "")]
+    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.vozilo")]
     public partial class vozilo : INotifyPropertyChanging, INotifyPropertyChanged
     {
@@ -3587,10 +2147,6 @@ namespace kolnikApp_komponente
         private string _proizvodjac;
 
         private string _model;
-
-        private EntitySet<temeljnica> _temeljnicas;
-
-        private EntitySet<vozi> _vozis;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -3606,8 +2162,6 @@ namespace kolnikApp_komponente
 
         public vozilo()
         {
-            this._temeljnicas = new EntitySet<temeljnica>(new Action<temeljnica>(this.attach_temeljnicas), new Action<temeljnica>(this.detach_temeljnicas));
-            this._vozis = new EntitySet<vozi>(new Action<vozi>(this.attach_vozis), new Action<vozi>(this.detach_vozis));
             OnCreated();
         }
 
@@ -3674,34 +2228,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozilo_temeljnica", Storage = "_temeljnicas", ThisKey = "registracijski_broj", OtherKey = "vozilo")]
-        public EntitySet<temeljnica> temeljnicas
-        {
-            get
-            {
-                return this._temeljnicas;
-            }
-            set
-            {
-                this._temeljnicas.Assign(value);
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "vozilo_vozi", Storage = "_vozis", ThisKey = "registracijski_broj", OtherKey = "vozilo")]
-        public EntitySet<vozi> vozis
-        {
-            get
-            {
-                return this._vozis;
-            }
-            set
-            {
-                this._vozis.Assign(value);
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -3721,30 +2247,6 @@ namespace kolnikApp_komponente
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        private void attach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.vozilo1 = this;
-        }
-
-        private void detach_temeljnicas(temeljnica entity)
-        {
-            this.SendPropertyChanging();
-            entity.vozilo1 = null;
-        }
-
-        private void attach_vozis(vozi entity)
-        {
-            this.SendPropertyChanging();
-            entity.vozilo1 = this;
-        }
-
-        private void detach_vozis(vozi entity)
-        {
-            this.SendPropertyChanging();
-            entity.vozilo1 = null;
-        }
     }
 
     [DataContract(Namespace = "")]
@@ -3762,10 +2264,6 @@ namespace kolnikApp_komponente
 
         private System.Nullable<System.DateTime> _datum_zavrsetka;
 
-        private EntityRef<poduzece> _poduzece1;
-
-        private EntityRef<zaposlenik> _zaposlenik1;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -3782,8 +2280,6 @@ namespace kolnikApp_komponente
 
         public zaposlen()
         {
-            this._poduzece1 = default(EntityRef<poduzece>);
-            this._zaposlenik1 = default(EntityRef<zaposlenik>);
             OnCreated();
         }
 
@@ -3799,10 +2295,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._zaposlenik != value))
                 {
-                    if (this._zaposlenik1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnzaposlenikChanging(value);
                     this.SendPropertyChanging();
                     this._zaposlenik = value;
@@ -3824,10 +2316,6 @@ namespace kolnikApp_komponente
             {
                 if ((this._poduzece != value))
                 {
-                    if (this._poduzece1.HasLoadedOrAssignedValue)
-                    {
-                        throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-                    }
                     this.OnpoduzeceChanging(value);
                     this.SendPropertyChanging();
                     this._poduzece = value;
@@ -3875,76 +2363,6 @@ namespace kolnikApp_komponente
                     this._datum_zavrsetka = value;
                     this.SendPropertyChanged("datum_zavrsetka");
                     this.Ondatum_zavrsetkaChanged();
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "poduzece_zaposlen", Storage = "_poduzece1", ThisKey = "poduzece", OtherKey = "oib", IsForeignKey = true)]
-        public poduzece poduzece1
-        {
-            get
-            {
-                return this._poduzece1.Entity;
-            }
-            set
-            {
-                poduzece previousValue = this._poduzece1.Entity;
-                if (((previousValue != value)
-                            || (this._poduzece1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._poduzece1.Entity = null;
-                        previousValue.zaposlens.Remove(this);
-                    }
-                    this._poduzece1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.zaposlens.Add(this);
-                        this._poduzece = value.oib;
-                    }
-                    else
-                    {
-                        this._poduzece = default(string);
-                    }
-                    this.SendPropertyChanged("poduzece1");
-                }
-            }
-        }
-
-        [IgnoreDataMember]
-        [global::System.Data.Linq.Mapping.AssociationAttribute(Name = "zaposlenik_zaposlen", Storage = "_zaposlenik1", ThisKey = "zaposlenik", OtherKey = "oib", IsForeignKey = true)]
-        public zaposlenik zaposlenik1
-        {
-            get
-            {
-                return this._zaposlenik1.Entity;
-            }
-            set
-            {
-                zaposlenik previousValue = this._zaposlenik1.Entity;
-                if (((previousValue != value)
-                            || (this._zaposlenik1.HasLoadedOrAssignedValue == false)))
-                {
-                    this.SendPropertyChanging();
-                    if ((previousValue != null))
-                    {
-                        this._zaposlenik1.Entity = null;
-                        previousValue.zaposlens.Remove(this);
-                    }
-                    this._zaposlenik1.Entity = value;
-                    if ((value != null))
-                    {
-                        value.zaposlens.Add(this);
-                        this._zaposlenik = value.oib;
-                    }
-                    else
-                    {
-                        this._zaposlenik = default(string);
-                    }
-                    this.SendPropertyChanged("zaposlenik1");
                 }
             }
         }
