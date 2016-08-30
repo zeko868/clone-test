@@ -1,25 +1,20 @@
-#include "Arduino-IRremote-master/IRremote.h"
-#include "Arduino-IRremote-master/IRremoteInt.h"
-#include "Arduino-IRremote-master/ir_Lego_PF_BitStreamEncoder.h"
 #include "MAX6675-library-master/max6675.h"
 
 const uint8_t thermoSOPin = 8;
 const uint8_t thermoCSPin = 9;
 const uint8_t thermoSCKPin = 10;
-const uint8_t IRRecvPin = 4;
-const uint32_t frequencyOfInfraredLEDInHertz = 38000;
-const uint32_t timePeriodBetween2AdjacentLEDEmissionsInMicroseconds = (1. / frequencyOfInfraredLEDInHertz) * 1000000;
+const uint8_t photocellPin = 0;
+const unsigned short photocellAnalogValueTreshold = 500;
 
 unsigned long startTimeOfCurrentMeasuring = 0;
 String inputString = "";
 MAX6675 thermocoupleHandler(thermoSCKPin, thermoCSPin, thermoSOPin);
-IRrecv irrecv(IRRecvPin);
-decode_results results;
+
 bool vehicleIsHere = false;
 
 inline bool IsObstacleBetweenDiodeAndReceiver()
 {
-	return !irrecv.decode(&results);
+	return analogRead(photocellPin) < photocellAnalogValueTreshold ? true : false;
 }
 
 void ListenForInfraredSignal()
@@ -48,7 +43,7 @@ void ListenForInfraredSignal()
 			if (millis() - startTimeOfCurrentMeasuring >= 1000)
 			{
 				startTimeOfCurrentMeasuring = 0;
-				delayMicroseconds(timePeriodBetween2AdjacentLEDEmissionsInMicroseconds);
+				delayMicroseconds(100);
 				if (IsObstacleBetweenDiodeAndReceiver())
 				{
 					vehicleIsHere = true;
@@ -60,13 +55,12 @@ void ListenForInfraredSignal()
 		{
 			if (millis() - startTimeOfCurrentMeasuring >= 2000)
 			{
-				irrecv.resume();
+	
 				startTimeOfCurrentMeasuring = 0;
-				delayMicroseconds(timePeriodBetween2AdjacentLEDEmissionsInMicroseconds);
+				delayMicroseconds(100);
 				if (!IsObstacleBetweenDiodeAndReceiver())
 				{
 					vehicleIsHere = false;
-					irrecv.resume();
 				}
 			}
 		}
@@ -80,7 +74,7 @@ void setup()
 	{
 		;
 	}
-	irrecv.enableIRIn();
+
 	inputString.reserve(100);
 }
 

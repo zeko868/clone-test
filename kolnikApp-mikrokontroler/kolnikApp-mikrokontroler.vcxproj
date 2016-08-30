@@ -66,7 +66,7 @@
       <AdditionalIncludeDirectories>C:\Program Files (x86)\Arduino\libraries;C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries;C:\Users\zeko868\Documents\Arduino\libraries;C:\Program Files (x86)\Arduino\hardware\arduino\avr\cores\arduino;C:\Program Files (x86)\Arduino\hardware\arduino\avr\variants\standard;C:\Users\zeko868\Documents\GitHub\r16001\r16001\kolnikApp-mikrokontroler;C:\Program Files (x86)\Arduino\hardware\tools\avr/avr/include/;C:\Program Files (x86)\Arduino\hardware\tools\avr//avr/include/avr/;C:\Program Files (x86)\Arduino\hardware\tools\avr/lib\gcc\avr\4.8.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\Users\zeko868\Documents\GitHub\r16001\r16001\kolnikApp-mikrokontroler\__vm\.kolnikApp-mikrokontroler.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;_VMDEBUG=1;F_CPU=16000000L;ARDUINO=106011;ARDUINO_AVR_DUEMILANOVE;ARDUINO_ARCH_AVR;__cplusplus=201103L;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=16000000L;ARDUINO=106011;ARDUINO_AVR_DUEMILANOVE;ARDUINO_ARCH_AVR;__cplusplus=201103L;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -78,55 +78,19 @@
     <ProjectCapability Include="VisualMicro" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Arduino-IRremote-master\.git" />
-    <None Include="Arduino-IRremote-master\.gitignore" />
-    <None Include="Arduino-IRremote-master\.travis.yml" />
-    <None Include="Arduino-IRremote-master\arduino-irremote.sublime-workspace" />
-    <None Include="Arduino-IRremote-master\changelog.md" />
-    <None Include="Arduino-IRremote-master\Contributing.md" />
-    <None Include="Arduino-IRremote-master\Contributors.md" />
-    <None Include="Arduino-IRremote-master\ISSUE_TEMPLATE.md" />
-    <None Include="Arduino-IRremote-master\library.json" />
-    <None Include="Arduino-IRremote-master\library.properties" />
-    <None Include="Arduino-IRremote-master\README.md" />
     <None Include="kolnikApp-mikrokontroler.ino">
       <FileType>CppCode</FileType>
     </None>
     <None Include="MAX6675-library-master\library.properties" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Arduino-IRremote-master\IRremote.h" />
-    <ClInclude Include="Arduino-IRremote-master\IRremoteInt.h" />
-    <ClInclude Include="Arduino-IRremote-master\ir_Lego_PF_BitStreamEncoder.h" />
     <ClInclude Include="MAX6675-library-master\max6675.h" />
     <ClInclude Include="__vm\.kolnikApp-mikrokontroler.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Arduino-IRremote-master\keywords.txt" />
-    <Text Include="Arduino-IRremote-master\LICENSE.txt" />
     <Text Include="MAX6675-library-master\keywords.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Arduino-IRremote-master\irPronto.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\irRecv.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\IRremote.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\irSend.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Aiwa.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Denon.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Dish.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_JVC.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Lego_PF.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_LG.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Mitsubishi.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_NEC.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Panasonic.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_RC5_RC6.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Samsung.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Sanyo.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Sharp.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Sony.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Template.cpp" />
-    <ClCompile Include="Arduino-IRremote-master\ir_Whynter.cpp" />
     <ClCompile Include="MAX6675-library-master\max6675.cpp" />
   </ItemGroup>
   <PropertyGroup>
