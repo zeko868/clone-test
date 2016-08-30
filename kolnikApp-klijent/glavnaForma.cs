@@ -8,49 +8,60 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using kolnikApp_komponente;
+using System.Threading;
 
 namespace kolnikApp_klijent
 {
     public partial class glavnaForma : Form
     {
         private CommunicationHandler sockObj;
-        private BindingList<object> tableNames = new BindingList<object>();
         public glavnaForma(CommunicationHandler sockObj)
         {
             this.sockObj = sockObj;
             InitializeComponent();
 
             DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
-            DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"] = tableNames;
+            DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"] = new BindingList<object>();
+            DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"].ListChanged += ProcessChanges;
             sockObj.SendRequestForSendingUsedData();
         }
 
-        private void glavnaForma_Load(object sender, EventArgs e)
+        void ProcessChanges(object obj, ListChangedEventArgs e)
         {
-            timerLoading.Start();
+            if (DataHandler.ChangesCommited)
+            {
+                if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("tablica"))
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        loadingTraka.Value = (int) (loadingTraka.Maximum * (2.0 / 4));
+                        loadingTraka.PerformStep();
+                    });
+                    foreach (string nazivTablice in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"])
+                    {
+                        DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
+                        DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
+                    }
+                    DataHandler.entityNamesWithReferencesToBelongingDataStores.Remove("tablica");
+                    sockObj.SendRequestForSendingUsedData();
+                }
+                else
+                {
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        this.Hide();
+                        obrazac formaObrazac = new obrazac(sockObj);
+                        //formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
+                        formaObrazac.Closed += (s, args) => this.Close();
+                        formaObrazac.Show();
+                    });
+                }
+            }
         }
 
-
-     private void formaObrazac_FormClosed(object sender, FormClosedEventArgs e)
+        private void formaObrazac_FormClosed(object sender, FormClosedEventArgs e)
         {
         this.Close();
-        }
-
-    private void timerLoading_Tick(object sender, EventArgs e)
-        {
-            if (loadingTraka.Value == loadingTraka.Maximum)
-            {
-                timerLoading.Stop();
-                this.Hide();
-                obrazac formaObrazac = new obrazac(sockObj, tableNames.OfType<string>().ToArray());
-                //formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
-                formaObrazac.Closed += (s, args) => this.Close();
-                formaObrazac.Show();
-            }
-            else
-            {
-                loadingTraka.PerformStep();
-            }           
         }
     }
 }

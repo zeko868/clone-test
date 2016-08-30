@@ -16,17 +16,10 @@ namespace kolnikApp_klijent
     public partial class obrazac : Form
     {
         private CommunicationHandler sockObj;
-        public obrazac(CommunicationHandler sockObj, string[] tableNames)
+        public obrazac(CommunicationHandler sockObj)
         {
             this.sockObj = sockObj;
-            this.tablice = tableNames;
-            DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
-            foreach (string nazivTablice in tablice)
-            {
-                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
-                DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
-            }
-            sockObj.SendRequestForSendingUsedData();
+            this.tablice = DataHandler.entityNamesWithReferencesToBelongingDataStores.Keys.ToArray<string>();
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;            
         }     

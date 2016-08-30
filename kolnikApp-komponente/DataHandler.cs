@@ -38,8 +38,7 @@ namespace kolnikApp_komponente
             }
         }
 
-        private static bool changesCommited = false;
-
+        private static volatile bool changesCommited = false;
         public static bool ChangesCommited
         {
             get
@@ -490,11 +489,15 @@ namespace kolnikApp_komponente
                         {
                             foreach (var tablica in datagroup.Elements())
                             {
+                                if (datagroup.Elements().Last() == tablica)
+                                {
+                                    ChangesCommited = true;
+                                }
                                 entityNamesWithReferencesToBelongingDataStores["tablica"].Add(tablica.Value);
                             }
                         }
                         break;
-                default:
+                    default:
                         if (isClientSide || IsUserPrivilegedToDoAnAction(address, entityName, action))
                         {
                             foreach (var redak in datagroup.Elements())
@@ -542,7 +545,14 @@ namespace kolnikApp_komponente
                                         oldValIfUpdating = ctors[0].Invoke(new object[] { });
                                         AssignObjectsProperties(oldValIfUpdating, redak, true);
                                     }
-                                    StoreReceivedDataIntoFormsLists(action, sth, oldValIfUpdating);
+                                    if (datagroup == datagroups.Last() && redak == datagroup.Elements().Last())
+                                    {
+                                        StoreReceivedDataIntoFormsLists(action, sth, oldValIfUpdating, true);
+                                    }
+                                    else
+                                    {
+                                        StoreReceivedDataIntoFormsLists(action, sth, oldValIfUpdating);
+                                    }
                                 }
 
                             }
@@ -591,7 +601,6 @@ namespace kolnikApp_komponente
             }
             else
             {
-                ChangesCommited = true;
                 IsConfirmationOfPreviousRequest = true;
             }
         }
@@ -619,8 +628,12 @@ namespace kolnikApp_komponente
                                                           select grp.Key).Where(x => x.naziv_tablice.Equals()).Select(x => x.EndPoint).ToArray();*/
         }
 
-        public void StoreReceivedDataIntoFormsLists(char action, object obj, object oldObjIfUpdate = null)
+        public void StoreReceivedDataIntoFormsLists(char action, object obj, object oldObjIfUpdate = null, bool lastElement = false)
         {
+            if (lastElement)
+            {
+                ChangesCommited = true;
+            }
             string objectTypename = obj.GetType().Name;
             if (entityNamesWithReferencesToBelongingDataStores.ContainsKey(objectTypename))
             {

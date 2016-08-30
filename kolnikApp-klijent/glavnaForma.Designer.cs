@@ -48,10 +48,6 @@
             this.loadingTraka.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.loadingTraka.TabIndex = 0;
             // 
-            // timerLoading
-            // 
-            this.timerLoading.Tick += new System.EventHandler(this.timerLoading_Tick);
-            // 
             // logo
             // 
             this.logo.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -76,7 +72,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KolnikApp";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.glavnaForma_Load);
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.ResumeLayout(false);
 

@@ -117,4 +117,5 @@ inline bool DoesStringStartWithNeedle(const char* pre, const char* str)
 void loop()
 {
 	ListenForInfraredSignal();
+	delay(100);
 }
