@@ -140,7 +140,7 @@ namespace kolnikApp_klijent
         //inicijalizacija stoga za omogućavanje povratka unatrag kroz aplikaciju
         Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
 
-        private void AutomaticallyResizeColumns(string NaslovTablice)
+        private void AutomaticallyResizeColumns()
         {
             for (int i = 0; i < this.PodaciIzTablica.Columns.Count; i++)
             {
@@ -157,6 +157,29 @@ namespace kolnikApp_klijent
                 PodaciIzTablica.Columns[i].Width = widthCol;
             }
         }
+
+        private void ContentOfDGV(string tableName, DataGridView dgvObj)
+        {
+            switch (tableName)
+            {
+                case "rabat":
+                    dgvObj.DataSource = (from rabatObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["rabat"]
+                                join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                                on ((rabat)rabatObj).artikl equals ((artikl)artiklObj).id
+                                join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                on ((rabat)rabatObj).poslovni_partner equals ((poduzece)poduzeceObj).oib
+                                select new {
+                                    poslovni_partner = ((poduzece)poduzeceObj).naziv,
+                                    artikl = ((artikl)artiklObj).naziv,
+                                    popust = ((rabat)rabatObj).popust
+                                }).ToArray();
+                    break;
+                default:
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
+                    break;
+            }
+        }
+
         //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
         private void ButtonClick1(object sender, EventArgs e)
         {
@@ -167,11 +190,10 @@ namespace kolnikApp_klijent
             {
                 StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
             }
-            PodaciIzTablica.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[Gumb.Tag.ToString()];
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
-            AutomaticallyResizeColumns(Gumb.Text);
-            this.PodaciIzTablica.AutoSizeColumnsMode=DataGridViewAutoSizeColumnsMode.AllCells;
+            ContentOfDGV(Gumb.Tag.ToString(), PodaciIzTablica);
+            AutomaticallyResizeColumns();
         }
 
         //vraćamo se unatrag za jednu "stranicu"
@@ -183,8 +205,8 @@ namespace kolnikApp_klijent
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
                 Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
                 oznaciGumb(GumbMenija);
-                PodaciIzTablica.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[GumbMenija.Tag.ToString()];
-                AutomaticallyResizeColumns(GumbMenija.Text);
+                ContentOfDGV(GumbMenija.Tag.ToString(), PodaciIzTablica);
+                AutomaticallyResizeColumns();
                 NaslovTablice.Text = GumbMenija.Text;
                 NaslovTablice.Tag = GumbMenija.Tag;
             }          
@@ -412,6 +434,9 @@ namespace kolnikApp_klijent
             Application.Restart();
         }
 
-        
+        private void PodaciIzTablica_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            PodaciIzTablica.Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
     }
 }

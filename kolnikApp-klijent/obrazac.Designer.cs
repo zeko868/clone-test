@@ -373,6 +373,7 @@
             this.PodaciIzTablica.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.PodaciIzTablica.Size = new System.Drawing.Size(724, 514);
             this.PodaciIzTablica.TabIndex = 4;
+            this.PodaciIzTablica.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
             // 
             // Separator
             // 
