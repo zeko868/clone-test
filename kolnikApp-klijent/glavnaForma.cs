@@ -37,24 +37,25 @@ namespace kolnikApp_klijent
                         loadingTraka.Value = (int) (loadingTraka.Maximum * (2.0 / 4));
                         loadingTraka.PerformStep();
                     });
-                    foreach (string nazivTablice in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"])
+                    if (DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"].Count == 0)
                     {
-                        DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
-                        DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
+                        DataHandler.entityNamesWithReferencesToBelongingDataStores.Remove("tablica");
+                        CloseLoginWindowAndStartMainOne();
                     }
-                    DataHandler.entityNamesWithReferencesToBelongingDataStores.Remove("tablica");
-                    sockObj.SendRequestForSendingUsedData();
+                    else
+                    {
+                        foreach (string nazivTablice in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"])
+                        {
+                            DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice] = new BindingList<object>();
+                            DataHandler.entityNamesWithReferencesToBelongingDataStores[nazivTablice].ListChanged += ProcessChanges;
+                        }
+                        DataHandler.entityNamesWithReferencesToBelongingDataStores.Remove("tablica");
+                        sockObj.SendRequestForSendingUsedData();
+                    }
                 }
                 else
                 {
-                    BeginInvoke((MethodInvoker)delegate
-                    {
-                        this.Hide();
-                        obrazac formaObrazac = new obrazac(sockObj);
-                        //formaObrazac.FormClosed += new FormClosedEventHandler(formaObrazac_FormClosed);
-                        formaObrazac.Closed += (s, args) => this.Close();
-                        formaObrazac.Show();
-                    });
+                    CloseLoginWindowAndStartMainOne();
                 }
             }
         }
@@ -62,6 +63,17 @@ namespace kolnikApp_klijent
         private void formaObrazac_FormClosed(object sender, FormClosedEventArgs e)
         {
         this.Close();
+        }
+
+        private void CloseLoginWindowAndStartMainOne()
+        {
+            BeginInvoke((MethodInvoker)delegate
+            {
+                this.Hide();
+                obrazac formaObrazac = new obrazac(sockObj);
+                formaObrazac.Closed += (s, args) => this.Close();
+                formaObrazac.Show();
+            });
         }
     }
 }

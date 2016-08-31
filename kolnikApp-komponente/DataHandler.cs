@@ -332,6 +332,16 @@ namespace kolnikApp_komponente
             foreach (var datagroup in datagroups)
             {
                 char action = datagroup.Attribute("action").Value[0];
+                if (datagroup.Elements().Count() == 0)
+                {
+                    if (datagroups.Count() == 1)
+                    {
+                        entityNamesWithReferencesToBelongingDataStores["tablica"].Add("tmp");
+                        DataHandler.ChangesCommited = true;
+                        entityNamesWithReferencesToBelongingDataStores["tablica"].Remove("tmp");
+                    }
+                    continue;
+                }
                 string entityName = datagroup.Elements().First().Name.LocalName;
                 switch (entityName)
                 {
