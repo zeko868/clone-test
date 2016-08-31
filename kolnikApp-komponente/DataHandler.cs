@@ -396,7 +396,16 @@ namespace kolnikApp_komponente
                                                                   || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
                                                               )
                                                               select new { zaposlenik , korisnicki_racun.lozinka });
-                            bool userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count());
+                            bool userWithProvidedUsernameOrOibExists = false;
+                            try
+                            {
+                                userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count());
+                            }
+                            catch
+                            {
+                                System.Windows.Forms.MessageBox.Show("Server with database does not reply.");
+                            }
+                            
                             if (userWithProvidedUsernameOrOibExists && HashPasswordUsingSHA1Algorithm(prijavaPodaci.Element("lozinka").Value) == queryResult.First().lozinka.TrimEnd(' '))
                             {
                                 string userOib = queryResult.First().zaposlenik.oib;
@@ -717,14 +726,12 @@ namespace kolnikApp_komponente
             }
             else if (primljenaPoruka.StartsWith("NOTIFY"))
             {
-                IQueryable<System.Net.IPEndPoint> otpremnicari = from radi in dataContextInstance.radis
+                IQueryable<string> otpremnicari = from radi in dataContextInstance.radis
                                    join radno_mjesto in dataContextInstance.radno_mjestos
                                    on radi.radno_mjesto equals radno_mjesto.id
-                                   join ip_adresar in ClientsAddressesList.addressList
-                                   on radi.zaposlenik equals ip_adresar.Oib
                                    where radi.datum_zavrsetka == null && radno_mjesto.naziv == "otpremitelj"
-                                   select ip_adresar.EndPoint;
-                IPAddressesOfDestinations = otpremnicari.ToArray();
+                                   select radi.zaposlenik;
+                IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => otpremnicari.Contains(x.Oib)).Select(x => x.EndPoint).ToArray();
                 ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", ""));
             }
         }
@@ -745,7 +752,14 @@ namespace kolnikApp_komponente
 
         public void InitializeDataContext()
         {
-            dataContextInstance = new DataClasses1DataContext();
+            try
+            {
+                dataContextInstance = new DataClasses1DataContext();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         public void ClearCurrentDataContext()
         {

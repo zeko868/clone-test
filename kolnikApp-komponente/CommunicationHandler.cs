@@ -205,9 +205,12 @@ namespace kolnikApp_komponente
                 {
                     response = dataHandlerInstance.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending);
                 }
-                foreach (var ipAddress in dataHandlerInstance.IPAddressesOfDestinations)
+                if (dataHandlerInstance.IPAddressesOfDestinations != null)
                 {
-                    MessageSend(response, ipAddress);
+                    foreach (var ipAddress in dataHandlerInstance.IPAddressesOfDestinations)
+                    {
+                        MessageSend(response, ipAddress);
+                    }
                 }
             }
         }

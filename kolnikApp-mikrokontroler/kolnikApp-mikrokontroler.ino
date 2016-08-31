@@ -4,7 +4,10 @@ const uint8_t thermoSOPin = 8;
 const uint8_t thermoCSPin = 9;
 const uint8_t thermoSCKPin = 10;
 const uint8_t photocellPin = 0;
-const unsigned short photocellAnalogValueTreshold = 500;
+const unsigned short defaultPhotocellAnalogValueTreshold = 500;
+unsigned short lowAnalogValue = 250;
+unsigned short highAnalogValue = 750;
+unsigned short photocellAnalogValueTreshold = defaultPhotocellAnalogValueTreshold;
 
 unsigned long startTimeOfCurrentMeasuring = 0;
 String inputString = "";
@@ -43,7 +46,6 @@ void ListenForInfraredSignal()
 			if (millis() - startTimeOfCurrentMeasuring >= 1000)
 			{
 				startTimeOfCurrentMeasuring = 0;
-				delayMicroseconds(100);
 				if (IsObstacleBetweenDiodeAndReceiver())
 				{
 					vehicleIsHere = true;
@@ -57,7 +59,6 @@ void ListenForInfraredSignal()
 			{
 	
 				startTimeOfCurrentMeasuring = 0;
-				delayMicroseconds(100);
 				if (!IsObstacleBetweenDiodeAndReceiver())
 				{
 					vehicleIsHere = false;
@@ -92,6 +93,25 @@ void serialEvent()
 			String oibPrimatelja = inputString.substring(newNeedlePos + newNeedle.length());
 			Serial.println("TMP=" + String(thermocoupleHandler.readCelsius()) + "&OIB=" + oibPrimatelja);
 		}
+	}
+	else if (DoesStringStartWithNeedle("calibrate ", inputString.c_str()))
+	{
+		const byte offset = strlen("calibrate ");
+		if (inputString.substring(offset) == "low")
+		{
+			lowAnalogValue = analogRead(photocellPin);
+			photocellAnalogValueTreshold = (highAnalogValue + lowAnalogValue) / 2;
+		}
+		else if (inputString.substring(offset) == "high")
+		{
+			highAnalogValue = analogRead(photocellPin);
+			photocellAnalogValueTreshold = (highAnalogValue + lowAnalogValue) / 2;
+		}
+		else
+		{
+			photocellAnalogValueTreshold = defaultPhotocellAnalogValueTreshold;
+		}
+		Serial.println(photocellAnalogValueTreshold);
 	}
 	inputString = "";
 }
