@@ -16,13 +16,26 @@ namespace kolnikApp_klijent
     public partial class obrazac : Form
     {
         private CommunicationHandler sockObj;
+        private DataGridView additionalDgv = new DataGridView();
+
         public obrazac(CommunicationHandler sockObj)
         {
             this.sockObj = sockObj;
             this.tablice = DataHandler.entityNamesWithReferencesToBelongingDataStores.Keys.ToArray<string>();
             InitializeComponent();
-            ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;            
-        }     
+            ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
+            additionalDgv.AllowUserToAddRows = false;
+            additionalDgv.AllowUserToDeleteRows = false;
+            additionalDgv.AllowUserToResizeRows = false;
+            additionalDgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            additionalDgv.MultiSelect = false;
+            additionalDgv.Name = "drugaTablica";
+            additionalDgv.ReadOnly = true;
+            additionalDgv.RowHeadersVisible = false;
+            additionalDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            additionalDgv.ColumnWidthChanged += PodaciIzTablica_ColumnWidthChanged;
+            PanelZaSadrzaj.Controls.Add(additionalDgv);
+        }
 
         void ProcessChanges (object obj, ListChangedEventArgs e)
         {
@@ -30,6 +43,10 @@ namespace kolnikApp_klijent
             {
                 Console.Beep(300,300);
                 //refresh controls and perform queries on lists in which data is stored
+                //mislim da gdje je direkt BindingList objekt dodijeljen kao DataSource da nije potrebno refreshati
+                //nakon primitka novih podataka
+                //ako se vrši LINQ upit nad njima, tada je potrebno ponovno izvršiti LINQ upit nad ažuriranim lokalnim
+                //kolekcijama
             }
         }
 
@@ -140,25 +157,25 @@ namespace kolnikApp_klijent
         //inicijalizacija stoga za omogućavanje povratka unatrag kroz aplikaciju
         Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
 
-        private void AutomaticallyResizeColumns()
+        private void AutomaticallyResizeColumns(ref DataGridView dgvObj)
         {
-            for (int i = 0; i < this.PodaciIzTablica.Columns.Count; i++)
+            for (int i = 0; i < dgvObj.Columns.Count; i++)
             {
-                if (i == this.PodaciIzTablica.Columns.Count -1)
+                if (i == dgvObj.Columns.Count -1)
                 {
-                    PodaciIzTablica.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
                 else
                 {
-                    PodaciIzTablica.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                    dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 }
-                int widthCol = PodaciIzTablica.Columns[i].Width;
-                PodaciIzTablica.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                PodaciIzTablica.Columns[i].Width = widthCol;
+                int widthCol = dgvObj.Columns[i].Width;
+                dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                dgvObj.Columns[i].Width = widthCol;
             }
         }
 
-        private void ContentOfDGV(string tableName, DataGridView dgvObj)
+        private void ContentOfDGV(string tableName, ref DataGridView dgvObj)
         {
             switch (tableName)
             {
@@ -174,8 +191,36 @@ namespace kolnikApp_klijent
                                     popust = ((rabat)rabatObj).popust
                                 }).ToArray();
                     break;
+                case "radi":
+                case "zaposlen":
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"];
+                    additionalDgv.Visible = true;
+                    break;
+                case "vozi":
+                    dgvObj.DataSource = (from vozac in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                         join radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                                         on ((zaposlenik)vozac).oib equals ((radi)radiObj).zaposlenik
+                                         join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                         on ((radi)radiObj).radno_mjesto equals ((radno_mjesto)rmObj).id
+                                         where ((radno_mjesto)rmObj).naziv == "vozač"
+                                         select ((zaposlenik)vozac)).ToArray();
+                    break;
                 default:
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
+                    break;
+            }
+            switch (tableName)
+            {
+                case "radi":
+                case "vozi":
+                case "zaposlen":
+                    dgvObj.Dock = DockStyle.None;
+                    AdjustDGVsWhenTheyAreNotDocked();
+                    additionalDgv.Visible = true;
+                    break;
+                default:
+                    dgvObj.Dock = DockStyle.Fill;
+                    additionalDgv.Visible = false;
                     break;
             }
         }
@@ -183,6 +228,8 @@ namespace kolnikApp_klijent
         //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
         private void ButtonClick1(object sender, EventArgs e)
         {
+            PodaciIzTablica.ClearSelection();
+            additionalDgv.DataSource = null;
             LogoutButton.Hide();
             Button Gumb = sender as Button;
             oznaciGumb(sender);
@@ -192,21 +239,23 @@ namespace kolnikApp_klijent
             }
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
-            ContentOfDGV(Gumb.Tag.ToString(), PodaciIzTablica);
-            AutomaticallyResizeColumns();
+            ContentOfDGV(Gumb.Tag.ToString(), ref PodaciIzTablica);
+            AutomaticallyResizeColumns(ref PodaciIzTablica);
         }
 
         //vraćamo se unatrag za jednu "stranicu"
         private void NatragSlika_Click(object sender, EventArgs e)
         {
+            PodaciIzTablica.ClearSelection();
+            additionalDgv.DataSource = null;
             LogoutButton.Hide();
             if(StogZaVracanjeUnatrag.Count > 0)
             {
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
                 Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
                 oznaciGumb(GumbMenija);
-                ContentOfDGV(GumbMenija.Tag.ToString(), PodaciIzTablica);
-                AutomaticallyResizeColumns();
+                ContentOfDGV(GumbMenija.Tag.ToString(), ref PodaciIzTablica);
+                AutomaticallyResizeColumns(ref PodaciIzTablica);
                 NaslovTablice.Text = GumbMenija.Text;
                 NaslovTablice.Tag = GumbMenija.Tag;
             }          
@@ -434,9 +483,66 @@ namespace kolnikApp_klijent
             Application.Restart();
         }
 
+        //ovo služi kada se ručno promijeni širina stupca DGV-u, pa da se ne pojave horizontalni klizači
         private void PodaciIzTablica_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
-            PodaciIzTablica.Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ((DataGridView)sender).Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void PodaciIzTablica_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (NaslovTablice.Tag.ToString())
+            {
+                case "zaposlen":
+                    additionalDgv.DataSource = (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                                            join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                            on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
+                                            where ((zaposlen)zaposlenObj).zaposlenik == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                            select new
+                                            {
+                                                poduzece = ((poduzece)poduzeceObj).naziv,
+                                                datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
+                                                datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka
+                                            }).ToArray();
+                    break;
+                case "radi":
+                    additionalDgv.DataSource = (from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                                                join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                                on ((radi)radiObj).radno_mjesto equals ((radno_mjesto)rmObj).id
+                                                where ((radi)radiObj).zaposlenik == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                select new
+                                                {
+                                                    radno_mjesto = ((radno_mjesto)rmObj).naziv,
+                                                    datum_pocetka = ((radi)radiObj).datum_pocetka,
+                                                    datum_zavrsetka = ((radi)radiObj).datum_zavrsetka
+                                                }).ToArray();
+                    break;
+                case "vozi":
+                    additionalDgv.DataSource = (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                                                where ((vozi)voziObj).vozac == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                select new
+                                                {
+                                                    vozilo = ((vozi)voziObj).vozilo,
+                                                    datum_pocetka = ((vozi)voziObj).datum_pocetka,
+                                                    datum_zavrsetka = ((vozi)voziObj).datum_zavrsetka
+                                                }).ToArray();
+                    break;
+            }
+        }
+
+        private void obrazac_Resize(object sender, EventArgs e)
+        {
+            AdjustDGVsWhenTheyAreNotDocked();
+        }
+
+        private void AdjustDGVsWhenTheyAreNotDocked()
+        {
+            PodaciIzTablica.Height = additionalDgv.Height = (int)(PanelZaSadrzaj.Height * 0.48);
+            additionalDgv.Top = PodaciIzTablica.Height + (int)(PanelZaSadrzaj.Height * 0.04);
+            additionalDgv.Width = PodaciIzTablica.Width = PanelZaSadrzaj.Width;
+            additionalDgv.Left = PodaciIzTablica.Left;
+            AutomaticallyResizeColumns(ref PodaciIzTablica);
+            AutomaticallyResizeColumns(ref additionalDgv);
         }
     }
 }
