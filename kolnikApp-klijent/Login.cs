@@ -42,7 +42,7 @@ namespace kolnikApp_klijent
         {
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             Nullable<bool> loginState = DataHandler.LoginState;
             if (!loginState.HasValue)
             {

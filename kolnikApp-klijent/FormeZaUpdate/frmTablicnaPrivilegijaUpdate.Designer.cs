@@ -1,6 +1,6 @@
 ﻿namespace kolnikApp_klijent.FormeZaUpdate
 {
-    partial class frmTablicaPrivilegijaUpdate
+    partial class frmTablicnaPrivilegijaUpdate
     {
         /// <summary>
         /// Required designer variable.

@@ -7,16 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmTablicaPrivilegija : Form
+    public partial class frmTablicnaPrivilegija : Form
     {
-        public frmTablicaPrivilegija()
+        public frmTablicnaPrivilegija()
         {
             InitializeComponent();
+
+            operacijaComboBox.DataSource = Operacije;
+            operacijaComboBox.SelectedIndex = -1;
+
+            radno_mjestoComboBox.DataSource =
+                (from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 select ((radno_mjesto)radno_mjestoObj).naziv).ToArray();
+            radno_mjestoComboBox.SelectedIndex = -1;
+
+            naziv_tabliceComboBox.DataSource = ImenaTablica;
+            naziv_tabliceComboBox.SelectedIndex = -1;
         }
-        string[] Operacije = new string[4] { "C", "R", "U", "D" };
+
+        string[] ImenaTablica = new string[17] { "Korisnički račun", "Račun", "Artikl", "Radi", "Rabat", "Zaposlenik", "Temeljnica", "Narudžbenica", "Vozilo", "Zaposlen", "Poduzeće", "Vozi", "Otpremnica", "Tablična privilegija", "Gradilište", "Nalog za proizvodnju", "Radno mjesto" };
+        string[] Operacije = new string[4] { "Create", "Read", "Update", "Delete" };
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
