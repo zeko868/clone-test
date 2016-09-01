@@ -374,7 +374,6 @@
             this.PodaciIzTablica.Size = new System.Drawing.Size(724, 514);
             this.PodaciIzTablica.TabIndex = 4;
             this.PodaciIzTablica.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
-            this.PodaciIzTablica.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PodaciIzTablica_RowEnter);
             // 
             // Separator
             // 
@@ -417,7 +416,6 @@
             this.Load += new System.EventHandler(this.obrazac_Load);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.obrazac_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.obrazac_MouseDown);
-            this.Resize += new System.EventHandler(this.obrazac_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.DeleteSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.UpdateSlika)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CreateSlika)).EndInit();
