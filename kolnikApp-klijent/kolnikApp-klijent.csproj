@@ -115,11 +115,11 @@
     <Compile Include="FormeZaUnos\frmRadnoMjesto.Designer.cs">
       <DependentUpon>frmRadnoMjesto.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUnos\frmTablicnaPrivilegija.cs">
+    <Compile Include="FormeZaUnos\frmTablicaPrivilegija.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUnos\frmTablicnaPrivilegija.Designer.cs">
-      <DependentUpon>frmTablicnaPrivilegija.cs</DependentUpon>
+    <Compile Include="FormeZaUnos\frmTablicaPrivilegija.Designer.cs">
+      <DependentUpon>frmTablicaPrivilegija.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUnos\frmTemeljnica.cs">
       <SubType>Form</SubType>
@@ -139,11 +139,11 @@
     <Compile Include="FormeZaUnos\frmVozilo.Designer.cs">
       <DependentUpon>frmVozilo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUnos\frmZaposlen.cs">
+    <Compile Include="FormeZaUnos\frmZaposen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUnos\frmZaposlen.Designer.cs">
-      <DependentUpon>frmZaposlen.cs</DependentUpon>
+    <Compile Include="FormeZaUnos\frmZaposen.Designer.cs">
+      <DependentUpon>frmZaposen.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUnos\frmZaposlenik.cs">
       <SubType>Form</SubType>
@@ -217,11 +217,11 @@
     <Compile Include="FormeZaUpdate\frmRadnoMjestoUpdate.Designer.cs">
       <DependentUpon>frmRadnoMjestoUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmTablicnaPrivilegijaUpdate.cs">
+    <Compile Include="FormeZaUpdate\frmTablicaPrivilegijaUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmTablicnaPrivilegijaUpdate.Designer.cs">
-      <DependentUpon>frmTablicnaPrivilegijaUpdate.cs</DependentUpon>
+    <Compile Include="FormeZaUpdate\frmTablicaPrivilegijaUpdate.Designer.cs">
+      <DependentUpon>frmTablicaPrivilegijaUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUpdate\frmTemeljnicaUpdate.cs">
       <SubType>Form</SubType>
@@ -312,8 +312,8 @@
     <EmbeddedResource Include="FormeZaUnos\frmRadnoMjesto.resx">
       <DependentUpon>frmRadnoMjesto.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmTablicnaPrivilegija.resx">
-      <DependentUpon>frmTablicnaPrivilegija.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUnos\frmTablicaPrivilegija.resx">
+      <DependentUpon>frmTablicaPrivilegija.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmTemeljnica.resx">
       <DependentUpon>frmTemeljnica.cs</DependentUpon>
@@ -324,8 +324,8 @@
     <EmbeddedResource Include="FormeZaUnos\frmVozilo.resx">
       <DependentUpon>frmVozilo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmZaposlen.resx">
-      <DependentUpon>frmZaposlen.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUnos\frmZaposen.resx">
+      <DependentUpon>frmZaposen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmZaposlenik.resx">
       <DependentUpon>frmZaposlenik.cs</DependentUpon>
@@ -363,8 +363,8 @@
     <EmbeddedResource Include="FormeZaUpdate\frmRadnoMjestoUpdate.resx">
       <DependentUpon>frmRadnoMjestoUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmTablicnaPrivilegijaUpdate.resx">
-      <DependentUpon>frmTablicnaPrivilegijaUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUpdate\frmTablicaPrivilegijaUpdate.resx">
+      <DependentUpon>frmTablicaPrivilegijaUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmTemeljnicaUpdate.resx">
       <DependentUpon>frmTemeljnicaUpdate.cs</DependentUpon>

@@ -45,14 +45,14 @@ namespace kolnikApp_klijent.FormeZaUnos
             bool IspravanDatum = false;
             if (datum_zavrsetkaDateTimePicker.Checked)
             {
-                if (datum_pocetkaDateTimePicker.Value <= datum_zavrsetkaDateTimePicker.Value)
+                if (datum_pocetkaDateTimePicker.Value < datum_zavrsetkaDateTimePicker.Value)
                 {
                     IspravanDatum = true;
                 }
-            }
-            else
-            {
-                IspravanDatum = true;
+                else
+                {
+                    popuniLabeleUpozorenja(UpozorenjeDatumi);
+                }
             }
             return IspravanDatum;
         }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmTablicnaPrivilegijaUpdate : Form
+    public partial class frmTablicaPrivilegijaUpdate : Form
     {
-        public frmTablicnaPrivilegijaUpdate()
+        public frmTablicaPrivilegijaUpdate()
         {
             InitializeComponent();
         }
