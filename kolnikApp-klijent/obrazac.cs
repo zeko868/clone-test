@@ -58,7 +58,6 @@ namespace kolnikApp_klijent
         //Event handler za klik na ikonicu "Help"
         private void HelpSlika_Click(object sender, EventArgs e)
         {
-            LogoutButton.Hide();
             //koristimo exeDirectory gdje je spremljena putanja i dodajemo naziv help file-a 
             String HelpFilepath = "file://" + Path.Combine(exeDirectory, "KolnikAppHelp.chm");
             Help.ShowHelp(this, HelpFilepath);     
@@ -123,23 +122,30 @@ namespace kolnikApp_klijent
 
         private void obrazac_Load(object sender, EventArgs e)
         {
+            int PomakZbogTabliceManje = 0;
             //dinamički se stvaraju gumbi na temelju broja tablica kojima korisnik ima pravo pristupa
             for (int i = 0; i < tablice.Length; i++)
-            {
-                Button GumbMenija = new Button();
-                GumbMenija.Name = tablice[i];
-                //šalje se ime tablice na "uljepšavanje"
-                GumbMenija.Text = UrediImeGumba(tablice[i]);
-                GumbMenija.Tag = tablice[i];
-                GumbMenija.Location = new Point(0, 30 * i);
-                GumbMenija.Height = 30;
-                GumbMenija.Width = MeniPanel.Width - 7;
-                GumbMenija.BackColor = Color.Black;
-                GumbMenija.ForeColor = Color.White;
-                GumbMenija.FlatStyle = FlatStyle.Flat;
-                GumbMenija.Click += new EventHandler(ButtonClick1);
+            {              
+               if (tablice[i] != "korisnicki_racun") { 
+                    Button GumbMenija = new Button();
+                    GumbMenija.Name = tablice[i];
+                    //šalje se ime tablice na "uljepšavanje"
+                    GumbMenija.Text = UrediImeGumba(tablice[i]);
+                    GumbMenija.Tag = tablice[i];
+                    GumbMenija.Location = new Point(0, 30 * (i-PomakZbogTabliceManje));
+                    GumbMenija.Height = 30;
+                    GumbMenija.Width = MeniPanel.Width - 7;
+                    GumbMenija.BackColor = Color.Black;
+                    GumbMenija.ForeColor = Color.White;
+                    GumbMenija.FlatStyle = FlatStyle.Flat;
+                    GumbMenija.Click += new EventHandler(ButtonClick1);
 
-                this.MeniPanel.Controls.Add(GumbMenija);
+                    this.MeniPanel.Controls.Add(GumbMenija);
+                }
+                else
+                {
+                    PomakZbogTabliceManje += 1;
+                }
             }
         }
 
@@ -191,16 +197,18 @@ namespace kolnikApp_klijent
                                     popust = ((rabat)rabatObj).popust
                                 }).ToArray();
                     break;
-                case "korisnicki_racun":
+                case "zaposlenik":
                     dgvObj.DataSource =
                         (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
                          join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
                          on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((zaposlenik)zaposlenikObj).oib
                          select new
                          {
-                             zaposlenik = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
+                             OIB=((zaposlenik)zaposlenikObj).oib,
+                             Ime = ((zaposlenik)zaposlenikObj).ime,
+                             Prezime=((zaposlenik)zaposlenikObj).prezime,
                              korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime,
-                             lozinka = ((korisnicki_racun)korisnicki_racunObj).lozinka
+                             //lozinka = ((korisnicki_racun)korisnicki_racunObj).lozinka
                          }).ToArray();
                     break;
                 case "racun":
@@ -323,10 +331,9 @@ namespace kolnikApp_klijent
         {
             PodaciIzTablica.ClearSelection();
             additionalDgv.DataSource = null;
-            LogoutButton.Hide();
             Button Gumb = sender as Button;
             oznaciGumb(sender);
-            if (NaslovTablice.Text != "Dobro došli!")
+            if (NaslovTablice.Text != "Dobro došli!" && Gumb.Text != NaslovTablice.Text)
             {
                 StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
             }
@@ -341,7 +348,6 @@ namespace kolnikApp_klijent
         {
             PodaciIzTablica.ClearSelection();
             additionalDgv.DataSource = null;
-            LogoutButton.Hide();
             if(StogZaVracanjeUnatrag.Count > 0)
             {
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
@@ -447,7 +453,6 @@ namespace kolnikApp_klijent
         //stavljanje aplikacije u "window" mode
         private void RestoreDown_Click(object sender, EventArgs e)
         {
-            LogoutButton.Hide();
             if (this.WindowState == FormWindowState.Maximized)
             {
                 this.WindowState = FormWindowState.Normal;
@@ -468,6 +473,7 @@ namespace kolnikApp_klijent
             else
             {
                 LogoutButton.Show();
+                LogoutButton.Focus();
             }            
         }
 
