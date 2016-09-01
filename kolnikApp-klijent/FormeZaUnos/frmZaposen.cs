@@ -7,24 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmZaposlen : Form
+    public partial class frmZaposen : Form
     {
-        public frmZaposlen()
+        public frmZaposen()
         {
             InitializeComponent();
-            zaposlenikComboBox.DataSource =
-                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
-            zaposlenikComboBox.SelectedIndex = -1;
-
-            poduzeceComboBox.DataSource =
-                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 select ((poduzece)poduzeceObj).naziv).ToArray();
-            poduzeceComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -55,14 +45,14 @@ namespace kolnikApp_klijent.FormeZaUnos
             bool IspravanDatum = false;
             if (datum_zavrsetkaDateTimePicker.Checked)
             {
-                if (datum_pocetkaDateTimePicker.Value <= datum_zavrsetkaDateTimePicker.Value)
+                if (datum_pocetkaDateTimePicker.Value < datum_zavrsetkaDateTimePicker.Value)
                 {
                     IspravanDatum = true;
                 }
-            }
-            else
-            {
-                IspravanDatum = true;
+                else
+                {
+                    popuniLabeleUpozorenja(UpozorenjeRazlikaDatuma);
+                }
             }
             return IspravanDatum;
         }

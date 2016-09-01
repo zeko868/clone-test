@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -16,25 +15,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmTemeljnica()
         {
             InitializeComponent();
-            artiklComboBox.DataSource =
-                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
-                 select ((artikl)artiklObj).naziv).ToArray();
-            artiklComboBox.SelectedIndex = -1;
-
-            vozacComboBox.DataSource =
-                (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
-                 from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 where ((zaposlenik)zaposlenObj).oib == ((radi)radiObj).zaposlenik &&
-                       ((radi)radiObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
-                       ((radno_mjesto)radno_mjestoObj).naziv == "vozač"
-                 select ((zaposlenik)zaposlenObj).ime + " " + ((zaposlenik)zaposlenObj).prezime).ToArray();
-            vozacComboBox.SelectedIndex = -1;
-
-            voziloComboBox.DataSource =
-                (from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
-                 select ((vozilo)voziloObj).registracijski_broj).ToArray();
-            voziloComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)

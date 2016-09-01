@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -16,15 +15,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmRabat()
         {
             InitializeComponent();
-            artiklComboBox.DataSource =
-                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
-                 select ((artikl)artiklObj).naziv).ToArray();
-            artiklComboBox.SelectedIndex = -1;
-
-            poslovni_partnerComboBox.DataSource =
-                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 select ((poduzece)poduzeceObj).naziv).ToArray();
-            poslovni_partnerComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)

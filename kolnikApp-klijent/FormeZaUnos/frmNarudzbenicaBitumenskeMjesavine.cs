@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -16,10 +15,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmNarudzbenicaBitumenskeMjesavine()
         {
             InitializeComponent();
-            naruciteljComboBox.DataSource =
-                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 select ((poduzece)poduzeceObj).naziv).ToArray();
-            naruciteljComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
