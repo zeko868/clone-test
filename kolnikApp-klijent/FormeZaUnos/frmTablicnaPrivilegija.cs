@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmTablicaPrivilegija : Form
+    public partial class frmTablicnaPrivilegija : Form
     {
-        public frmTablicaPrivilegija()
+        public frmTablicnaPrivilegija()
         {
             InitializeComponent();
         }

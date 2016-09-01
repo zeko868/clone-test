@@ -1,6 +1,6 @@
 ﻿namespace kolnikApp_klijent.FormeZaUnos
 {
-    partial class frmZaposen
+    partial class frmZaposlen
     {
         /// <summary>
         /// Required designer variable.

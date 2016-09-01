@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmZaposen : Form
+    public partial class frmZaposlen : Form
     {
-        public frmZaposen()
+        public frmZaposlen()
         {
             InitializeComponent();
         }
@@ -45,14 +45,14 @@ namespace kolnikApp_klijent.FormeZaUnos
             bool IspravanDatum = false;
             if (datum_zavrsetkaDateTimePicker.Checked)
             {
-                if (datum_pocetkaDateTimePicker.Value < datum_zavrsetkaDateTimePicker.Value)
+                if (datum_pocetkaDateTimePicker.Value <= datum_zavrsetkaDateTimePicker.Value)
                 {
                     IspravanDatum = true;
                 }
-                else
-                {
-                    popuniLabeleUpozorenja(UpozorenjeRazlikaDatuma);
-                }
+            }
+            else
+            {
+                IspravanDatum = true;
             }
             return IspravanDatum;
         }

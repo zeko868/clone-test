@@ -191,6 +191,99 @@ namespace kolnikApp_klijent
                                     popust = ((rabat)rabatObj).popust
                                 }).ToArray();
                     break;
+                case "korisnicki_racun":
+                    dgvObj.DataSource =
+                        (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                         on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((zaposlenik)zaposlenikObj).oib
+                         select new
+                         {
+                             zaposlenik = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
+                             korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime,
+                             lozinka = ((korisnicki_racun)korisnicki_racunObj).lozinka
+                         }).ToArray();
+                    break;
+                case "racun":
+                    dgvObj.DataSource =
+                        (from racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["racun"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                         on ((racun)racunObj).izdavatelj equals ((zaposlenik)zaposlenikObj).oib
+                         select new
+                         {
+                             id_racun = ((racun)racunObj).id,
+                             datum_izdavanja = ((racun)racunObj).datum_izdavanja,
+                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
+                         }).ToArray();
+                    break;
+                case "tablicna_privilegija":
+                    dgvObj.DataSource =
+                        (from tablicna_privilegijaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablicna_privilegija"]
+                         join radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                         on ((tablicna_privilegija)tablicna_privilegijaObj).radno_mjesto equals ((radno_mjesto)radno_mjestoObj).id
+                         select new
+                         {
+                             radno_mjesto = ((radno_mjesto)radno_mjestoObj).naziv,
+                             naziv_tablice = ((tablicna_privilegija)tablicna_privilegijaObj).naziv_tablice,
+                             operacija = ((tablicna_privilegija)tablicna_privilegijaObj).operacija
+                         }).ToArray();
+                    break;
+                case "temeljnica":
+                    dgvObj.DataSource =
+                        (from temeljnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["temeljnica"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                         on ((temeljnica)temeljnicaObj).vozac equals ((zaposlenik)zaposlenikObj).oib
+                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         on ((temeljnica)temeljnicaObj).artikl equals ((artikl)artiklObj).id
+                         select new
+                         {
+                             id = ((temeljnica)temeljnicaObj).id,
+                             datum_izdavanja = ((temeljnica)temeljnicaObj).datum_izdavanja,
+                             kolicina = ((temeljnica)temeljnicaObj).kolicina,
+                             vozilo = ((temeljnica)temeljnicaObj).vozilo,
+                             vozac = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
+                             artikl = ((artikl)artiklObj).naziv
+                         }).ToArray();
+                    break;
+                case "nalog_za_proizvodnju":
+                    dgvObj.DataSource =
+                        (from nalog_za_proizvodnjuObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["nalog_za_proizvodnju"]
+                         join gradilisteObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["gradiliste"]
+                         on ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).gradiliste equals ((gradiliste)gradilisteObj).id
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                         on ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).izdavatelj equals ((zaposlenik)zaposlenikObj).oib
+                         select new
+                         {
+                             temeljnica = ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).temeljnica,
+                             gradiliste = ((gradiliste)gradilisteObj).naziv_mjesta,
+                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
+                         }).ToArray();
+                    break;
+                case "narudzbenica_bitumenske_mjesavine":
+                    dgvObj.DataSource =
+                        (from narudzbenica_bitumenske_mjesavineObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                         join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).narucitelj equals ((poduzece)poduzeceObj).oib
+                         select new
+                         {
+                             temeljnica = ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).temeljnica,
+                             datum_potrazivanja = ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).datum_potrazivanja,
+                             narucitelj = ((poduzece)poduzeceObj).naziv
+                         }).ToArray();
+                    break;
+                case "otpremnica":
+                    dgvObj.DataSource =
+                        (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                         on ((otpremnica)otpremnicaObj).otpremitelj equals ((zaposlenik)zaposlenikObj).oib
+                         select new
+                         {
+                             temeljnica = ((otpremnica)otpremnicaObj).temeljnica,
+                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
+                             datum_otpreme = ((otpremnica)otpremnicaObj).datum_otpreme,
+                             racun = ((otpremnica)otpremnicaObj).racun,
+                             temperatura = ((otpremnica)otpremnicaObj).temperatura
+                         }).ToArray();
+                    break;
                 case "radi":
                 case "zaposlen":
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"];
@@ -332,7 +425,6 @@ namespace kolnikApp_klijent
         //otvaranje nove forme za "Create" na temelju dobivenog imena
         private void CreateSlika_Click(object sender, EventArgs e)
         {
-            LogoutButton.Hide();
             string ImeForme=pretvoriUImeForme("Create");
             Type TipForme = Type.GetType("kolnikApp_klijent.FormeZaUnos." + ImeForme);
             Form nextForm2 = (Form)Activator.CreateInstance(TipForme);
@@ -349,7 +441,6 @@ namespace kolnikApp_klijent
         //minimiziranje aplikacije klikom na "_"
         private void Minimize_Click(object sender, EventArgs e)
         {
-            LogoutButton.Hide();
             this.WindowState = FormWindowState.Minimized;
         }
 
@@ -380,32 +471,14 @@ namespace kolnikApp_klijent
             }            
         }
 
-        //skrivanje logout gumba
-        private void obrazac_MouseClick(object sender, MouseEventArgs e)
-        {
-            LogoutButton.Hide();
-        }
-        //skrivanje logout gumba
-        private void MenuLista_MouseClick(object sender, MouseEventArgs e)
-        {
-            LogoutButton.Hide();
-        }
-
         //otvaranje nove forme za "Update" na temelju dobivenog imena
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
-            LogoutButton.Hide();
             string ImeForme = pretvoriUImeForme("Update");
             Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
             Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme);
             FormaZaUpdate.ShowDialog();
 
-        }
-
-        //skrivanje logout gumba
-        private void DeleteSlika_Click(object sender, EventArgs e)
-        {
-            LogoutButton.Hide();
         }
 
         //omogućavanje micanje forme po ekranu ako smo pozicionirani na formi
@@ -448,31 +521,6 @@ namespace kolnikApp_klijent
             {
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-
-        //skirvanje logout gumba
-        private void LogoSlika_Click(object sender, EventArgs e)
-        {
-            if (LogoutButton.Visible)
-            {
-                LogoutButton.Hide();
-            }
-        }
-        //skirvanje logout gumba
-        private void LijeviIzbornik_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (LogoutButton.Visible)
-            {
-                LogoutButton.Hide();
-            }
-        }
-        //skirvanje logout gumba
-        private void Header_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (LogoutButton.Visible)
-            {
-                LogoutButton.Hide();
             }
         }
 
@@ -543,6 +591,11 @@ namespace kolnikApp_klijent
             additionalDgv.Left = PodaciIzTablica.Left;
             AutomaticallyResizeColumns(ref PodaciIzTablica);
             AutomaticallyResizeColumns(ref additionalDgv);
+        }
+
+        private void LogoutButton_Leave(object sender, EventArgs e)
+        {
+            LogoutButton.Hide();
         }
     }
 }
