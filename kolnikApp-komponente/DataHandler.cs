@@ -86,6 +86,14 @@ namespace kolnikApp_komponente
         public static Dictionary<string, BindingList<object>> entityNamesWithReferencesToBelongingDataStores = null;
         public static Dictionary<string, System.Windows.Forms.Control> entityNamesWithBelongingContainers = null;
 
+        public enum Operations
+        {
+            C = 1,
+            R = 2,
+            U = 4,
+            D = 8
+        }
+
         public static Nullable<T> TypeToNullableType<T>(string s) where T : struct
         {
             Nullable<T> result = new Nullable<T>();
@@ -212,7 +220,6 @@ namespace kolnikApp_komponente
                             {
                                 case "DateTime":
                                 case "String":
-                                case "Char":
                                     commandForUpdatingRecord += info.Name + "='" + info.GetValue(obj).ToString() + "'" + delimiter;
                                     break;
                                 default:
@@ -286,14 +293,7 @@ namespace kolnikApp_komponente
                     else
                     {
                         TypeConverter conv = TypeDescriptor.GetConverter(info.PropertyType);
-                        if (info.PropertyType.Name == "Char")
-                        {
-                            info.SetValue(p, (char)byte.Parse((string)value));
-                        }
-                        else
-                        {
-                            info.SetValue(p, conv.ConvertFrom(value));
-                        }
+                        info.SetValue(p, conv.ConvertFrom(value));
                     }
                 }
             }
@@ -301,16 +301,19 @@ namespace kolnikApp_komponente
 
         public bool IsUserPrivilegedToDoAnAction(System.Net.IPEndPoint address, string entityName, char action)
         {
-            IEnumerable<int> userHasRight = from ip_adresar in ClientsAddressesList.addressList
+            IEnumerable<byte> userRights = from ip_adresar in ClientsAddressesList.addressList
             join radi in dataContextInstance.radis
             on ip_adresar.Oib equals radi.zaposlenik
             join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
             on radi.radno_mjesto equals tablicna_privilegija.radno_mjesto
             where ip_adresar.EndPoint.Equals(address)
             && tablicna_privilegija.naziv_tablice.Equals(entityName)
-            && tablicna_privilegija.operacija == action
-            select 1;
-            return userHasRight.Any();
+            select tablicna_privilegija.operacija;
+            if (userRights.Count() == 0)
+            {
+                return false;
+            }
+            return ((Operations)userRights.First()).HasFlag((Operations)Enum.Parse(typeof(Operations), action.ToString()));
         }
 
         public List<string> GetListOfAccessibleEntityTypes(System.Net.IPEndPoint address)
@@ -321,7 +324,9 @@ namespace kolnikApp_komponente
                                             join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
                                             on radi.radno_mjesto equals tablicna_privilegija.radno_mjesto
                                             where ip_adresar.EndPoint.Equals(address)
-                                            select tablicna_privilegija.naziv_tablice).Distinct().ToList();
+                                            &&
+                                            tablicna_privilegija.operacija > 0
+                                            select tablicna_privilegija.naziv_tablice).ToList();
         }
 
         public void InterpretXMLData(string XMLData, System.Net.IPEndPoint address, bool isClientSide = true)
@@ -329,6 +334,7 @@ namespace kolnikApp_komponente
             XDocument doc = XDocument.Parse(XMLData);
 
             var datagroups = doc.Element("data").Elements();
+            bool isAvailabilityCheck = false;
             foreach (var datagroup in datagroups)
             {
                 char action = datagroup.Attribute("action").Value[0];
@@ -385,13 +391,13 @@ namespace kolnikApp_komponente
                         if (isClientSide)
                         {
                             //VratiPaketPosluziteljuSPotvrdomOAktivnosti
-                            ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost", "active"));
+                            ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost"));
                         }
                         else
                         {
-                            string sendersOib = ClientsAddressesList.addressList.Where(x => x.EndPoint.Equals(address)).Select(x => x.Oib).First();
-                            ClientsAddressesList.addressList.Where(x => x.Oib == sendersOib).First().UpdateTimeOfLastAnswer();
+                            ClientsAddressesList.addressList.Where(x => x.EndPoint.Equals(address)).First().UpdateTimeOfLastAnswer();
                         }
+                        isAvailabilityCheck = true;
                         break;
                     case "prijava":
                         if (!isClientSide)
@@ -616,11 +622,14 @@ namespace kolnikApp_komponente
                 {
                     IPAddressesOfDestinations = new System.Net.IPEndPoint[1];
                     IPAddressesOfDestinations[0] = address;
+                    IsConfirmationOfPreviousRequest = !isAvailabilityCheck ? false : true;
                 }
             }
             else
             {
-                IsConfirmationOfPreviousRequest = true;
+                IPAddressesOfDestinations = new System.Net.IPEndPoint[1];
+                IPAddressesOfDestinations[0] = address;
+                IsConfirmationOfPreviousRequest = !isAvailabilityCheck ? true : false;
             }
         }
 

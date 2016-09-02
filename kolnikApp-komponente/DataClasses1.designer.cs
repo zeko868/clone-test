@@ -1704,7 +1704,7 @@ namespace kolnikApp_komponente
 
         private string _naziv_tablice;
 
-        private char _operacija;
+        private byte _operacija;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
@@ -1714,7 +1714,7 @@ namespace kolnikApp_komponente
         partial void Onradno_mjestoChanged();
         partial void Onnaziv_tabliceChanging(string value);
         partial void Onnaziv_tabliceChanged();
-        partial void OnoperacijaChanging(char value);
+        partial void OnoperacijaChanging(byte value);
         partial void OnoperacijaChanged();
         #endregion
 
@@ -1766,8 +1766,8 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_operacija", DbType = "Char(1) NOT NULL", IsPrimaryKey = true)]
-        public char operacija
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_operacija", DbType = "TinyInt NOT NULL")]
+        public byte operacija
         {
             get
             {

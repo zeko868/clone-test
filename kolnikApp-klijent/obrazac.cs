@@ -232,7 +232,7 @@ namespace kolnikApp_klijent
                          {
                              radno_mjesto = ((radno_mjesto)radno_mjestoObj).naziv,
                              naziv_tablice = ((tablicna_privilegija)tablicna_privilegijaObj).naziv_tablice,
-                             operacija = ((tablicna_privilegija)tablicna_privilegijaObj).operacija
+                             operacija = String.Join(", ", GetListOfOperationNames(((tablicna_privilegija)tablicna_privilegijaObj).operacija))
                          }).ToArray();
                     break;
                 case "temeljnica":
@@ -323,6 +323,26 @@ namespace kolnikApp_klijent
                     dgvObj.Dock = DockStyle.Fill;
                     additionalDgv.Visible = false;
                     break;
+            }
+        }
+
+        IEnumerable<string> GetListOfOperationNames(byte mixOfOperations)
+        {
+            if (Convert.ToBoolean(mixOfOperations & (byte)DataHandler.Operations.C))
+            {
+                yield return "create";
+            }
+            if (Convert.ToBoolean(mixOfOperations & (byte)DataHandler.Operations.R))
+            {
+                yield return "read";
+            }
+            if (Convert.ToBoolean(mixOfOperations & (byte)DataHandler.Operations.U))
+            {
+                yield return "update";
+            }
+            if (Convert.ToBoolean(mixOfOperations & (byte)DataHandler.Operations.D))
+            {
+                yield return "delete";
             }
         }
 
@@ -441,6 +461,7 @@ namespace kolnikApp_klijent
         //zatvaranje aplikacije klikom na "X"
         private void closeButton_Click(object sender, EventArgs e)
         {
+            sockObj.SendLogoutRequest();
             this.Close();
         }
 

@@ -39,7 +39,8 @@ namespace kolnikApp_komponente
             if (this.isServer)
             {
                 ClientsAddressesList.addressList = new List<ClientsAddress>();
-                Thread HearthbeatCheckingThreadHandle = new Thread(new ThreadStart(CheckIfAnyUserHasTimedOut));
+                Thread HeartbeatCheckingThreadHandle = new Thread(new ThreadStart(CheckIfAnyUserHasTimedOut));
+                HeartbeatCheckingThreadHandle.Start();
             }
         }
 
@@ -79,11 +80,12 @@ namespace kolnikApp_komponente
                     MessageSend(checkAvailabilityMessageContent, zapis.EndPoint);
                 }
                 Thread.Sleep(numOfMsecToWaitForTimeoutResponse);
-                foreach (var zapis in ClientsAddressesList.addressList)
+                //dunno why this sleep call prevents async function calls and main thread from execution -> therefore 1 extra second is added at comparison in condition in following if statement
+                for (byte i = 0; i<ClientsAddressesList.addressList.Count(); i++)
                 {
-                    if ((DateTime.Now - zapis.TimeOfLastAnswer).TotalMilliseconds > numOfMsecToWaitForTimeoutResponse)
+                    if ((DateTime.Now - ClientsAddressesList.addressList[i].TimeOfLastAnswer).TotalMilliseconds > (numOfMsecToWaitForTimeoutResponse + 1000))
                     {
-                        ClientsAddressesList.UnregisterUserWithCertainIPAddress(zapis.EndPoint);
+                        ClientsAddressesList.UnregisterUserWithCertainIPAddress(ClientsAddressesList.addressList[i].EndPoint);
                     }
                 }
                 Thread.Sleep(intervalLengthBetweenTimeoutChecksInMsec - numOfMsecToWaitForTimeoutResponse);
@@ -95,7 +97,8 @@ namespace kolnikApp_komponente
             IPEndPoint remoteIPAddress = null;
             if (remoteServerIdentifier != null)
             {
-                if (IsValidIPAddress(remoteServerIdentifier)) {
+                if (IsValidIPAddress(remoteServerIdentifier))
+                {
                     remoteIPAddress = new IPEndPoint(IPAddress.Parse(remoteServerIdentifier), portNum);
                 }
                 else
