@@ -42,6 +42,24 @@
             datum_izdavanjaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // izdavateljLabel
+            // 
+            izdavateljLabel.AutoSize = true;
+            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
+            izdavateljLabel.Name = "izdavateljLabel";
+            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
+            izdavateljLabel.TabIndex = 37;
+            izdavateljLabel.Text = "Izdavatelj:";
+            // 
+            // datum_izdavanjaLabel
+            // 
+            datum_izdavanjaLabel.AutoSize = true;
+            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
+            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
+            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
+            datum_izdavanjaLabel.TabIndex = 36;
+            datum_izdavanjaLabel.Text = "Datum izdavanja:";
+            // 
             // UpozorenjeIzdavatelj
             // 
             this.UpozorenjeIzdavatelj.AutoSize = true;
@@ -64,15 +82,6 @@
             this.UpozorenjeDatumIzdavanja.Text = "label1";
             this.UpozorenjeDatumIzdavanja.Visible = false;
             // 
-            // izdavateljLabel
-            // 
-            izdavateljLabel.AutoSize = true;
-            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
-            izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
-            izdavateljLabel.TabIndex = 37;
-            izdavateljLabel.Text = "Izdavatelj:";
-            // 
             // izdavateljComboBox
             // 
             this.izdavateljComboBox.FormattingEnabled = true;
@@ -81,15 +90,6 @@
             this.izdavateljComboBox.Size = new System.Drawing.Size(131, 21);
             this.izdavateljComboBox.TabIndex = 39;
             this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
-            // 
-            // datum_izdavanjaLabel
-            // 
-            datum_izdavanjaLabel.AutoSize = true;
-            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
-            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
-            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
-            datum_izdavanjaLabel.TabIndex = 36;
-            datum_izdavanjaLabel.Text = "Datum izdavanja:";
             // 
             // datum_izdavanjaDateTimePicker
             // 
@@ -106,6 +106,7 @@
             this.GumbReset.TabIndex = 35;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -141,6 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeIzdavatelj);

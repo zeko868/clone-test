@@ -12,24 +12,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmZaposlenikUpdate : Form
     {
-        public frmZaposlenikUpdate()
+        public frmZaposlenikUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();
+            imeTextBox.Text = PodatkovniRedak.Cells["ime"].Value.ToString();
+            prezimeTextBox.Text = PodatkovniRedak.Cells["prezime"].Value.ToString();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            oibTextBox.Text = "";
-            imeTextBox.Text = "";
-            prezimeTextBox.Text = "";
-            UpozorenjePrezime.Hide();
-            UpozorenjeOib.Hide();
-            UpozorenjeIme.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -120,6 +113,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 UpozorenjePrezime.Hide();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            oibTextBox.Text = "";
+            imeTextBox.Text = "";
+            prezimeTextBox.Text = "";
+            UpozorenjePrezime.Hide();
+            UpozorenjeOib.Hide();
+            UpozorenjeIme.Hide();
         }
     }
 }

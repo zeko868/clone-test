@@ -54,6 +54,51 @@
             datum_izdavanjaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // artiklLabel
+            // 
+            artiklLabel.AutoSize = true;
+            artiklLabel.Location = new System.Drawing.Point(91, 160);
+            artiklLabel.Name = "artiklLabel";
+            artiklLabel.Size = new System.Drawing.Size(33, 13);
+            artiklLabel.TabIndex = 46;
+            artiklLabel.Text = "Artikl:";
+            // 
+            // vozacLabel
+            // 
+            vozacLabel.AutoSize = true;
+            vozacLabel.Location = new System.Drawing.Point(84, 133);
+            vozacLabel.Name = "vozacLabel";
+            vozacLabel.Size = new System.Drawing.Size(40, 13);
+            vozacLabel.TabIndex = 44;
+            vozacLabel.Text = "Vozač:";
+            // 
+            // voziloLabel
+            // 
+            voziloLabel.AutoSize = true;
+            voziloLabel.Location = new System.Drawing.Point(86, 106);
+            voziloLabel.Name = "voziloLabel";
+            voziloLabel.Size = new System.Drawing.Size(38, 13);
+            voziloLabel.TabIndex = 43;
+            voziloLabel.Text = "Vozilo:";
+            // 
+            // kolicinaLabel
+            // 
+            kolicinaLabel.AutoSize = true;
+            kolicinaLabel.Location = new System.Drawing.Point(77, 80);
+            kolicinaLabel.Name = "kolicinaLabel";
+            kolicinaLabel.Size = new System.Drawing.Size(47, 13);
+            kolicinaLabel.TabIndex = 41;
+            kolicinaLabel.Text = "Količina:";
+            // 
+            // datum_izdavanjaLabel
+            // 
+            datum_izdavanjaLabel.AutoSize = true;
+            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 55);
+            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
+            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
+            datum_izdavanjaLabel.TabIndex = 39;
+            datum_izdavanjaLabel.Text = "Datum izdavanja:";
+            // 
             // UpozorenjeArtikl
             // 
             this.UpozorenjeArtikl.AutoSize = true;
@@ -109,15 +154,6 @@
             this.UpozorenjeDatumIzdavanja.Text = "label1";
             this.UpozorenjeDatumIzdavanja.Visible = false;
             // 
-            // artiklLabel
-            // 
-            artiklLabel.AutoSize = true;
-            artiklLabel.Location = new System.Drawing.Point(91, 160);
-            artiklLabel.Name = "artiklLabel";
-            artiklLabel.Size = new System.Drawing.Size(33, 13);
-            artiklLabel.TabIndex = 46;
-            artiklLabel.Text = "Artikl:";
-            // 
             // artiklComboBox
             // 
             this.artiklComboBox.FormattingEnabled = true;
@@ -126,15 +162,6 @@
             this.artiklComboBox.Size = new System.Drawing.Size(131, 21);
             this.artiklComboBox.TabIndex = 48;
             this.artiklComboBox.SelectedIndexChanged += new System.EventHandler(this.artiklComboBox_SelectedIndexChanged);
-            // 
-            // vozacLabel
-            // 
-            vozacLabel.AutoSize = true;
-            vozacLabel.Location = new System.Drawing.Point(84, 133);
-            vozacLabel.Name = "vozacLabel";
-            vozacLabel.Size = new System.Drawing.Size(40, 13);
-            vozacLabel.TabIndex = 44;
-            vozacLabel.Text = "Vozac:";
             // 
             // vozacComboBox
             // 
@@ -145,15 +172,6 @@
             this.vozacComboBox.TabIndex = 47;
             this.vozacComboBox.SelectedIndexChanged += new System.EventHandler(this.vozacComboBox_SelectedIndexChanged);
             // 
-            // voziloLabel
-            // 
-            voziloLabel.AutoSize = true;
-            voziloLabel.Location = new System.Drawing.Point(86, 106);
-            voziloLabel.Name = "voziloLabel";
-            voziloLabel.Size = new System.Drawing.Size(38, 13);
-            voziloLabel.TabIndex = 43;
-            voziloLabel.Text = "Vozilo:";
-            // 
             // voziloComboBox
             // 
             this.voziloComboBox.FormattingEnabled = true;
@@ -163,15 +181,6 @@
             this.voziloComboBox.TabIndex = 45;
             this.voziloComboBox.SelectedIndexChanged += new System.EventHandler(this.voziloComboBox_SelectedIndexChanged);
             // 
-            // kolicinaLabel
-            // 
-            kolicinaLabel.AutoSize = true;
-            kolicinaLabel.Location = new System.Drawing.Point(77, 80);
-            kolicinaLabel.Name = "kolicinaLabel";
-            kolicinaLabel.Size = new System.Drawing.Size(47, 13);
-            kolicinaLabel.TabIndex = 41;
-            kolicinaLabel.Text = "Kolicina:";
-            // 
             // kolicinaTextBox
             // 
             this.kolicinaTextBox.Location = new System.Drawing.Point(129, 77);
@@ -180,15 +189,6 @@
             this.kolicinaTextBox.Size = new System.Drawing.Size(131, 20);
             this.kolicinaTextBox.TabIndex = 42;
             this.kolicinaTextBox.Leave += new System.EventHandler(this.kolicinaTextBox_Leave);
-            // 
-            // datum_izdavanjaLabel
-            // 
-            datum_izdavanjaLabel.AutoSize = true;
-            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 55);
-            datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
-            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
-            datum_izdavanjaLabel.TabIndex = 39;
-            datum_izdavanjaLabel.Text = "Datum izdavanja:";
             // 
             // datum_izdavanjaDateTimePicker
             // 
@@ -205,6 +205,7 @@
             this.GumbReset.TabIndex = 38;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -240,6 +241,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeArtikl);

@@ -46,6 +46,33 @@
             oibLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // prezimeLabel
+            // 
+            prezimeLabel.AutoSize = true;
+            prezimeLabel.Location = new System.Drawing.Point(77, 106);
+            prezimeLabel.Name = "prezimeLabel";
+            prezimeLabel.Size = new System.Drawing.Size(47, 13);
+            prezimeLabel.TabIndex = 42;
+            prezimeLabel.Text = "Prezime:";
+            // 
+            // imeLabel
+            // 
+            imeLabel.AutoSize = true;
+            imeLabel.Location = new System.Drawing.Point(97, 80);
+            imeLabel.Name = "imeLabel";
+            imeLabel.Size = new System.Drawing.Size(27, 13);
+            imeLabel.TabIndex = 40;
+            imeLabel.Text = "Ime:";
+            // 
+            // oibLabel
+            // 
+            oibLabel.AutoSize = true;
+            oibLabel.Location = new System.Drawing.Point(99, 54);
+            oibLabel.Name = "oibLabel";
+            oibLabel.Size = new System.Drawing.Size(28, 13);
+            oibLabel.TabIndex = 39;
+            oibLabel.Text = "OIB:";
+            // 
             // UpozorenjePrezime
             // 
             this.UpozorenjePrezime.AutoSize = true;
@@ -79,15 +106,6 @@
             this.UpozorenjeOib.Text = "label1";
             this.UpozorenjeOib.Visible = false;
             // 
-            // prezimeLabel
-            // 
-            prezimeLabel.AutoSize = true;
-            prezimeLabel.Location = new System.Drawing.Point(77, 106);
-            prezimeLabel.Name = "prezimeLabel";
-            prezimeLabel.Size = new System.Drawing.Size(47, 13);
-            prezimeLabel.TabIndex = 42;
-            prezimeLabel.Text = "Prezime:";
-            // 
             // prezimeTextBox
             // 
             this.prezimeTextBox.Location = new System.Drawing.Point(129, 103);
@@ -97,15 +115,6 @@
             this.prezimeTextBox.TabIndex = 44;
             this.prezimeTextBox.Leave += new System.EventHandler(this.prezimeTextBox_Leave);
             // 
-            // imeLabel
-            // 
-            imeLabel.AutoSize = true;
-            imeLabel.Location = new System.Drawing.Point(97, 80);
-            imeLabel.Name = "imeLabel";
-            imeLabel.Size = new System.Drawing.Size(27, 13);
-            imeLabel.TabIndex = 40;
-            imeLabel.Text = "Ime:";
-            // 
             // imeTextBox
             // 
             this.imeTextBox.Location = new System.Drawing.Point(129, 77);
@@ -114,15 +123,6 @@
             this.imeTextBox.Size = new System.Drawing.Size(126, 20);
             this.imeTextBox.TabIndex = 43;
             this.imeTextBox.Leave += new System.EventHandler(this.imeTextBox_Leave);
-            // 
-            // oibLabel
-            // 
-            oibLabel.AutoSize = true;
-            oibLabel.Location = new System.Drawing.Point(99, 54);
-            oibLabel.Name = "oibLabel";
-            oibLabel.Size = new System.Drawing.Size(28, 13);
-            oibLabel.TabIndex = 39;
-            oibLabel.Text = "OIB:";
             // 
             // oibTextBox
             // 
@@ -141,6 +141,7 @@
             this.GumbReset.TabIndex = 38;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -177,6 +178,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjePrezime);

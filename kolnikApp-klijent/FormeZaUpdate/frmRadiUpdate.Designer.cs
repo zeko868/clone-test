@@ -49,6 +49,42 @@
             zaposlenikLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // datum_zavrsetkaLabel
+            // 
+            datum_zavrsetkaLabel.AutoSize = true;
+            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
+            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
+            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
+            datum_zavrsetkaLabel.TabIndex = 42;
+            datum_zavrsetkaLabel.Text = "Datum završetka:";
+            // 
+            // datum_pocetkaLabel
+            // 
+            datum_pocetkaLabel.AutoSize = true;
+            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
+            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
+            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
+            datum_pocetkaLabel.TabIndex = 40;
+            datum_pocetkaLabel.Text = "Datum početka:";
+            // 
+            // radno_mjestoLabel
+            // 
+            radno_mjestoLabel.AutoSize = true;
+            radno_mjestoLabel.Location = new System.Drawing.Point(53, 81);
+            radno_mjestoLabel.Name = "radno_mjestoLabel";
+            radno_mjestoLabel.Size = new System.Drawing.Size(75, 13);
+            radno_mjestoLabel.TabIndex = 38;
+            radno_mjestoLabel.Text = "Radno mjesto:";
+            // 
+            // zaposlenikLabel
+            // 
+            zaposlenikLabel.AutoSize = true;
+            zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
+            zaposlenikLabel.Name = "zaposlenikLabel";
+            zaposlenikLabel.Size = new System.Drawing.Size(62, 13);
+            zaposlenikLabel.TabIndex = 37;
+            zaposlenikLabel.Text = "Zaposlenik:";
+            // 
             // UpozorenjeRazlikaDatuma
             // 
             this.UpozorenjeRazlikaDatuma.BackColor = System.Drawing.Color.Khaki;
@@ -81,15 +117,6 @@
             this.UpozorenjeZaposlenik.Text = "label1";
             this.UpozorenjeZaposlenik.Visible = false;
             // 
-            // datum_zavrsetkaLabel
-            // 
-            datum_zavrsetkaLabel.AutoSize = true;
-            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
-            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
-            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
-            datum_zavrsetkaLabel.TabIndex = 42;
-            datum_zavrsetkaLabel.Text = "Datum zavrsetka:";
-            // 
             // datum_zavrsetkaDateTimePicker
             // 
             this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
@@ -99,15 +126,6 @@
             this.datum_zavrsetkaDateTimePicker.TabIndex = 44;
             this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
             // 
-            // datum_pocetkaLabel
-            // 
-            datum_pocetkaLabel.AutoSize = true;
-            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
-            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
-            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
-            datum_pocetkaLabel.TabIndex = 40;
-            datum_pocetkaLabel.Text = "Datum pocetka:";
-            // 
             // datum_pocetkaDateTimePicker
             // 
             this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
@@ -115,15 +133,6 @@
             this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(133, 20);
             this.datum_pocetkaDateTimePicker.TabIndex = 43;
             this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
-            // 
-            // radno_mjestoLabel
-            // 
-            radno_mjestoLabel.AutoSize = true;
-            radno_mjestoLabel.Location = new System.Drawing.Point(53, 81);
-            radno_mjestoLabel.Name = "radno_mjestoLabel";
-            radno_mjestoLabel.Size = new System.Drawing.Size(75, 13);
-            radno_mjestoLabel.TabIndex = 38;
-            radno_mjestoLabel.Text = "Radno mjesto:";
             // 
             // radno_mjestoComboBox
             // 
@@ -133,15 +142,6 @@
             this.radno_mjestoComboBox.Size = new System.Drawing.Size(133, 21);
             this.radno_mjestoComboBox.TabIndex = 41;
             this.radno_mjestoComboBox.SelectedIndexChanged += new System.EventHandler(this.radno_mjestoComboBox_SelectedIndexChanged);
-            // 
-            // zaposlenikLabel
-            // 
-            zaposlenikLabel.AutoSize = true;
-            zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
-            zaposlenikLabel.Name = "zaposlenikLabel";
-            zaposlenikLabel.Size = new System.Drawing.Size(62, 13);
-            zaposlenikLabel.TabIndex = 37;
-            zaposlenikLabel.Text = "Zaposlenik:";
             // 
             // zaposlenikComboBox
             // 
@@ -160,6 +160,7 @@
             this.GumbReset.TabIndex = 36;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -195,6 +196,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeRazlikaDatuma);

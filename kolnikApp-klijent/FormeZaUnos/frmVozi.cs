@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -15,6 +16,9 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmVozi()
         {
             InitializeComponent();
+            voziloComboBox.DataSource = (from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                                         select ((vozilo)voziloObj).registracijski_broj).ToArray(); 
+            voziloComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -78,6 +82,22 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void voziloComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeVozilo.Hide();
+            if (voziloComboBox.SelectedValue != null) { 
+            //string[] ImeIPrezime = vozacComboBox.SelectedValue.ToString().Split(' ');
+            string[] VozaciKojiVozeVozilo = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                             from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                                             from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                                             where ((zaposlenik)zaposlenikObj).oib == ((vozi)voziObj).vozac &&
+                                                   ((vozilo)voziloObj).registracijski_broj == ((vozi)voziObj).vozilo &&
+                                                   ((vozilo)voziloObj).registracijski_broj == voziloComboBox.SelectedValue.ToString()
+                                             select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+
+            string[] SviVozaci = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                  select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+            var Filtrirano = SviVozaci.Except(VozaciKojiVozeVozilo);
+            vozacComboBox.DataSource = Filtrirano.ToList();
+            vozacComboBox.SelectedIndex = -1;
+        }
         }
 
         private void vozacComboBox_SelectedIndexChanged(object sender, EventArgs e)

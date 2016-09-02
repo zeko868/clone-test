@@ -50,6 +50,42 @@
             oibLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // ibanLabel
+            // 
+            ibanLabel.AutoSize = true;
+            ibanLabel.Location = new System.Drawing.Point(93, 132);
+            ibanLabel.Name = "ibanLabel";
+            ibanLabel.Size = new System.Drawing.Size(35, 13);
+            ibanLabel.TabIndex = 42;
+            ibanLabel.Text = "IBAN:";
+            // 
+            // adresaLabel
+            // 
+            adresaLabel.AutoSize = true;
+            adresaLabel.Location = new System.Drawing.Point(81, 106);
+            adresaLabel.Name = "adresaLabel";
+            adresaLabel.Size = new System.Drawing.Size(43, 13);
+            adresaLabel.TabIndex = 40;
+            adresaLabel.Text = "Adresa:";
+            // 
+            // nazivLabel
+            // 
+            nazivLabel.AutoSize = true;
+            nazivLabel.Location = new System.Drawing.Point(88, 80);
+            nazivLabel.Name = "nazivLabel";
+            nazivLabel.Size = new System.Drawing.Size(37, 13);
+            nazivLabel.TabIndex = 38;
+            nazivLabel.Text = "Naziv:";
+            // 
+            // oibLabel
+            // 
+            oibLabel.AutoSize = true;
+            oibLabel.Location = new System.Drawing.Point(99, 54);
+            oibLabel.Name = "oibLabel";
+            oibLabel.Size = new System.Drawing.Size(28, 13);
+            oibLabel.TabIndex = 37;
+            oibLabel.Text = "OIB:";
+            // 
             // UpozorenjeIban
             // 
             this.UpozorenjeIban.AutoSize = true;
@@ -94,15 +130,6 @@
             this.UpozorenjeOib.Text = "label1";
             this.UpozorenjeOib.Visible = false;
             // 
-            // ibanLabel
-            // 
-            ibanLabel.AutoSize = true;
-            ibanLabel.Location = new System.Drawing.Point(93, 132);
-            ibanLabel.Name = "ibanLabel";
-            ibanLabel.Size = new System.Drawing.Size(35, 13);
-            ibanLabel.TabIndex = 42;
-            ibanLabel.Text = "IBAN:";
-            // 
             // ibanTextBox
             // 
             this.ibanTextBox.Location = new System.Drawing.Point(129, 129);
@@ -111,15 +138,6 @@
             this.ibanTextBox.Size = new System.Drawing.Size(135, 20);
             this.ibanTextBox.TabIndex = 44;
             this.ibanTextBox.Leave += new System.EventHandler(this.ibanTextBox_Leave);
-            // 
-            // adresaLabel
-            // 
-            adresaLabel.AutoSize = true;
-            adresaLabel.Location = new System.Drawing.Point(81, 106);
-            adresaLabel.Name = "adresaLabel";
-            adresaLabel.Size = new System.Drawing.Size(43, 13);
-            adresaLabel.TabIndex = 40;
-            adresaLabel.Text = "Adresa:";
             // 
             // adresaTextBox
             // 
@@ -130,15 +148,6 @@
             this.adresaTextBox.TabIndex = 43;
             this.adresaTextBox.Leave += new System.EventHandler(this.adresaTextBox_Leave);
             // 
-            // nazivLabel
-            // 
-            nazivLabel.AutoSize = true;
-            nazivLabel.Location = new System.Drawing.Point(88, 80);
-            nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(37, 13);
-            nazivLabel.TabIndex = 38;
-            nazivLabel.Text = "Naziv:";
-            // 
             // nazivTextBox
             // 
             this.nazivTextBox.Location = new System.Drawing.Point(129, 77);
@@ -147,15 +156,6 @@
             this.nazivTextBox.Size = new System.Drawing.Size(135, 20);
             this.nazivTextBox.TabIndex = 41;
             this.nazivTextBox.Leave += new System.EventHandler(this.nazivTextBox_Leave);
-            // 
-            // oibLabel
-            // 
-            oibLabel.AutoSize = true;
-            oibLabel.Location = new System.Drawing.Point(99, 54);
-            oibLabel.Name = "oibLabel";
-            oibLabel.Size = new System.Drawing.Size(28, 13);
-            oibLabel.TabIndex = 37;
-            oibLabel.Text = "OIB:";
             // 
             // oibTextBox
             // 
@@ -184,6 +184,7 @@
             this.GumbReset.TabIndex = 35;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -209,6 +210,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(349, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeIban);

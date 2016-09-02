@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -15,6 +16,9 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmZaposlen()
         {
             InitializeComponent();
+            zaposlenikComboBox.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                             select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+            zaposlenikComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -79,6 +83,21 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeZaposlenik.Hide();
+            string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
+            string[] PoduzeceUKojemRadi = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                           from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                                           from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                           where ((zaposlenik)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                                                 ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
+                                                 ((zaposlenik)zaposlenikObj).ime == ImeIPrezime[0] &&
+                                                 ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1]
+                                           select ((poduzece)poduzeceObj).naziv).ToArray();
+
+            string[] SvaPoduzeca =(from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                   select ((poduzece)poduzeceObj).naziv).ToArray();
+            var Filtrirano = SvaPoduzeca.Except(PoduzeceUKojemRadi);
+            poduzeceComboBox.DataSource = Filtrirano.ToList();
+            poduzeceComboBox.SelectedIndex = -1;
         }
 
         private void poduzeceComboBox_SelectedIndexChanged(object sender, EventArgs e)

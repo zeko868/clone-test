@@ -12,25 +12,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmVoziUpdate : Form
     {
-        public frmVoziUpdate()
+        public frmVoziUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            vozacComboBox.SelectedItem = PodatkovniRedak.Cells["vozac"].Value;
+            voziloComboBox.SelectedItem = PodatkovniRedak.Cells["vozilo"].Value;
+            datum_pocetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_pocetka"].Value;
+            datum_zavrsetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_zavrsetka"].Value;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            voziloComboBox.SelectedIndex = -1;
-            vozacComboBox.SelectedIndex = -1;
-            datum_pocetkaDateTimePicker.Value = DateTime.Now;
-            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
-            UpozorenjeVozac.Hide();
-            UpozorenjeVozilo.Hide();
-            UpozorenjeDatumi.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -113,6 +106,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
                     UpozorenjeDatumi.Show();
                 }
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            voziloComboBox.SelectedIndex = -1;
+            vozacComboBox.SelectedIndex = -1;
+            datum_pocetkaDateTimePicker.Value = DateTime.Now;
+            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
+            UpozorenjeVozac.Hide();
+            UpozorenjeVozilo.Hide();
+            UpozorenjeDatumi.Hide();
         }
     }
 }

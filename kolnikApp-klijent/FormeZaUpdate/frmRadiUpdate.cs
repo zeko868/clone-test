@@ -7,30 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmRadiUpdate : Form
     {
-        public frmRadiUpdate()
+        public frmRadiUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            zaposlenikComboBox.DataSource =
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+            zaposlenikComboBox.SelectedItem = PodatkovniRedak.Cells["zaposlenik"].Value;
+
+            radno_mjestoComboBox.DataSource =
+                (from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 select ((radno_mjesto)radno_mjestoObj).naziv).ToArray();
+            radno_mjestoComboBox.SelectedItem = PodatkovniRedak.Cells["radno_mjesto"].Value;
+            datum_pocetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_pocetka"].Value;
+            datum_zavrsetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_zavrsetka"].Value;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            zaposlenikComboBox.SelectedIndex = -1;
-            radno_mjestoComboBox.SelectedIndex = -1;
-            datum_pocetkaDateTimePicker.Value = DateTime.Now;
-            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
-            UpozorenjeRadnoMjesto.Hide();
-            UpozorenjeRazlikaDatuma.Hide();
-            UpozorenjeZaposlenik.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -115,6 +116,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
                     UpozorenjeRazlikaDatuma.Show();
                 }
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            zaposlenikComboBox.SelectedIndex = -1;
+            radno_mjestoComboBox.SelectedIndex = -1;
+            datum_pocetkaDateTimePicker.Value = DateTime.Now;
+            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
+            UpozorenjeRadnoMjesto.Hide();
+            UpozorenjeRazlikaDatuma.Hide();
+            UpozorenjeZaposlenik.Hide();
         }
     }
 }

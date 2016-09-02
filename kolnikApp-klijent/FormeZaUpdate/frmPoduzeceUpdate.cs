@@ -12,9 +12,13 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmPoduzeceUpdate : Form
     {
-        public frmPoduzeceUpdate()
+        public frmPoduzeceUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();
+            nazivTextBox.Text= PodatkovniRedak.Cells["naziv"].Value.ToString();
+            adresaTextBox.Text= PodatkovniRedak.Cells["adresa"].Value.ToString();
+            ibanTextBox.Text= PodatkovniRedak.Cells["iban"].Value.ToString();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -22,17 +26,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
             this.Close();
         }
 
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            oibTextBox.Text = "";
-            nazivTextBox.Text = "";
-            adresaTextBox.Text = "";
-            ibanTextBox.Text = "";
-            UpozorenjeAdresa.Hide();
-            UpozorenjeIban.Hide();
-            UpozorenjeNaziv.Hide();
-            UpozorenjeOib.Hide();
-        }
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
         {
             string TekstUpozorenja = "Polje mora biti popunjeno";
@@ -138,6 +131,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 UpozorenjeIban.Hide();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            oibTextBox.Text = "";
+            nazivTextBox.Text = "";
+            adresaTextBox.Text = "";
+            ibanTextBox.Text = "";
+            UpozorenjeAdresa.Hide();
+            UpozorenjeIban.Hide();
+            UpozorenjeNaziv.Hide();
+            UpozorenjeOib.Hide();
         }
     }
 }

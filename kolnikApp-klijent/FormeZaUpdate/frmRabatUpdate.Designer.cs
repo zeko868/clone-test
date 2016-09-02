@@ -46,6 +46,33 @@
             popustLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // poslovni_partnerLabel
+            // 
+            poslovni_partnerLabel.AutoSize = true;
+            poslovni_partnerLabel.Location = new System.Drawing.Point(38, 81);
+            poslovni_partnerLabel.Name = "poslovni_partnerLabel";
+            poslovni_partnerLabel.Size = new System.Drawing.Size(86, 13);
+            poslovni_partnerLabel.TabIndex = 39;
+            poslovni_partnerLabel.Text = "Poslovni partner:";
+            // 
+            // artiklLabel
+            // 
+            artiklLabel.AutoSize = true;
+            artiklLabel.Location = new System.Drawing.Point(91, 54);
+            artiklLabel.Name = "artiklLabel";
+            artiklLabel.Size = new System.Drawing.Size(33, 13);
+            artiklLabel.TabIndex = 37;
+            artiklLabel.Text = "Artikl:";
+            // 
+            // popustLabel
+            // 
+            popustLabel.AutoSize = true;
+            popustLabel.Location = new System.Drawing.Point(81, 108);
+            popustLabel.Name = "popustLabel";
+            popustLabel.Size = new System.Drawing.Size(43, 13);
+            popustLabel.TabIndex = 36;
+            popustLabel.Text = "Popust:";
+            // 
             // UpozorenjePopust
             // 
             this.UpozorenjePopust.AutoSize = true;
@@ -79,15 +106,6 @@
             this.UpozorenjeArtikl.Text = "label1";
             this.UpozorenjeArtikl.Visible = false;
             // 
-            // poslovni_partnerLabel
-            // 
-            poslovni_partnerLabel.AutoSize = true;
-            poslovni_partnerLabel.Location = new System.Drawing.Point(38, 81);
-            poslovni_partnerLabel.Name = "poslovni_partnerLabel";
-            poslovni_partnerLabel.Size = new System.Drawing.Size(86, 13);
-            poslovni_partnerLabel.TabIndex = 39;
-            poslovni_partnerLabel.Text = "Poslovni partner:";
-            // 
             // poslovni_partnerComboBox
             // 
             this.poslovni_partnerComboBox.FormattingEnabled = true;
@@ -97,15 +115,6 @@
             this.poslovni_partnerComboBox.TabIndex = 41;
             this.poslovni_partnerComboBox.SelectedIndexChanged += new System.EventHandler(this.poslovni_partnerComboBox_SelectedIndexChanged);
             // 
-            // artiklLabel
-            // 
-            artiklLabel.AutoSize = true;
-            artiklLabel.Location = new System.Drawing.Point(91, 54);
-            artiklLabel.Name = "artiklLabel";
-            artiklLabel.Size = new System.Drawing.Size(33, 13);
-            artiklLabel.TabIndex = 37;
-            artiklLabel.Text = "Artikl:";
-            // 
             // artiklComboBox
             // 
             this.artiklComboBox.FormattingEnabled = true;
@@ -114,15 +123,6 @@
             this.artiklComboBox.Size = new System.Drawing.Size(121, 21);
             this.artiklComboBox.TabIndex = 40;
             this.artiklComboBox.SelectedIndexChanged += new System.EventHandler(this.artiklComboBox_SelectedIndexChanged);
-            // 
-            // popustLabel
-            // 
-            popustLabel.AutoSize = true;
-            popustLabel.Location = new System.Drawing.Point(81, 108);
-            popustLabel.Name = "popustLabel";
-            popustLabel.Size = new System.Drawing.Size(43, 13);
-            popustLabel.TabIndex = 36;
-            popustLabel.Text = "Popust:";
             // 
             // popustTextBox
             // 
@@ -141,6 +141,7 @@
             this.GumbReset.TabIndex = 35;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -176,6 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjePopust);

@@ -46,6 +46,33 @@
             registracijski_brojLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // modelLabel
+            // 
+            modelLabel.AutoSize = true;
+            modelLabel.Location = new System.Drawing.Point(85, 106);
+            modelLabel.Name = "modelLabel";
+            modelLabel.Size = new System.Drawing.Size(39, 13);
+            modelLabel.TabIndex = 40;
+            modelLabel.Text = "Model:";
+            // 
+            // proizvodjacLabel
+            // 
+            proizvodjacLabel.AutoSize = true;
+            proizvodjacLabel.Location = new System.Drawing.Point(59, 80);
+            proizvodjacLabel.Name = "proizvodjacLabel";
+            proizvodjacLabel.Size = new System.Drawing.Size(64, 13);
+            proizvodjacLabel.TabIndex = 38;
+            proizvodjacLabel.Text = "Proizvođač:";
+            // 
+            // registracijski_brojLabel
+            // 
+            registracijski_brojLabel.AutoSize = true;
+            registracijski_brojLabel.Location = new System.Drawing.Point(36, 54);
+            registracijski_brojLabel.Name = "registracijski_brojLabel";
+            registracijski_brojLabel.Size = new System.Drawing.Size(92, 13);
+            registracijski_brojLabel.TabIndex = 37;
+            registracijski_brojLabel.Text = "Registracijski broj:";
+            // 
             // UpozorenjeModel
             // 
             this.UpozorenjeModel.AutoSize = true;
@@ -79,15 +106,6 @@
             this.UpozorenjeRegistracijskiBroj.Text = "label1";
             this.UpozorenjeRegistracijskiBroj.Visible = false;
             // 
-            // modelLabel
-            // 
-            modelLabel.AutoSize = true;
-            modelLabel.Location = new System.Drawing.Point(85, 106);
-            modelLabel.Name = "modelLabel";
-            modelLabel.Size = new System.Drawing.Size(39, 13);
-            modelLabel.TabIndex = 40;
-            modelLabel.Text = "Model:";
-            // 
             // modelTextBox
             // 
             this.modelTextBox.Location = new System.Drawing.Point(129, 103);
@@ -97,15 +115,6 @@
             this.modelTextBox.TabIndex = 42;
             this.modelTextBox.Leave += new System.EventHandler(this.modelTextBox_Leave);
             // 
-            // proizvodjacLabel
-            // 
-            proizvodjacLabel.AutoSize = true;
-            proizvodjacLabel.Location = new System.Drawing.Point(59, 80);
-            proizvodjacLabel.Name = "proizvodjacLabel";
-            proizvodjacLabel.Size = new System.Drawing.Size(64, 13);
-            proizvodjacLabel.TabIndex = 38;
-            proizvodjacLabel.Text = "Proizvođač:";
-            // 
             // proizvodjacTextBox
             // 
             this.proizvodjacTextBox.Location = new System.Drawing.Point(129, 77);
@@ -114,15 +123,6 @@
             this.proizvodjacTextBox.Size = new System.Drawing.Size(127, 20);
             this.proizvodjacTextBox.TabIndex = 41;
             this.proizvodjacTextBox.Leave += new System.EventHandler(this.proizvodjacTextBox_Leave);
-            // 
-            // registracijski_brojLabel
-            // 
-            registracijski_brojLabel.AutoSize = true;
-            registracijski_brojLabel.Location = new System.Drawing.Point(36, 54);
-            registracijski_brojLabel.Name = "registracijski_brojLabel";
-            registracijski_brojLabel.Size = new System.Drawing.Size(92, 13);
-            registracijski_brojLabel.TabIndex = 37;
-            registracijski_brojLabel.Text = "Registracijski broj:";
             // 
             // registracijski_brojTextBox
             // 
@@ -141,6 +141,7 @@
             this.GumbReset.TabIndex = 36;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -176,6 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeModel);

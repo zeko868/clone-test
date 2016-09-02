@@ -7,29 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmRabatUpdate : Form
     {
-        public frmRabatUpdate()
+        public frmRabatUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+
+            artiklComboBox.DataSource =
+                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                 select ((artikl)artiklObj).naziv).ToArray();
+            artiklComboBox.SelectedItem = PodatkovniRedak.Cells["artikl"].Value;
+
+            poslovni_partnerComboBox.DataSource =
+                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                 select ((poduzece)poduzeceObj).naziv).ToArray();
+            poslovni_partnerComboBox.SelectedItem = PodatkovniRedak.Cells["poslovni_partner"].Value;
+            popustTextBox.Text = PodatkovniRedak.Cells["popust"].Value.ToString();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            artiklComboBox.SelectedIndex = -1;
-            poslovni_partnerComboBox.SelectedIndex = -1;
-            popustTextBox.Text = "";
-            UpozorenjeArtikl.Hide();
-            UpozorenjePopust.Hide();
-            UpozorenjePoslovniPartner.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja, string VrstaLabele)
@@ -97,6 +99,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 UpozorenjePopust.Hide();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            artiklComboBox.SelectedIndex = -1;
+            poslovni_partnerComboBox.SelectedIndex = -1;
+            popustTextBox.Text = "";
+            UpozorenjeArtikl.Hide();
+            UpozorenjePopust.Hide();
+            UpozorenjePoslovniPartner.Hide();
         }
     }
 }

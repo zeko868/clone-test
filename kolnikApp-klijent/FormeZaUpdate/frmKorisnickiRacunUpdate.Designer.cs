@@ -46,6 +46,33 @@
             zaposlenikLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // lozinkaLabel
+            // 
+            lozinkaLabel.AutoSize = true;
+            lozinkaLabel.Location = new System.Drawing.Point(76, 106);
+            lozinkaLabel.Name = "lozinkaLabel";
+            lozinkaLabel.Size = new System.Drawing.Size(47, 13);
+            lozinkaLabel.TabIndex = 25;
+            lozinkaLabel.Text = "Lozinka:";
+            // 
+            // korisnicko_imeLabel
+            // 
+            korisnicko_imeLabel.AutoSize = true;
+            korisnicko_imeLabel.Location = new System.Drawing.Point(46, 80);
+            korisnicko_imeLabel.Name = "korisnicko_imeLabel";
+            korisnicko_imeLabel.Size = new System.Drawing.Size(78, 13);
+            korisnicko_imeLabel.TabIndex = 24;
+            korisnicko_imeLabel.Text = "Korisničko ime:";
+            // 
+            // zaposlenikLabel
+            // 
+            zaposlenikLabel.AutoSize = true;
+            zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
+            zaposlenikLabel.Name = "zaposlenikLabel";
+            zaposlenikLabel.Size = new System.Drawing.Size(62, 13);
+            zaposlenikLabel.TabIndex = 23;
+            zaposlenikLabel.Text = "Zaposlenik:";
+            // 
             // UpozorenjeLozinka
             // 
             this.UpozorenjeLozinka.AutoSize = true;
@@ -117,15 +144,6 @@
             this.GumbPotvrda.UseVisualStyleBackColor = true;
             this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
-            // lozinkaLabel
-            // 
-            lozinkaLabel.AutoSize = true;
-            lozinkaLabel.Location = new System.Drawing.Point(80, 106);
-            lozinkaLabel.Name = "lozinkaLabel";
-            lozinkaLabel.Size = new System.Drawing.Size(43, 13);
-            lozinkaLabel.TabIndex = 25;
-            lozinkaLabel.Text = "lozinka:";
-            // 
             // lozinkaTextBox
             // 
             this.lozinkaTextBox.Location = new System.Drawing.Point(129, 103);
@@ -135,15 +153,6 @@
             this.lozinkaTextBox.TabIndex = 27;
             this.lozinkaTextBox.Leave += new System.EventHandler(this.lozinkaTextBox_Leave);
             // 
-            // korisnicko_imeLabel
-            // 
-            korisnicko_imeLabel.AutoSize = true;
-            korisnicko_imeLabel.Location = new System.Drawing.Point(46, 80);
-            korisnicko_imeLabel.Name = "korisnicko_imeLabel";
-            korisnicko_imeLabel.Size = new System.Drawing.Size(77, 13);
-            korisnicko_imeLabel.TabIndex = 24;
-            korisnicko_imeLabel.Text = "korisnicko ime:";
-            // 
             // korisnicko_imeTextBox
             // 
             this.korisnicko_imeTextBox.Location = new System.Drawing.Point(129, 77);
@@ -152,15 +161,6 @@
             this.korisnicko_imeTextBox.Size = new System.Drawing.Size(133, 20);
             this.korisnicko_imeTextBox.TabIndex = 26;
             this.korisnicko_imeTextBox.Leave += new System.EventHandler(this.korisnicko_imeTextBox_Leave);
-            // 
-            // zaposlenikLabel
-            // 
-            zaposlenikLabel.AutoSize = true;
-            zaposlenikLabel.Location = new System.Drawing.Point(63, 54);
-            zaposlenikLabel.Name = "zaposlenikLabel";
-            zaposlenikLabel.Size = new System.Drawing.Size(60, 13);
-            zaposlenikLabel.TabIndex = 23;
-            zaposlenikLabel.Text = "zaposlenik:";
             // 
             // NaslovKorisnickiRacun
             // 

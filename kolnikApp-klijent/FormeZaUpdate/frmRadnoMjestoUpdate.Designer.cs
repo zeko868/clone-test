@@ -38,6 +38,15 @@
             nazivLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // nazivLabel
+            // 
+            nazivLabel.AutoSize = true;
+            nazivLabel.Location = new System.Drawing.Point(88, 54);
+            nazivLabel.Name = "nazivLabel";
+            nazivLabel.Size = new System.Drawing.Size(37, 13);
+            nazivLabel.TabIndex = 35;
+            nazivLabel.Text = "Naziv:";
+            // 
             // UpozorenjeNaziv
             // 
             this.UpozorenjeNaziv.AutoSize = true;
@@ -48,15 +57,6 @@
             this.UpozorenjeNaziv.TabIndex = 37;
             this.UpozorenjeNaziv.Text = "label1";
             this.UpozorenjeNaziv.Visible = false;
-            // 
-            // nazivLabel
-            // 
-            nazivLabel.AutoSize = true;
-            nazivLabel.Location = new System.Drawing.Point(88, 54);
-            nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(37, 13);
-            nazivLabel.TabIndex = 35;
-            nazivLabel.Text = "Naziv:";
             // 
             // nazivTextBox
             // 
@@ -75,6 +75,7 @@
             this.GumbReset.TabIndex = 34;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -110,6 +111,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeNaziv);

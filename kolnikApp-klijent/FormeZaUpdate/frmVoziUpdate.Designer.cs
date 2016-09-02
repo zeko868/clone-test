@@ -49,6 +49,42 @@
             voziloLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // datum_zavrsetkaLabel
+            // 
+            datum_zavrsetkaLabel.AutoSize = true;
+            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
+            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
+            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
+            datum_zavrsetkaLabel.TabIndex = 42;
+            datum_zavrsetkaLabel.Text = "Datum završetka:";
+            // 
+            // datum_pocetkaLabel
+            // 
+            datum_pocetkaLabel.AutoSize = true;
+            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
+            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
+            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
+            datum_pocetkaLabel.TabIndex = 40;
+            datum_pocetkaLabel.Text = "Datum početka:";
+            // 
+            // vozacLabel
+            // 
+            vozacLabel.AutoSize = true;
+            vozacLabel.Location = new System.Drawing.Point(84, 81);
+            vozacLabel.Name = "vozacLabel";
+            vozacLabel.Size = new System.Drawing.Size(40, 13);
+            vozacLabel.TabIndex = 38;
+            vozacLabel.Text = "Vozač:";
+            // 
+            // voziloLabel
+            // 
+            voziloLabel.AutoSize = true;
+            voziloLabel.Location = new System.Drawing.Point(86, 54);
+            voziloLabel.Name = "voziloLabel";
+            voziloLabel.Size = new System.Drawing.Size(38, 13);
+            voziloLabel.TabIndex = 37;
+            voziloLabel.Text = "Vozilo:";
+            // 
             // UpozorenjeDatumi
             // 
             this.UpozorenjeDatumi.BackColor = System.Drawing.Color.Khaki;
@@ -81,15 +117,6 @@
             this.UpozorenjeVozilo.Text = "label1";
             this.UpozorenjeVozilo.Visible = false;
             // 
-            // datum_zavrsetkaLabel
-            // 
-            datum_zavrsetkaLabel.AutoSize = true;
-            datum_zavrsetkaLabel.Location = new System.Drawing.Point(35, 135);
-            datum_zavrsetkaLabel.Name = "datum_zavrsetkaLabel";
-            datum_zavrsetkaLabel.Size = new System.Drawing.Size(90, 13);
-            datum_zavrsetkaLabel.TabIndex = 42;
-            datum_zavrsetkaLabel.Text = "Datum zavrsetka:";
-            // 
             // datum_zavrsetkaDateTimePicker
             // 
             this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
@@ -99,15 +126,6 @@
             this.datum_zavrsetkaDateTimePicker.TabIndex = 44;
             this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
             // 
-            // datum_pocetkaLabel
-            // 
-            datum_pocetkaLabel.AutoSize = true;
-            datum_pocetkaLabel.Location = new System.Drawing.Point(42, 109);
-            datum_pocetkaLabel.Name = "datum_pocetkaLabel";
-            datum_pocetkaLabel.Size = new System.Drawing.Size(83, 13);
-            datum_pocetkaLabel.TabIndex = 40;
-            datum_pocetkaLabel.Text = "Datum pocetka:";
-            // 
             // datum_pocetkaDateTimePicker
             // 
             this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
@@ -115,15 +133,6 @@
             this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
             this.datum_pocetkaDateTimePicker.TabIndex = 43;
             this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
-            // 
-            // vozacLabel
-            // 
-            vozacLabel.AutoSize = true;
-            vozacLabel.Location = new System.Drawing.Point(84, 81);
-            vozacLabel.Name = "vozacLabel";
-            vozacLabel.Size = new System.Drawing.Size(40, 13);
-            vozacLabel.TabIndex = 38;
-            vozacLabel.Text = "Vozac:";
             // 
             // vozacComboBox
             // 
@@ -133,15 +142,6 @@
             this.vozacComboBox.Size = new System.Drawing.Size(137, 21);
             this.vozacComboBox.TabIndex = 41;
             this.vozacComboBox.SelectedIndexChanged += new System.EventHandler(this.vozacComboBox_SelectedIndexChanged);
-            // 
-            // voziloLabel
-            // 
-            voziloLabel.AutoSize = true;
-            voziloLabel.Location = new System.Drawing.Point(86, 54);
-            voziloLabel.Name = "voziloLabel";
-            voziloLabel.Size = new System.Drawing.Size(38, 13);
-            voziloLabel.TabIndex = 37;
-            voziloLabel.Text = "Vozilo:";
             // 
             // voziloComboBox
             // 
@@ -160,6 +160,7 @@
             this.GumbReset.TabIndex = 36;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 

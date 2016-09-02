@@ -12,24 +12,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmArtiklUpdate : Form
     {
-        public frmArtiklUpdate()
+        public frmArtiklUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();
+            jedinicna_cijenaTextBox.Text = PodatkovniRedak.Cells["jedinicna_cijena"].Value.ToString();
+            jedinica_mjereTextBox.Text = PodatkovniRedak.Cells["jedinica_mjere"].Value.ToString();
+
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            nazivTextBox.Text = "";
-            jedinica_mjereTextBox.Text = "";
-            jedinicna_cijenaTextBox.Text = "";
-            UpozorenjeJedinicaMjere.Hide();
-            UpozorenjeJedinicnaCijena.Hide();
-            UpozorenjeNaziv.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -102,6 +96,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 //pohrani podatke u klasu i pošalji na server
                 this.Close();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            nazivTextBox.Text = "";
+            jedinica_mjereTextBox.Text = "";
+            jedinicna_cijenaTextBox.Text = "";
+            UpozorenjeJedinicaMjere.Hide();
+            UpozorenjeJedinicnaCijena.Hide();
+            UpozorenjeNaziv.Hide();
         }
     }
 }

@@ -46,6 +46,33 @@
             nazivLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // jedinica_mjereLabel
+            // 
+            jedinica_mjereLabel.AutoSize = true;
+            jedinica_mjereLabel.Location = new System.Drawing.Point(49, 106);
+            jedinica_mjereLabel.Name = "jedinica_mjereLabel";
+            jedinica_mjereLabel.Size = new System.Drawing.Size(77, 13);
+            jedinica_mjereLabel.TabIndex = 17;
+            jedinica_mjereLabel.Text = "Jedinica mjere:";
+            // 
+            // jedinicna_cijenaLabel
+            // 
+            jedinicna_cijenaLabel.AutoSize = true;
+            jedinicna_cijenaLabel.Location = new System.Drawing.Point(40, 80);
+            jedinicna_cijenaLabel.Name = "jedinicna_cijenaLabel";
+            jedinicna_cijenaLabel.Size = new System.Drawing.Size(86, 13);
+            jedinicna_cijenaLabel.TabIndex = 15;
+            jedinicna_cijenaLabel.Text = "Jedinicna cijena:";
+            // 
+            // nazivLabel
+            // 
+            nazivLabel.AutoSize = true;
+            nazivLabel.Location = new System.Drawing.Point(88, 54);
+            nazivLabel.Name = "nazivLabel";
+            nazivLabel.Size = new System.Drawing.Size(37, 13);
+            nazivLabel.TabIndex = 13;
+            nazivLabel.Text = "Naziv:";
+            // 
             // UpozorenjeJedinicaMjere
             // 
             this.UpozorenjeJedinicaMjere.AutoSize = true;
@@ -87,6 +114,7 @@
             this.GumbReset.TabIndex = 22;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -118,15 +146,6 @@
             this.NaslovArtikl.TabIndex = 19;
             this.NaslovArtikl.Text = "Artikl";
             // 
-            // jedinica_mjereLabel
-            // 
-            jedinica_mjereLabel.AutoSize = true;
-            jedinica_mjereLabel.Location = new System.Drawing.Point(49, 106);
-            jedinica_mjereLabel.Name = "jedinica_mjereLabel";
-            jedinica_mjereLabel.Size = new System.Drawing.Size(77, 13);
-            jedinica_mjereLabel.TabIndex = 17;
-            jedinica_mjereLabel.Text = "Jedinica mjere:";
-            // 
             // jedinica_mjereTextBox
             // 
             this.jedinica_mjereTextBox.Location = new System.Drawing.Point(129, 103);
@@ -136,15 +155,6 @@
             this.jedinica_mjereTextBox.TabIndex = 18;
             this.jedinica_mjereTextBox.Leave += new System.EventHandler(this.jedinica_mjereTextBox_Leave);
             // 
-            // jedinicna_cijenaLabel
-            // 
-            jedinicna_cijenaLabel.AutoSize = true;
-            jedinicna_cijenaLabel.Location = new System.Drawing.Point(40, 80);
-            jedinicna_cijenaLabel.Name = "jedinicna_cijenaLabel";
-            jedinicna_cijenaLabel.Size = new System.Drawing.Size(86, 13);
-            jedinicna_cijenaLabel.TabIndex = 15;
-            jedinicna_cijenaLabel.Text = "Jedinicna cijena:";
-            // 
             // jedinicna_cijenaTextBox
             // 
             this.jedinicna_cijenaTextBox.Location = new System.Drawing.Point(129, 77);
@@ -153,15 +163,6 @@
             this.jedinicna_cijenaTextBox.Size = new System.Drawing.Size(100, 20);
             this.jedinicna_cijenaTextBox.TabIndex = 16;
             this.jedinicna_cijenaTextBox.Leave += new System.EventHandler(this.jedinicna_cijenaTextBox_Leave);
-            // 
-            // nazivLabel
-            // 
-            nazivLabel.AutoSize = true;
-            nazivLabel.Location = new System.Drawing.Point(88, 54);
-            nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(37, 13);
-            nazivLabel.TabIndex = 13;
-            nazivLabel.Text = "Naziv:";
             // 
             // nazivTextBox
             // 
@@ -176,6 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeJedinicaMjere);

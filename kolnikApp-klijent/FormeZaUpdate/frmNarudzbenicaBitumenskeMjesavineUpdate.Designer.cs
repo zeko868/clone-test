@@ -46,6 +46,33 @@
             temeljnicaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // naruciteljLabel
+            // 
+            naruciteljLabel.AutoSize = true;
+            naruciteljLabel.Location = new System.Drawing.Point(71, 106);
+            naruciteljLabel.Name = "naruciteljLabel";
+            naruciteljLabel.Size = new System.Drawing.Size(54, 13);
+            naruciteljLabel.TabIndex = 30;
+            naruciteljLabel.Text = "Naručitelj:";
+            // 
+            // datum_potrazivanjaLabel
+            // 
+            datum_potrazivanjaLabel.AutoSize = true;
+            datum_potrazivanjaLabel.Location = new System.Drawing.Point(24, 81);
+            datum_potrazivanjaLabel.Name = "datum_potrazivanjaLabel";
+            datum_potrazivanjaLabel.Size = new System.Drawing.Size(101, 13);
+            datum_potrazivanjaLabel.TabIndex = 29;
+            datum_potrazivanjaLabel.Text = "Datum potraživanja:";
+            // 
+            // temeljnicaLabel
+            // 
+            temeljnicaLabel.AutoSize = true;
+            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
+            temeljnicaLabel.Name = "temeljnicaLabel";
+            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
+            temeljnicaLabel.TabIndex = 28;
+            temeljnicaLabel.Text = "Temeljnica:";
+            // 
             // temeljnicaComboBox
             // 
             this.temeljnicaComboBox.FormattingEnabled = true;
@@ -98,15 +125,6 @@
             this.NaslovNarudzbenica.TabIndex = 33;
             this.NaslovNarudzbenica.Text = "Narudžbenica";
             // 
-            // naruciteljLabel
-            // 
-            naruciteljLabel.AutoSize = true;
-            naruciteljLabel.Location = new System.Drawing.Point(71, 106);
-            naruciteljLabel.Name = "naruciteljLabel";
-            naruciteljLabel.Size = new System.Drawing.Size(54, 13);
-            naruciteljLabel.TabIndex = 30;
-            naruciteljLabel.Text = "Narucitelj:";
-            // 
             // naruciteljComboBox
             // 
             this.naruciteljComboBox.FormattingEnabled = true;
@@ -116,30 +134,12 @@
             this.naruciteljComboBox.TabIndex = 32;
             this.naruciteljComboBox.SelectedIndexChanged += new System.EventHandler(this.naruciteljComboBox_SelectedIndexChanged);
             // 
-            // datum_potrazivanjaLabel
-            // 
-            datum_potrazivanjaLabel.AutoSize = true;
-            datum_potrazivanjaLabel.Location = new System.Drawing.Point(24, 81);
-            datum_potrazivanjaLabel.Name = "datum_potrazivanjaLabel";
-            datum_potrazivanjaLabel.Size = new System.Drawing.Size(101, 13);
-            datum_potrazivanjaLabel.TabIndex = 29;
-            datum_potrazivanjaLabel.Text = "Datum potrazivanja:";
-            // 
             // datum_potrazivanjaDateTimePicker
             // 
             this.datum_potrazivanjaDateTimePicker.Location = new System.Drawing.Point(129, 77);
             this.datum_potrazivanjaDateTimePicker.Name = "datum_potrazivanjaDateTimePicker";
             this.datum_potrazivanjaDateTimePicker.Size = new System.Drawing.Size(138, 20);
             this.datum_potrazivanjaDateTimePicker.TabIndex = 31;
-            // 
-            // temeljnicaLabel
-            // 
-            temeljnicaLabel.AutoSize = true;
-            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
-            temeljnicaLabel.Name = "temeljnicaLabel";
-            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
-            temeljnicaLabel.TabIndex = 28;
-            temeljnicaLabel.Text = "Temeljnica:";
             // 
             // GumbReset
             // 
@@ -149,6 +149,7 @@
             this.GumbReset.TabIndex = 27;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -170,10 +171,11 @@
             this.GumbPotvrda.UseVisualStyleBackColor = true;
             this.GumbPotvrda.Click += new System.EventHandler(this.GumbPotvrda_Click);
             // 
-            // frmNarudzbenicaUpdate
+            // frmNarudzbenicaBitumenskeMjesavineUpdate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.temeljnicaComboBox);
@@ -189,7 +191,7 @@
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
-            this.Name = "frmNarudzbenicaUpdate";
+            this.Name = "frmNarudzbenicaBitumenskeMjesavineUpdate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmNarudzbenicaUpdate";
             this.ResumeLayout(false);

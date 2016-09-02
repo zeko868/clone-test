@@ -12,22 +12,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmRadnoMjestoUpdate : Form
     {
-        public frmRadnoMjestoUpdate()
+        public frmRadnoMjestoUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            nazivTextBox.Text = "";
-            UpozorenjeNaziv.Hide();
-        }
-
+        
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
         {
             string TekstUpozorenja = "Polje mora biti popunjeno";
@@ -58,6 +53,12 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 UpozorenjeNaziv.Hide();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            nazivTextBox.Text = "";
+            UpozorenjeNaziv.Hide();
         }
     }
 }

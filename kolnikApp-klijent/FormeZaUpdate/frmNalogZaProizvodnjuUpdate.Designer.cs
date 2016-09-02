@@ -46,6 +46,33 @@
             temeljnicaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // gradilisteLabel
+            // 
+            gradilisteLabel.AutoSize = true;
+            gradilisteLabel.Location = new System.Drawing.Point(72, 80);
+            gradilisteLabel.Name = "gradilisteLabel";
+            gradilisteLabel.Size = new System.Drawing.Size(53, 13);
+            gradilisteLabel.TabIndex = 30;
+            gradilisteLabel.Text = "Gradilište:";
+            // 
+            // izdavateljLabel
+            // 
+            izdavateljLabel.AutoSize = true;
+            izdavateljLabel.Location = new System.Drawing.Point(69, 106);
+            izdavateljLabel.Name = "izdavateljLabel";
+            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
+            izdavateljLabel.TabIndex = 29;
+            izdavateljLabel.Text = "Izdavatelj:";
+            // 
+            // temeljnicaLabel
+            // 
+            temeljnicaLabel.AutoSize = true;
+            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
+            temeljnicaLabel.Name = "temeljnicaLabel";
+            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
+            temeljnicaLabel.TabIndex = 28;
+            temeljnicaLabel.Text = "Temeljnica:";
+            // 
             // temeljnicaComboBox
             // 
             this.temeljnicaComboBox.FormattingEnabled = true;
@@ -88,15 +115,6 @@
             this.UpozorenjeTemeljnica.Text = "label1";
             this.UpozorenjeTemeljnica.Visible = false;
             // 
-            // gradilisteLabel
-            // 
-            gradilisteLabel.AutoSize = true;
-            gradilisteLabel.Location = new System.Drawing.Point(72, 80);
-            gradilisteLabel.Name = "gradilisteLabel";
-            gradilisteLabel.Size = new System.Drawing.Size(53, 13);
-            gradilisteLabel.TabIndex = 30;
-            gradilisteLabel.Text = "Gradiliste:";
-            // 
             // gradilisteComboBox
             // 
             this.gradilisteComboBox.FormattingEnabled = true;
@@ -105,15 +123,6 @@
             this.gradilisteComboBox.Size = new System.Drawing.Size(121, 21);
             this.gradilisteComboBox.TabIndex = 32;
             this.gradilisteComboBox.SelectedIndexChanged += new System.EventHandler(this.gradilisteComboBox_SelectedIndexChanged);
-            // 
-            // izdavateljLabel
-            // 
-            izdavateljLabel.AutoSize = true;
-            izdavateljLabel.Location = new System.Drawing.Point(69, 106);
-            izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
-            izdavateljLabel.TabIndex = 29;
-            izdavateljLabel.Text = "Izdavatelj:";
             // 
             // izdavateljComboBox
             // 
@@ -124,15 +133,6 @@
             this.izdavateljComboBox.TabIndex = 31;
             this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
             // 
-            // temeljnicaLabel
-            // 
-            temeljnicaLabel.AutoSize = true;
-            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
-            temeljnicaLabel.Name = "temeljnicaLabel";
-            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
-            temeljnicaLabel.TabIndex = 28;
-            temeljnicaLabel.Text = "Temeljnica:";
-            // 
             // GumbReset
             // 
             this.GumbReset.Location = new System.Drawing.Point(262, 144);
@@ -141,6 +141,7 @@
             this.GumbReset.TabIndex = 27;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -176,6 +177,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.temeljnicaComboBox);

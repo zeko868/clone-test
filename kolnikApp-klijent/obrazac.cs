@@ -286,18 +286,16 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 case "radi":
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"];
+                    additionalDgv.Visible = true;                    
+                    break;
                 case "zaposlen":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"];
-                    additionalDgv.Visible = true;
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];
+                    additionalDgv.Visible = true;                     
                     break;
                 case "vozi":
-                    dgvObj.DataSource = (from vozac in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                                         join radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
-                                         on ((zaposlenik)vozac).oib equals ((radi)radiObj).zaposlenik
-                                         join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                         on ((radi)radiObj).radno_mjesto equals ((radno_mjesto)rmObj).id
-                                         where ((radno_mjesto)rmObj).naziv == "vozač"
-                                         select ((zaposlenik)vozac)).ToArray();
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];
+                    additionalDgv.Visible = true;                    
                     break;
                 default:
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
@@ -468,10 +466,17 @@ namespace kolnikApp_klijent
         //otvaranje nove forme za "Update" na temelju dobivenog imena
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
-            string ImeForme = pretvoriUImeForme("Update");
-            Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
-            Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme);
-            FormaZaUpdate.ShowDialog();
+            DataGridViewRow SelektiraniRedak=null;
+            if (PodaciIzTablica.SelectedRows.Count != 0) {
+                foreach (DataGridViewRow Red in PodaciIzTablica.SelectedRows)
+                {
+                   SelektiraniRedak = Red;
+                }                
+                string ImeForme = pretvoriUImeForme("Update");
+                Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
+                Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak);
+                FormaZaUpdate.ShowDialog();
+            }
 
         }
 
@@ -493,35 +498,49 @@ namespace kolnikApp_klijent
             switch (NaslovTablice.Tag.ToString())
             {
                 case "zaposlen":
-                    additionalDgv.DataSource = (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
-                                            join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                            on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
-                                            where ((zaposlen)zaposlenObj).zaposlenik == PodaciIzTablica[0, e.RowIndex].Value.ToString()
-                                            select new
-                                            {
-                                                poduzece = ((poduzece)poduzeceObj).naziv,
-                                                datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
-                                                datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka
-                                            }).ToArray();
+                    additionalDgv.DataSource =(from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                               from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                                               from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                               where ((zaposlenik)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik && 
+                                                     ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
+                                                     ((zaposlen)zaposlenObj).poduzece == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                               select new
+                                               {
+                                                   OIB= ((zaposlenik)zaposlenikObj).oib,
+                                                   Ime= ((zaposlenik)zaposlenikObj).ime,
+                                                   Prezime= ((zaposlenik)zaposlenikObj).prezime,
+                                                   datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
+                                                   datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka
+                                               }).ToArray();
                     break;
                 case "radi":
                     additionalDgv.DataSource = (from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
-                                                join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                                on ((radi)radiObj).radno_mjesto equals ((radno_mjesto)rmObj).id
-                                                where ((radi)radiObj).zaposlenik == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                                from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                                where ((radi)radiObj).radno_mjesto == ((radno_mjesto)rmObj).id &&
+                                                      ((radi)radiObj).zaposlenik == ((zaposlenik)zaposlenikObj).oib &&
+                                                      ((radi)radiObj).radno_mjesto.ToString() == PodaciIzTablica[0, e.RowIndex].Value.ToString()
                                                 select new
                                                 {
-                                                    radno_mjesto = ((radno_mjesto)rmObj).naziv,
+                                                    OIB = ((zaposlenik)zaposlenikObj).oib,
+                                                    Ime = ((zaposlenik)zaposlenikObj).ime,
+                                                    Prezime = ((zaposlenik)zaposlenikObj).prezime,                                                    
                                                     datum_pocetka = ((radi)radiObj).datum_pocetka,
-                                                    datum_zavrsetka = ((radi)radiObj).datum_zavrsetka
+                                                    datum_zavrsetka = ((radi)radiObj).datum_zavrsetka                                                    
                                                 }).ToArray();
                     break;
                 case "vozi":
                     additionalDgv.DataSource = (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
-                                                where ((vozi)voziObj).vozac == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                                                from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                                where ((vozi)voziObj).vozac == ((zaposlenik)zaposlenikObj).oib &&
+                                                      ((vozi)voziObj).vozilo == ((vozilo)voziloObj).registracijski_broj &&
+                                                      ((vozi)voziObj).vozilo == PodaciIzTablica[0, e.RowIndex].Value.ToString()
                                                 select new
                                                 {
-                                                    vozilo = ((vozi)voziObj).vozilo,
+                                                    OIB = ((zaposlenik)zaposlenikObj).oib,
+                                                    Ime = ((zaposlenik)zaposlenikObj).ime,
+                                                    Prezime = ((zaposlenik)zaposlenikObj).prezime,                                                    
                                                     datum_pocetka = ((vozi)voziObj).datum_pocetka,
                                                     datum_zavrsetka = ((vozi)voziObj).datum_zavrsetka
                                                 }).ToArray();

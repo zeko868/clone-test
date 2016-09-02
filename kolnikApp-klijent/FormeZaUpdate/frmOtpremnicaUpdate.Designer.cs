@@ -49,6 +49,42 @@
             temeljnicaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // temperaturaLabel
+            // 
+            temperaturaLabel.AutoSize = true;
+            temperaturaLabel.Location = new System.Drawing.Point(57, 133);
+            temperaturaLabel.Name = "temperaturaLabel";
+            temperaturaLabel.Size = new System.Drawing.Size(70, 13);
+            temperaturaLabel.TabIndex = 40;
+            temperaturaLabel.Text = "Temperatura:";
+            // 
+            // otpremiteljLabel
+            // 
+            otpremiteljLabel.AutoSize = true;
+            otpremiteljLabel.Location = new System.Drawing.Point(66, 106);
+            otpremiteljLabel.Name = "otpremiteljLabel";
+            otpremiteljLabel.Size = new System.Drawing.Size(59, 13);
+            otpremiteljLabel.TabIndex = 39;
+            otpremiteljLabel.Text = "Otpremitelj:";
+            // 
+            // datum_otpremeLabel
+            // 
+            datum_otpremeLabel.AutoSize = true;
+            datum_otpremeLabel.Location = new System.Drawing.Point(43, 81);
+            datum_otpremeLabel.Name = "datum_otpremeLabel";
+            datum_otpremeLabel.Size = new System.Drawing.Size(82, 13);
+            datum_otpremeLabel.TabIndex = 37;
+            datum_otpremeLabel.Text = "Datum otpreme:";
+            // 
+            // temeljnicaLabel
+            // 
+            temeljnicaLabel.AutoSize = true;
+            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
+            temeljnicaLabel.Name = "temeljnicaLabel";
+            temeljnicaLabel.Size = new System.Drawing.Size(61, 13);
+            temeljnicaLabel.TabIndex = 36;
+            temeljnicaLabel.Text = "Temeljnica:";
+            // 
             // UpozorenjeTemeperatura
             // 
             this.UpozorenjeTemeperatura.AutoSize = true;
@@ -91,15 +127,6 @@
             this.UpozorenjeTemeljnica.Text = "label1";
             this.UpozorenjeTemeljnica.Visible = false;
             // 
-            // temperaturaLabel
-            // 
-            temperaturaLabel.AutoSize = true;
-            temperaturaLabel.Location = new System.Drawing.Point(57, 133);
-            temperaturaLabel.Name = "temperaturaLabel";
-            temperaturaLabel.Size = new System.Drawing.Size(66, 13);
-            temperaturaLabel.TabIndex = 40;
-            temperaturaLabel.Text = "temperatura:";
-            // 
             // temperaturaTextBox
             // 
             this.temperaturaTextBox.Location = new System.Drawing.Point(129, 130);
@@ -107,15 +134,6 @@
             this.temperaturaTextBox.Size = new System.Drawing.Size(143, 20);
             this.temperaturaTextBox.TabIndex = 42;
             this.temperaturaTextBox.Leave += new System.EventHandler(this.temperaturaTextBox_Leave);
-            // 
-            // otpremiteljLabel
-            // 
-            otpremiteljLabel.AutoSize = true;
-            otpremiteljLabel.Location = new System.Drawing.Point(66, 106);
-            otpremiteljLabel.Name = "otpremiteljLabel";
-            otpremiteljLabel.Size = new System.Drawing.Size(57, 13);
-            otpremiteljLabel.TabIndex = 39;
-            otpremiteljLabel.Text = "otpremitelj:";
             // 
             // otpremiteljComboBox
             // 
@@ -126,30 +144,12 @@
             this.otpremiteljComboBox.TabIndex = 41;
             this.otpremiteljComboBox.SelectedIndexChanged += new System.EventHandler(this.otpremiteljComboBox_SelectedIndexChanged);
             // 
-            // datum_otpremeLabel
-            // 
-            datum_otpremeLabel.AutoSize = true;
-            datum_otpremeLabel.Location = new System.Drawing.Point(43, 81);
-            datum_otpremeLabel.Name = "datum_otpremeLabel";
-            datum_otpremeLabel.Size = new System.Drawing.Size(80, 13);
-            datum_otpremeLabel.TabIndex = 37;
-            datum_otpremeLabel.Text = "datum otpreme:";
-            // 
             // datum_otpremeDateTimePicker
             // 
             this.datum_otpremeDateTimePicker.Location = new System.Drawing.Point(129, 77);
             this.datum_otpremeDateTimePicker.Name = "datum_otpremeDateTimePicker";
             this.datum_otpremeDateTimePicker.Size = new System.Drawing.Size(143, 20);
             this.datum_otpremeDateTimePicker.TabIndex = 38;
-            // 
-            // temeljnicaLabel
-            // 
-            temeljnicaLabel.AutoSize = true;
-            temeljnicaLabel.Location = new System.Drawing.Point(66, 54);
-            temeljnicaLabel.Name = "temeljnicaLabel";
-            temeljnicaLabel.Size = new System.Drawing.Size(57, 13);
-            temeljnicaLabel.TabIndex = 36;
-            temeljnicaLabel.Text = "temeljnica:";
             // 
             // NaslovOtpremnica
             // 
@@ -169,6 +169,7 @@
             this.GumbReset.TabIndex = 34;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
+            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
             // 
             // GumbIzlaz
             // 
@@ -194,6 +195,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(364, 264);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeTemeperatura);

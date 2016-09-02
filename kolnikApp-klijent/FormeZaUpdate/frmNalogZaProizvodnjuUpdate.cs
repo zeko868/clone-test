@@ -7,29 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmNalogZaProizvodnjuUpdate : Form
     {
-        public frmNalogZaProizvodnjuUpdate()
+        public frmNalogZaProizvodnjuUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+
+            gradilisteComboBox.DataSource =
+                (from gradilisteObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["gradiliste"]
+                 select ((gradiliste)gradilisteObj).naziv_mjesta).ToArray();
+            gradilisteComboBox.SelectedItem = PodatkovniRedak.Cells["gradiliste"].Value;
+
+            izdavateljComboBox.DataSource =
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+            izdavateljComboBox.SelectedItem = PodatkovniRedak.Cells["izdavatelj"].Value;
+            temeljnicaComboBox.SelectedItem = PodatkovniRedak.Cells["temeljnica"].Value;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            temeljnicaComboBox.SelectedIndex = -1;
-            gradilisteComboBox.SelectedIndex = -1;
-            izdavateljComboBox.SelectedIndex = -1;
-            UpozorenjeTemeljnica.Hide();
-            UpozorenjeGradiliste.Hide();
-            UpozorenjeIzdavatelj.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -73,6 +75,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
 
         private void izdavateljComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            UpozorenjeIzdavatelj.Hide();
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            temeljnicaComboBox.SelectedIndex = -1;
+            gradilisteComboBox.SelectedIndex = -1;
+            izdavateljComboBox.SelectedIndex = -1;
+            UpozorenjeTemeljnica.Hide();
+            UpozorenjeGradiliste.Hide();
             UpozorenjeIzdavatelj.Hide();
         }
     }

@@ -12,24 +12,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmVoziloUpdate : Form
     {
-        public frmVoziloUpdate()
+        public frmVoziloUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+            registracijski_brojTextBox.Text = PodatkovniRedak.Cells["registracijski_broj"].Value.ToString();
+            proizvodjacTextBox.Text = PodatkovniRedak.Cells["proizvodjac"].Value.ToString();
+            modelTextBox.Text = PodatkovniRedak.Cells["model"].Value.ToString();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            registracijski_brojTextBox.Text = "";
-            proizvodjacTextBox.Text = "";
-            modelTextBox.Text = "";
-            UpozorenjeModel.Hide();
-            UpozorenjeProizvodac.Hide();
-            UpozorenjeRegistracijskiBroj.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
@@ -94,6 +87,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 UpozorenjeModel.Hide();
             }
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            registracijski_brojTextBox.Text = "";
+            proizvodjacTextBox.Text = "";
+            modelTextBox.Text = "";
+            UpozorenjeModel.Hide();
+            UpozorenjeProizvodac.Hide();
+            UpozorenjeRegistracijskiBroj.Hide();
         }
     }
 }

@@ -7,32 +7,42 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmTemeljnicaUpdate : Form
     {
-        public frmTemeljnicaUpdate()
+        public frmTemeljnicaUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
+
+            artiklComboBox.DataSource =
+                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                 select ((artikl)artiklObj).naziv).ToArray();
+            artiklComboBox.SelectedItem = PodatkovniRedak.Cells["artikl"].Value;
+
+            vozacComboBox.DataSource =
+                (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                 from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                 from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 where ((zaposlenik)zaposlenObj).oib == ((radi)radiObj).zaposlenik &&
+                       ((radi)radiObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
+                       ((radno_mjesto)radno_mjestoObj).naziv == "vozač"
+                 select ((zaposlenik)zaposlenObj).ime + " " + ((zaposlenik)zaposlenObj).prezime).ToArray();
+            vozacComboBox.SelectedItem = PodatkovniRedak.Cells["vozac"].Value;
+
+            voziloComboBox.DataSource =
+                (from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                 select ((vozilo)voziloObj).registracijski_broj).ToArray();
+            voziloComboBox.SelectedItem = PodatkovniRedak.Cells["vozilo"].Value;
+            kolicinaTextBox.Text = PodatkovniRedak.Cells["kolicina"].Value.ToString();
+            datum_izdavanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            datum_izdavanjaDateTimePicker.Value = DateTime.Now;
-            kolicinaTextBox.Text = "";
-            voziloComboBox.SelectedIndex = -1;
-            vozacComboBox.SelectedIndex = -1;
-            artiklComboBox.SelectedIndex = -1;
-            UpozorenjeArtikl.Hide();
-            UpozorenjeKolicina.Hide();
-            UpozorenjeVozac.Hide();
-            UpozorenjeVozilo.Hide();
         }
 
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja, string VrstaLabele)
@@ -108,6 +118,19 @@ namespace kolnikApp_klijent.FormeZaUpdate
         private void artiklComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeArtikl.Hide();
+        }
+
+        private void GumbReset_Click(object sender, EventArgs e)
+        {
+            datum_izdavanjaDateTimePicker.Value = DateTime.Now;
+            kolicinaTextBox.Text = "";
+            voziloComboBox.SelectedIndex = -1;
+            vozacComboBox.SelectedIndex = -1;
+            artiklComboBox.SelectedIndex = -1;
+            UpozorenjeArtikl.Hide();
+            UpozorenjeKolicina.Hide();
+            UpozorenjeVozac.Hide();
+            UpozorenjeVozilo.Hide();
         }
     }
 }
