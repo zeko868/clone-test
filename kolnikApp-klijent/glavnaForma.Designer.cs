@@ -40,10 +40,11 @@
             // 
             this.loadingTraka.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadingTraka.Location = new System.Drawing.Point(91, 310);
+            this.loadingTraka.Location = new System.Drawing.Point(121, 382);
+            this.loadingTraka.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.loadingTraka.Maximum = 15;
             this.loadingTraka.Name = "loadingTraka";
-            this.loadingTraka.Size = new System.Drawing.Size(618, 11);
+            this.loadingTraka.Size = new System.Drawing.Size(824, 14);
             this.loadingTraka.Step = 1;
             this.loadingTraka.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.loadingTraka.TabIndex = 0;
@@ -52,26 +53,27 @@
             // 
             this.logo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.logo.Image = ((System.Drawing.Image)(resources.GetObject("logo.Image")));
-            this.logo.Location = new System.Drawing.Point(218, 58);
+            this.logo.Location = new System.Drawing.Point(291, 71);
+            this.logo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.logo.Name = "logo";
-            this.logo.Size = new System.Drawing.Size(383, 218);
+            this.logo.Size = new System.Drawing.Size(511, 268);
             this.logo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.logo.TabIndex = 1;
             this.logo.TabStop = false;
             // 
             // glavnaForma
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSlateGray;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(1045, 567);
             this.Controls.Add(this.logo);
             this.Controls.Add(this.loadingTraka);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "glavnaForma";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KolnikApp";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.logo)).EndInit();
             this.ResumeLayout(false);
 

@@ -13,14 +13,18 @@ using System.Runtime.InteropServices;
 
 namespace kolnikApp_klijent
 {
-    public partial class obrazac : Form
+    public partial class obrazac :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        private CommunicationHandler sockObj;
         private DataGridView additionalDgv = new DataGridView();
 
-        public obrazac(CommunicationHandler sockObj)
+        public obrazac() : base()
         {
-            this.sockObj = sockObj;
             this.tablice = DataHandler.entityNamesWithReferencesToBelongingDataStores.Keys.ToArray<string>();
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
@@ -62,17 +66,6 @@ namespace kolnikApp_klijent
             String HelpFilepath = "file://" + Path.Combine(exeDirectory, "KolnikAppHelp.chm");
             Help.ShowHelp(this, HelpFilepath);     
         }
-
-        //Maknuli smo boarder pa omogućujemo micanje aplikacije
-        //detaljnije komentirati!!!!!!!!!!!!!
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-
-        [DllImportAttribute("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd,
-                         int Msg, int wParam, int lParam);
-        [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
 
         //funkcija koja vraća uljepšani naziv za ime tablice koje je prosljeđeno
         private string UrediImeGumba(string NazivTablice)
@@ -458,32 +451,6 @@ namespace kolnikApp_klijent
 
         }
 
-        //zatvaranje aplikacije klikom na "X"
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            sockObj.SendLogoutRequest();
-            this.Close();
-        }
-
-        //minimiziranje aplikacije klikom na "_"
-        private void Minimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        //stavljanje aplikacije u "window" mode
-        private void RestoreDown_Click(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
-        }
-
         //vidljivost gumba logout
         private void ImeKorisnika_Click(object sender, EventArgs e)
         {
@@ -506,49 +473,6 @@ namespace kolnikApp_klijent
             Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme);
             FormaZaUpdate.ShowDialog();
 
-        }
-
-        //omogućavanje micanje forme po ekranu ako smo pozicionirani na formi
-        //i držimo pritisnutu tipku miša 
-        private void obrazac_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-
-        //omogućavanje micanje forme po ekranu ako smo pozicionirani na lijevom panelu
-        //i držimo pritisnutu tipku miša 
-        private void LijeviIzbornik_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-
-        //omogućavanje micanje forme po ekranu ako smo pozicionirani na logu
-        //i držimo pritisnutu tipku miša 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-        //omogućavanje micanje forme po ekranu ako smo pozicionirani na panelu s ikonama
-        //i držimo pritisnutu tipku miša 
-        private void Header_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
         }
 
         //logout
@@ -623,6 +547,20 @@ namespace kolnikApp_klijent
         private void LogoutButton_Leave(object sender, EventArgs e)
         {
             LogoutButton.Hide();
+        }
+
+        private void obrazac_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            sockObj.SendLogoutRequest();
+        }
+
+        private void ImeKorisnika_Resize(object sender, EventArgs e)
+        {
+            int distanceDifference = ImeKorisnika.Right - Minimize.Left;
+            if (distanceDifference > 0)
+            {
+                ImeKorisnika.Left = ImeKorisnika.Left - distanceDifference;
+            }
         }
     }
 }

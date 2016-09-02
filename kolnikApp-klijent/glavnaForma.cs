@@ -12,12 +12,16 @@ using System.Threading;
 
 namespace kolnikApp_klijent
 {
-    public partial class glavnaForma : Form
+    public partial class glavnaForma :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        private CommunicationHandler sockObj;
-        public glavnaForma(CommunicationHandler sockObj)
+        public glavnaForma()
         {
-            this.sockObj = sockObj;
             InitializeComponent();
 
             DataHandler.entityNamesWithReferencesToBelongingDataStores.Clear();
@@ -70,7 +74,7 @@ namespace kolnikApp_klijent
             BeginInvoke((MethodInvoker)delegate
             {
                 this.Hide();
-                obrazac formaObrazac = new obrazac(sockObj);
+                obrazac formaObrazac = new obrazac();
                 formaObrazac.Closed += (s, args) => this.Close();
                 formaObrazac.Show();
             });

@@ -12,14 +12,18 @@ using System.Threading;
 
 namespace kolnikApp_klijent
 {
-    public partial class Login : Form
+    public partial class Login :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        CommunicationHandler sockObj;
         bool loginUsingUsername;
-        public Login(CommunicationHandler sockObj)
+        public Login(CommunicationHandler sockObj) : base(sockObj)
         {
             InitializeComponent();
-            this.sockObj = sockObj;
             loginUsingUsername = true;
         }
 
@@ -53,7 +57,7 @@ namespace kolnikApp_klijent
                 if (loginState.Value == true)
                 {
                     this.Hide();
-                    glavnaForma newForm = new glavnaForma(sockObj);
+                    glavnaForma newForm = new glavnaForma();
                     newForm.Closed += (s, args) => this.Close();
                     newForm.Show();
                 }
