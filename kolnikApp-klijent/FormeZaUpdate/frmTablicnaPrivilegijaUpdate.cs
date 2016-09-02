@@ -26,9 +26,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
         {
             radno_mjestoComboBox.SelectedIndex = -1;
             naziv_tabliceComboBox.SelectedIndex = -1;
-            operacijaComboBox.SelectedIndex = -1;
             UpozorenjeNazivTablice.Hide();
-            UpozorenjeOperacija.Hide();
             UpozorenjeRadnoMjesto.Hide();
         }
 
@@ -49,11 +47,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 popuniLabeleUpozorenja(UpozorenjeNazivTablice);
             }
-            if (operacijaComboBox.SelectedIndex == -1)
-            {
-                popuniLabeleUpozorenja(UpozorenjeOperacija);
-            }
-            if (radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1 && operacijaComboBox.SelectedIndex != -1)
+            if (radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1)
             {
                 //pohrani podatke u klasu i pošalji u BP
                 this.Close();
@@ -69,11 +63,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
         private void naziv_tabliceComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeNazivTablice.Hide();
-        }
-
-        private void operacijaComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpozorenjeOperacija.Hide();
         }
     }
 }

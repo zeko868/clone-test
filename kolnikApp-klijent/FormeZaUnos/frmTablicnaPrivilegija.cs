@@ -16,7 +16,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             InitializeComponent();
         }
-        string[] Operacije = new string[4] { "C", "R", "U", "D" };
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
@@ -27,9 +26,7 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             radno_mjestoComboBox.SelectedIndex = -1;
             naziv_tabliceComboBox.SelectedIndex = -1;
-            operacijaComboBox.SelectedIndex = -1;
             UpozorenjeNazivTablice.Hide();
-            UpozorenjeOperacija.Hide();
             UpozorenjeRadnoMjesto.Hide();
         }
 
@@ -50,11 +47,7 @@ namespace kolnikApp_klijent.FormeZaUnos
             {
                 popuniLabeleUpozorenja(UpozorenjeNazivTablice);
             }
-            if (operacijaComboBox.SelectedIndex == -1)
-            {
-                popuniLabeleUpozorenja(UpozorenjeOperacija);
-            }
-            if(radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1 && operacijaComboBox.SelectedIndex != -1)
+            if(radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1)
             {
                 //pohrani podatke u klasu i pošalji u BP
                 this.Close();
@@ -70,11 +63,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void naziv_tabliceComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeNazivTablice.Hide();
-        }
-
-        private void operacijaComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpozorenjeOperacija.Hide();
         }
     }
 }
