@@ -1364,6 +1364,8 @@ namespace kolnikApp_komponente
 
         private string _izdavatelj;
 
+        private bool _placeno;
+
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1374,6 +1376,8 @@ namespace kolnikApp_komponente
         partial void Ondatum_izdavanjaChanged();
         partial void OnizdavateljChanging(string value);
         partial void OnizdavateljChanged();
+        partial void OnplacenoChanging(bool value);
+        partial void OnplacenoChanged();
         #endregion
 
         public racun()
@@ -1440,6 +1444,27 @@ namespace kolnikApp_komponente
                     this._izdavatelj = value;
                     this.SendPropertyChanged("izdavatelj");
                     this.OnizdavateljChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_placeno", DbType = "Bit NOT NULL")]
+        public bool placeno
+        {
+            get
+            {
+                return this._placeno;
+            }
+            set
+            {
+                if ((this._placeno != value))
+                {
+                    this.OnplacenoChanging(value);
+                    this.SendPropertyChanging();
+                    this._placeno = value;
+                    this.SendPropertyChanged("placeno");
+                    this.OnplacenoChanged();
                 }
             }
         }

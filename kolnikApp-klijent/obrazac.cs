@@ -213,7 +213,8 @@ namespace kolnikApp_klijent
                          {
                              id_racun = ((racun)racunObj).id,
                              datum_izdavanja = ((racun)racunObj).datum_izdavanja,
-                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
+                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
+                             placeno = ((racun)racunObj).placeno ? "da" : "ne"
                          }).ToArray();
                     break;
                 case "tablicna_privilegija":

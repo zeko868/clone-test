@@ -26,6 +26,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
                  select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
             izdavateljComboBox.SelectedItem = PodatkovniRedak.Cells["izdavatelj"].Value;
             datum_izdavanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value;
+            placenoCheckBox.Checked = (string)(PodatkovniRedak.Cells["placeno"].Value) == "da" ? true : false;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)

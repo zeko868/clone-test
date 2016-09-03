@@ -38,6 +38,8 @@
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovRacun = new System.Windows.Forms.Label();
+            this.placenoCheckBox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             izdavateljLabel = new System.Windows.Forms.Label();
             datum_izdavanjaLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -45,18 +47,20 @@
             // izdavateljLabel
             // 
             izdavateljLabel.AutoSize = true;
-            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
+            izdavateljLabel.Location = new System.Drawing.Point(92, 98);
+            izdavateljLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
+            izdavateljLabel.Size = new System.Drawing.Size(71, 17);
             izdavateljLabel.TabIndex = 37;
             izdavateljLabel.Text = "Izdavatelj:";
             // 
             // datum_izdavanjaLabel
             // 
             datum_izdavanjaLabel.AutoSize = true;
-            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
+            datum_izdavanjaLabel.Location = new System.Drawing.Point(48, 66);
+            datum_izdavanjaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
-            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
+            datum_izdavanjaLabel.Size = new System.Drawing.Size(117, 17);
             datum_izdavanjaLabel.TabIndex = 36;
             datum_izdavanjaLabel.Text = "Datum izdavanja:";
             // 
@@ -64,9 +68,10 @@
             // 
             this.UpozorenjeIzdavatelj.AutoSize = true;
             this.UpozorenjeIzdavatelj.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(266, 77);
+            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(355, 95);
+            this.UpozorenjeIzdavatelj.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeIzdavatelj.Name = "UpozorenjeIzdavatelj";
-            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeIzdavatelj.TabIndex = 41;
             this.UpozorenjeIzdavatelj.Text = "label1";
             this.UpozorenjeIzdavatelj.Visible = false;
@@ -75,9 +80,10 @@
             // 
             this.UpozorenjeDatumIzdavanja.AutoSize = true;
             this.UpozorenjeDatumIzdavanja.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeDatumIzdavanja.Location = new System.Drawing.Point(266, 51);
+            this.UpozorenjeDatumIzdavanja.Location = new System.Drawing.Point(355, 63);
+            this.UpozorenjeDatumIzdavanja.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeDatumIzdavanja.Name = "UpozorenjeDatumIzdavanja";
-            this.UpozorenjeDatumIzdavanja.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeDatumIzdavanja.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeDatumIzdavanja.TabIndex = 40;
             this.UpozorenjeDatumIzdavanja.Text = "label1";
             this.UpozorenjeDatumIzdavanja.Visible = false;
@@ -85,24 +91,27 @@
             // izdavateljComboBox
             // 
             this.izdavateljComboBox.FormattingEnabled = true;
-            this.izdavateljComboBox.Location = new System.Drawing.Point(129, 77);
+            this.izdavateljComboBox.Location = new System.Drawing.Point(172, 95);
+            this.izdavateljComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.izdavateljComboBox.Name = "izdavateljComboBox";
-            this.izdavateljComboBox.Size = new System.Drawing.Size(131, 21);
+            this.izdavateljComboBox.Size = new System.Drawing.Size(173, 24);
             this.izdavateljComboBox.TabIndex = 39;
             this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
             // 
             // datum_izdavanjaDateTimePicker
             // 
-            this.datum_izdavanjaDateTimePicker.Location = new System.Drawing.Point(129, 51);
+            this.datum_izdavanjaDateTimePicker.Location = new System.Drawing.Point(172, 63);
+            this.datum_izdavanjaDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.datum_izdavanjaDateTimePicker.Name = "datum_izdavanjaDateTimePicker";
-            this.datum_izdavanjaDateTimePicker.Size = new System.Drawing.Size(131, 20);
+            this.datum_izdavanjaDateTimePicker.Size = new System.Drawing.Size(173, 22);
             this.datum_izdavanjaDateTimePicker.TabIndex = 38;
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 121);
+            this.GumbReset.Location = new System.Drawing.Point(349, 173);
+            this.GumbReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
+            this.GumbReset.Size = new System.Drawing.Size(100, 28);
             this.GumbReset.TabIndex = 35;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
@@ -111,18 +120,20 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 121);
+            this.GumbIzlaz.Location = new System.Drawing.Point(241, 173);
+            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbIzlaz.Name = "GumbIzlaz";
-            this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
+            this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
             this.GumbIzlaz.TabIndex = 34;
             this.GumbIzlaz.Text = "Cancel";
             this.GumbIzlaz.UseVisualStyleBackColor = true;
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 121);
+            this.GumbPotvrda.Location = new System.Drawing.Point(133, 173);
+            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbPotvrda.Name = "GumbPotvrda";
-            this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
+            this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
             this.GumbPotvrda.TabIndex = 33;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
@@ -132,19 +143,40 @@
             // 
             this.NaslovRacun.AutoSize = true;
             this.NaslovRacun.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NaslovRacun.Location = new System.Drawing.Point(12, 9);
+            this.NaslovRacun.Location = new System.Drawing.Point(16, 11);
+            this.NaslovRacun.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.NaslovRacun.Name = "NaslovRacun";
-            this.NaslovRacun.Size = new System.Drawing.Size(80, 26);
+            this.NaslovRacun.Size = new System.Drawing.Size(98, 31);
             this.NaslovRacun.TabIndex = 32;
             this.NaslovRacun.Text = "Račun";
             // 
+            // placenoCheckBox
+            // 
+            this.placenoCheckBox.AutoSize = true;
+            this.placenoCheckBox.Location = new System.Drawing.Point(172, 127);
+            this.placenoCheckBox.Name = "placenoCheckBox";
+            this.placenoCheckBox.Size = new System.Drawing.Size(18, 17);
+            this.placenoCheckBox.TabIndex = 42;
+            this.placenoCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(100, 127);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "Plaćeno:";
+            // 
             // frmRacunUpdate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(485, 325);
             this.ControlBox = false;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.placenoCheckBox);
             this.Controls.Add(this.UpozorenjeIzdavatelj);
             this.Controls.Add(this.UpozorenjeDatumIzdavanja);
             this.Controls.Add(izdavateljLabel);
@@ -155,6 +187,7 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRacun);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmRacunUpdate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRacunUpdate";
@@ -173,5 +206,7 @@
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovRacun;
+        private System.Windows.Forms.CheckBox placenoCheckBox;
+        private System.Windows.Forms.Label label1;
     }
 }
