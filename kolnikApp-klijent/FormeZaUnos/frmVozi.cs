@@ -89,7 +89,8 @@ namespace kolnikApp_klijent.FormeZaUnos
                                              from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
                                              where ((zaposlenik)zaposlenikObj).oib == ((vozi)voziObj).vozac &&
                                                    ((vozilo)voziloObj).registracijski_broj == ((vozi)voziObj).vozilo &&
-                                                   ((vozilo)voziloObj).registracijski_broj == voziloComboBox.SelectedValue.ToString()
+                                                   ((vozilo)voziloObj).registracijski_broj == voziloComboBox.SelectedValue.ToString() &&
+                                                   ((vozi)voziObj).datum_zavrsetka == null
                                              select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
 
             string[] SviVozaci = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]

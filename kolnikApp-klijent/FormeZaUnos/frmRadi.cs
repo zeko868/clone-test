@@ -85,22 +85,24 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeZaposlenik.Hide();
-            
+            if (zaposlenikComboBox.SelectedValue != null) { 
             string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
-            string[] RadnaMjestaRadnika=(from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
-                                         from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                         from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                                         where ((radi)radiObj).radno_mjesto == ((radno_mjesto)rmObj).id &&
-                                               ((radi)radiObj).zaposlenik == ((zaposlenik)zaposlenikObj).oib &&
-                                               ((zaposlenik)zaposlenikObj).ime == ImeIPrezime[0] &&
-                                               ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1]
-                                         select ((radno_mjesto)rmObj).naziv).ToArray();
+            string[] RadnaMjestaRadnika = (from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                                           from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                           from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                           where ((radi)radiObj).radno_mjesto == ((radno_mjesto)rmObj).id &&
+                                                 ((radi)radiObj).zaposlenik == ((zaposlenik)zaposlenikObj).oib &&
+                                                 ((zaposlenik)zaposlenikObj).ime == ImeIPrezime[0] &&
+                                                 ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1] &&
+                                                 ((radi)radiObj).datum_zavrsetka == null
+                                           select ((radno_mjesto)rmObj).naziv).ToArray();
 
-            string[] SvaRadnaMjesta =(from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                      select ((radno_mjesto)rmObj).naziv).ToArray();
+            string[] SvaRadnaMjesta = (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                       select ((radno_mjesto)rmObj).naziv).ToArray();
             var Filtrirano = SvaRadnaMjesta.Except(RadnaMjestaRadnika);
             radno_mjestoComboBox.DataSource = Filtrirano.ToList();
             radno_mjestoComboBox.SelectedIndex = -1;
+        }
         }
 
         private void radno_mjestoComboBox_SelectedIndexChanged(object sender, EventArgs e)

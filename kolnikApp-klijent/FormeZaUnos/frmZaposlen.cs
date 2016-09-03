@@ -83,6 +83,7 @@ namespace kolnikApp_klijent.FormeZaUnos
         private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpozorenjeZaposlenik.Hide();
+            if (zaposlenikComboBox.SelectedValue != null) { 
             string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
             string[] PoduzeceUKojemRadi = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
                                            from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
@@ -90,14 +91,16 @@ namespace kolnikApp_klijent.FormeZaUnos
                                            where ((zaposlenik)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
                                                  ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
                                                  ((zaposlenik)zaposlenikObj).ime == ImeIPrezime[0] &&
-                                                 ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1]
+                                                 ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1] &&
+                                                 ((zaposlen)zaposlenObj).datum_zavrsetka == null
                                            select ((poduzece)poduzeceObj).naziv).ToArray();
 
-            string[] SvaPoduzeca =(from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                   select ((poduzece)poduzeceObj).naziv).ToArray();
+            string[] SvaPoduzeca = (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                    select ((poduzece)poduzeceObj).naziv).ToArray();
             var Filtrirano = SvaPoduzeca.Except(PoduzeceUKojemRadi);
             poduzeceComboBox.DataSource = Filtrirano.ToList();
             poduzeceComboBox.SelectedIndex = -1;
+        }
         }
 
         private void poduzeceComboBox_SelectedIndexChanged(object sender, EventArgs e)
