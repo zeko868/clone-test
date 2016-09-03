@@ -35,13 +35,33 @@
             this.kolnikApp = new System.Windows.Forms.Label();
             this.loginGumb = new System.Windows.Forms.Button();
             this.loginTypeLabel = new System.Windows.Forms.LinkLabel();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Size = new System.Drawing.Size(1045, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(925, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(966, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(1008, 0);
             // 
             // textBox1
             // 
             this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox1.Location = new System.Drawing.Point(356, 177);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(308, 22);
             this.textBox1.TabIndex = 0;
@@ -50,7 +70,7 @@
             // 
             this.textBox2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBox2.Location = new System.Drawing.Point(356, 254);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(308, 22);
             this.textBox2.TabIndex = 1;
@@ -101,7 +121,7 @@
             this.loginGumb.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.loginGumb.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.loginGumb.Location = new System.Drawing.Point(412, 327);
-            this.loginGumb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.loginGumb.Margin = new System.Windows.Forms.Padding(4);
             this.loginGumb.Name = "loginGumb";
             this.loginGumb.Size = new System.Drawing.Size(200, 62);
             this.loginGumb.TabIndex = 2;
@@ -135,10 +155,23 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(362, 470);
             this.Name = "Login";
             this.Text = "Login";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Login_KeyDown);
+            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.textBox2, 0);
+            this.Controls.SetChildIndex(this.loginGumb, 0);
+            this.Controls.SetChildIndex(this.korisnickoIme, 0);
+            this.Controls.SetChildIndex(this.lozinka, 0);
+            this.Controls.SetChildIndex(this.kolnikApp, 0);
+            this.Controls.SetChildIndex(this.loginTypeLabel, 0);
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

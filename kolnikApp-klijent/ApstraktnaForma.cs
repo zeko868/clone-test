@@ -20,6 +20,7 @@ namespace kolnikApp_klijent
         protected PictureBox RestoreDown;
         protected PictureBox CloseButton;
         private bool isMaximized;
+        private bool initialState;
         private Rectangle dimensionsBeforeMaximizing;
         protected ApstraktnaForma()
         {
@@ -127,12 +128,16 @@ namespace kolnikApp_klijent
             this.Name = "ApstraktnaForma";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.ApstraktnaForma_Load);
+            this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.Padding = new System.Windows.Forms.Padding(2);
             this.controlBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
-
+            this.isMaximized = false;
+            this.initialState = true;
         }
 
         //zatvaranje aplikacije klikom na "X"
@@ -163,6 +168,11 @@ namespace kolnikApp_klijent
                 this.MaximizeWindow();
             }
             isMaximized = !isMaximized;
+            if (initialState)
+            {
+                    System.Threading.Thread.Sleep(25);  //pomaže da se prilikom prvog maksimiziranja instancirane forme ne pojavi izbugirana forma koja se do sada nekada pojavljivala
+                    initialState = false;
+            }
         }
 
         //Maknuli smo border pa omogućujemo micanje aplikacije
@@ -179,15 +189,16 @@ namespace kolnikApp_klijent
 
         //omogućavanje micanje forme po ekranu ako smo pozicionirani na formi
         //i držimo pritisnutu tipku miša 
-        private void titleBar_MouseDown(object sender, MouseEventArgs e)
+        public void titleBar_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 if (isMaximized)
                 {
+                    float horizontalRatioOfClickedPositionOnOverallTitlebar;
                     RestoreDown_Click(sender, e);
-                    float asd = ((float)Cursor.Position.X) / Screen.FromControl(this).WorkingArea.Width;
-                    this.Location = new Point((int)(Cursor.Position.X - this.Width * asd), Cursor.Position.Y);
+                    horizontalRatioOfClickedPositionOnOverallTitlebar = ((float)Cursor.Position.X) / Screen.FromControl(this).WorkingArea.Width;
+                    this.Location = new Point((int)(Cursor.Position.X - this.Width * horizontalRatioOfClickedPositionOnOverallTitlebar), Cursor.Position.Y);
                 }
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
@@ -202,6 +213,49 @@ namespace kolnikApp_klijent
         {
             isMaximized = false;
             this.MaximumSize = new Size(Screen.FromControl(this).WorkingArea.Width, Screen.FromControl(this).WorkingArea.Height);
+        }
+
+        private const int
+            HTLEFT = 10,
+            HTRIGHT = 11,
+            HTTOP = 12,
+            HTTOPLEFT = 13,
+            HTTOPRIGHT = 14,
+            HTBOTTOM = 15,
+            HTBOTTOMLEFT = 16,
+            HTBOTTOMRIGHT = 17;
+
+        const int resizableBorderWidth = 10;
+
+        Rectangle Top { get { return new Rectangle(0, 0, this.ClientSize.Width, resizableBorderWidth); } }
+        Rectangle Left { get { return new Rectangle(0, 0, resizableBorderWidth, this.ClientSize.Height); } }
+        Rectangle Bottom { get { return new Rectangle(0, this.ClientSize.Height - resizableBorderWidth, this.ClientSize.Width, resizableBorderWidth); } }
+        Rectangle Right { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, 0, resizableBorderWidth, this.ClientSize.Height); } }
+
+        Rectangle TopLeft { get { return new Rectangle(0, 0, resizableBorderWidth, resizableBorderWidth); } }
+        Rectangle TopRight { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, 0, resizableBorderWidth, resizableBorderWidth); } }
+        Rectangle BottomLeft { get { return new Rectangle(0, this.ClientSize.Height - resizableBorderWidth, resizableBorderWidth, resizableBorderWidth); } }
+        Rectangle BottomRight { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, this.ClientSize.Height - resizableBorderWidth, resizableBorderWidth, resizableBorderWidth); } }
+
+
+        protected override void WndProc(ref Message message)
+        {
+            base.WndProc(ref message);
+
+            if (!isMaximized && message.Msg == 0x84) // WM_NCHITTEST
+            {
+                var cursor = this.PointToClient(Cursor.Position);
+
+                if (TopLeft.Contains(cursor)) message.Result = (IntPtr)HTTOPLEFT;
+                else if (TopRight.Contains(cursor)) message.Result = (IntPtr)HTTOPRIGHT;
+                else if (BottomLeft.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMLEFT;
+                else if (BottomRight.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMRIGHT;
+
+                else if (Top.Contains(cursor)) message.Result = (IntPtr)HTTOP;
+                else if (Left.Contains(cursor)) message.Result = (IntPtr)HTLEFT;
+                else if (Right.Contains(cursor)) message.Result = (IntPtr)HTRIGHT;
+                else if (Bottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
+            }
         }
     }
 }

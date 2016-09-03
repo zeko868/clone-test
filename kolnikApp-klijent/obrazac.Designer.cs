@@ -187,6 +187,7 @@
             this.LogoSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LogoSlika.TabIndex = 0;
             this.LogoSlika.TabStop = false;
+            this.LogoSlika.MouseDown += titleBar_MouseDown;
             // 
             // KolnikAppHelp
             // 
@@ -391,7 +392,7 @@
             this.Controls.Add(this.PanelZaSadrzaj);
             this.KolnikAppHelp.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.Topic);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximumSize = new System.Drawing.Size(1920, 1030);
+            this.MinimumSize = new System.Drawing.Size(741, 442);
             this.Name = "obrazac";
             this.KolnikAppHelp.SetShowHelp(this, true);
             this.Text = "obrazac";
