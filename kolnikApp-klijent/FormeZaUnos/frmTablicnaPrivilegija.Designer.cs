@@ -40,6 +40,7 @@
             this.UpozorenjeRadnoMjesto = new System.Windows.Forms.Label();
             this.UpozorenjeNazivTablice = new System.Windows.Forms.Label();
             this.operacijeCheckedListBox = new System.Windows.Forms.CheckedListBox();
+            this.UpozorenjeCheckbox = new System.Windows.Forms.Label();
             radno_mjestoLabel = new System.Windows.Forms.Label();
             naziv_tabliceLabel = new System.Windows.Forms.Label();
             operacijaLabel = new System.Windows.Forms.Label();
@@ -48,30 +49,27 @@
             // radno_mjestoLabel
             // 
             radno_mjestoLabel.AutoSize = true;
-            radno_mjestoLabel.Location = new System.Drawing.Point(71, 66);
-            radno_mjestoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            radno_mjestoLabel.Location = new System.Drawing.Point(53, 54);
             radno_mjestoLabel.Name = "radno_mjestoLabel";
-            radno_mjestoLabel.Size = new System.Drawing.Size(99, 17);
+            radno_mjestoLabel.Size = new System.Drawing.Size(75, 13);
             radno_mjestoLabel.TabIndex = 19;
             radno_mjestoLabel.Text = "Radno mjesto:";
             // 
             // naziv_tabliceLabel
             // 
             naziv_tabliceLabel.AutoSize = true;
-            naziv_tabliceLabel.Location = new System.Drawing.Point(72, 100);
-            naziv_tabliceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            naziv_tabliceLabel.Location = new System.Drawing.Point(54, 81);
             naziv_tabliceLabel.Name = "naziv_tabliceLabel";
-            naziv_tabliceLabel.Size = new System.Drawing.Size(92, 17);
+            naziv_tabliceLabel.Size = new System.Drawing.Size(71, 13);
             naziv_tabliceLabel.TabIndex = 20;
             naziv_tabliceLabel.Text = "Naziv tablice:";
             // 
             // operacijaLabel
             // 
             operacijaLabel.AutoSize = true;
-            operacijaLabel.Location = new System.Drawing.Point(93, 133);
-            operacijaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            operacijaLabel.Location = new System.Drawing.Point(70, 108);
             operacijaLabel.Name = "operacijaLabel";
-            operacijaLabel.Size = new System.Drawing.Size(73, 17);
+            operacijaLabel.Size = new System.Drawing.Size(55, 13);
             operacijaLabel.TabIndex = 21;
             operacijaLabel.Text = "Operacije:";
             // 
@@ -79,19 +77,17 @@
             // 
             this.NaslovTablicaPrivilegija.AutoSize = true;
             this.NaslovTablicaPrivilegija.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NaslovTablicaPrivilegija.Location = new System.Drawing.Point(16, 11);
-            this.NaslovTablicaPrivilegija.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.NaslovTablicaPrivilegija.Location = new System.Drawing.Point(12, 9);
             this.NaslovTablicaPrivilegija.Name = "NaslovTablicaPrivilegija";
-            this.NaslovTablicaPrivilegija.Size = new System.Drawing.Size(333, 31);
+            this.NaslovTablicaPrivilegija.Size = new System.Drawing.Size(275, 26);
             this.NaslovTablicaPrivilegija.TabIndex = 9;
             this.NaslovTablicaPrivilegija.Text = "Privilegije radnog mjesta";
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(349, 241);
-            this.GumbReset.Margin = new System.Windows.Forms.Padding(4);
+            this.GumbReset.Location = new System.Drawing.Point(262, 196);
             this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(100, 28);
+            this.GumbReset.Size = new System.Drawing.Size(75, 23);
             this.GumbReset.TabIndex = 18;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
@@ -100,10 +96,9 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(241, 241);
-            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4);
+            this.GumbIzlaz.Location = new System.Drawing.Point(181, 196);
             this.GumbIzlaz.Name = "GumbIzlaz";
-            this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
+            this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 17;
             this.GumbIzlaz.Text = "Cancel";
             this.GumbIzlaz.UseVisualStyleBackColor = true;
@@ -111,10 +106,9 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(133, 241);
-            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4);
+            this.GumbPotvrda.Location = new System.Drawing.Point(100, 196);
             this.GumbPotvrda.Name = "GumbPotvrda";
-            this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
+            this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 16;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
@@ -123,20 +117,18 @@
             // radno_mjestoComboBox
             // 
             this.radno_mjestoComboBox.FormattingEnabled = true;
-            this.radno_mjestoComboBox.Location = new System.Drawing.Point(172, 63);
-            this.radno_mjestoComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.radno_mjestoComboBox.Location = new System.Drawing.Point(129, 51);
             this.radno_mjestoComboBox.Name = "radno_mjestoComboBox";
-            this.radno_mjestoComboBox.Size = new System.Drawing.Size(160, 24);
+            this.radno_mjestoComboBox.Size = new System.Drawing.Size(121, 21);
             this.radno_mjestoComboBox.TabIndex = 20;
             this.radno_mjestoComboBox.SelectedIndexChanged += new System.EventHandler(this.radno_mjestoComboBox_SelectedIndexChanged);
             // 
             // naziv_tabliceComboBox
             // 
             this.naziv_tabliceComboBox.FormattingEnabled = true;
-            this.naziv_tabliceComboBox.Location = new System.Drawing.Point(172, 96);
-            this.naziv_tabliceComboBox.Margin = new System.Windows.Forms.Padding(4);
+            this.naziv_tabliceComboBox.Location = new System.Drawing.Point(129, 78);
             this.naziv_tabliceComboBox.Name = "naziv_tabliceComboBox";
-            this.naziv_tabliceComboBox.Size = new System.Drawing.Size(160, 24);
+            this.naziv_tabliceComboBox.Size = new System.Drawing.Size(121, 21);
             this.naziv_tabliceComboBox.TabIndex = 21;
             this.naziv_tabliceComboBox.SelectedIndexChanged += new System.EventHandler(this.naziv_tabliceComboBox_SelectedIndexChanged);
             // 
@@ -144,10 +136,9 @@
             // 
             this.UpozorenjeRadnoMjesto.AutoSize = true;
             this.UpozorenjeRadnoMjesto.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeRadnoMjesto.Location = new System.Drawing.Point(341, 63);
-            this.UpozorenjeRadnoMjesto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.UpozorenjeRadnoMjesto.Location = new System.Drawing.Point(256, 51);
             this.UpozorenjeRadnoMjesto.Name = "UpozorenjeRadnoMjesto";
-            this.UpozorenjeRadnoMjesto.Size = new System.Drawing.Size(46, 17);
+            this.UpozorenjeRadnoMjesto.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjeRadnoMjesto.TabIndex = 30;
             this.UpozorenjeRadnoMjesto.Text = "label1";
             this.UpozorenjeRadnoMjesto.Visible = false;
@@ -156,10 +147,9 @@
             // 
             this.UpozorenjeNazivTablice.AutoSize = true;
             this.UpozorenjeNazivTablice.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeNazivTablice.Location = new System.Drawing.Point(341, 96);
-            this.UpozorenjeNazivTablice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.UpozorenjeNazivTablice.Location = new System.Drawing.Point(256, 78);
             this.UpozorenjeNazivTablice.Name = "UpozorenjeNazivTablice";
-            this.UpozorenjeNazivTablice.Size = new System.Drawing.Size(46, 17);
+            this.UpozorenjeNazivTablice.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjeNazivTablice.TabIndex = 31;
             this.UpozorenjeNazivTablice.Text = "label1";
             this.UpozorenjeNazivTablice.Visible = false;
@@ -172,18 +162,32 @@
             "Read",
             "Update",
             "Delete"});
-            this.operacijeCheckedListBox.Location = new System.Drawing.Point(173, 133);
+            this.operacijeCheckedListBox.Location = new System.Drawing.Point(130, 108);
+            this.operacijeCheckedListBox.Margin = new System.Windows.Forms.Padding(2);
             this.operacijeCheckedListBox.Name = "operacijeCheckedListBox";
-            this.operacijeCheckedListBox.Size = new System.Drawing.Size(120, 89);
+            this.operacijeCheckedListBox.Size = new System.Drawing.Size(91, 64);
             this.operacijeCheckedListBox.TabIndex = 32;
+            this.operacijeCheckedListBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.operacijeCheckedListBox_ItemCheck);
+            // 
+            // UpozorenjeCheckbox
+            // 
+            this.UpozorenjeCheckbox.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeCheckbox.Location = new System.Drawing.Point(259, 108);
+            this.UpozorenjeCheckbox.Name = "UpozorenjeCheckbox";
+            this.UpozorenjeCheckbox.Size = new System.Drawing.Size(93, 31);
+            this.UpozorenjeCheckbox.TabIndex = 33;
+            this.UpozorenjeCheckbox.Text = "Označite barem jednu opciju";
+            this.UpozorenjeCheckbox.Visible = false;
             // 
             // frmTablicnaPrivilegija
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AcceptButton = this.GumbPotvrda;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(485, 325);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeCheckbox);
             this.Controls.Add(this.operacijeCheckedListBox);
             this.Controls.Add(this.UpozorenjeNazivTablice);
             this.Controls.Add(this.UpozorenjeRadnoMjesto);
@@ -196,7 +200,6 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovTablicaPrivilegija);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmTablicnaPrivilegija";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmTablicaPrivilegija";
@@ -216,5 +219,6 @@
         private System.Windows.Forms.Label UpozorenjeRadnoMjesto;
         private System.Windows.Forms.Label UpozorenjeNazivTablice;
         private System.Windows.Forms.CheckedListBox operacijeCheckedListBox;
+        private System.Windows.Forms.Label UpozorenjeCheckbox;
     }
 }

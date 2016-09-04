@@ -17,7 +17,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
             InitializeComponent();
             nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();
             jedinicna_cijenaTextBox.Text = PodatkovniRedak.Cells["jedinicna_cijena"].Value.ToString();
-            jedinica_mjereTextBox.Text = PodatkovniRedak.Cells["jedinica_mjere"].Value.ToString();
 
         }
 
@@ -63,24 +62,8 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
         }
 
-        private void jedinica_mjereTextBox_Leave(object sender, EventArgs e)
-        {
-            if (jedinica_mjereTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjeJedinicaMjere);
-            }
-            else
-            {
-                UpozorenjeJedinicaMjere.Hide();
-            }
-        }
-
         private void GumbPotvrda_Click(object sender, EventArgs e)
         {
-            if (jedinica_mjereTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjeJedinicaMjere);
-            }
             if (jedinicna_cijenaTextBox.Text == "")
             {
                 popuniLabeleUpozorenja(UpozorenjeJedinicnaCijena);
@@ -91,21 +74,11 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
 
             float VarijablaZaProvjeru = 0;
-            if (float.TryParse(jedinicna_cijenaTextBox.Text, out VarijablaZaProvjeru) && jedinica_mjereTextBox.Text != "" && nazivTextBox.Text != "" && jedinicna_cijenaTextBox.Text != "")
+            if (float.TryParse(jedinicna_cijenaTextBox.Text, out VarijablaZaProvjeru) && nazivTextBox.Text != "" && jedinicna_cijenaTextBox.Text != "")
             {
                 //pohrani podatke u klasu i pošalji na server
                 this.Close();
             }
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            nazivTextBox.Text = "";
-            jedinica_mjereTextBox.Text = "";
-            jedinicna_cijenaTextBox.Text = "";
-            UpozorenjeJedinicaMjere.Hide();
-            UpozorenjeJedinicnaCijena.Hide();
-            UpozorenjeNaziv.Hide();
         }
     }
 }

@@ -40,7 +40,6 @@
             this.otpremiteljComboBox = new System.Windows.Forms.ComboBox();
             this.datum_otpremeDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.NaslovOtpremnica = new System.Windows.Forms.Label();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             temperaturaLabel = new System.Windows.Forms.Label();
@@ -161,20 +160,10 @@
             this.NaslovOtpremnica.TabIndex = 35;
             this.NaslovOtpremnica.Text = "Otpremnica";
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 169);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 34;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 169);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 168);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 33;
@@ -183,7 +172,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 169);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 168);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 32;
@@ -193,10 +182,11 @@
             // 
             // frmOtpremnicaUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeTemeperatura);
             this.Controls.Add(this.UpozorenjeOtpremitelj);
@@ -210,7 +200,6 @@
             this.Controls.Add(this.datum_otpremeDateTimePicker);
             this.Controls.Add(temeljnicaLabel);
             this.Controls.Add(this.NaslovOtpremnica);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Name = "frmOtpremnicaUpdate";
@@ -231,7 +220,6 @@
         private System.Windows.Forms.ComboBox otpremiteljComboBox;
         private System.Windows.Forms.DateTimePicker datum_otpremeDateTimePicker;
         private System.Windows.Forms.Label NaslovOtpremnica;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
     }

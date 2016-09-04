@@ -37,7 +37,6 @@
             this.UpozorenjeTemeljnica = new System.Windows.Forms.Label();
             this.gradilisteComboBox = new System.Windows.Forms.ComboBox();
             this.izdavateljComboBox = new System.Windows.Forms.ComboBox();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovNalogZaProizvodnju = new System.Windows.Forms.Label();
@@ -133,20 +132,10 @@
             this.izdavateljComboBox.TabIndex = 31;
             this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 27;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 143);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 26;
@@ -155,7 +144,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 143);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 25;
@@ -175,10 +164,11 @@
             // 
             // frmNalogZaProizvodnjuUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.temeljnicaComboBox);
             this.Controls.Add(this.UpozorenjeIzdavatelj);
@@ -189,7 +179,6 @@
             this.Controls.Add(izdavateljLabel);
             this.Controls.Add(this.izdavateljComboBox);
             this.Controls.Add(temeljnicaLabel);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovNalogZaProizvodnju);
@@ -209,7 +198,6 @@
         private System.Windows.Forms.Label UpozorenjeTemeljnica;
         private System.Windows.Forms.ComboBox gradilisteComboBox;
         private System.Windows.Forms.ComboBox izdavateljComboBox;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovNalogZaProizvodnju;

@@ -39,7 +39,6 @@
             this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.vozacComboBox = new System.Windows.Forms.ComboBox();
             this.voziloComboBox = new System.Windows.Forms.ComboBox();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovVozi = new System.Windows.Forms.Label();
@@ -152,20 +151,10 @@
             this.voziloComboBox.TabIndex = 39;
             this.voziloComboBox.SelectedIndexChanged += new System.EventHandler(this.voziloComboBox_SelectedIndexChanged);
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 169);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 36;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 169);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 168);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 35;
@@ -174,7 +163,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 169);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 168);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 34;
@@ -194,9 +183,11 @@
             // 
             // frmVoziUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.CancelButton = this.GumbIzlaz;
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeDatumi);
             this.Controls.Add(this.UpozorenjeVozac);
@@ -209,7 +200,6 @@
             this.Controls.Add(this.vozacComboBox);
             this.Controls.Add(voziloLabel);
             this.Controls.Add(this.voziloComboBox);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovVozi);
@@ -230,7 +220,6 @@
         private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
         private System.Windows.Forms.ComboBox vozacComboBox;
         private System.Windows.Forms.ComboBox voziloComboBox;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovVozi;

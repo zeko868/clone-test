@@ -31,6 +31,8 @@
             System.Windows.Forms.Label oibLabel;
             System.Windows.Forms.Label imeLabel;
             System.Windows.Forms.Label prezimeLabel;
+            System.Windows.Forms.Label LozinkaLabel;
+            System.Windows.Forms.Label KorisnickoImeLabel;
             this.NaslovZaposlenik = new System.Windows.Forms.Label();
             this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
@@ -41,9 +43,15 @@
             this.UpozorenjeOib = new System.Windows.Forms.Label();
             this.UpozorenjeIme = new System.Windows.Forms.Label();
             this.UpozorenjePrezime = new System.Windows.Forms.Label();
+            this.UpozorenjeLozinka = new System.Windows.Forms.Label();
+            this.UpozorenjeKorIme = new System.Windows.Forms.Label();
+            this.lozinkaTextBox = new System.Windows.Forms.TextBox();
+            this.korisnickoImeTextBox = new System.Windows.Forms.TextBox();
             oibLabel = new System.Windows.Forms.Label();
             imeLabel = new System.Windows.Forms.Label();
             prezimeLabel = new System.Windows.Forms.Label();
+            LozinkaLabel = new System.Windows.Forms.Label();
+            KorisnickoImeLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // oibLabel
@@ -73,6 +81,24 @@
             prezimeLabel.TabIndex = 30;
             prezimeLabel.Text = "Prezime:";
             // 
+            // LozinkaLabel
+            // 
+            LozinkaLabel.AutoSize = true;
+            LozinkaLabel.Location = new System.Drawing.Point(77, 158);
+            LozinkaLabel.Name = "LozinkaLabel";
+            LozinkaLabel.Size = new System.Drawing.Size(47, 13);
+            LozinkaLabel.TabIndex = 36;
+            LozinkaLabel.Text = "Lozinka:";
+            // 
+            // KorisnickoImeLabel
+            // 
+            KorisnickoImeLabel.AutoSize = true;
+            KorisnickoImeLabel.Location = new System.Drawing.Point(45, 132);
+            KorisnickoImeLabel.Name = "KorisnickoImeLabel";
+            KorisnickoImeLabel.Size = new System.Drawing.Size(78, 13);
+            KorisnickoImeLabel.TabIndex = 35;
+            KorisnickoImeLabel.Text = "Korisničko ime:";
+            // 
             // NaslovZaposlenik
             // 
             this.NaslovZaposlenik.AutoSize = true;
@@ -85,7 +111,7 @@
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
+            this.GumbReset.Location = new System.Drawing.Point(264, 192);
             this.GumbReset.Name = "GumbReset";
             this.GumbReset.Size = new System.Drawing.Size(75, 23);
             this.GumbReset.TabIndex = 27;
@@ -96,7 +122,7 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(183, 192);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 26;
@@ -106,8 +132,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(102, 192);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 25;
@@ -175,13 +200,60 @@
             this.UpozorenjePrezime.Text = "label1";
             this.UpozorenjePrezime.Visible = false;
             // 
+            // UpozorenjeLozinka
+            // 
+            this.UpozorenjeLozinka.AutoSize = true;
+            this.UpozorenjeLozinka.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeLozinka.Location = new System.Drawing.Point(261, 155);
+            this.UpozorenjeLozinka.Name = "UpozorenjeLozinka";
+            this.UpozorenjeLozinka.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeLozinka.TabIndex = 40;
+            this.UpozorenjeLozinka.Text = "label1";
+            this.UpozorenjeLozinka.Visible = false;
+            // 
+            // UpozorenjeKorIme
+            // 
+            this.UpozorenjeKorIme.AutoSize = true;
+            this.UpozorenjeKorIme.BackColor = System.Drawing.Color.Khaki;
+            this.UpozorenjeKorIme.Location = new System.Drawing.Point(261, 129);
+            this.UpozorenjeKorIme.Name = "UpozorenjeKorIme";
+            this.UpozorenjeKorIme.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeKorIme.TabIndex = 39;
+            this.UpozorenjeKorIme.Text = "label1";
+            this.UpozorenjeKorIme.Visible = false;
+            // 
+            // lozinkaTextBox
+            // 
+            this.lozinkaTextBox.Location = new System.Drawing.Point(129, 155);
+            this.lozinkaTextBox.MaxLength = 45;
+            this.lozinkaTextBox.Name = "lozinkaTextBox";
+            this.lozinkaTextBox.Size = new System.Drawing.Size(126, 20);
+            this.lozinkaTextBox.TabIndex = 38;
+            this.lozinkaTextBox.Leave += new System.EventHandler(this.lozinkaTextBox_Leave);
+            // 
+            // korisnickoImeTextBox
+            // 
+            this.korisnickoImeTextBox.Location = new System.Drawing.Point(129, 129);
+            this.korisnickoImeTextBox.MaxLength = 45;
+            this.korisnickoImeTextBox.Name = "korisnickoImeTextBox";
+            this.korisnickoImeTextBox.Size = new System.Drawing.Size(126, 20);
+            this.korisnickoImeTextBox.TabIndex = 37;
+            this.korisnickoImeTextBox.Leave += new System.EventHandler(this.korisnickoImeTextBox_Leave);
+            // 
             // frmZaposlenik
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.GumbPotvrda;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.CancelButton = this.GumbIzlaz;
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.UpozorenjeLozinka);
+            this.Controls.Add(this.UpozorenjeKorIme);
+            this.Controls.Add(LozinkaLabel);
+            this.Controls.Add(this.lozinkaTextBox);
+            this.Controls.Add(KorisnickoImeLabel);
+            this.Controls.Add(this.korisnickoImeTextBox);
             this.Controls.Add(this.UpozorenjePrezime);
             this.Controls.Add(this.UpozorenjeIme);
             this.Controls.Add(this.UpozorenjeOib);
@@ -215,5 +287,9 @@
         private System.Windows.Forms.Label UpozorenjeOib;
         private System.Windows.Forms.Label UpozorenjeIme;
         private System.Windows.Forms.Label UpozorenjePrezime;
+        private System.Windows.Forms.Label UpozorenjeLozinka;
+        private System.Windows.Forms.Label UpozorenjeKorIme;
+        private System.Windows.Forms.TextBox lozinkaTextBox;
+        private System.Windows.Forms.TextBox korisnickoImeTextBox;
     }
 }

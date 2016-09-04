@@ -38,7 +38,6 @@
             this.NaslovNarudzbenica = new System.Windows.Forms.Label();
             this.naruciteljComboBox = new System.Windows.Forms.ComboBox();
             this.datum_potrazivanjaDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             naruciteljLabel = new System.Windows.Forms.Label();
@@ -141,20 +140,10 @@
             this.datum_potrazivanjaDateTimePicker.Size = new System.Drawing.Size(138, 20);
             this.datum_potrazivanjaDateTimePicker.TabIndex = 31;
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 27;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 143);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 26;
@@ -163,7 +152,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 143);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 25;
@@ -173,10 +162,11 @@
             // 
             // frmNarudzbenicaBitumenskeMjesavineUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.temeljnicaComboBox);
             this.Controls.Add(this.UpozorenjeNarucitelj);
@@ -188,7 +178,6 @@
             this.Controls.Add(datum_potrazivanjaLabel);
             this.Controls.Add(this.datum_potrazivanjaDateTimePicker);
             this.Controls.Add(temeljnicaLabel);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Name = "frmNarudzbenicaBitumenskeMjesavineUpdate";
@@ -208,7 +197,6 @@
         private System.Windows.Forms.Label NaslovNarudzbenica;
         private System.Windows.Forms.ComboBox naruciteljComboBox;
         private System.Windows.Forms.DateTimePicker datum_potrazivanjaDateTimePicker;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
     }

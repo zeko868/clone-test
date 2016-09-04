@@ -37,7 +37,6 @@
             this.modelTextBox = new System.Windows.Forms.TextBox();
             this.proizvodjacTextBox = new System.Windows.Forms.TextBox();
             this.registracijski_brojTextBox = new System.Windows.Forms.TextBox();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovVozilo = new System.Windows.Forms.Label();
@@ -133,20 +132,10 @@
             this.registracijski_brojTextBox.TabIndex = 39;
             this.registracijski_brojTextBox.Leave += new System.EventHandler(this.registracijski_brojTextBox_Leave);
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 36;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 143);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 35;
@@ -155,7 +144,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 143);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 34;
@@ -175,10 +164,11 @@
             // 
             // frmVoziloUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeModel);
             this.Controls.Add(this.UpozorenjeProizvodac);
@@ -189,7 +179,6 @@
             this.Controls.Add(this.proizvodjacTextBox);
             this.Controls.Add(registracijski_brojLabel);
             this.Controls.Add(this.registracijski_brojTextBox);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovVozilo);
@@ -209,7 +198,6 @@
         private System.Windows.Forms.TextBox modelTextBox;
         private System.Windows.Forms.TextBox proizvodjacTextBox;
         private System.Windows.Forms.TextBox registracijski_brojTextBox;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovVozilo;

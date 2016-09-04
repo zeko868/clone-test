@@ -41,7 +41,6 @@
             this.nazivTextBox = new System.Windows.Forms.TextBox();
             this.oibTextBox = new System.Windows.Forms.TextBox();
             this.NaslovPoduzece = new System.Windows.Forms.Label();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             ibanLabel = new System.Windows.Forms.Label();
@@ -176,20 +175,10 @@
             this.NaslovPoduzece.TabIndex = 36;
             this.NaslovPoduzece.Text = "Poduzeće";
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 169);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 35;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 169);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 168);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 34;
@@ -198,7 +187,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 169);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 168);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 33;
@@ -208,10 +197,11 @@
             // 
             // frmPoduzeceUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(349, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeIban);
             this.Controls.Add(this.UpozorenjeAdresa);
@@ -226,7 +216,6 @@
             this.Controls.Add(oibLabel);
             this.Controls.Add(this.oibTextBox);
             this.Controls.Add(this.NaslovPoduzece);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Name = "frmPoduzeceUpdate";
@@ -248,7 +237,6 @@
         private System.Windows.Forms.TextBox nazivTextBox;
         private System.Windows.Forms.TextBox oibTextBox;
         private System.Windows.Forms.Label NaslovPoduzece;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
     }

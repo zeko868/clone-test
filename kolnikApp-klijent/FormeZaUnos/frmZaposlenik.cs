@@ -27,6 +27,10 @@ namespace kolnikApp_klijent.FormeZaUnos
             oibTextBox.Text = "";
             imeTextBox.Text = "";
             prezimeTextBox.Text = "";
+            korisnickoImeTextBox.Text = "";
+            lozinkaTextBox.Text = "";
+            UpozorenjeKorIme.Hide();
+            UpozorenjeLozinka.Hide();
             UpozorenjePrezime.Hide();
             UpozorenjeOib.Hide();
             UpozorenjeIme.Hide();
@@ -70,24 +74,6 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             return IspravanOib;
         }
-        
-        private void GumbPotvrda_Click(object sender, EventArgs e)
-        {
-            bool IspravanOib = TestirajPravilonostUnosaZaOib();
-            if (imeTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjeIme);
-            }
-            if (prezimeTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjePrezime);
-            }
-            if(IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
-            {
-                //pohrani podatke u klasu i pošalji u BP
-                this.Close();
-            }
-        }
 
         private void oibTextBox_Leave(object sender, EventArgs e)
         {
@@ -119,6 +105,56 @@ namespace kolnikApp_klijent.FormeZaUnos
             else
             {
                 UpozorenjePrezime.Hide();
+            }
+        }
+
+        private void lozinkaTextBox_Leave(object sender, EventArgs e)
+        {
+            if (lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            else
+            {
+                UpozorenjeLozinka.Hide();
+            }
+        }
+
+        private void korisnickoImeTextBox_Leave(object sender, EventArgs e)
+        {
+            if (korisnickoImeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorIme);
+            }
+            else
+            {
+                UpozorenjeKorIme.Hide();
+            }
+        }
+
+        private void GumbPotvrda_Click(object sender, EventArgs e)
+        {
+            bool IspravanOib = TestirajPravilonostUnosaZaOib();
+            if (imeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeIme);
+            }
+            if (prezimeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjePrezime);
+            }
+            if (lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            if (korisnickoImeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorIme);
+            }
+            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "" && korisnickoImeTextBox.Text != "" && lozinkaTextBox.Text != "")
+            {
+                //pohrani podatke u klasu i pošalji u BP
+                this.Close();
             }
         }
     }

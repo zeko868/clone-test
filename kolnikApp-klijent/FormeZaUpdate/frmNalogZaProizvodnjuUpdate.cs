@@ -77,15 +77,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
         {
             UpozorenjeIzdavatelj.Hide();
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            temeljnicaComboBox.SelectedIndex = -1;
-            gradilisteComboBox.SelectedIndex = -1;
-            izdavateljComboBox.SelectedIndex = -1;
-            UpozorenjeTemeljnica.Hide();
-            UpozorenjeGradiliste.Hide();
-            UpozorenjeIzdavatelj.Hide();
-        }
     }
 }

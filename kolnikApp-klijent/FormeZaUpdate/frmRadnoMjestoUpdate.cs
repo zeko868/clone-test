@@ -54,11 +54,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjeNaziv.Hide();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            nazivTextBox.Text = "";
-            UpozorenjeNaziv.Hide();
-        }
     }
 }

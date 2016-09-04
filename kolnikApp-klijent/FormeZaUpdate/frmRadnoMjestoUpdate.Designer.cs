@@ -31,7 +31,6 @@
             System.Windows.Forms.Label nazivLabel;
             this.UpozorenjeNaziv = new System.Windows.Forms.Label();
             this.nazivTextBox = new System.Windows.Forms.TextBox();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovRadnoMjesto = new System.Windows.Forms.Label();
@@ -67,20 +66,10 @@
             this.nazivTextBox.TabIndex = 36;
             this.nazivTextBox.Leave += new System.EventHandler(this.nazivTextBox_Leave);
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 90);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 34;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 90);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 89);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 33;
@@ -89,7 +78,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 90);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 89);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 32;
@@ -109,15 +98,15 @@
             // 
             // frmRadnoMjestoUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeNaziv);
             this.Controls.Add(nazivLabel);
             this.Controls.Add(this.nazivTextBox);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRadnoMjesto);
@@ -133,7 +122,6 @@
 
         private System.Windows.Forms.Label UpozorenjeNaziv;
         private System.Windows.Forms.TextBox nazivTextBox;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovRadnoMjesto;

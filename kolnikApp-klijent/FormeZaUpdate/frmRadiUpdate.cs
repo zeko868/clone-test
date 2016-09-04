@@ -13,20 +13,47 @@ namespace kolnikApp_klijent.FormeZaUpdate
 {
     public partial class frmRadiUpdate : Form
     {
-        public frmRadiUpdate(DataGridViewRow PodatkovniRedak)
+        public frmRadiUpdate(DataGridViewRow PodatkovniRedak, DataGridViewRow DodatniRedak)
         {
             InitializeComponent();
             zaposlenikComboBox.DataSource =
                 (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
                  select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
-            zaposlenikComboBox.SelectedItem = PodatkovniRedak.Cells["zaposlenik"].Value;
+            string ImePrezime = DodatniRedak.Cells["ime"].Value.ToString() + " " + DodatniRedak.Cells["prezime"].Value.ToString();
+            zaposlenikComboBox.SelectedItem = ImePrezime;
+            zaposlenikComboBox.Enabled = false;            
 
-            radno_mjestoComboBox.DataSource =
-                (from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 select ((radno_mjesto)radno_mjestoObj).naziv).ToArray();
-            radno_mjestoComboBox.SelectedItem = PodatkovniRedak.Cells["radno_mjesto"].Value;
-            datum_pocetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_pocetka"].Value;
-            datum_zavrsetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_zavrsetka"].Value;
+            dobaviMogucaRadnaMjesta(DodatniRedak);
+            datum_pocetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_pocetka"].Value;
+            if(DodatniRedak.Cells["datum_zavrsetka"].Value == null)
+            {
+                datum_zavrsetkaDateTimePicker.Checked = false;
+            }
+            else
+            {
+                datum_zavrsetkaDateTimePicker.Checked = true;
+                datum_zavrsetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_zavrsetka"].Value;
+            }
+            zaposlenikComboBox.SelectedIndexChanged += new EventHandler((s, e) => zaposlenikComboBox_SelectedIndexChanged(s, e, DodatniRedak));
+        }
+
+        private void dobaviMogucaRadnaMjesta(DataGridViewRow DodatniRedak)
+        {
+            string[] RadnaMjestaRadnika = (from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                                           from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                           from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                                           where ((radi)radiObj).radno_mjesto == ((radno_mjesto)rmObj).id &&
+                                                 ((radi)radiObj).zaposlenik == ((zaposlenik)zaposlenikObj).oib &&
+                                                 ((zaposlenik)zaposlenikObj).ime ==  DodatniRedak.Cells["ime"].Value.ToString() && 
+                                                 ((zaposlenik)zaposlenikObj).prezime == DodatniRedak.Cells["prezime"].Value.ToString() &&
+                                                 ((radi)radiObj).datum_zavrsetka == null
+                                               select ((radno_mjesto)rmObj).naziv).ToArray();
+
+                string[] SvaRadnaMjesta = (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                           select ((radno_mjesto)rmObj).naziv).ToArray();
+                var Filtrirano = SvaRadnaMjesta.Except(RadnaMjestaRadnika);
+                radno_mjestoComboBox.DataSource = Filtrirano.ToList();
+                radno_mjestoComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -78,9 +105,10 @@ namespace kolnikApp_klijent.FormeZaUpdate
 
         }
 
-        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e, DataGridViewRow DodatniRedak)
         {
             UpozorenjeZaposlenik.Hide();
+            dobaviMogucaRadnaMjesta(DodatniRedak);
         }
 
         private void radno_mjestoComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -116,17 +144,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
                     UpozorenjeRazlikaDatuma.Show();
                 }
             }
-        }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            zaposlenikComboBox.SelectedIndex = -1;
-            radno_mjestoComboBox.SelectedIndex = -1;
-            datum_pocetkaDateTimePicker.Value = DateTime.Now;
-            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
-            UpozorenjeRadnoMjesto.Hide();
-            UpozorenjeRazlikaDatuma.Hide();
-            UpozorenjeZaposlenik.Hide();
         }
     }
 }

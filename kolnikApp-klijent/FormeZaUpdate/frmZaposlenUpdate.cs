@@ -104,16 +104,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjeRazlikaDatuma.Show();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            zaposlenikComboBox.SelectedIndex = -1;
-            poduzeceComboBox.SelectedIndex = -1;
-            datum_pocetkaDateTimePicker.Value = DateTime.Now;
-            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
-            UpozorenjePoduzece.Hide();
-            UpozorenjeRazlikaDatuma.Hide();
-            UpozorenjeZaposlenik.Hide();
-        }
     }
 }

@@ -119,7 +119,7 @@
             this.popustTextBox.Location = new System.Drawing.Point(129, 105);
             this.popustTextBox.MaxLength = 6;
             this.popustTextBox.Name = "popustTextBox";
-            this.popustTextBox.Size = new System.Drawing.Size(121, 20);
+            this.popustTextBox.Size = new System.Drawing.Size(143, 20);
             this.popustTextBox.TabIndex = 21;
             this.popustTextBox.Leave += new System.EventHandler(this.popustTextBox_Leave);
             // 
@@ -128,7 +128,7 @@
             this.artiklComboBox.FormattingEnabled = true;
             this.artiklComboBox.Location = new System.Drawing.Point(129, 51);
             this.artiklComboBox.Name = "artiklComboBox";
-            this.artiklComboBox.Size = new System.Drawing.Size(121, 21);
+            this.artiklComboBox.Size = new System.Drawing.Size(143, 21);
             this.artiklComboBox.TabIndex = 22;
             this.artiklComboBox.SelectedIndexChanged += new System.EventHandler(this.artiklComboBox_SelectedIndexChanged);
             // 
@@ -137,7 +137,7 @@
             this.poslovni_partnerComboBox.FormattingEnabled = true;
             this.poslovni_partnerComboBox.Location = new System.Drawing.Point(129, 78);
             this.poslovni_partnerComboBox.Name = "poslovni_partnerComboBox";
-            this.poslovni_partnerComboBox.Size = new System.Drawing.Size(121, 21);
+            this.poslovni_partnerComboBox.Size = new System.Drawing.Size(143, 21);
             this.poslovni_partnerComboBox.TabIndex = 23;
             this.poslovni_partnerComboBox.SelectedIndexChanged += new System.EventHandler(this.poslovni_partnerComboBox_SelectedIndexChanged);
             // 
@@ -145,7 +145,7 @@
             // 
             this.UpozorenjeArtikl.AutoSize = true;
             this.UpozorenjeArtikl.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeArtikl.Location = new System.Drawing.Point(256, 51);
+            this.UpozorenjeArtikl.Location = new System.Drawing.Point(278, 51);
             this.UpozorenjeArtikl.Name = "UpozorenjeArtikl";
             this.UpozorenjeArtikl.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjeArtikl.TabIndex = 29;
@@ -156,7 +156,7 @@
             // 
             this.UpozorenjePoslovniPartner.AutoSize = true;
             this.UpozorenjePoslovniPartner.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjePoslovniPartner.Location = new System.Drawing.Point(256, 78);
+            this.UpozorenjePoslovniPartner.Location = new System.Drawing.Point(278, 78);
             this.UpozorenjePoslovniPartner.Name = "UpozorenjePoslovniPartner";
             this.UpozorenjePoslovniPartner.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjePoslovniPartner.TabIndex = 30;
@@ -167,7 +167,7 @@
             // 
             this.UpozorenjePopust.AutoSize = true;
             this.UpozorenjePopust.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjePopust.Location = new System.Drawing.Point(256, 105);
+            this.UpozorenjePopust.Location = new System.Drawing.Point(278, 105);
             this.UpozorenjePopust.Name = "UpozorenjePopust";
             this.UpozorenjePopust.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjePopust.TabIndex = 31;
@@ -176,10 +176,11 @@
             // 
             // frmRabat
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjePopust);
             this.Controls.Add(this.UpozorenjePoslovniPartner);

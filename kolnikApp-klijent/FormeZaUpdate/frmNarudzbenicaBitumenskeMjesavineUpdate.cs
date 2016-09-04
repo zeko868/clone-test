@@ -63,15 +63,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
         {
             UpozorenjeNarucitelj.Hide();
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            temeljnicaComboBox.SelectedIndex = -1;
-            datum_potrazivanjaDateTimePicker.Value = DateTime.Now;
-            naruciteljComboBox.SelectedIndex = -1;
-            UpozorenjeTemeljnica.Hide();
-            UpozorenjeNarucitelj.Hide();
-            UpozorenjeDatumPotrazivanja.Hide();
-        }
     }
 }

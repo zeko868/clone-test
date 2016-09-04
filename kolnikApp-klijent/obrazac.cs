@@ -301,16 +301,13 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 case "radi":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"];
-                    additionalDgv.Visible = true;                    
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"];             
                     break;
                 case "zaposlen":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];
-                    additionalDgv.Visible = true;                     
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];                  
                     break;
                 case "vozi":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];
-                    additionalDgv.Visible = true;                    
+                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];                  
                     break;
                 default:
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
@@ -440,7 +437,7 @@ namespace kolnikApp_klijent
 
         //funkcija koja iz naziva tablice stvara ime forme i stavlja ga u string
         private string pretvoriUImeForme(string vrsta)
-        {
+        {            
             string ImeForme = "frm";
             char Separator = '_';
             string[] dijelovi = NaslovTablice.Tag.ToString().Split(Separator);
@@ -457,11 +454,13 @@ namespace kolnikApp_klijent
         //otvaranje nove forme za "Create" na temelju dobivenog imena
         private void CreateSlika_Click(object sender, EventArgs e)
         {
-            string ImeForme=pretvoriUImeForme("Create");
-            Type TipForme = Type.GetType("kolnikApp_klijent.FormeZaUnos." + ImeForme);
-            Form nextForm2 = (Form)Activator.CreateInstance(TipForme);
-            nextForm2.ShowDialog();
-
+            if (NaslovTablice.Text != "Dobro došli!")
+            {
+                string ImeForme = pretvoriUImeForme("Create");
+                Type TipForme = Type.GetType("kolnikApp_klijent.FormeZaUnos." + ImeForme);
+                Form nextForm2 = (Form)Activator.CreateInstance(TipForme);
+                nextForm2.ShowDialog();
+            }
         }
 
         //vidljivost gumba logout
@@ -489,7 +488,21 @@ namespace kolnikApp_klijent
                 }                
                 string ImeForme = pretvoriUImeForme("Update");
                 Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
-                Form FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak);
+                Form FormaZaUpdate=null;
+                if(additionalDgv.SelectedRows.Count != 0)
+                {
+                    DataGridViewRow addSelektiraniRedak = null;
+                    foreach (DataGridViewRow addRed in additionalDgv.SelectedRows)
+                    {
+                        addSelektiraniRedak = addRed;
+                    }
+                    FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak, addSelektiraniRedak);
+                }
+                else
+                {
+                    FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak);
+                }
+                
                 FormaZaUpdate.ShowDialog();
             }
 

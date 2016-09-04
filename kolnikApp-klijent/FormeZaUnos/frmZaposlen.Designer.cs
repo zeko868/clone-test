@@ -193,12 +193,13 @@
             this.UpozorenjeRazlikaDatuma.Text = "Datum završetka mora biti veći od datuma početka";
             this.UpozorenjeRazlikaDatuma.Visible = false;
             // 
-            // frmZaposen
+            // frmZaposlen
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeRazlikaDatuma);
             this.Controls.Add(this.UpozorenjePoduzece);
@@ -215,7 +216,7 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovZaposlen);
-            this.Name = "frmZaposen";
+            this.Name = "frmZaposlen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmZaposen";
             this.ResumeLayout(false);

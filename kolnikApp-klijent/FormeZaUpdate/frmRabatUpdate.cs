@@ -100,15 +100,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjePopust.Hide();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            artiklComboBox.SelectedIndex = -1;
-            poslovni_partnerComboBox.SelectedIndex = -1;
-            popustTextBox.Text = "";
-            UpozorenjeArtikl.Hide();
-            UpozorenjePopust.Hide();
-            UpozorenjePoslovniPartner.Hide();
-        }
     }
 }

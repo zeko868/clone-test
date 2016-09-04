@@ -47,20 +47,18 @@
             // datum_izdavanjaLabel
             // 
             datum_izdavanjaLabel.AutoSize = true;
-            datum_izdavanjaLabel.Location = new System.Drawing.Point(48, 66);
-            datum_izdavanjaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            datum_izdavanjaLabel.Location = new System.Drawing.Point(36, 54);
             datum_izdavanjaLabel.Name = "datum_izdavanjaLabel";
-            datum_izdavanjaLabel.Size = new System.Drawing.Size(117, 17);
+            datum_izdavanjaLabel.Size = new System.Drawing.Size(89, 13);
             datum_izdavanjaLabel.TabIndex = 13;
             datum_izdavanjaLabel.Text = "Datum izdavanja:";
             // 
             // izdavateljLabel
             // 
             izdavateljLabel.AutoSize = true;
-            izdavateljLabel.Location = new System.Drawing.Point(92, 98);
-            izdavateljLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            izdavateljLabel.Location = new System.Drawing.Point(69, 80);
             izdavateljLabel.Name = "izdavateljLabel";
-            izdavateljLabel.Size = new System.Drawing.Size(71, 17);
+            izdavateljLabel.Size = new System.Drawing.Size(55, 13);
             izdavateljLabel.TabIndex = 14;
             izdavateljLabel.Text = "Izdavatelj:";
             // 
@@ -68,19 +66,17 @@
             // 
             this.NaslovRacun.AutoSize = true;
             this.NaslovRacun.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NaslovRacun.Location = new System.Drawing.Point(16, 11);
-            this.NaslovRacun.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.NaslovRacun.Location = new System.Drawing.Point(12, 9);
             this.NaslovRacun.Name = "NaslovRacun";
-            this.NaslovRacun.Size = new System.Drawing.Size(98, 31);
+            this.NaslovRacun.Size = new System.Drawing.Size(80, 26);
             this.NaslovRacun.TabIndex = 7;
             this.NaslovRacun.Text = "Račun";
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(349, 171);
-            this.GumbReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbReset.Location = new System.Drawing.Point(262, 139);
             this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(100, 28);
+            this.GumbReset.Size = new System.Drawing.Size(75, 23);
             this.GumbReset.TabIndex = 12;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
@@ -89,10 +85,9 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(241, 171);
-            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbIzlaz.Location = new System.Drawing.Point(181, 139);
             this.GumbIzlaz.Name = "GumbIzlaz";
-            this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
+            this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 11;
             this.GumbIzlaz.Text = "Cancel";
             this.GumbIzlaz.UseVisualStyleBackColor = true;
@@ -100,10 +95,9 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(133, 171);
-            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbPotvrda.Location = new System.Drawing.Point(100, 139);
             this.GumbPotvrda.Name = "GumbPotvrda";
-            this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
+            this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 10;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
@@ -111,19 +105,17 @@
             // 
             // datum_izdavanjaDateTimePicker
             // 
-            this.datum_izdavanjaDateTimePicker.Location = new System.Drawing.Point(172, 63);
-            this.datum_izdavanjaDateTimePicker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.datum_izdavanjaDateTimePicker.Location = new System.Drawing.Point(129, 51);
             this.datum_izdavanjaDateTimePicker.Name = "datum_izdavanjaDateTimePicker";
-            this.datum_izdavanjaDateTimePicker.Size = new System.Drawing.Size(173, 22);
+            this.datum_izdavanjaDateTimePicker.Size = new System.Drawing.Size(131, 20);
             this.datum_izdavanjaDateTimePicker.TabIndex = 14;
             // 
             // izdavateljComboBox
             // 
             this.izdavateljComboBox.FormattingEnabled = true;
-            this.izdavateljComboBox.Location = new System.Drawing.Point(172, 95);
-            this.izdavateljComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.izdavateljComboBox.Location = new System.Drawing.Point(129, 77);
             this.izdavateljComboBox.Name = "izdavateljComboBox";
-            this.izdavateljComboBox.Size = new System.Drawing.Size(173, 24);
+            this.izdavateljComboBox.Size = new System.Drawing.Size(131, 21);
             this.izdavateljComboBox.TabIndex = 15;
             this.izdavateljComboBox.SelectedIndexChanged += new System.EventHandler(this.izdavateljComboBox_SelectedIndexChanged);
             // 
@@ -131,10 +123,9 @@
             // 
             this.UpozorenjeDatumIzdavanja.AutoSize = true;
             this.UpozorenjeDatumIzdavanja.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeDatumIzdavanja.Location = new System.Drawing.Point(355, 63);
-            this.UpozorenjeDatumIzdavanja.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.UpozorenjeDatumIzdavanja.Location = new System.Drawing.Point(266, 51);
             this.UpozorenjeDatumIzdavanja.Name = "UpozorenjeDatumIzdavanja";
-            this.UpozorenjeDatumIzdavanja.Size = new System.Drawing.Size(46, 17);
+            this.UpozorenjeDatumIzdavanja.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjeDatumIzdavanja.TabIndex = 30;
             this.UpozorenjeDatumIzdavanja.Text = "label1";
             this.UpozorenjeDatumIzdavanja.Visible = false;
@@ -143,10 +134,9 @@
             // 
             this.UpozorenjeIzdavatelj.AutoSize = true;
             this.UpozorenjeIzdavatelj.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(355, 95);
-            this.UpozorenjeIzdavatelj.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.UpozorenjeIzdavatelj.Location = new System.Drawing.Point(266, 77);
             this.UpozorenjeIzdavatelj.Name = "UpozorenjeIzdavatelj";
-            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(46, 17);
+            this.UpozorenjeIzdavatelj.Size = new System.Drawing.Size(35, 13);
             this.UpozorenjeIzdavatelj.TabIndex = 31;
             this.UpozorenjeIzdavatelj.Text = "label1";
             this.UpozorenjeIzdavatelj.Visible = false;
@@ -154,27 +144,30 @@
             // placenoCheckBox
             // 
             this.placenoCheckBox.AutoSize = true;
-            this.placenoCheckBox.Location = new System.Drawing.Point(172, 127);
+            this.placenoCheckBox.Location = new System.Drawing.Point(129, 103);
+            this.placenoCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.placenoCheckBox.Name = "placenoCheckBox";
-            this.placenoCheckBox.Size = new System.Drawing.Size(18, 17);
+            this.placenoCheckBox.Size = new System.Drawing.Size(15, 14);
             this.placenoCheckBox.TabIndex = 32;
             this.placenoCheckBox.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(100, 126);
+            this.label1.Location = new System.Drawing.Point(75, 102);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 33;
             this.label1.Text = "Plaćeno:";
             // 
             // frmRacun
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AcceptButton = this.GumbPotvrda;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(485, 325);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.placenoCheckBox);
@@ -188,7 +181,6 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRacun);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmRacun";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRacun";

@@ -107,16 +107,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjeTemeperatura.Hide();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            temeljnicaComboBox.SelectedIndex = -1;
-            datum_otpremeDateTimePicker.Value = DateTime.Now;
-            otpremiteljComboBox.SelectedIndex = -1;
-            temperaturaTextBox.Text = "";
-            UpozorenjeOtpremitelj.Hide();
-            UpozorenjeTemeljnica.Hide();
-            UpozorenjeTemeperatura.Hide();
-        }
     }
 }

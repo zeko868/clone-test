@@ -107,16 +107,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 }
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            voziloComboBox.SelectedIndex = -1;
-            vozacComboBox.SelectedIndex = -1;
-            datum_pocetkaDateTimePicker.Value = DateTime.Now;
-            datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
-            UpozorenjeVozac.Hide();
-            UpozorenjeVozilo.Hide();
-            UpozorenjeDatumi.Hide();
-        }
     }
 }

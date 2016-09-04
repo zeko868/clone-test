@@ -37,7 +37,6 @@
             this.poslovni_partnerComboBox = new System.Windows.Forms.ComboBox();
             this.artiklComboBox = new System.Windows.Forms.ComboBox();
             this.popustTextBox = new System.Windows.Forms.TextBox();
-            this.GumbReset = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovRabat = new System.Windows.Forms.Label();
@@ -133,20 +132,10 @@
             this.popustTextBox.TabIndex = 38;
             this.popustTextBox.Leave += new System.EventHandler(this.popustTextBox_Leave);
             // 
-            // GumbReset
-            // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
-            this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
-            this.GumbReset.TabIndex = 35;
-            this.GumbReset.Text = "Reset";
-            this.GumbReset.UseVisualStyleBackColor = true;
-            this.GumbReset.Click += new System.EventHandler(this.GumbReset_Click);
-            // 
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(210, 143);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 34;
@@ -155,7 +144,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(129, 143);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 33;
@@ -175,10 +164,11 @@
             // 
             // frmRabatUpdate
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjePopust);
             this.Controls.Add(this.UpozorenjePoslovniPartner);
@@ -189,7 +179,6 @@
             this.Controls.Add(this.artiklComboBox);
             this.Controls.Add(popustLabel);
             this.Controls.Add(this.popustTextBox);
-            this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRabat);
@@ -209,7 +198,6 @@
         private System.Windows.Forms.ComboBox poslovni_partnerComboBox;
         private System.Windows.Forms.ComboBox artiklComboBox;
         private System.Windows.Forms.TextBox popustTextBox;
-        private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovRabat;

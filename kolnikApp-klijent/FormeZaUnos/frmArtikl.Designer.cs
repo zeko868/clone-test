@@ -30,20 +30,16 @@
         {
             System.Windows.Forms.Label nazivLabel;
             System.Windows.Forms.Label jedinicna_cijenaLabel;
-            System.Windows.Forms.Label jedinica_mjereLabel;
             this.nazivTextBox = new System.Windows.Forms.TextBox();
             this.jedinicna_cijenaTextBox = new System.Windows.Forms.TextBox();
-            this.jedinica_mjereTextBox = new System.Windows.Forms.TextBox();
             this.NaslovArtikl = new System.Windows.Forms.Label();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbReset = new System.Windows.Forms.Button();
             this.UpozorenjeNaziv = new System.Windows.Forms.Label();
             this.UpozorenjeJedinicnaCijena = new System.Windows.Forms.Label();
-            this.UpozorenjeJedinicaMjere = new System.Windows.Forms.Label();
             nazivLabel = new System.Windows.Forms.Label();
             jedinicna_cijenaLabel = new System.Windows.Forms.Label();
-            jedinica_mjereLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // nazivLabel
@@ -64,15 +60,6 @@
             jedinicna_cijenaLabel.TabIndex = 2;
             jedinicna_cijenaLabel.Text = "Jedinicna cijena:";
             // 
-            // jedinica_mjereLabel
-            // 
-            jedinica_mjereLabel.AutoSize = true;
-            jedinica_mjereLabel.Location = new System.Drawing.Point(49, 106);
-            jedinica_mjereLabel.Name = "jedinica_mjereLabel";
-            jedinica_mjereLabel.Size = new System.Drawing.Size(77, 13);
-            jedinica_mjereLabel.TabIndex = 4;
-            jedinica_mjereLabel.Text = "Jedinica mjere:";
-            // 
             // nazivTextBox
             // 
             this.nazivTextBox.Location = new System.Drawing.Point(129, 51);
@@ -91,15 +78,6 @@
             this.jedinicna_cijenaTextBox.TabIndex = 3;
             this.jedinicna_cijenaTextBox.Leave += new System.EventHandler(this.jedinicna_cijenaTextBox_Leave);
             // 
-            // jedinica_mjereTextBox
-            // 
-            this.jedinica_mjereTextBox.Location = new System.Drawing.Point(129, 103);
-            this.jedinica_mjereTextBox.MaxLength = 6;
-            this.jedinica_mjereTextBox.Name = "jedinica_mjereTextBox";
-            this.jedinica_mjereTextBox.Size = new System.Drawing.Size(100, 20);
-            this.jedinica_mjereTextBox.TabIndex = 5;
-            this.jedinica_mjereTextBox.Leave += new System.EventHandler(this.jedinica_mjereTextBox_Leave);
-            // 
             // NaslovArtikl
             // 
             this.NaslovArtikl.AutoSize = true;
@@ -112,7 +90,7 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(100, 118);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
             this.GumbPotvrda.TabIndex = 7;
@@ -123,7 +101,7 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(181, 118);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
             this.GumbIzlaz.TabIndex = 8;
@@ -133,7 +111,7 @@
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
+            this.GumbReset.Location = new System.Drawing.Point(262, 118);
             this.GumbReset.Name = "GumbReset";
             this.GumbReset.Size = new System.Drawing.Size(75, 23);
             this.GumbReset.TabIndex = 9;
@@ -163,33 +141,20 @@
             this.UpozorenjeJedinicnaCijena.Text = "label1";
             this.UpozorenjeJedinicnaCijena.Visible = false;
             // 
-            // UpozorenjeJedinicaMjere
-            // 
-            this.UpozorenjeJedinicaMjere.AutoSize = true;
-            this.UpozorenjeJedinicaMjere.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeJedinicaMjere.Location = new System.Drawing.Point(236, 103);
-            this.UpozorenjeJedinicaMjere.Name = "UpozorenjeJedinicaMjere";
-            this.UpozorenjeJedinicaMjere.Size = new System.Drawing.Size(35, 13);
-            this.UpozorenjeJedinicaMjere.TabIndex = 12;
-            this.UpozorenjeJedinicaMjere.Text = "label1";
-            this.UpozorenjeJedinicaMjere.Visible = false;
-            // 
             // frmArtikl
             // 
+            this.AcceptButton = this.GumbPotvrda;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(364, 264);
+            this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
-            this.Controls.Add(this.UpozorenjeJedinicaMjere);
             this.Controls.Add(this.UpozorenjeJedinicnaCijena);
             this.Controls.Add(this.UpozorenjeNaziv);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovArtikl);
-            this.Controls.Add(jedinica_mjereLabel);
-            this.Controls.Add(this.jedinica_mjereTextBox);
             this.Controls.Add(jedinicna_cijenaLabel);
             this.Controls.Add(this.jedinicna_cijenaTextBox);
             this.Controls.Add(nazivLabel);
@@ -205,13 +170,11 @@
         #endregion
         private System.Windows.Forms.TextBox nazivTextBox;
         private System.Windows.Forms.TextBox jedinicna_cijenaTextBox;
-        private System.Windows.Forms.TextBox jedinica_mjereTextBox;
         private System.Windows.Forms.Label NaslovArtikl;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbReset;
         private System.Windows.Forms.Label UpozorenjeNaziv;
         private System.Windows.Forms.Label UpozorenjeJedinicnaCijena;
-        private System.Windows.Forms.Label UpozorenjeJedinicaMjere;
     }
 }

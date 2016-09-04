@@ -88,15 +88,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjeModel.Hide();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            registracijski_brojTextBox.Text = "";
-            proizvodjacTextBox.Text = "";
-            modelTextBox.Text = "";
-            UpozorenjeModel.Hide();
-            UpozorenjeProizvodac.Hide();
-            UpozorenjeRegistracijskiBroj.Hide();
-        }
     }
 }

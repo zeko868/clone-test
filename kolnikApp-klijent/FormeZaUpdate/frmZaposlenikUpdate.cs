@@ -18,6 +18,8 @@ namespace kolnikApp_klijent.FormeZaUpdate
             oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();
             imeTextBox.Text = PodatkovniRedak.Cells["ime"].Value.ToString();
             prezimeTextBox.Text = PodatkovniRedak.Cells["prezime"].Value.ToString();
+            korisnickoImeTextBox.Text = PodatkovniRedak.Cells["korisnicko_ime"].Value.ToString();
+            //lozinkaTextBox.Text=????
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -75,7 +77,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 popuniLabeleUpozorenja(UpozorenjePrezime);
             }
-            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
+            if(lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            if(korisnickoImeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorIme);
+            }
+            //što je s lozinkom???
+            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "" && korisnickoImeTextBox.Text != "")
             {
                 //pohrani podatke u klasu i pošalji u BP
                 this.Close();
@@ -115,14 +126,28 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
         }
 
-        private void GumbReset_Click(object sender, EventArgs e)
+        private void korisnickoImeTextBox_Leave(object sender, EventArgs e)
         {
-            oibTextBox.Text = "";
-            imeTextBox.Text = "";
-            prezimeTextBox.Text = "";
-            UpozorenjePrezime.Hide();
-            UpozorenjeOib.Hide();
-            UpozorenjeIme.Hide();
+            if (korisnickoImeTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeKorIme);
+            }
+            else
+            {
+                UpozorenjeKorIme.Hide();
+            }
+        }
+
+        private void lozinkaTextBox_Leave(object sender, EventArgs e)
+        {
+            if(lozinkaTextBox.Text == "")
+            {
+                popuniLabeleUpozorenja(UpozorenjeLozinka);
+            }
+            else
+            {
+                UpozorenjeLozinka.Hide();
+            }
         }
     }
 }

@@ -52,12 +52,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
         {
             UpozorenjeIzdavatelj.Hide();
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            datum_izdavanjaDateTimePicker.Value = DateTime.Now;
-            izdavateljComboBox.SelectedIndex = -1;
-            UpozorenjeIzdavatelj.Hide();
-        }
     }
 }

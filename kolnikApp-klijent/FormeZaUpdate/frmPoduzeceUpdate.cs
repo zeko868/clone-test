@@ -132,17 +132,5 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 UpozorenjeIban.Hide();
             }
         }
-
-        private void GumbReset_Click(object sender, EventArgs e)
-        {
-            oibTextBox.Text = "";
-            nazivTextBox.Text = "";
-            adresaTextBox.Text = "";
-            ibanTextBox.Text = "";
-            UpozorenjeAdresa.Hide();
-            UpozorenjeIban.Hide();
-            UpozorenjeNaziv.Hide();
-            UpozorenjeOib.Hide();
-        }
     }
 }
