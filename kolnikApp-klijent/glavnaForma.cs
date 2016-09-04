@@ -38,7 +38,7 @@ namespace kolnikApp_klijent
                 {
                     Invoke((MethodInvoker)delegate
                     {
-                        loadingTraka.Value = (int) (loadingTraka.Maximum * (2.0 / 4));
+                        loadingTraka.Value = (int) (loadingTraka.Maximum * (1.0 / 2));
                         loadingTraka.PerformStep();
                     });
                     if (DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"].Count == 0)

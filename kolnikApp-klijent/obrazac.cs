@@ -25,7 +25,7 @@ namespace kolnikApp_klijent
 
         public obrazac() : base()
         {
-            this.tablice = DataHandler.entityNamesWithReferencesToBelongingDataStores.Keys.ToArray<string>();
+            this.tablice = DataHandler.entityNamesForButtons.ToArray();
             InitializeComponent();
             ImeKorisnika.Text = DataHandler.LoggedUser.ime + " " + DataHandler.LoggedUser.prezime;
             additionalDgv.AllowUserToAddRows = false;
@@ -191,18 +191,32 @@ namespace kolnikApp_klijent
                                 }).ToArray();
                     break;
                 case "zaposlenik":
-                    dgvObj.DataSource =
-                        (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
-                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                         on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((zaposlenik)zaposlenikObj).oib
-                         select new
-                         {
-                             OIB=((zaposlenik)zaposlenikObj).oib,
-                             Ime = ((zaposlenik)zaposlenikObj).ime,
-                             Prezime=((zaposlenik)zaposlenikObj).prezime,
-                             korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime,
-                             //lozinka = ((korisnicki_racun)korisnicki_racunObj).lozinka
-                         }).ToArray();
+                    if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
+                    {
+                        dgvObj.DataSource =
+                            (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
+                             join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                             on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((zaposlenik)zaposlenikObj).oib
+                             select new
+                             {
+                                 OIB = ((zaposlenik)zaposlenikObj).oib,
+                                 Ime = ((zaposlenik)zaposlenikObj).ime,
+                                 Prezime = ((zaposlenik)zaposlenikObj).prezime,
+                                 korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime
+                             }).ToArray();
+
+                    }
+                    else
+                    {
+                        dgvObj.DataSource =
+                            (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                             select new
+                             {
+                                 OIB = ((zaposlenik)zaposlenikObj).oib,
+                                 Ime = ((zaposlenik)zaposlenikObj).ime,
+                                 Prezime = ((zaposlenik)zaposlenikObj).prezime
+                             }).ToArray();
+                    }
                     break;
                 case "racun":
                     dgvObj.DataSource =

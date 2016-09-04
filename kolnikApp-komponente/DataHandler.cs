@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
+using System.Data.Linq;
 using System.Globalization;
 using System.IO;
 using System.IO.Ports;
@@ -84,7 +86,8 @@ namespace kolnikApp_komponente
         public System.Net.IPEndPoint[] IPAddressesOfDestinations = null;
 
         public static Dictionary<string, BindingList<object>> entityNamesWithReferencesToBelongingDataStores = null;
-        public static Dictionary<string, System.Windows.Forms.Control> entityNamesWithBelongingContainers = null;
+        public static List<string> entityNamesForButtons = new List<string>();
+        static List<Dictionary<string, object>> entityRelationships = null;
 
         public enum Operations
         {
@@ -316,7 +319,31 @@ namespace kolnikApp_komponente
             return ((Operations)userRights.First()).HasFlag((Operations)Enum.Parse(typeof(Operations), action.ToString()));
         }
 
-        public List<string> GetListOfAccessibleEntityTypes(System.Net.IPEndPoint address)
+        private List<Dictionary<string, object>> GetNonEntityQueryResult(string query)
+        {
+            List<Dictionary<string, object>> retVal = new List<Dictionary<string, object>>();
+            using (DbCommand command = dataContextInstance.Connection.CreateCommand())
+            {
+                command.CommandText = query;
+                dataContextInstance.Connection.Open();
+
+                using (DbDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (reader.Read())
+                    {
+                        Dictionary<string, object> dictionary = new Dictionary<string, object>();
+
+                        for (int i = 0; i < reader.FieldCount; i++)
+                            dictionary.Add(reader.GetName(i), reader.GetValue(i));
+
+                        retVal.Add(dictionary);
+                    }
+                }
+            }
+            return retVal;
+        }
+
+        private List<string> GetListOfAccessibleEntityTypes(System.Net.IPEndPoint address)
         {
             return (from ip_adresar in ClientsAddressesList.addressList
                                             join radi in dataContextInstance.radis
@@ -508,7 +535,15 @@ namespace kolnikApp_komponente
                     case "tablica":
                         if (!isClientSide)
                         {
-                            ResponseForSending = AddHeaderInfoToXMLDatagroup(String.Join("", GetListOfAccessibleEntityTypes(address).Select(x => ConvertNonObjectDataIntoXMLData("tablica", x))));
+                            var entityRelationships = DataHandler.entityRelationships == null ? DataHandler.entityRelationships = GetNonEntityQueryResult("SELECT * FROM prikazi_sve_ovisnosti_medju_tablicama;") : DataHandler.entityRelationships;
+                            var buttonEntities = GetListOfAccessibleEntityTypes(address);
+                            var otherEntities = entityRelationships.Where(x => buttonEntities.Contains(x["FK_Table"].ToString())).Select(x => x["PK_Table"].ToString()).Except(buttonEntities);
+                            Dictionary<string, string> atributes = new Dictionary<string, string>();
+                            atributes.Add("menu", "yes");
+                            ResponseForSending = AddHeaderInfoToXMLDatagroup(
+                                String.Join("", buttonEntities.Select(x => ConvertNonObjectDataIntoXMLData("tablica", x, atributes)))
+                                + String.Join("", otherEntities.Select(x => ConvertNonObjectDataIntoXMLData("tablica", x)))
+                                );
                         }
                         else
                         {
@@ -519,6 +554,10 @@ namespace kolnikApp_komponente
                                     ChangesCommited = true;
                                 }
                                 entityNamesWithReferencesToBelongingDataStores["tablica"].Add(tablica.Value);
+                                if (tablica.Attribute("menu") != null)
+                                {
+                                    entityNamesForButtons.Add(tablica.Value);
+                                }
                             }
                         }
                         break;
@@ -677,20 +716,6 @@ namespace kolnikApp_komponente
                         entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(oldObjIfUpdate);
                         entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
                         break;
-                }
-
-                if (entityNamesWithBelongingContainers != null && entityNamesWithBelongingContainers.ContainsKey(objectTypename))
-                {
-                    string controlTypename = entityNamesWithBelongingContainers[objectTypename].GetType().Name;
-                    switch (controlTypename)
-                    {
-                        case "DataGridView":
-                            ((System.Windows.Forms.DataGridView)entityNamesWithBelongingContainers[objectTypename]).Refresh();
-                            break;
-                        case "ComboBox":
-                            ((System.Windows.Forms.ComboBox)entityNamesWithBelongingContainers[objectTypename]).Refresh();
-                            break;
-                    }
                 }
             }
         }
