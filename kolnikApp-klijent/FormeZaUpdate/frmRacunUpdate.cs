@@ -17,13 +17,13 @@ namespace kolnikApp_klijent.FormeZaUpdate
         {
             InitializeComponent();
             izdavateljComboBox.DataSource =
-                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
                  from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 where ((zaposlenik)zaposlenikObj).oib == ((radi)radiObj).zaposlenik &&
-                       ((radi)radiObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
+                 where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                       ((zaposlen)zaposlenObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
                        ((radno_mjesto)radno_mjestoObj).naziv == "računovođa"
-                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             izdavateljComboBox.SelectedItem = PodatkovniRedak.Cells["izdavatelj"].Value;
             datum_izdavanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value;
             placenoCheckBox.Checked = (string)(PodatkovniRedak.Cells["placeno"].Value) == "da" ? true : false;

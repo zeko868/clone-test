@@ -33,18 +33,12 @@ namespace kolnikApp_komponente
         partial void Insertartikl(artikl instance);
         partial void Updateartikl(artikl instance);
         partial void Deleteartikl(artikl instance);
-        partial void Insertgradiliste(gradiliste instance);
-        partial void Updategradiliste(gradiliste instance);
-        partial void Deletegradiliste(gradiliste instance);
-        partial void Insertzaposlenik(zaposlenik instance);
-        partial void Updatezaposlenik(zaposlenik instance);
-        partial void Deletezaposlenik(zaposlenik instance);
+        partial void Insertosoba(osoba instance);
+        partial void Updateosoba(osoba instance);
+        partial void Deleteosoba(osoba instance);
         partial void Insertkorisnicki_racun(korisnicki_racun instance);
         partial void Updatekorisnicki_racun(korisnicki_racun instance);
         partial void Deletekorisnicki_racun(korisnicki_racun instance);
-        partial void Insertnalog_za_proizvodnju(nalog_za_proizvodnju instance);
-        partial void Updatenalog_za_proizvodnju(nalog_za_proizvodnju instance);
-        partial void Deletenalog_za_proizvodnju(nalog_za_proizvodnju instance);
         partial void Insertnarudzbenica_bitumenske_mjesavine(narudzbenica_bitumenske_mjesavine instance);
         partial void Updatenarudzbenica_bitumenske_mjesavine(narudzbenica_bitumenske_mjesavine instance);
         partial void Deletenarudzbenica_bitumenske_mjesavine(narudzbenica_bitumenske_mjesavine instance);
@@ -60,18 +54,15 @@ namespace kolnikApp_komponente
         partial void Insertracun(racun instance);
         partial void Updateracun(racun instance);
         partial void Deleteracun(racun instance);
-        partial void Insertradi(radi instance);
-        partial void Updateradi(radi instance);
-        partial void Deleteradi(radi instance);
         partial void Insertradno_mjesto(radno_mjesto instance);
         partial void Updateradno_mjesto(radno_mjesto instance);
         partial void Deleteradno_mjesto(radno_mjesto instance);
         partial void Inserttablicna_privilegija(tablicna_privilegija instance);
         partial void Updatetablicna_privilegija(tablicna_privilegija instance);
         partial void Deletetablicna_privilegija(tablicna_privilegija instance);
-        partial void Inserttemeljnica(temeljnica instance);
-        partial void Updatetemeljnica(temeljnica instance);
-        partial void Deletetemeljnica(temeljnica instance);
+        partial void Insertproizvodni_nalog(proizvodni_nalog instance);
+        partial void Updateproizvodni_nalog(proizvodni_nalog instance);
+        partial void Deleteproizvodni_nalog(proizvodni_nalog instance);
         partial void Insertvozi(vozi instance);
         partial void Updatevozi(vozi instance);
         partial void Deletevozi(vozi instance);
@@ -121,19 +112,11 @@ namespace kolnikApp_komponente
             }
         }
 
-        public System.Data.Linq.Table<gradiliste> gradilistes
+        public System.Data.Linq.Table<osoba> osobas
         {
             get
             {
-                return this.GetTable<gradiliste>();
-            }
-        }
-
-        public System.Data.Linq.Table<zaposlenik> zaposleniks
-        {
-            get
-            {
-                return this.GetTable<zaposlenik>();
+                return this.GetTable<osoba>();
             }
         }
 
@@ -142,14 +125,6 @@ namespace kolnikApp_komponente
             get
             {
                 return this.GetTable<korisnicki_racun>();
-            }
-        }
-
-        public System.Data.Linq.Table<nalog_za_proizvodnju> nalog_za_proizvodnjus
-        {
-            get
-            {
-                return this.GetTable<nalog_za_proizvodnju>();
             }
         }
 
@@ -193,14 +168,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        public System.Data.Linq.Table<radi> radis
-        {
-            get
-            {
-                return this.GetTable<radi>();
-            }
-        }
-
         public System.Data.Linq.Table<radno_mjesto> radno_mjestos
         {
             get
@@ -217,11 +184,11 @@ namespace kolnikApp_komponente
             }
         }
 
-        public System.Data.Linq.Table<temeljnica> temeljnicas
+        public System.Data.Linq.Table<proizvodni_nalog> proizvodni_nalogs
         {
             get
             {
-                return this.GetTable<temeljnica>();
+                return this.GetTable<proizvodni_nalog>();
             }
         }
 
@@ -263,8 +230,6 @@ namespace kolnikApp_komponente
 
         private decimal _jedinicna_cijena;
 
-        private string _jedinica_mjere;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -275,8 +240,6 @@ namespace kolnikApp_komponente
         partial void OnnazivChanged();
         partial void Onjedinicna_cijenaChanging(decimal value);
         partial void Onjedinicna_cijenaChanged();
-        partial void Onjedinica_mjereChanging(string value);
-        partial void Onjedinica_mjereChanged();
         #endregion
 
         public artikl()
@@ -347,27 +310,6 @@ namespace kolnikApp_komponente
             }
         }
 
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_jedinica_mjere", DbType = "VarChar(5) NOT NULL", CanBeNull = false)]
-        public string jedinica_mjere
-        {
-            get
-            {
-                return this._jedinica_mjere;
-            }
-            set
-            {
-                if ((this._jedinica_mjere != value))
-                {
-                    this.Onjedinica_mjereChanging(value);
-                    this.SendPropertyChanging();
-                    this._jedinica_mjere = value;
-                    this.SendPropertyChanged("jedinica_mjere");
-                    this.Onjedinica_mjereChanged();
-                }
-            }
-        }
-
         public event PropertyChangingEventHandler PropertyChanging;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -390,97 +332,8 @@ namespace kolnikApp_komponente
     }
 
     [DataContract(IsReference = true, Namespace = "")]
-    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.gradiliste")]
-    public partial class gradiliste : INotifyPropertyChanging, INotifyPropertyChanged
-    {
-
-        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-
-        private int _id;
-
-        private string _naziv_mjesta;
-
-        #region Extensibility Method Definitions
-        partial void OnLoaded();
-        partial void OnValidate(System.Data.Linq.ChangeAction action);
-        partial void OnCreated();
-        partial void OnidChanging(int value);
-        partial void OnidChanged();
-        partial void Onnaziv_mjestaChanging(string value);
-        partial void Onnaziv_mjestaChanged();
-        #endregion
-
-        public gradiliste()
-        {
-            OnCreated();
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int id
-        {
-            get
-            {
-                return this._id;
-            }
-            set
-            {
-                if ((this._id != value))
-                {
-                    this.OnidChanging(value);
-                    this.SendPropertyChanging();
-                    this._id = value;
-                    this.SendPropertyChanged("id");
-                    this.OnidChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_naziv_mjesta", DbType = "VarChar(45) NOT NULL", CanBeNull = false)]
-        public string naziv_mjesta
-        {
-            get
-            {
-                return this._naziv_mjesta;
-            }
-            set
-            {
-                if ((this._naziv_mjesta != value))
-                {
-                    this.Onnaziv_mjestaChanging(value);
-                    this.SendPropertyChanging();
-                    this._naziv_mjesta = value;
-                    this.SendPropertyChanged("naziv_mjesta");
-                    this.Onnaziv_mjestaChanged();
-                }
-            }
-        }
-
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void SendPropertyChanging()
-        {
-            if ((this.PropertyChanging != null))
-            {
-                this.PropertyChanging(this, emptyChangingEventArgs);
-            }
-        }
-
-        protected virtual void SendPropertyChanged(String propertyName)
-        {
-            if ((this.PropertyChanged != null))
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-
-    [DataContract(IsReference = true, Namespace = "")]
-    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.zaposlenik")]
-    public partial class zaposlenik : INotifyPropertyChanging, INotifyPropertyChanged
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.osoba")]
+    public partial class osoba : INotifyPropertyChanging, INotifyPropertyChanged
     {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -503,7 +356,7 @@ namespace kolnikApp_komponente
         partial void OnprezimeChanged();
         #endregion
 
-        public zaposlenik()
+        public osoba()
         {
             OnCreated();
         }
@@ -707,142 +560,45 @@ namespace kolnikApp_komponente
     }
 
     [DataContract(IsReference = true, Namespace = "")]
-    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.nalog_za_proizvodnju")]
-    public partial class nalog_za_proizvodnju : INotifyPropertyChanging, INotifyPropertyChanged
-    {
-
-        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-
-        private int _temeljnica;
-
-        private int _gradiliste;
-
-        private string _izdavatelj;
-
-        #region Extensibility Method Definitions
-        partial void OnLoaded();
-        partial void OnValidate(System.Data.Linq.ChangeAction action);
-        partial void OnCreated();
-        partial void OntemeljnicaChanging(int value);
-        partial void OntemeljnicaChanged();
-        partial void OngradilisteChanging(int value);
-        partial void OngradilisteChanged();
-        partial void OnizdavateljChanging(string value);
-        partial void OnizdavateljChanged();
-        #endregion
-
-        public nalog_za_proizvodnju()
-        {
-            OnCreated();
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_temeljnica", DbType = "Int NOT NULL", IsPrimaryKey = true)]
-        public int temeljnica
-        {
-            get
-            {
-                return this._temeljnica;
-            }
-            set
-            {
-                if ((this._temeljnica != value))
-                {
-                    this.OntemeljnicaChanging(value);
-                    this.SendPropertyChanging();
-                    this._temeljnica = value;
-                    this.SendPropertyChanged("temeljnica");
-                    this.OntemeljnicaChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_gradiliste", DbType = "Int NOT NULL")]
-        public int gradiliste
-        {
-            get
-            {
-                return this._gradiliste;
-            }
-            set
-            {
-                if ((this._gradiliste != value))
-                {
-                    this.OngradilisteChanging(value);
-                    this.SendPropertyChanging();
-                    this._gradiliste = value;
-                    this.SendPropertyChanged("gradiliste");
-                    this.OngradilisteChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_izdavatelj", DbType = "Char(11) NOT NULL", CanBeNull = false)]
-        public string izdavatelj
-        {
-            get
-            {
-                return this._izdavatelj;
-            }
-            set
-            {
-                if ((this._izdavatelj != value))
-                {
-                    this.OnizdavateljChanging(value);
-                    this.SendPropertyChanging();
-                    this._izdavatelj = value;
-                    this.SendPropertyChanged("izdavatelj");
-                    this.OnizdavateljChanged();
-                }
-            }
-        }
-
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void SendPropertyChanging()
-        {
-            if ((this.PropertyChanging != null))
-            {
-                this.PropertyChanging(this, emptyChangingEventArgs);
-            }
-        }
-
-        protected virtual void SendPropertyChanged(String propertyName)
-        {
-            if ((this.PropertyChanged != null))
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-
-    [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.narudzbenica_bitumenske_mjesavine")]
     public partial class narudzbenica_bitumenske_mjesavine : INotifyPropertyChanging, INotifyPropertyChanged
     {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 
-        private int _temeljnica;
+        private int _id;
+
+        private System.DateTime _datum_izdavanja;
 
         private System.DateTime _datum_potrazivanja;
 
-        private string _narucitelj;
+        private string _izdavatelj;
+
+        private decimal _kolicina;
+
+        private int _vozi;
+
+        private int _artikl;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
         partial void OnCreated();
-        partial void OntemeljnicaChanging(int value);
-        partial void OntemeljnicaChanged();
+        partial void OnidChanging(int value);
+        partial void OnidChanged();
+        partial void Ondatum_izdavanjaChanging(System.DateTime value);
+        partial void Ondatum_izdavanjaChanged();
         partial void Ondatum_potrazivanjaChanging(System.DateTime value);
         partial void Ondatum_potrazivanjaChanged();
-        partial void OnnaruciteljChanging(string value);
-        partial void OnnaruciteljChanged();
+        partial void OnkolicinaChanging(decimal value);
+        partial void OnkolicinaChanged();
+        partial void OnvoziChanging(int value);
+        partial void OnvoziChanged();
+        partial void OnartiklChanging(int value);
+        partial void OnartiklChanged();
+        partial void OnizdavateljChanging(string value);
+        partial void OnizdavateljChanged();
+
         #endregion
 
         public narudzbenica_bitumenske_mjesavine()
@@ -851,22 +607,43 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_temeljnica", DbType = "Int NOT NULL", IsPrimaryKey = true)]
-        public int temeljnica
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
+        public int id
         {
             get
             {
-                return this._temeljnica;
+                return this._id;
             }
             set
             {
-                if ((this._temeljnica != value))
+                if ((this._id != value))
                 {
-                    this.OntemeljnicaChanging(value);
+                    this.OnidChanging(value);
                     this.SendPropertyChanging();
-                    this._temeljnica = value;
-                    this.SendPropertyChanged("temeljnica");
-                    this.OntemeljnicaChanged();
+                    this._id = value;
+                    this.SendPropertyChanged("id");
+                    this.OnidChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_izdavanja", DbType = "DateTime NOT NULL")]
+        public System.DateTime datum_izdavanja
+        {
+            get
+            {
+                return this._datum_izdavanja;
+            }
+            set
+            {
+                if ((this._datum_izdavanja != value))
+                {
+                    this.Ondatum_izdavanjaChanging(value);
+                    this.SendPropertyChanging();
+                    this._datum_izdavanja = value;
+                    this.SendPropertyChanged("datum_izdavanja");
+                    this.Ondatum_izdavanjaChanged();
                 }
             }
         }
@@ -893,22 +670,85 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_narucitelj", DbType = "Char(11) NOT NULL", CanBeNull = false)]
-        public string narucitelj
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_izdavatelj", DbType = "Char(11) NOT NULL", CanBeNull = false)]
+        public string izdavatelj
         {
             get
             {
-                return this._narucitelj;
+                return this._izdavatelj;
             }
             set
             {
-                if ((this._narucitelj != value))
+                if ((this._izdavatelj != value))
                 {
-                    this.OnnaruciteljChanging(value);
+                    this.OnizdavateljChanging(value);
                     this.SendPropertyChanging();
-                    this._narucitelj = value;
-                    this.SendPropertyChanged("narucitelj");
-                    this.OnnaruciteljChanged();
+                    this._izdavatelj = value;
+                    this.SendPropertyChanged("izdavatelj");
+                    this.OnizdavateljChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_kolicina", DbType = "Decimal(5,3) NOT NULL")]
+        public decimal kolicina
+        {
+            get
+            {
+                return this._kolicina;
+            }
+            set
+            {
+                if ((this._kolicina != value))
+                {
+                    this.OnkolicinaChanging(value);
+                    this.SendPropertyChanging();
+                    this._kolicina = value;
+                    this.SendPropertyChanged("kolicina");
+                    this.OnkolicinaChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozi", DbType = "Int NOT NULL", CanBeNull = false)]
+        public int vozi
+        {
+            get
+            {
+                return this._vozi;
+            }
+            set
+            {
+                if ((this._vozi != value))
+                {
+                    this.OnvoziChanging(value);
+                    this.SendPropertyChanging();
+                    this._vozi = value;
+                    this.SendPropertyChanged("vozi");
+                    this.OnvoziChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_artikl", DbType = "Int NOT NULL")]
+        public int artikl
+        {
+            get
+            {
+                return this._artikl;
+            }
+            set
+            {
+                if ((this._artikl != value))
+                {
+                    this.OnartiklChanging(value);
+                    this.SendPropertyChanging();
+                    this._artikl = value;
+                    this.SendPropertyChanged("artikl");
+                    this.OnartiklChanged();
                 }
             }
         }
@@ -941,7 +781,7 @@ namespace kolnikApp_komponente
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 
-        private int _temeljnica;
+        private int _nalog;
 
         private System.DateTime _datum_otpreme;
 
@@ -949,22 +789,18 @@ namespace kolnikApp_komponente
 
         private string _otpremitelj;
 
-        private int _temperatura;
-
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
         partial void OnCreated();
-        partial void OntemeljnicaChanging(int value);
-        partial void OntemeljnicaChanged();
+        partial void OnnalogChanging(int value);
+        partial void OnnalogChanged();
         partial void Ondatum_otpremeChanging(System.DateTime value);
         partial void Ondatum_otpremeChanged();
         partial void OnracunChanging(System.Nullable<int> value);
         partial void OnracunChanged();
         partial void OnotpremiteljChanging(string value);
         partial void OnotpremiteljChanged();
-        partial void OntemperaturaChanging(int value);
-        partial void OntemperaturaChanged();
         #endregion
 
         public otpremnica()
@@ -973,22 +809,22 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_temeljnica", DbType = "Int NOT NULL", IsPrimaryKey = true)]
-        public int temeljnica
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_nalog", DbType = "Int NOT NULL", IsPrimaryKey = true)]
+        public int nalog
         {
             get
             {
-                return this._temeljnica;
+                return this._nalog;
             }
             set
             {
-                if ((this._temeljnica != value))
+                if ((this._nalog != value))
                 {
-                    this.OntemeljnicaChanging(value);
+                    this.OnnalogChanging(value);
                     this.SendPropertyChanging();
-                    this._temeljnica = value;
-                    this.SendPropertyChanged("temeljnica");
-                    this.OntemeljnicaChanged();
+                    this._nalog = value;
+                    this.SendPropertyChanged("nalog");
+                    this.OnnalogChanged();
                 }
             }
         }
@@ -1052,27 +888,6 @@ namespace kolnikApp_komponente
                     this._otpremitelj = value;
                     this.SendPropertyChanged("otpremitelj");
                     this.OnotpremiteljChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_temperatura", DbType = "Int NOT NULL")]
-        public int temperatura
-        {
-            get
-            {
-                return this._temperatura;
-            }
-            set
-            {
-                if ((this._temperatura != value))
-                {
-                    this.OntemperaturaChanging(value);
-                    this.SendPropertyChanging();
-                    this._temperatura = value;
-                    this.SendPropertyChanged("temperatura");
-                    this.OntemperaturaChanged();
                 }
             }
         }
@@ -1490,145 +1305,6 @@ namespace kolnikApp_komponente
         }
     }
 
-    [DataContract(Namespace = "")]
-    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.radi")]
-    public partial class radi : INotifyPropertyChanging, INotifyPropertyChanged
-    {
-
-        private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-
-        private string _zaposlenik;
-
-        private int _radno_mjesto;
-
-        private System.DateTime _datum_pocetka;
-
-        private System.Nullable<System.DateTime> _datum_zavrsetka;
-
-        #region Extensibility Method Definitions
-        partial void OnLoaded();
-        partial void OnValidate(System.Data.Linq.ChangeAction action);
-        partial void OnCreated();
-        partial void OnzaposlenikChanging(string value);
-        partial void OnzaposlenikChanged();
-        partial void Onradno_mjestoChanging(int value);
-        partial void Onradno_mjestoChanged();
-        partial void Ondatum_pocetkaChanging(System.DateTime value);
-        partial void Ondatum_pocetkaChanged();
-        partial void Ondatum_zavrsetkaChanging(System.Nullable<System.DateTime> value);
-        partial void Ondatum_zavrsetkaChanged();
-        #endregion
-
-        public radi()
-        {
-            OnCreated();
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_zaposlenik", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
-        public string zaposlenik
-        {
-            get
-            {
-                return this._zaposlenik;
-            }
-            set
-            {
-                if ((this._zaposlenik != value))
-                {
-                    this.OnzaposlenikChanging(value);
-                    this.SendPropertyChanging();
-                    this._zaposlenik = value;
-                    this.SendPropertyChanged("zaposlenik");
-                    this.OnzaposlenikChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_radno_mjesto", DbType = "Int NOT NULL", IsPrimaryKey = true)]
-        public int radno_mjesto
-        {
-            get
-            {
-                return this._radno_mjesto;
-            }
-            set
-            {
-                if ((this._radno_mjesto != value))
-                {
-                    this.Onradno_mjestoChanging(value);
-                    this.SendPropertyChanging();
-                    this._radno_mjesto = value;
-                    this.SendPropertyChanged("radno_mjesto");
-                    this.Onradno_mjestoChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_pocetka", DbType = "Date NOT NULL", IsPrimaryKey = true)]
-        public System.DateTime datum_pocetka
-        {
-            get
-            {
-                return this._datum_pocetka;
-            }
-            set
-            {
-                if ((this._datum_pocetka != value))
-                {
-                    this.Ondatum_pocetkaChanging(value);
-                    this.SendPropertyChanging();
-                    this._datum_pocetka = value;
-                    this.SendPropertyChanged("datum_pocetka");
-                    this.Ondatum_pocetkaChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_zavrsetka", DbType = "Date")]
-        public System.Nullable<System.DateTime> datum_zavrsetka
-        {
-            get
-            {
-                return this._datum_zavrsetka;
-            }
-            set
-            {
-                if ((this._datum_zavrsetka != value))
-                {
-                    this.Ondatum_zavrsetkaChanging(value);
-                    this.SendPropertyChanging();
-                    this._datum_zavrsetka = value;
-                    this.SendPropertyChanged("datum_zavrsetka");
-                    this.Ondatum_zavrsetkaChanged();
-                }
-            }
-        }
-
-        public event PropertyChangingEventHandler PropertyChanging;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void SendPropertyChanging()
-        {
-            if ((this.PropertyChanging != null))
-            {
-                this.PropertyChanging(this, emptyChangingEventArgs);
-            }
-        }
-
-        protected virtual void SendPropertyChanged(String propertyName)
-        {
-            if ((this.PropertyChanged != null))
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-
     [DataContract(IsReference = true, Namespace = "")]
     [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.radno_mjesto")]
     public partial class radno_mjesto : INotifyPropertyChanging, INotifyPropertyChanged
@@ -1833,64 +1509,56 @@ namespace kolnikApp_komponente
     }
 
     [DataContract(IsReference = true, Namespace = "")]
-    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.temeljnica")]
-    public partial class temeljnica : INotifyPropertyChanging, INotifyPropertyChanged
+    [global::System.Data.Linq.Mapping.TableAttribute(Name = "dbo.proizvodni_nalog")]
+    public partial class proizvodni_nalog : INotifyPropertyChanging, INotifyPropertyChanged
     {
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 
-        private int _id;
+        private int _narudzbenica;
 
         private System.DateTime _datum_izdavanja;
 
-        private decimal _kolicina;
+        private string _izdavatelj;
 
-        private string _vozilo;
-
-        private string _vozac;
-
-        private int _artikl;
+        private int _temperatura;
 
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
         partial void OnCreated();
-        partial void OnidChanging(int value);
-        partial void OnidChanged();
+        partial void OnnarudzbenicaChanging(int value);
+        partial void OnnarudzbenicaChanged();
         partial void Ondatum_izdavanjaChanging(System.DateTime value);
         partial void Ondatum_izdavanjaChanged();
-        partial void OnkolicinaChanging(decimal value);
-        partial void OnkolicinaChanged();
-        partial void OnvoziloChanging(string value);
-        partial void OnvoziloChanged();
-        partial void OnvozacChanging(string value);
-        partial void OnvozacChanged();
-        partial void OnartiklChanging(int value);
-        partial void OnartiklChanged();
+        partial void OntemperaturaChanging(int value);
+        partial void OntemperaturaChanged();
+        partial void OnizdavateljChanging(string value);
+        partial void OnizdavateljChanged();
         #endregion
 
-        public temeljnica()
+        public proizvodni_nalog()
         {
             OnCreated();
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
-        public int id
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_narudzbenica", DbType = "Int NOT NULL", IsPrimaryKey = true)]
+        public int narudzbenica
         {
             get
             {
-                return this._id;
+                return this._narudzbenica;
             }
             set
             {
-                if ((this._id != value))
+                if ((this._narudzbenica != value))
                 {
-                    this.OnidChanging(value);
+                    this.OnnarudzbenicaChanging(value);
                     this.SendPropertyChanging();
-                    this._id = value;
-                    this.SendPropertyChanged("id");
-                    this.OnidChanged();
+                    this._narudzbenica = value;
+                    this.SendPropertyChanged("narudzbenica");
+                    this.OnnarudzbenicaChanged();
                 }
             }
         }
@@ -1917,85 +1585,43 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_kolicina", DbType = "Decimal(5,3) NOT NULL")]
-        public decimal kolicina
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_izdavatelj", DbType = "Char(11) NOT NULL")]
+        public string izdavatelj
         {
             get
             {
-                return this._kolicina;
+                return this._izdavatelj;
             }
             set
             {
-                if ((this._kolicina != value))
+                if ((this._izdavatelj != value))
                 {
-                    this.OnkolicinaChanging(value);
+                    this.OnizdavateljChanging(value);
                     this.SendPropertyChanging();
-                    this._kolicina = value;
-                    this.SendPropertyChanged("kolicina");
-                    this.OnkolicinaChanged();
+                    this._izdavatelj = value;
+                    this.SendPropertyChanged("izdavatelj");
+                    this.OnizdavateljChanged();
                 }
             }
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozilo", DbType = "VarChar(8) NOT NULL", CanBeNull = false)]
-        public string vozilo
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_temperatura", DbType = "Int NOT NULL")]
+        public int temperatura
         {
             get
             {
-                return this._vozilo;
+                return this._temperatura;
             }
             set
             {
-                if ((this._vozilo != value))
+                if ((this._temperatura != value))
                 {
-                    this.OnvoziloChanging(value);
+                    this.OntemperaturaChanging(value);
                     this.SendPropertyChanging();
-                    this._vozilo = value;
-                    this.SendPropertyChanged("vozilo");
-                    this.OnvoziloChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozac", DbType = "Char(11) NOT NULL", CanBeNull = false)]
-        public string vozac
-        {
-            get
-            {
-                return this._vozac;
-            }
-            set
-            {
-                if ((this._vozac != value))
-                {
-                    this.OnvozacChanging(value);
-                    this.SendPropertyChanging();
-                    this._vozac = value;
-                    this.SendPropertyChanged("vozac");
-                    this.OnvozacChanged();
-                }
-            }
-        }
-
-        [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_artikl", DbType = "Int NOT NULL")]
-        public int artikl
-        {
-            get
-            {
-                return this._artikl;
-            }
-            set
-            {
-                if ((this._artikl != value))
-                {
-                    this.OnartiklChanging(value);
-                    this.SendPropertyChanging();
-                    this._artikl = value;
-                    this.SendPropertyChanged("artikl");
-                    this.OnartiklChanged();
+                    this._temperatura = value;
+                    this.SendPropertyChanged("temperatura");
+                    this.OntemperaturaChanged();
                 }
             }
         }
@@ -2028,6 +1654,8 @@ namespace kolnikApp_komponente
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 
+        private int _id;
+
         private string _vozilo;
 
         private string _vozac;
@@ -2040,6 +1668,8 @@ namespace kolnikApp_komponente
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
         partial void OnCreated();
+        partial void OnidChanging(int value);
+        partial void OnidChanged();
         partial void OnvoziloChanging(string value);
         partial void OnvoziloChanged();
         partial void OnvozacChanging(string value);
@@ -2056,7 +1686,28 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozilo", DbType = "VarChar(8) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
+        public int id
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnidChanging(value);
+                    this.SendPropertyChanging();
+                    this._id = value;
+                    this.SendPropertyChanged("id");
+                    this.OnidChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozilo", DbType = "VarChar(8) NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
         public string vozilo
         {
             get
@@ -2077,7 +1728,7 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozac", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_vozac", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
         public string vozac
         {
             get
@@ -2098,7 +1749,7 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_pocetka", DbType = "Date NOT NULL", IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_pocetka", DbType = "Date NOT NULL", IsPrimaryKey = false)]
         public System.DateTime datum_pocetka
         {
             get
@@ -2281,6 +1932,8 @@ namespace kolnikApp_komponente
 
         private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 
+        private int _id;
+
         private string _zaposlenik;
 
         private string _poduzece;
@@ -2289,10 +1942,14 @@ namespace kolnikApp_komponente
 
         private System.Nullable<System.DateTime> _datum_zavrsetka;
 
+        private int _radno_mjesto;
+
         #region Extensibility Method Definitions
         partial void OnLoaded();
         partial void OnValidate(System.Data.Linq.ChangeAction action);
         partial void OnCreated();
+        partial void OnidChanging(int value);
+        partial void OnidChanged();
         partial void OnzaposlenikChanging(string value);
         partial void OnzaposlenikChanged();
         partial void OnpoduzeceChanging(string value);
@@ -2301,6 +1958,8 @@ namespace kolnikApp_komponente
         partial void Ondatum_pocetkaChanged();
         partial void Ondatum_zavrsetkaChanging(System.Nullable<System.DateTime> value);
         partial void Ondatum_zavrsetkaChanged();
+        partial void Onradno_mjestoChanging(int value);
+        partial void Onradno_mjestoChanged();
         #endregion
 
         public zaposlen()
@@ -2309,7 +1968,28 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_zaposlenik", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_id", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
+        public int id
+        {
+            get
+            {
+                return this._id;
+            }
+            set
+            {
+                if ((this._id != value))
+                {
+                    this.OnidChanging(value);
+                    this.SendPropertyChanging();
+                    this._id = value;
+                    this.SendPropertyChanged("id");
+                    this.OnidChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_zaposlenik", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
         public string zaposlenik
         {
             get
@@ -2330,7 +2010,7 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_poduzece", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_poduzece", DbType = "Char(11) NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
         public string poduzece
         {
             get
@@ -2351,7 +2031,7 @@ namespace kolnikApp_komponente
         }
 
         [DataMemberAttribute]
-        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_pocetka", DbType = "Date NOT NULL", IsPrimaryKey = true)]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_datum_pocetka", DbType = "Date NOT NULL", IsPrimaryKey = false)]
         public System.DateTime datum_pocetka
         {
             get
@@ -2388,6 +2068,27 @@ namespace kolnikApp_komponente
                     this._datum_zavrsetka = value;
                     this.SendPropertyChanged("datum_zavrsetka");
                     this.Ondatum_zavrsetkaChanged();
+                }
+            }
+        }
+
+        [DataMemberAttribute]
+        [global::System.Data.Linq.Mapping.ColumnAttribute(Storage = "_radno_mjesto", DbType = "Int NOT NULL", CanBeNull = false, IsPrimaryKey = false)]
+        public int radno_mjesto
+        {
+            get
+            {
+                return this._radno_mjesto;
+            }
+            set
+            {
+                if ((this._radno_mjesto != value))
+                {
+                    this.Onradno_mjestoChanging(value);
+                    this.SendPropertyChanging();
+                    this._radno_mjesto = value;
+                    this.SendPropertyChanged("radno_mjesto");
+                    this.Onradno_mjestoChanged();
                 }
             }
         }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmZaposlenikUpdate : Form
+    public partial class frmOsobaUpdate : Form
     {
-        public frmZaposlenikUpdate(DataGridViewRow PodatkovniRedak)
+        public frmOsobaUpdate(DataGridViewRow PodatkovniRedak)
         {
             InitializeComponent();
             oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();

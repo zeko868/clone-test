@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmZaposlenik : Form
+    public partial class frmOsoba : Form
     {
-        public frmZaposlenik()
+        public frmOsoba()
         {
             InitializeComponent();
         }

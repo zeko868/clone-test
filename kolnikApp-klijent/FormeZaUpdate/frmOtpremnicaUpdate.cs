@@ -18,13 +18,13 @@ namespace kolnikApp_klijent.FormeZaUpdate
             InitializeComponent();
 
             otpremiteljComboBox.DataSource =
-                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
                  from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 where ((zaposlenik)zaposlenikObj).oib == ((radi)radiObj).zaposlenik &&
-                 ((radi)radiObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
+                 where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                 ((zaposlen)zaposlenObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
                  ((radno_mjesto)radno_mjestoObj).naziv == "otpremitelj"
-                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
+                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime
                  ).ToArray();
             otpremiteljComboBox.SelectedItem = PodatkovniRedak.Cells["izdavatelj"].Value;
             datum_otpremeDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_otpreme"].Value;

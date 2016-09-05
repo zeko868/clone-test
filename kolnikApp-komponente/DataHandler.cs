@@ -59,9 +59,9 @@ namespace kolnikApp_komponente
             }
         }
 
-        private static zaposlenik loggedUser;
+        private static osoba loggedUser;
 
-        public static zaposlenik LoggedUser
+        public static osoba LoggedUser
         {
             get
             {
@@ -305,10 +305,10 @@ namespace kolnikApp_komponente
         public bool IsUserPrivilegedToDoAnAction(System.Net.IPEndPoint address, string entityName, char action)
         {
             IEnumerable<byte> userRights = from ip_adresar in ClientsAddressesList.addressList
-            join radi in dataContextInstance.radis
-            on ip_adresar.Oib equals radi.zaposlenik
+            join zaposlen in dataContextInstance.zaposlens
+            on ip_adresar.Oib equals zaposlen.zaposlenik
             join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
-            on radi.radno_mjesto equals tablicna_privilegija.radno_mjesto
+            on zaposlen.radno_mjesto equals tablicna_privilegija.radno_mjesto
             where ip_adresar.EndPoint.Equals(address)
             && tablicna_privilegija.naziv_tablice.Equals(entityName)
             select tablicna_privilegija.operacija;
@@ -346,10 +346,10 @@ namespace kolnikApp_komponente
         private List<string> GetListOfAccessibleEntityTypes(System.Net.IPEndPoint address)
         {
             return (from ip_adresar in ClientsAddressesList.addressList
-                                            join radi in dataContextInstance.radis
-                                            on ip_adresar.Oib equals radi.zaposlenik
+                                            join zaposlen in dataContextInstance.zaposlens
+                                            on ip_adresar.Oib equals zaposlen.zaposlenik
                                             join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
-                                            on radi.radno_mjesto equals tablicna_privilegija.radno_mjesto
+                                            on zaposlen.radno_mjesto equals tablicna_privilegija.radno_mjesto
                                             where ip_adresar.EndPoint.Equals(address)
                                             &&
                                             tablicna_privilegija.operacija > 0
@@ -431,14 +431,14 @@ namespace kolnikApp_komponente
                         {
                             XElement prijavaPodaci = datagroup.Element("prijava");
                             var queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
-                                                              join zaposlenik in dataContextInstance.zaposleniks
-                                                              on korisnicki_racun.zaposlenik equals zaposlenik.oib
+                                                              join osoba in dataContextInstance.osobas
+                                                              on korisnicki_racun.zaposlenik equals osoba.oib
                                                               where
                                                               (
                                                                   korisnicki_racun.korisnicko_ime.Equals(prijavaPodaci.Element("korisnicko_ime").Value)
                                                                   || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
                                                               )
-                                                              select new { zaposlenik , korisnicki_racun.lozinka });
+                                                              select new { osoba , korisnicki_racun.lozinka });
                             bool userWithProvidedUsernameOrOibExists = false;
                             try
                             {
@@ -451,7 +451,7 @@ namespace kolnikApp_komponente
                             
                             if (userWithProvidedUsernameOrOibExists && HashPasswordUsingSHA1Algorithm(prijavaPodaci.Element("lozinka").Value) == queryResult.First().lozinka.TrimEnd(' '))
                             {
-                                string userOib = queryResult.First().zaposlenik.oib;
+                                string userOib = queryResult.First().osoba.oib;
                                 if (ClientsAddressesList.CheckIfUserWithCertainOibIsAlreadyLoggedIn(userOib))
                                 {
                                     HasErrorOccurred = true;
@@ -463,7 +463,7 @@ namespace kolnikApp_komponente
                                     ClientsAddressesList.RegisterUser(userOib, address);
                                     Dictionary<string, string> attributes = new Dictionary<string, string>();
                                     attributes["success"] = "success";
-                                    ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", ConvertObjectsToXMLData(queryResult.First().zaposlenik), attributes));
+                                    ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava", ConvertObjectsToXMLData(queryResult.First().osoba), attributes));
                                 }
                             }
                             else
@@ -478,11 +478,11 @@ namespace kolnikApp_komponente
                             XElement infoAboutLoginAttempt = datagroup.Element("prijava");
                             if (datagroup.Element("prijava").Attribute("success") != null)
                             {
-                                LoggedUser = new zaposlenik()
+                                LoggedUser = new osoba()
                                 {
-                                    oib = infoAboutLoginAttempt.Element("zaposlenik").Element("oib").Value,
-                                    ime = infoAboutLoginAttempt.Element("zaposlenik").Element("ime").Value,
-                                    prezime = infoAboutLoginAttempt.Element("zaposlenik").Element("prezime").Value
+                                    oib = infoAboutLoginAttempt.Element("osoba").Element("oib").Value,
+                                    ime = infoAboutLoginAttempt.Element("osoba").Element("ime").Value,
+                                    prezime = infoAboutLoginAttempt.Element("osoba").Element("prezime").Value
                                 };
                                 LoginState = true;
                                 IsConfirmationOfPreviousRequest = true;
@@ -506,18 +506,18 @@ namespace kolnikApp_komponente
                             korisnicki_racun noviKorisnickiRacun = new korisnicki_racun();
                             XElement registracijaPodaci = datagroup.Element("registracija");
                             noviKorisnickiRacun.zaposlenik = registracijaPodaci.Element("oib").Value;
-                            IQueryable<int> queryResult = from zaposlenik in dataContextInstance.zaposleniks
-                                                           where zaposlenik.oib == registracijaPodaci.Element("oib").Value
+                            IQueryable<int> queryResult = from osoba in dataContextInstance.osobas
+                                                           where osoba.oib == registracijaPodaci.Element("oib").Value
                                                            select 1;
                             if (queryResult.Count() == 0)
                             {
-                                zaposlenik noviZaposlenik = new zaposlenik()
+                                osoba noviZaposlenik = new osoba()
                                 {
                                     oib = registracijaPodaci.Element("oib").Value,
                                     ime = registracijaPodaci.Element("ime").Value,
                                     prezime = registracijaPodaci.Element("prezime").Value
                                 };
-                                dataContextInstance.zaposleniks.InsertOnSubmit(noviZaposlenik);
+                                dataContextInstance.osobas.InsertOnSubmit(noviZaposlenik);
                             }
                             noviKorisnickiRacun.korisnicko_ime = registracijaPodaci.Element("korisnicko_ime").Value;
                             noviKorisnickiRacun.lozinka = HashPasswordUsingSHA1Algorithm(registracijaPodaci.Element("lozinka").Value);
@@ -681,14 +681,14 @@ namespace kolnikApp_komponente
         {
             ResponseForSending += XMLData;
             sendToAll = true;
-            //select radi.zaposlenik,tablicna_privilegija.naziv_tablice from radi
-            //join tablicna_privilegija on radi.radno_mjesto = tablicna_privilegija.radno_mjesto
-            //group by radi.zaposlenik, tablicna_privilegija.naziv_tablice having count(*) > 0;
+            //select zaposlen.zaposlenik,tablicna_privilegija.naziv_tablice from zaposlen
+            //join tablicna_privilegija on zaposlen.radno_mjesto = tablicna_privilegija.radno_mjesto
+            //group by zaposlen.zaposlenik, tablicna_privilegija.naziv_tablice having count(*) > 0;
             /*            IPAddressesOfOtherDestinations = (from ip_adresar in ClientsAddressesList.addressList
-                                                          join radi in dataContextInstance.radis
-                                                          on ip_adresar.Oib equals radi.zaposlenik
+                                                          join zaposlen in dataContextInstance.zaposlens
+                                                          on ip_adresar.Oib equals zaposlen.zaposlenik
                                                           join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
-                                                          on radi.radno_mjesto equals tablicna_privilegija.radno_mjesto
+                                                          on zaposlen.radno_mjesto equals tablicna_privilegija.radno_mjesto
                                                           where !ip_adresar.EndPoint.Equals(senderIP)
                                                           group ip_adresar by new { ip_adresar.EndPoint, tablicna_privilegija.naziv_tablice } into grp
                                                           where grp.Count() > 0
@@ -770,11 +770,11 @@ namespace kolnikApp_komponente
             }
             else if (primljenaPoruka.StartsWith("NOTIFY"))
             {
-                IQueryable<string> otpremnicari = from radi in dataContextInstance.radis
+                IQueryable<string> otpremnicari = from zaposlen in dataContextInstance.zaposlens
                                    join radno_mjesto in dataContextInstance.radno_mjestos
-                                   on radi.radno_mjesto equals radno_mjesto.id
-                                   where radi.datum_zavrsetka == null && radno_mjesto.naziv == "otpremitelj"
-                                   select radi.zaposlenik;
+                                   on zaposlen.radno_mjesto equals radno_mjesto.id
+                                   where zaposlen.datum_zavrsetka == null && radno_mjesto.naziv == "otpremitelj"
+                                   select zaposlen.zaposlenik;
                 IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => otpremnicari.Contains(x.Oib)).Select(x => x.EndPoint).ToArray();
                 ResponseForSending = AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("pristiglo_vozilo", ""));
             }

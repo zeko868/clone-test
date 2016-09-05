@@ -85,13 +85,11 @@ namespace kolnikApp_klijent
                     break;
                 case "vozilo": PravoIme = "Vozilo";
                     break;                        
-                case "temeljnica": PravoIme = "Temeljnica";
+                case "proizvodni_nalog": PravoIme = "Proizvodni nalog";
                     break;
                 case "narudzbenica_bitumenske_mjesavine": PravoIme = "Narudžbenica";
                     break;
-                case "zaposlenik": PravoIme = "Zaposlenik";
-                    break;
-                case "radi": PravoIme = "Radi";
+                case "osoba": PravoIme = "Osoba";
                     break;
                 case "korisnicki_racun": PravoIme = "Korisnički račun";
                     break;
@@ -100,10 +98,6 @@ namespace kolnikApp_klijent
                 case "otpremnica": PravoIme = "Otpremnica";
                     break;
                 case "tablicna_privilegija": PravoIme = "Tablična privilegija";
-                    break;
-                case "gradiliste": PravoIme = "Gradilište";
-                    break;
-                case "nalog_za_proizvodnju": PravoIme = "Nalog za proizvodnju";
                     break;
                 case "radno_mjesto":PravoIme = "Radno mjesto";
                     break;
@@ -190,18 +184,18 @@ namespace kolnikApp_klijent
                                     popust = ((rabat)rabatObj).popust
                                 }).ToArray();
                     break;
-                case "zaposlenik":
+                case "osoba":
                     if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
                     {
                         dgvObj.DataSource =
                             (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
-                             join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                             on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((zaposlenik)zaposlenikObj).oib
+                             join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                             on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((osoba)zaposlenikObj).oib
                              select new
                              {
-                                 OIB = ((zaposlenik)zaposlenikObj).oib,
-                                 Ime = ((zaposlenik)zaposlenikObj).ime,
-                                 Prezime = ((zaposlenik)zaposlenikObj).prezime,
+                                 OIB = ((osoba)zaposlenikObj).oib,
+                                 Ime = ((osoba)zaposlenikObj).ime,
+                                 Prezime = ((osoba)zaposlenikObj).prezime,
                                  korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime
                              }).ToArray();
 
@@ -209,27 +203,14 @@ namespace kolnikApp_klijent
                     else
                     {
                         dgvObj.DataSource =
-                            (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                            (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                              select new
                              {
-                                 OIB = ((zaposlenik)zaposlenikObj).oib,
-                                 Ime = ((zaposlenik)zaposlenikObj).ime,
-                                 Prezime = ((zaposlenik)zaposlenikObj).prezime
+                                 OIB = ((osoba)zaposlenikObj).oib,
+                                 Ime = ((osoba)zaposlenikObj).ime,
+                                 Prezime = ((osoba)zaposlenikObj).prezime
                              }).ToArray();
                     }
-                    break;
-                case "racun":
-                    dgvObj.DataSource =
-                        (from racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["racun"]
-                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                         on ((racun)racunObj).izdavatelj equals ((zaposlenik)zaposlenikObj).oib
-                         select new
-                         {
-                             id_racun = ((racun)racunObj).id,
-                             datum_izdavanja = ((racun)racunObj).datum_izdavanja,
-                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
-                             placeno = ((racun)racunObj).placeno ? "da" : "ne"
-                         }).ToArray();
                     break;
                 case "tablicna_privilegija":
                     dgvObj.DataSource =
@@ -243,65 +224,71 @@ namespace kolnikApp_klijent
                              operacija = String.Join(", ", GetListOfOperationNames(((tablicna_privilegija)tablicna_privilegijaObj).operacija))
                          }).ToArray();
                     break;
-                case "temeljnica":
-                    dgvObj.DataSource =
-                        (from temeljnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["temeljnica"]
-                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                         on ((temeljnica)temeljnicaObj).vozac equals ((zaposlenik)zaposlenikObj).oib
-                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
-                         on ((temeljnica)temeljnicaObj).artikl equals ((artikl)artiklObj).id
-                         select new
-                         {
-                             id = ((temeljnica)temeljnicaObj).id,
-                             datum_izdavanja = ((temeljnica)temeljnicaObj).datum_izdavanja,
-                             kolicina = ((temeljnica)temeljnicaObj).kolicina,
-                             vozilo = ((temeljnica)temeljnicaObj).vozilo,
-                             vozac = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
-                             artikl = ((artikl)artiklObj).naziv
-                         }).ToArray();
-                    break;
-                case "nalog_za_proizvodnju":
-                    dgvObj.DataSource =
-                        (from nalog_za_proizvodnjuObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["nalog_za_proizvodnju"]
-                         join gradilisteObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["gradiliste"]
-                         on ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).gradiliste equals ((gradiliste)gradilisteObj).id
-                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                         on ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).izdavatelj equals ((zaposlenik)zaposlenikObj).oib
-                         select new
-                         {
-                             temeljnica = ((nalog_za_proizvodnju)nalog_za_proizvodnjuObj).temeljnica,
-                             gradiliste = ((gradiliste)gradilisteObj).naziv_mjesta,
-                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
-                         }).ToArray();
-                    break;
                 case "narudzbenica_bitumenske_mjesavine":
                     dgvObj.DataSource =
-                        (from narudzbenica_bitumenske_mjesavineObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                        (from narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
+                         join voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).vozi equals ((vozi)voziObj).id
+                         join vozacObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((vozi)voziObj).vozac equals ((osoba)vozacObj).oib
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).izdavatelj equals ((osoba)zaposlenikObj).oib
+                         join zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                         on ((osoba)zaposlenikObj).oib equals ((zaposlen)zaposlenObj).zaposlenik
                          join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                         on ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).narucitelj equals ((poduzece)poduzeceObj).oib
+                         on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
+                         where ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_izdavanja >= ((zaposlen)zaposlenObj).datum_pocetka && (((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_izdavanja <= ((zaposlen)zaposlenObj).datum_zavrsetka || ((zaposlen)zaposlenObj).datum_zavrsetka == null)
                          select new
                          {
-                             temeljnica = ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).temeljnica,
-                             datum_potrazivanja = ((narudzbenica_bitumenske_mjesavine)narudzbenica_bitumenske_mjesavineObj).datum_potrazivanja,
-                             narucitelj = ((poduzece)poduzeceObj).naziv
-                         }).ToArray();
+                             id_narudzbenica = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id,
+                             datum_izdavanja = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_izdavanja,
+                             datum_potrazivanja = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_potrazivanja,
+                             artikl = ((artikl)artiklObj).naziv,
+                             kolicina = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina,
+                             vozi = ((osoba)vozacObj).ime + " " + ((osoba)vozacObj).prezime + " (" + ((vozi)voziObj).vozilo + ")",
+                             izdavatelj = ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime + " (" + ((poduzece)poduzeceObj).naziv + ")"
+                         }
+                         ).ToArray();
+                    break;
+                case "proizvodni_nalog":
+                    dgvObj.DataSource =
+                        (from nalogObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["proizvodni_nalog"]
+                         join narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                         on ((proizvodni_nalog)nalogObj).narudzbenica equals ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((proizvodni_nalog)nalogObj).izdavatelj equals ((osoba)zaposlenikObj).oib
+                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
+                         select new
+                         {
+                             narudzbenica = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id.ToString() + " - " + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_potrazivanja + " (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")",
+                             izdavatelj = ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime,
+                             datum_izdavanja = ((proizvodni_nalog)nalogObj).datum_izdavanja,
+                             temperatura = ((proizvodni_nalog)nalogObj).temperatura
+                         }
+                         ).ToArray();
                     break;
                 case "otpremnica":
                     dgvObj.DataSource =
                         (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
-                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                         on ((otpremnica)otpremnicaObj).otpremitelj equals ((zaposlenik)zaposlenikObj).oib
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((otpremnica)otpremnicaObj).otpremitelj equals ((osoba)zaposlenikObj).oib
+                         join narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                         on ((otpremnica)otpremnicaObj).nalog equals ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id
+                         join voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).vozi equals ((vozi)voziObj).id
+                         join vozacObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((vozi)voziObj).vozac equals ((osoba)vozacObj).oib
+                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
                          select new
                          {
-                             temeljnica = ((otpremnica)otpremnicaObj).temeljnica,
-                             izdavatelj = ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime,
-                             datum_otpreme = ((otpremnica)otpremnicaObj).datum_otpreme,
-                             racun = ((otpremnica)otpremnicaObj).racun,
-                             temperatura = ((otpremnica)otpremnicaObj).temperatura
+                             narudzbenica = ((otpremnica)otpremnicaObj).nalog.ToString() + " - " + ((osoba)vozacObj).ime + " " + ((osoba)vozacObj).prezime +" (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")",
+                             izdavatelj = ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime,
+                             datum_otpreme = ((otpremnica)otpremnicaObj).datum_otpreme
                          }).ToArray();
-                    break;
-                case "radi":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"];             
                     break;
                 case "zaposlen":
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];                  
@@ -309,15 +296,28 @@ namespace kolnikApp_klijent
                 case "vozi":
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];                  
                     break;
+                case "racun":
+                    dgvObj.DataSource =
+                        (from racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["racun"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((racun)racunObj).izdavatelj equals ((osoba)zaposlenikObj).oib
+                         select new
+                         {
+                             id_racun = ((racun)racunObj).id,
+                             datum_izdavanja = ((racun)racunObj).datum_izdavanja,
+                             izdavatelj = ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime,
+                             placeno = ((racun)racunObj).placeno ? "da" : "ne"
+                         }).ToArray();
+                    break;
                 default:
                     dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
                     break;
             }
             switch (tableName)
             {
-                case "radi":
                 case "vozi":
                 case "zaposlen":
+                case "racun":
                     dgvObj.Dock = DockStyle.None;
                     AdjustDGVsWhenTheyAreNotDocked();
                     additionalDgv.Visible = true;
@@ -526,52 +526,60 @@ namespace kolnikApp_klijent
             switch (NaslovTablice.Tag.ToString())
             {
                 case "zaposlen":
-                    additionalDgv.DataSource =(from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+                    additionalDgv.DataSource =(from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                                                from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
                                                from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                               where ((zaposlenik)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik && 
+                                               from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                               where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik && 
                                                      ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
+                                                     ((radno_mjesto)radnoMjestoObj).id == ((zaposlen)zaposlenObj).radno_mjesto &&
                                                      ((zaposlen)zaposlenObj).poduzece == PodaciIzTablica[0, e.RowIndex].Value.ToString()
                                                select new
                                                {
-                                                   OIB= ((zaposlenik)zaposlenikObj).oib,
-                                                   Ime= ((zaposlenik)zaposlenikObj).ime,
-                                                   Prezime= ((zaposlenik)zaposlenikObj).prezime,
+                                                   OIB= ((osoba)zaposlenikObj).oib,
+                                                   Ime= ((osoba)zaposlenikObj).ime,
+                                                   Prezime= ((osoba)zaposlenikObj).prezime,
                                                    datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
-                                                   datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka
+                                                   datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka,
+                                                   radno_mjesto = ((radno_mjesto)radnoMjestoObj).naziv
                                                }).ToArray();
-                    break;
-                case "radi":
-                    additionalDgv.DataSource = (from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
-                                                from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                                from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                                                where ((radi)radiObj).radno_mjesto == ((radno_mjesto)rmObj).id &&
-                                                      ((radi)radiObj).zaposlenik == ((zaposlenik)zaposlenikObj).oib &&
-                                                      ((radi)radiObj).radno_mjesto.ToString() == PodaciIzTablica[0, e.RowIndex].Value.ToString()
-                                                select new
-                                                {
-                                                    OIB = ((zaposlenik)zaposlenikObj).oib,
-                                                    Ime = ((zaposlenik)zaposlenikObj).ime,
-                                                    Prezime = ((zaposlenik)zaposlenikObj).prezime,                                                    
-                                                    datum_pocetka = ((radi)radiObj).datum_pocetka,
-                                                    datum_zavrsetka = ((radi)radiObj).datum_zavrsetka                                                    
-                                                }).ToArray();
                     break;
                 case "vozi":
                     additionalDgv.DataSource = (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
                                                 from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
-                                                from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                                                where ((vozi)voziObj).vozac == ((zaposlenik)zaposlenikObj).oib &&
+                                                from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                                                where ((vozi)voziObj).vozac == ((osoba)zaposlenikObj).oib &&
                                                       ((vozi)voziObj).vozilo == ((vozilo)voziloObj).registracijski_broj &&
                                                       ((vozi)voziObj).vozilo == PodaciIzTablica[0, e.RowIndex].Value.ToString()
                                                 select new
                                                 {
-                                                    OIB = ((zaposlenik)zaposlenikObj).oib,
-                                                    Ime = ((zaposlenik)zaposlenikObj).ime,
-                                                    Prezime = ((zaposlenik)zaposlenikObj).prezime,                                                    
+                                                    OIB = ((osoba)zaposlenikObj).oib,
+                                                    Ime = ((osoba)zaposlenikObj).ime,
+                                                    Prezime = ((osoba)zaposlenikObj).prezime,                                                    
                                                     datum_pocetka = ((vozi)voziObj).datum_pocetka,
                                                     datum_zavrsetka = ((vozi)voziObj).datum_zavrsetka
                                                 }).ToArray();
+                    break;
+                case "racun":
+                    additionalDgv.DataSource =
+                        (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
+                         join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((otpremnica)otpremnicaObj).otpremitelj equals ((osoba)zaposlenikObj).oib
+                         join narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                         on ((otpremnica)otpremnicaObj).nalog equals ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id
+                         join voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).vozi equals ((vozi)voziObj).id
+                         join vozacObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         on ((vozi)voziObj).vozac equals ((osoba)vozacObj).oib
+                         join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
+                         where ((otpremnica)otpremnicaObj).racun == int.Parse(PodaciIzTablica[0, e.RowIndex].Value.ToString())
+                         select new
+                         {
+                             narudzbenica = ((otpremnica)otpremnicaObj).nalog.ToString() + " - " + ((osoba)vozacObj).ime + " " + ((osoba)vozacObj).prezime + " (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")",
+                             izdavatelj = ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime,
+                             datum_otpreme = ((otpremnica)otpremnicaObj).datum_otpreme
+                         }).ToArray();
                     break;
             }
         }

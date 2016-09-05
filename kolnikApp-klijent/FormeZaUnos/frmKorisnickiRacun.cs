@@ -17,9 +17,9 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             InitializeComponent();
             zaposlenikComboBox.DataSource =
-                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 where !DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"].Any(f => ((korisnicki_racun)f).zaposlenik == ((zaposlenik)zaposlenikObj).oib)
-                 select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 where !DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"].Any(f => ((korisnicki_racun)f).zaposlenik == ((osoba)zaposlenikObj).oib)
+                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime
                 ).ToArray();
             zaposlenikComboBox.SelectedIndex = -1;
         }

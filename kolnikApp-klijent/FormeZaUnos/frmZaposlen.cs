@@ -16,8 +16,8 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmZaposlen()
         {
             InitializeComponent();
-            zaposlenikComboBox.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                                             select ((zaposlenik)zaposlenikObj).ime + " " + ((zaposlenik)zaposlenikObj).prezime).ToArray();
+            zaposlenikComboBox.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                                             select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             zaposlenikComboBox.SelectedIndex = -1;
         }
 
@@ -85,13 +85,13 @@ namespace kolnikApp_klijent.FormeZaUnos
             UpozorenjeZaposlenik.Hide();
             if (zaposlenikComboBox.SelectedValue != null) { 
             string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
-            string[] PoduzeceUKojemRadi = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
+            string[] PoduzeceUKojemRadi = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                                            from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
                                            from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                           where ((zaposlenik)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                                           where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
                                                  ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
-                                                 ((zaposlenik)zaposlenikObj).ime == ImeIPrezime[0] &&
-                                                 ((zaposlenik)zaposlenikObj).prezime == ImeIPrezime[1] &&
+                                                 ((osoba)zaposlenikObj).ime == ImeIPrezime[0] &&
+                                                 ((osoba)zaposlenikObj).prezime == ImeIPrezime[1] &&
                                                  ((zaposlen)zaposlenObj).datum_zavrsetka == null
                                            select ((poduzece)poduzeceObj).naziv).ToArray();
 

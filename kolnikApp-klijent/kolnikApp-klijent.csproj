@@ -58,23 +58,11 @@
     <Compile Include="FormeZaUnos\frmArtikl.Designer.cs">
       <DependentUpon>frmArtikl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUnos\frmGradiliste.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUnos\frmGradiliste.Designer.cs">
-      <DependentUpon>frmGradiliste.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormeZaUnos\frmKorisnickiRacun.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormeZaUnos\frmKorisnickiRacun.Designer.cs">
       <DependentUpon>frmKorisnickiRacun.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormeZaUnos\frmNalogZaProizvodnju.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUnos\frmNalogZaProizvodnju.Designer.cs">
-      <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUnos\frmNarudzbenicaBitumenskeMjesavine.cs">
       <SubType>Form</SubType>
@@ -105,12 +93,6 @@
     </Compile>
     <Compile Include="FormeZaUnos\frmRacun.Designer.cs">
       <DependentUpon>frmRacun.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormeZaUnos\frmRadi.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUnos\frmRadi.Designer.cs">
-      <DependentUpon>frmRadi.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUnos\frmRadnoMjesto.cs">
       <SubType>Form</SubType>
@@ -148,11 +130,11 @@
     <Compile Include="FormeZaUnos\frmZaposlen.Designer.cs">
       <DependentUpon>frmZaposlen.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUnos\frmZaposlenik.cs">
+    <Compile Include="FormeZaUnos\frmOsoba.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUnos\frmZaposlenik.Designer.cs">
-      <DependentUpon>frmZaposlenik.cs</DependentUpon>
+    <Compile Include="FormeZaUnos\frmOsoba.Designer.cs">
+      <DependentUpon>frmOsoba.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUpdate\frmArtiklUpdate.cs">
       <SubType>Form</SubType>
@@ -160,23 +142,11 @@
     <Compile Include="FormeZaUpdate\frmArtiklUpdate.Designer.cs">
       <DependentUpon>frmArtiklUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmGradilisteUpdate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUpdate\frmGradilisteUpdate.Designer.cs">
-      <DependentUpon>frmGradilisteUpdate.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormeZaUpdate\frmKorisnickiRacunUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormeZaUpdate\frmKorisnickiRacunUpdate.Designer.cs">
       <DependentUpon>frmKorisnickiRacunUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormeZaUpdate\frmNalogZaProizvodnjuUpdate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUpdate\frmNalogZaProizvodnjuUpdate.Designer.cs">
-      <DependentUpon>frmNalogZaProizvodnjuUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUpdate\frmNarudzbenicaBitumenskeMjesavineUpdate.cs">
       <SubType>Form</SubType>
@@ -208,12 +178,6 @@
     <Compile Include="FormeZaUpdate\frmRacunUpdate.Designer.cs">
       <DependentUpon>frmRacunUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmRadiUpdate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormeZaUpdate\frmRadiUpdate.Designer.cs">
-      <DependentUpon>frmRadiUpdate.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormeZaUpdate\frmRadnoMjestoUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,11 +208,11 @@
     <Compile Include="FormeZaUpdate\frmVoziUpdate.Designer.cs">
       <DependentUpon>frmVoziUpdate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmZaposlenikUpdate.cs">
+    <Compile Include="FormeZaUpdate\frmOsobaUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormeZaUpdate\frmZaposlenikUpdate.Designer.cs">
-      <DependentUpon>frmZaposlenikUpdate.cs</DependentUpon>
+    <Compile Include="FormeZaUpdate\frmOsobaUpdate.Designer.cs">
+      <DependentUpon>frmOsobaUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="FormeZaUpdate\frmZaposlenUpdate.cs">
       <SubType>Form</SubType>
@@ -291,20 +255,17 @@
     <EmbeddedResource Include="FormeZaUnos\frmArtikl.resx">
       <DependentUpon>frmArtikl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmGradiliste.resx">
-      <DependentUpon>frmGradiliste.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmKorisnickiRacun.resx">
       <DependentUpon>frmKorisnickiRacun.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmNalogZaProizvodnju.resx">
-      <DependentUpon>frmNalogZaProizvodnju.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmNarudzbenicaBitumenskeMjesavine.resx">
       <DependentUpon>frmNarudzbenicaBitumenskeMjesavine.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmOtpremnica.resx">
       <DependentUpon>frmOtpremnica.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmPoduzece.resx">
       <DependentUpon>frmPoduzece.cs</DependentUpon>
@@ -314,9 +275,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmRacun.resx">
       <DependentUpon>frmRacun.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmRadi.resx">
-      <DependentUpon>frmRadi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmRadnoMjesto.resx">
       <DependentUpon>frmRadnoMjesto.cs</DependentUpon>
@@ -335,21 +293,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUnos\frmZaposlen.resx">
       <DependentUpon>frmZaposlen.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUnos\frmZaposlenik.resx">
-      <DependentUpon>frmZaposlenik.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUnos\frmOsoba.resx">
+      <DependentUpon>frmOsoba.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmArtiklUpdate.resx">
       <DependentUpon>frmArtiklUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmGradilisteUpdate.resx">
-      <DependentUpon>frmGradilisteUpdate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmKorisnickiRacunUpdate.resx">
       <DependentUpon>frmKorisnickiRacunUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmNalogZaProizvodnjuUpdate.resx">
-      <DependentUpon>frmNalogZaProizvodnjuUpdate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmNarudzbenicaBitumenskeMjesavineUpdate.resx">
       <DependentUpon>frmNarudzbenicaBitumenskeMjesavineUpdate.cs</DependentUpon>
@@ -366,9 +320,6 @@
     <EmbeddedResource Include="FormeZaUpdate\frmRacunUpdate.resx">
       <DependentUpon>frmRacunUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmRadiUpdate.resx">
-      <DependentUpon>frmRadiUpdate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmRadnoMjestoUpdate.resx">
       <DependentUpon>frmRadnoMjestoUpdate.cs</DependentUpon>
     </EmbeddedResource>
@@ -384,11 +335,12 @@
     <EmbeddedResource Include="FormeZaUpdate\frmVoziUpdate.resx">
       <DependentUpon>frmVoziUpdate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormeZaUpdate\frmZaposlenikUpdate.resx">
-      <DependentUpon>frmZaposlenikUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="FormeZaUpdate\frmOsobaUpdate.resx">
+      <DependentUpon>frmOsobaUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormeZaUpdate\frmZaposlenUpdate.resx">
       <DependentUpon>frmZaposlenUpdate.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="glavnaForma.resx">
       <DependentUpon>glavnaForma.cs</DependentUpon>

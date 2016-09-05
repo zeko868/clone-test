@@ -22,13 +22,13 @@ namespace kolnikApp_klijent.FormeZaUnos
             artiklComboBox.SelectedIndex = -1;
 
             vozacComboBox.DataSource =
-                (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlenik"]
-                 from radiObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radi"]
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
                  from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 where ((zaposlenik)zaposlenObj).oib == ((radi)radiObj).zaposlenik &&
-                       ((radi)radiObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
+                 where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                       ((zaposlen)zaposlenObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
                        ((radno_mjesto)radno_mjestoObj).naziv == "vozač"
-                 select ((zaposlenik)zaposlenObj).ime + " " + ((zaposlenik)zaposlenObj).prezime).ToArray();
+                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             vozacComboBox.SelectedIndex = -1;
 
             voziloComboBox.DataSource =
