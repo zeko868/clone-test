@@ -47,7 +47,28 @@
             datum_otpremeLabel = new System.Windows.Forms.Label();
             otpremiteljLabel = new System.Windows.Forms.Label();
             temperaturaLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // temeljnicaLabel
             // 
@@ -200,6 +221,7 @@
             this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.NaslovOtpremnica);
             this.Controls.Add(this.UpozorenjeTemeperatura);
             this.Controls.Add(this.UpozorenjeOtpremitelj);
             this.Controls.Add(this.temeljnicaComboBox);
@@ -211,13 +233,32 @@
             this.Controls.Add(datum_otpremeLabel);
             this.Controls.Add(this.datum_otpremeDateTimePicker);
             this.Controls.Add(temeljnicaLabel);
-            this.Controls.Add(this.NaslovOtpremnica);
             this.Controls.Add(this.GumbReset);
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmOtpremnica";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmOtpremnica";
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(temeljnicaLabel, 0);
+            this.Controls.SetChildIndex(this.datum_otpremeDateTimePicker, 0);
+            this.Controls.SetChildIndex(datum_otpremeLabel, 0);
+            this.Controls.SetChildIndex(this.otpremiteljComboBox, 0);
+            this.Controls.SetChildIndex(otpremiteljLabel, 0);
+            this.Controls.SetChildIndex(this.temperaturaTextBox, 0);
+            this.Controls.SetChildIndex(temperaturaLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeTemeljnica, 0);
+            this.Controls.SetChildIndex(this.temeljnicaComboBox, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeOtpremitelj, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeTemeperatura, 0);
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovOtpremnica, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

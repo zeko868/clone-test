@@ -22,10 +22,37 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmNarudzbenicaBitumenskeMjesavine() : base(false)
         {
             InitializeComponent();
-            naruciteljComboBox.DataSource =
+            izdavateljComboBox.DataSource =
                 (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
                  select ((poduzece)poduzeceObj).naziv).ToArray();
-            naruciteljComboBox.SelectedIndex = -1;
+            izdavateljComboBox.SelectedIndex = -1;
+
+            artiklComboBox.DataSource =
+                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                 select ((artikl)artiklObj).naziv).ToArray();
+            artiklComboBox.SelectedIndex = -1;
+
+            voziComboBox.DataSource =
+                (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                 join voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                 on ((vozi)voziObj).vozilo equals ((vozilo)voziloObj).registracijski_broj
+                 join osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 on ((vozi)voziObj).vozac equals ((osoba)osobaObj).oib
+                 where ((vozi)voziObj).datum_zavrsetka == null                 
+                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((vozi)voziObj).vozilo + ")").ToArray();
+            voziComboBox.SelectedIndex = -1;
+
+            izdavateljComboBox.DataSource =
+                (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                 join osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 on ((zaposlen)zaposlenObj).zaposlenik equals ((osoba)osobaObj).oib
+                 join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                 on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
+                 join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 on ((zaposlen)zaposlenObj).radno_mjesto equals ((radno_mjesto)rmObj).id
+                 where ((radno_mjesto)rmObj).naziv == "naručitelj" && ((zaposlen)zaposlenObj).datum_zavrsetka == null
+                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((poduzece)poduzeceObj).naziv + ")").ToArray();
+            izdavateljComboBox.SelectedIndex = -1;
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -35,12 +62,18 @@ namespace kolnikApp_klijent.FormeZaUnos
 
         private void GumbReset_Click(object sender, EventArgs e)
         {
-            temeljnicaComboBox.SelectedIndex = -1;
             datum_potrazivanjaDateTimePicker.Value = DateTime.Now;
-            naruciteljComboBox.SelectedIndex = -1;
-            UpozorenjeTemeljnica.Hide();
-            UpozorenjeNarucitelj.Hide();
-            UpozorenjeDatumPotrazivanja.Hide();
+            datum_izdavanjaDateTimePicker.Value = DateTime.Now;
+            izdavateljComboBox.SelectedIndex = -1;
+            voziComboBox.SelectedIndex = -1;
+            artiklComboBox.SelectedIndex = -1;
+            kolicinaTextBox.Text = "";
+            UpozorenjeIzdavatelj.Hide();
+            UpozorenjeDatumi.Hide();
+            UpozorenjeArtikl.Hide();
+            UpozorenjeDatumi.Hide();
+            UpozorenjeKolicina.Hide();
+            UpozorenjeVozi.Hide();
         }
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
         {
@@ -49,31 +82,87 @@ namespace kolnikApp_klijent.FormeZaUnos
             LabelaUpozorenja.Show();
         }
 
+        private bool provjeriIspravnostDatuma()
+        {
+            return (datum_izdavanjaDateTimePicker.Value <= datum_potrazivanjaDateTimePicker.Value) ? true : false;
+        }
+
         private void GumbPotvrda_Click(object sender, EventArgs e)
         {
-            if (temeljnicaComboBox.SelectedIndex == -1)
+            if(izdavateljComboBox.SelectedIndex == -1)
             {
-                popuniLabeleUpozorenja(UpozorenjeTemeljnica);
+                popuniLabeleUpozorenja(UpozorenjeIzdavatelj);
             }
-            if(naruciteljComboBox.SelectedIndex == -1)
+            if(voziComboBox.SelectedIndex == -1)
             {
-                popuniLabeleUpozorenja(UpozorenjeNarucitelj);
+                popuniLabeleUpozorenja(UpozorenjeVozi);
             }
-            if(temeljnicaComboBox.SelectedIndex != -1 && naruciteljComboBox.SelectedIndex != -1)
+            if (artiklComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeArtikl);
+            }
+            if(kolicinaTextBox.Text == "")
+            {
+                UpozorenjeKolicina.Text = "Polje mora biti popunjeno";
+                UpozorenjeKolicina.Show();
+            }
+            if(provjeriIspravnostDatuma() && izdavateljComboBox.SelectedIndex != -1 && voziComboBox.SelectedIndex != -1 && artiklComboBox.SelectedIndex != -1 && kolicinaTextBox.Text != "")
             {
                 //pohraniti podatke u klasu i poslati u BP
                 this.Close();
             }            
         }
 
-        private void temeljnicaComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void datum_izdavanjaDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            UpozorenjeTemeljnica.Hide();
+            if (provjeriIspravnostDatuma())
+            {
+                UpozorenjeDatumi.Hide();
+            }
+            else
+            {
+                UpozorenjeDatumi.Show();
+            }
         }
 
-        private void naruciteljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void datum_potrazivanjaDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            UpozorenjeNarucitelj.Hide();
+            if (provjeriIspravnostDatuma())
+            {
+                UpozorenjeDatumi.Hide();
+            }
+            else
+            {
+                UpozorenjeDatumi.Show();
+            }
+        }
+
+        private void izdavateljComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeIzdavatelj.Hide();
+        }
+
+        private void artiklComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeArtikl.Hide();
+        }
+
+        private void voziComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeVozi.Hide();
+        }
+
+        private void kolicinaTextBox_Leave(object sender, EventArgs e)
+        {
+            if(kolicinaTextBox.Text == "")
+            {
+                UpozorenjeKolicina.Text= "Polje mora biti popunjeno";
+                UpozorenjeKolicina.Show();
+            }
+            else
+            {
+                UpozorenjeKolicina.Hide();
+            }
         }
     }
 }
