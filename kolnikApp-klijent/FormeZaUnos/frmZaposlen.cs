@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmZaposlen : Form
+    public partial class frmZaposlen :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmZaposlen()
+        public frmZaposlen() : base(false)
         {
             InitializeComponent();
             zaposlenikComboBox.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]

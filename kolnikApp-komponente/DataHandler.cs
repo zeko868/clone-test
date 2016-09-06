@@ -115,7 +115,7 @@ namespace kolnikApp_komponente
             return result;
         }
 
-        private bool IsCollection(object variable)
+        private static bool IsCollection(object variable)
         {
             return variable.GetType().GetInterfaces().Any(
                 i => i.IsGenericType &&
@@ -123,7 +123,7 @@ namespace kolnikApp_komponente
             );
         }
 
-        public string ConvertObjectsToXMLData(object instance)
+        public static string ConvertObjectsToXMLData(object instance)
         {
             MemoryStream stream1 = new MemoryStream();
             try
@@ -151,17 +151,17 @@ namespace kolnikApp_komponente
             return Regex.Replace(xmlOutput.Replace("xmlns:z=\"http://schemas.microsoft.com/2003/10/Serialization/\"", "").Replace(" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" ", "").Replace(" i:nil=\"true\"", ""), @" z:Id=""i\d+""", "");
         }
 
-        public string AddWrapperOverXMLDatagroups(string XMLData)
+        public static string AddWrapperOverXMLDatagroups(string XMLData)
         {
             return "<data>" + XMLData + "</data>";
         }
 
-        private string AddHeaderInfoToXMLDatagroup(string XMLData, char action = 'R')
+        public static string AddHeaderInfoToXMLDatagroup(string XMLData, char action = 'R')
         {
             return "<datagroup action=\"" + action + "\">" + XMLData + "</datagroup>";
         }
 
-        private string ConvertNonObjectDataIntoXMLData(string tagName, string value = null, Dictionary<string,string> attributes = null)
+        private static string ConvertNonObjectDataIntoXMLData(string tagName, string value = null, Dictionary<string,string> attributes = null)
         {
             return "<" + tagName + (attributes!=null?String.Join("", attributes.Select(x => " " + x.Key + "=\"" + x.Value + "\"")):"") + ">" + (value==null?"":value) + "</" + tagName + ">";
         }
@@ -197,7 +197,7 @@ namespace kolnikApp_komponente
                     delimiter = " AND ";
                     operatorForNull = " IS ";
                 }
-                foreach (PropertyInfo info in tip.GetProperties().Where(x => x.PropertyType.Namespace != "kolnikApp_server" && x.PropertyType.Name != "EntitySet`1"))
+                foreach (PropertyInfo info in tip.GetProperties())
                 {
                     if (info.CanWrite)
                     {
@@ -218,7 +218,6 @@ namespace kolnikApp_komponente
                         }
                         else
                         {
-                            Console.WriteLine(info.PropertyType.Name);
                             switch (info.PropertyType.Name)
                             {
                                 case "DateTime":
@@ -672,7 +671,7 @@ namespace kolnikApp_komponente
             }
         }
 
-        private string HashPasswordUsingSHA1Algorithm(string password)
+        public static string HashPasswordUsingSHA1Algorithm(string password)
         {
             return String.Join("", SHA1.Create().ComputeHash(System.Text.Encoding.UTF8.GetBytes(password.ToCharArray())).Select(x => String.Format("{0:X}", x)));
         }
@@ -813,6 +812,28 @@ namespace kolnikApp_komponente
         void IDisposable.Dispose()
         {
 
+        }
+
+        public static string SerializeUpdatedObject(object oldObj, object newObj)
+        {
+            string entityName = oldObj.GetType().Name;
+            string str = "<" + entityName + ">";
+            foreach (PropertyInfo info in oldObj.GetType().GetProperties())
+            {
+                if (info.CanRead)
+                {
+                    str += "<" + info.Name + " old=\"";
+                    if (info.GetValue(oldObj) != null)
+                    {
+                        str += info.GetValue(oldObj).ToString();
+                    }
+                    str += "\">";
+                    str += info.GetValue(newObj).ToString();
+                    str += "</" + info.Name + ">";
+                }
+            }
+            str += "</" + entityName + ">";
+            return str;
         }
     }
 }

@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmNarudzbenicaBitumenskeMjesavineUpdate : Form
+    public partial class frmNarudzbenicaBitumenskeMjesavineUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmNarudzbenicaBitumenskeMjesavineUpdate(DataGridViewRow PodatkovniRedak)
+        public frmNarudzbenicaBitumenskeMjesavineUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
 

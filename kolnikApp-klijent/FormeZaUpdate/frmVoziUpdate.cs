@@ -10,9 +10,15 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmVoziUpdate : Form
+    public partial class frmVoziUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmVoziUpdate(DataGridViewRow PodatkovniRedak)
+        public frmVoziUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
             vozacComboBox.SelectedItem = PodatkovniRedak.Cells["vozac"].Value;

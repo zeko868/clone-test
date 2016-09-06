@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmRabatUpdate : Form
+    public partial class frmRabatUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmRabatUpdate(DataGridViewRow PodatkovniRedak)
+        public frmRabatUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
 

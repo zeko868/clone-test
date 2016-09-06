@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmRabat : Form
+    public partial class frmRabat :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmRabat()
+        public frmRabat() : base(false)
         {
             InitializeComponent();
             artiklComboBox.DataSource =

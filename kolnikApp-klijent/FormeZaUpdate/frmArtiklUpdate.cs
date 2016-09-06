@@ -10,9 +10,15 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmArtiklUpdate : Form
+    public partial class frmArtiklUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmArtiklUpdate(DataGridViewRow PodatkovniRedak)
+        public frmArtiklUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
             nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kolnikApp_komponente;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,16 +11,40 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmOsobaUpdate : Form
+    public partial class frmOsobaUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
     {
-        public frmOsobaUpdate(DataGridViewRow PodatkovniRedak)
+        osoba oldInstance = null;
+        korisnicki_racun oldAccountInstance = null;
+        public frmOsobaUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
-            oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();
-            imeTextBox.Text = PodatkovniRedak.Cells["ime"].Value.ToString();
-            prezimeTextBox.Text = PodatkovniRedak.Cells["prezime"].Value.ToString();
+            oldInstance = new osoba
+            {
+                oib = oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString(),
+                ime = imeTextBox.Text = PodatkovniRedak.Cells["ime"].Value.ToString(),
+                prezime = prezimeTextBox.Text = PodatkovniRedak.Cells["prezime"].Value.ToString()
+
+            };
             korisnickoImeTextBox.Text = PodatkovniRedak.Cells["korisnicko_ime"].Value.ToString();
-            //lozinkaTextBox.Text=????
+            if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
+            {
+                if (korisnickoImeTextBox.Text != String.Empty)
+                {
+                    oldAccountInstance = new korisnicki_racun
+                    {
+                        zaposlenik = oldInstance.oib,
+                        korisnicko_ime = korisnickoImeTextBox.Text,
+                        lozinka = (from accountObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
+                                   where ((korisnicki_racun)accountObj).zaposlenik == oldInstance.oib
+                                   select ((korisnicki_racun)accountObj).lozinka).First()
+                    };
+            }
+            }
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -86,9 +111,54 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 popuniLabeleUpozorenja(UpozorenjeKorIme);
             }
             //što je s lozinkom???
-            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "" && korisnickoImeTextBox.Text != "")
+            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
             {
+                korisnicki_racun newAccountInstance = null;
+                osoba newInstance = new osoba()
+                {
+                    oib = oibTextBox.Text,
+                    ime = imeTextBox.Text,
+                    prezime = prezimeTextBox.Text
+                };
+                if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
+                {
+                    if (korisnickoImeTextBox.Text != "" && lozinkaTextBox.Text != "")
+                    {
+                        newAccountInstance = new korisnicki_racun()
+                        {
+                            zaposlenik = oldInstance.oib,
+                            korisnicko_ime = korisnickoImeTextBox.Text,
+                            lozinka = DataHandler.HashPasswordUsingSHA1Algorithm(lozinkaTextBox.Text)
+                        };
+                    }
+                }
+                string dataForSending = "";
+                //kod updateanja je u bazi potrebno prvo izvršiti rad s korisničkim imenom, a onda nad osobom
+                //inače ako je oldAccountInstance == null && newAccountInstance == null, tada izvrši promjenu samo nad osobom
+                if (oldAccountInstance == null && newAccountInstance == null)
+                {
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                }
+                //inače ako je oldAccountInstance == null && newAccountInstance != null, tada izvrši dodavanje korisničkog računa i promjenu nad osobom
+                else if (oldAccountInstance == null && newAccountInstance != null)
+                {
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newAccountInstance), 'C');
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                }
+                //inače ako je oldAccountInstance != null && newAccountInstance == null, tada izvrši brisanje korisničkog računa i promjenu nad osobom
+                else if (oldAccountInstance != null && newAccountInstance == null)
+                {
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newAccountInstance), 'D');
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                }
+                //inače izvrši promjenu nad korisničkim računom i promjenu nad osobom
+                else
+                {
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(newAccountInstance, newAccountInstance), 'U');
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                }
                 //pohrani podatke u klasu i pošalji u BP
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

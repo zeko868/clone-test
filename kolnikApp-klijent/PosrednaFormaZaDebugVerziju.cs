@@ -10,13 +10,16 @@ namespace kolnikApp_klijent
 {
     public class PosrednaFormaZaDebugVerziju : ApstraktnaForma
     {
-        protected PosrednaFormaZaDebugVerziju() : base()
+        protected PosrednaFormaZaDebugVerziju(bool fullControlBox = true) : base(fullControlBox)
         {
         }
 
         protected PosrednaFormaZaDebugVerziju(CommunicationHandler sockObj) : base(sockObj)
         {
+        }
 
+        protected PosrednaFormaZaDebugVerziju() : this(true)
+        {
         }
     }
 }

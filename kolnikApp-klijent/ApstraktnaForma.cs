@@ -20,11 +20,20 @@ namespace kolnikApp_klijent
         protected PictureBox RestoreDown;
         protected PictureBox CloseButton;
         private bool isMaximized;
+        private bool isResizable;
         private bool initialState;
+        private bool isDialogWindow;
         private Rectangle dimensionsBeforeMaximizing;
-        protected ApstraktnaForma()
+        protected ApstraktnaForma(bool fullControlBox)
         {
             InitializeComponent();
+            if (!fullControlBox)
+            {
+                isResizable = false;
+                isDialogWindow = true;
+                RestoreDown.Visible = false;
+                Minimize.Visible = false;
+            }
         }
 
         protected ApstraktnaForma(CommunicationHandler sockObj)
@@ -138,6 +147,8 @@ namespace kolnikApp_klijent
             this.ResumeLayout(false);
             this.isMaximized = false;
             this.initialState = true;
+            this.isResizable = true;
+            this.isDialogWindow = false;
         }
 
         //zatvaranje aplikacije klikom na "X"
@@ -168,10 +179,11 @@ namespace kolnikApp_klijent
                 this.MaximizeWindow();
             }
             isMaximized = !isMaximized;
+            isResizable = !isResizable;
             if (initialState)
             {
-                    System.Threading.Thread.Sleep(25);  //pomaže da se prilikom prvog maksimiziranja instancirane forme ne pojavi izbugirana forma koja se do sada nekada pojavljivala
-                    initialState = false;
+                System.Threading.Thread.Sleep(25);  //pomaže da se prilikom prvog maksimiziranja instancirane forme ne pojavi izbugirana forma koja se do sada nekada pojavljivala
+                initialState = false;
             }
         }
 
@@ -202,7 +214,7 @@ namespace kolnikApp_klijent
                 }
                 ReleaseCapture();
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-                if (Cursor.Position.Y == 0)
+                if (Cursor.Position.Y == 0 && isResizable)
                 {
                     RestoreDown_Click(sender, e);
                 }
@@ -211,7 +223,6 @@ namespace kolnikApp_klijent
 
         private void ApstraktnaForma_Load(object sender, EventArgs e)
         {
-            isMaximized = false;
             this.MaximumSize = new Size(Screen.FromControl(this).WorkingArea.Width, Screen.FromControl(this).WorkingArea.Height);
         }
 
@@ -227,10 +238,10 @@ namespace kolnikApp_klijent
 
         const int resizableBorderWidth = 10;
 
-        Rectangle Top { get { return new Rectangle(0, 0, this.ClientSize.Width, resizableBorderWidth); } }
-        Rectangle Left { get { return new Rectangle(0, 0, resizableBorderWidth, this.ClientSize.Height); } }
-        Rectangle Bottom { get { return new Rectangle(0, this.ClientSize.Height - resizableBorderWidth, this.ClientSize.Width, resizableBorderWidth); } }
-        Rectangle Right { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, 0, resizableBorderWidth, this.ClientSize.Height); } }
+        new Rectangle Top { get { return new Rectangle(0, 0, this.ClientSize.Width, resizableBorderWidth); } }
+        new Rectangle Left { get { return new Rectangle(0, 0, resizableBorderWidth, this.ClientSize.Height); } }
+        new Rectangle Bottom { get { return new Rectangle(0, this.ClientSize.Height - resizableBorderWidth, this.ClientSize.Width, resizableBorderWidth); } }
+        new Rectangle Right { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, 0, resizableBorderWidth, this.ClientSize.Height); } }
 
         Rectangle TopLeft { get { return new Rectangle(0, 0, resizableBorderWidth, resizableBorderWidth); } }
         Rectangle TopRight { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, 0, resizableBorderWidth, resizableBorderWidth); } }
@@ -242,7 +253,7 @@ namespace kolnikApp_klijent
         {
             base.WndProc(ref message);
 
-            if (!isMaximized && message.Msg == 0x84) // WM_NCHITTEST
+            if (isResizable && message.Msg == 0x84) // WM_NCHITTEST
             {
                 var cursor = this.PointToClient(Cursor.Position);
 

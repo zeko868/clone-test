@@ -173,7 +173,7 @@ namespace kolnikApp_komponente
                         {
                             return;
                         }
-                        response = dataHandlerInstance.AddWrapperOverXMLDatagroups(response);
+                        response = DataHandler.AddWrapperOverXMLDatagroups(response);
                     }
                 }
 
@@ -206,7 +206,7 @@ namespace kolnikApp_komponente
                 }
                 else
                 {
-                    response = dataHandlerInstance.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending);
+                    response = DataHandler.AddWrapperOverXMLDatagroups(dataHandlerInstance.ResponseForSending);
                 }
                 if (dataHandlerInstance.IPAddressesOfDestinations != null)
                 {
@@ -236,6 +236,11 @@ namespace kolnikApp_komponente
         {
             DataHandler instance = new DataHandler();
             MessageSend(instance.ConstructLogoutMessageContent(), serverAddress);
+        }
+
+        public void SendSerializedData(string serializedData)
+        {
+            MessageSend(serializedData, serverAddress);
         }
     }
 

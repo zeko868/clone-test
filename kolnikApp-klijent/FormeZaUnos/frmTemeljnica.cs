@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmTemeljnica : Form
+    public partial class frmTemeljnica :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmTemeljnica()
+        public frmTemeljnica() : base(false)
         {
             InitializeComponent();
             artiklComboBox.DataSource =

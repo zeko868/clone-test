@@ -10,9 +10,15 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmZaposlenUpdate : Form
+    public partial class frmZaposlenUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmZaposlenUpdate(DataGridViewRow PodatkovniRedak)
+        public frmZaposlenUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
             zaposlenikComboBox.SelectedItem = PodatkovniRedak.Cells["zaposlenik"].Value;

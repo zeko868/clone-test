@@ -20,7 +20,7 @@ namespace kolnikApp_klijent
 #endif
 
     {
-        public glavnaForma()
+        public glavnaForma() : base()
         {
             InitializeComponent();
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kolnikApp_komponente;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,11 +11,24 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmOsoba : Form
+    public partial class frmOsoba :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmOsoba()
+        public frmOsoba() : base(false)
         {
             InitializeComponent();
+            if (!DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicko_ime"))
+            {
+                this.lozinkaTextBox.Visible = false;
+                this.korisnickoImeTextBox.Visible = false;
+                this.KorisnickoImeLabel.Visible = false;
+                this.LozinkaLabel.Visible = false;
+            }
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -151,8 +165,36 @@ namespace kolnikApp_klijent.FormeZaUnos
             {
                 popuniLabeleUpozorenja(UpozorenjeKorIme);
             }
-            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "" && korisnickoImeTextBox.Text != "" && lozinkaTextBox.Text != "")
+            if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
             {
+                korisnicki_racun newAccountInstance = null;
+                osoba newInstance = new osoba
+                {
+                    oib = oibTextBox.Text,
+                    ime = imeTextBox.Text,
+                    prezime = prezimeTextBox.Text
+                };
+                if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
+                {
+                    if (korisnickoImeTextBox.Text != "" && lozinkaTextBox.Text != "")
+                    {
+                        newAccountInstance = new korisnicki_racun
+                        {
+                            zaposlenik = oibTextBox.Text,
+                            korisnicko_ime = korisnickoImeTextBox.Text,
+                            lozinka = DataHandler.HashPasswordUsingSHA1Algorithm(lozinkaTextBox.Text)
+                        };
+                        //pohrani s korisnickim_racunom
+                    }
+                    else
+                    {
+                        //pohrani bez korisnickog_racuna
+                    }
+                }
+                else
+                {
+                    //pohrani bez korisnickog_racuna
+                }
                 //pohrani podatke u klasu i pošalji u BP
                 this.Close();
             }

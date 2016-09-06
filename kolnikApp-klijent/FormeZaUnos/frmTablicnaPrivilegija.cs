@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmTablicnaPrivilegija : Form
+    public partial class frmTablicnaPrivilegija :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmTablicnaPrivilegija()
+        public frmTablicnaPrivilegija() : base(false)
         {
             InitializeComponent();
             radno_mjestoComboBox.DataSource = (from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]

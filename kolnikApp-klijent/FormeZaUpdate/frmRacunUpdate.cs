@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
-    public partial class frmRacunUpdate : Form
+    public partial class frmRacunUpdate :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmRacunUpdate(DataGridViewRow PodatkovniRedak)
+        public frmRacunUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
             izdavateljComboBox.DataSource =

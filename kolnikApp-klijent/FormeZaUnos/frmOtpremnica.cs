@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmOtpremnica : Form
+    public partial class frmOtpremnica :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmOtpremnica()
+        public frmOtpremnica() : base(false)
         {
             InitializeComponent();
             otpremiteljComboBox.DataSource =

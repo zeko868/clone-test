@@ -188,15 +188,17 @@ namespace kolnikApp_klijent
                     if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
                     {
                         dgvObj.DataSource =
-                            (from korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
-                             join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                             on ((korisnicki_racun)korisnicki_racunObj).zaposlenik equals ((osoba)zaposlenikObj).oib
+                            (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                             join korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
+                             on ((osoba)zaposlenikObj).oib equals ((korisnicki_racun)korisnicki_racunObj).zaposlenik
+                             into korisnicki_racuni
+                             from sub_korisnicki_racun in korisnicki_racuni.DefaultIfEmpty()
                              select new
                              {
                                  OIB = ((osoba)zaposlenikObj).oib,
                                  Ime = ((osoba)zaposlenikObj).ime,
                                  Prezime = ((osoba)zaposlenikObj).prezime,
-                                 korisnicko_ime = ((korisnicki_racun)korisnicki_racunObj).korisnicko_ime
+                                 Korisnicko_ime = sub_korisnicki_racun == null ? "" : ((korisnicki_racun)sub_korisnicki_racun).korisnicko_ime
                              }).ToArray();
 
                     }

@@ -10,9 +10,15 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmPoduzece : Form
+    public partial class frmPoduzece :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmPoduzece()
+        public frmPoduzece() : base(false)
         {
             InitializeComponent();
         }

@@ -11,9 +11,15 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
-    public partial class frmNarudzbenicaBitumenskeMjesavine : Form
+    public partial class frmNarudzbenicaBitumenskeMjesavine :
+#if DEBUG
+            PosrednaFormaZaDebugVerziju
+#else
+            ApstraktnaForma
+#endif
+
     {
-        public frmNarudzbenicaBitumenskeMjesavine()
+        public frmNarudzbenicaBitumenskeMjesavine() : base(false)
         {
             InitializeComponent();
             naruciteljComboBox.DataSource =
