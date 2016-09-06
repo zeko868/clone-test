@@ -46,25 +46,20 @@ namespace kolnikApp_klijent
         {
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
 
-            Thread.Sleep(2000);
-            Nullable<bool> loginState = DataHandler.LoginState;
-            if (!loginState.HasValue)
+            while (DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting)
             {
-                MessageBox.Show("Pogreška sa kontaktiranjem poslužitelja. Provjerite jeste li spojeni na mrežu ili je li poslužitelj dostupan");
+                ;
+            }
+            if (DataHandler.UserLoginState == (byte)DataHandler.LoginState.success)
+            {
+                this.Hide();
+                glavnaForma newForm = new glavnaForma();
+                newForm.Closed += (s, args) => this.Close();
+                newForm.Show();
             }
             else
             {
-                if (loginState.Value == true)
-                {
-                    this.Hide();
-                    glavnaForma newForm = new glavnaForma();
-                    newForm.Closed += (s, args) => this.Close();
-                    newForm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Pogrešno uneseni podaci za prijavu ili je već netko s navedenim korisničkim imenom je već prijavljen!");
-                }
+                MessageBox.Show("Pogrešno uneseni podaci za prijavu ili je već netko s navedenim korisničkim imenom već prijavljen!");
             }
 
         }

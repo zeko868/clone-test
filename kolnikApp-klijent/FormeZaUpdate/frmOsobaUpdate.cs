@@ -154,7 +154,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 //inače izvrši promjenu nad korisničkim računom i promjenu nad osobom
                 else
                 {
-                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(newAccountInstance, newAccountInstance), 'U');
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldAccountInstance, newAccountInstance), 'U');
                     dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
                 }
                 //pohrani podatke u klasu i pošalji u BP

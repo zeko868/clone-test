@@ -14,7 +14,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -24,21 +24,14 @@ namespace kolnikApp_komponente
     {
         private bool sendToAll = false;
 
-        private static Nullable<bool> loginState = null;
-
-        public static Nullable<bool> LoginState
+        public enum LoginState
         {
-            get
-            {
-                Nullable<bool> tmp = loginState;
-                loginState = null;
-                return tmp;
-            }
-            private set
-            {
-                loginState = value;
-            }
+            waiting = 0,
+            error = 1,
+            success = 2
         }
+
+        public static volatile byte UserLoginState;
 
         private static volatile bool changesCommited = false;
         public static bool ChangesCommited
@@ -303,6 +296,7 @@ namespace kolnikApp_komponente
 
         public bool IsUserPrivilegedToDoAnAction(System.Net.IPEndPoint address, string entityName, char action)
         {
+
             IEnumerable<byte> userRights = from ip_adresar in ClientsAddressesList.addressList
             join zaposlen in dataContextInstance.zaposlens
             on ip_adresar.Oib equals zaposlen.zaposlenik
@@ -421,7 +415,11 @@ namespace kolnikApp_komponente
                         }
                         else
                         {
-                            ClientsAddressesList.addressList.Where(x => x.EndPoint.Equals(address)).First().UpdateTimeOfLastAnswer();
+                            var addressOibPair = ClientsAddressesList.addressList.Where(x => x.EndPoint.Equals(address));
+                            if (addressOibPair.Count() != 0)
+                            {
+                                addressOibPair.First().UpdateTimeOfLastAnswer();
+                            }
                         }
                         isAvailabilityCheck = true;
                         break;
@@ -483,12 +481,12 @@ namespace kolnikApp_komponente
                                     ime = infoAboutLoginAttempt.Element("osoba").Element("ime").Value,
                                     prezime = infoAboutLoginAttempt.Element("osoba").Element("prezime").Value
                                 };
-                                LoginState = true;
+                                UserLoginState = (byte)LoginState.success;
                                 IsConfirmationOfPreviousRequest = true;
                             }
                             else
                             {
-                                LoginState = false;
+                                UserLoginState = (byte)LoginState.error;
                             }
                         }
                         break;
