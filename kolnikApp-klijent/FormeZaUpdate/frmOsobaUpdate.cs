@@ -43,7 +43,14 @@ namespace kolnikApp_klijent.FormeZaUpdate
                                    where ((korisnicki_racun)accountObj).zaposlenik == oldInstance.oib
                                    select ((korisnicki_racun)accountObj).lozinka).First()
                     };
+                }
             }
+            else
+            {
+                this.lozinkaTextBox.Visible = false;
+                this.korisnickoImeTextBox.Visible = false;
+                this.KorisnickoImeLabel.Visible = false;
+                this.LozinkaLabel.Visible = false;
             }
         }
 
@@ -196,23 +203,14 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
         }
 
-        private void korisnickoImeTextBox_Leave(object sender, EventArgs e)
-        {
-            if (korisnickoImeTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjeKorIme);
-            }
-            else
-            {
-                UpozorenjeKorIme.Hide();
-            }
-        }
-
         private void lozinkaTextBox_Leave(object sender, EventArgs e)
         {
             if(lozinkaTextBox.Text == "")
             {
-                popuniLabeleUpozorenja(UpozorenjeLozinka);
+                if (korisnickoImeTextBox.Text != "")
+                {
+                    popuniLabeleUpozorenja(UpozorenjeLozinka);
+                }
             }
             else
             {

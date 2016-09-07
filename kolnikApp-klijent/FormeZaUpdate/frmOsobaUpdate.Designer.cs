@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.Label prezimeLabel;
-            System.Windows.Forms.Label imeLabel;
-            System.Windows.Forms.Label oibLabel;
-            System.Windows.Forms.Label LozinkaLabel;
-            System.Windows.Forms.Label KorisnickoImeLabel;
             this.UpozorenjePrezime = new System.Windows.Forms.Label();
             this.UpozorenjeIme = new System.Windows.Forms.Label();
             this.UpozorenjeOib = new System.Windows.Forms.Label();
@@ -226,7 +221,6 @@
             this.korisnickoImeTextBox.Name = "korisnickoImeTextBox";
             this.korisnickoImeTextBox.Size = new System.Drawing.Size(126, 20);
             this.korisnickoImeTextBox.TabIndex = 50;
-            this.korisnickoImeTextBox.Leave += new System.EventHandler(this.korisnickoImeTextBox_Leave);
             // 
             // frmZaposlenikUpdate
             // 
@@ -277,5 +271,10 @@
         private System.Windows.Forms.Label UpozorenjeKorIme;
         private System.Windows.Forms.TextBox lozinkaTextBox;
         private System.Windows.Forms.TextBox korisnickoImeTextBox;
+        System.Windows.Forms.Label prezimeLabel;
+        System.Windows.Forms.Label imeLabel;
+        System.Windows.Forms.Label oibLabel;
+        System.Windows.Forms.Label LozinkaLabel;
+        System.Windows.Forms.Label KorisnickoImeLabel;
     }
 }

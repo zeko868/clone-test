@@ -22,7 +22,7 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmOsoba() : base(false)
         {
             InitializeComponent();
-            if (!DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicko_ime"))
+            if (!DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
             {
                 this.lozinkaTextBox.Visible = false;
                 this.korisnickoImeTextBox.Visible = false;
@@ -126,23 +126,14 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             if (lozinkaTextBox.Text == "")
             {
-                popuniLabeleUpozorenja(UpozorenjeLozinka);
+                if (korisnickoImeTextBox.Text != "")
+                {
+                    popuniLabeleUpozorenja(UpozorenjeLozinka);
+                }
             }
             else
             {
                 UpozorenjeLozinka.Hide();
-            }
-        }
-
-        private void korisnickoImeTextBox_Leave(object sender, EventArgs e)
-        {
-            if (korisnickoImeTextBox.Text == "")
-            {
-                popuniLabeleUpozorenja(UpozorenjeKorIme);
-            }
-            else
-            {
-                UpozorenjeKorIme.Hide();
             }
         }
 
@@ -174,6 +165,7 @@ namespace kolnikApp_klijent.FormeZaUnos
                     ime = imeTextBox.Text,
                     prezime = prezimeTextBox.Text
                 };
+                string dataForSending = "";
                 if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
                 {
                     if (korisnickoImeTextBox.Text != "" && lozinkaTextBox.Text != "")
@@ -185,17 +177,22 @@ namespace kolnikApp_klijent.FormeZaUnos
                             lozinka = DataHandler.HashPasswordUsingSHA1Algorithm(lozinkaTextBox.Text)
                         };
                         //pohrani s korisnickim_racunom
+                        dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                        dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newAccountInstance), 'C');
                     }
                     else
                     {
                         //pohrani bez korisnickog_racuna
+                        dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
                     }
                 }
                 else
                 {
                     //pohrani bez korisnickog_racuna
+                    dataForSending += DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
                 }
                 //pohrani podatke u klasu i pošalji u BP
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

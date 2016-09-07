@@ -47,57 +47,28 @@
             prezimeLabel = new System.Windows.Forms.Label();
             LozinkaLabel = new System.Windows.Forms.Label();
             KorisnickoImeLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
             // 
-            // oibLabel
+            // controlBox
             // 
-            oibLabel.AutoSize = true;
-            oibLabel.Location = new System.Drawing.Point(132, 66);
-            oibLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            oibLabel.Name = "oibLabel";
-            oibLabel.Size = new System.Drawing.Size(35, 17);
-            oibLabel.TabIndex = 28;
-            oibLabel.Text = "OIB:";
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(535, 33);
             // 
-            // imeLabel
+            // Minimize
             // 
-            imeLabel.AutoSize = true;
-            imeLabel.Location = new System.Drawing.Point(129, 98);
-            imeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            imeLabel.Name = "imeLabel";
-            imeLabel.Size = new System.Drawing.Size(34, 17);
-            imeLabel.TabIndex = 29;
-            imeLabel.Text = "Ime:";
+            this.Minimize.Location = new System.Drawing.Point(415, 0);
             // 
-            // prezimeLabel
+            // RestoreDown
             // 
-            prezimeLabel.AutoSize = true;
-            prezimeLabel.Location = new System.Drawing.Point(103, 130);
-            prezimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            prezimeLabel.Name = "prezimeLabel";
-            prezimeLabel.Size = new System.Drawing.Size(63, 17);
-            prezimeLabel.TabIndex = 30;
-            prezimeLabel.Text = "Prezime:";
+            this.RestoreDown.Location = new System.Drawing.Point(456, 0);
             // 
-            // LozinkaLabel
+            // CloseButton
             // 
-            LozinkaLabel.AutoSize = true;
-            LozinkaLabel.Location = new System.Drawing.Point(103, 194);
-            LozinkaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            LozinkaLabel.Name = "LozinkaLabel";
-            LozinkaLabel.Size = new System.Drawing.Size(61, 17);
-            LozinkaLabel.TabIndex = 36;
-            LozinkaLabel.Text = "Lozinka:";
-            // 
-            // KorisnickoImeLabel
-            // 
-            KorisnickoImeLabel.AutoSize = true;
-            KorisnickoImeLabel.Location = new System.Drawing.Point(60, 162);
-            KorisnickoImeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            KorisnickoImeLabel.Name = "KorisnickoImeLabel";
-            KorisnickoImeLabel.Size = new System.Drawing.Size(103, 17);
-            KorisnickoImeLabel.TabIndex = 35;
-            KorisnickoImeLabel.Text = "Korisničko ime:";
+            this.CloseButton.Location = new System.Drawing.Point(498, 0);
             // 
             // NaslovZaposlenik
             // 
@@ -113,7 +84,7 @@
             // GumbReset
             // 
             this.GumbReset.Location = new System.Drawing.Point(352, 236);
-            this.GumbReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbReset.Margin = new System.Windows.Forms.Padding(4);
             this.GumbReset.Name = "GumbReset";
             this.GumbReset.Size = new System.Drawing.Size(100, 28);
             this.GumbReset.TabIndex = 27;
@@ -125,7 +96,7 @@
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.GumbIzlaz.Location = new System.Drawing.Point(244, 236);
-            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4);
             this.GumbIzlaz.Name = "GumbIzlaz";
             this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
             this.GumbIzlaz.TabIndex = 26;
@@ -136,7 +107,7 @@
             // GumbPotvrda
             // 
             this.GumbPotvrda.Location = new System.Drawing.Point(136, 236);
-            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4);
             this.GumbPotvrda.Name = "GumbPotvrda";
             this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
             this.GumbPotvrda.TabIndex = 25;
@@ -147,7 +118,7 @@
             // oibTextBox
             // 
             this.oibTextBox.Location = new System.Drawing.Point(172, 63);
-            this.oibTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.oibTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.oibTextBox.MaxLength = 11;
             this.oibTextBox.Name = "oibTextBox";
             this.oibTextBox.Size = new System.Drawing.Size(167, 22);
@@ -157,7 +128,7 @@
             // imeTextBox
             // 
             this.imeTextBox.Location = new System.Drawing.Point(172, 95);
-            this.imeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.imeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.imeTextBox.MaxLength = 45;
             this.imeTextBox.Name = "imeTextBox";
             this.imeTextBox.Size = new System.Drawing.Size(167, 22);
@@ -167,7 +138,7 @@
             // prezimeTextBox
             // 
             this.prezimeTextBox.Location = new System.Drawing.Point(172, 127);
-            this.prezimeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.prezimeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.prezimeTextBox.MaxLength = 45;
             this.prezimeTextBox.Name = "prezimeTextBox";
             this.prezimeTextBox.Size = new System.Drawing.Size(167, 22);
@@ -237,7 +208,7 @@
             // lozinkaTextBox
             // 
             this.lozinkaTextBox.Location = new System.Drawing.Point(172, 191);
-            this.lozinkaTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.lozinkaTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.lozinkaTextBox.MaxLength = 45;
             this.lozinkaTextBox.Name = "lozinkaTextBox";
             this.lozinkaTextBox.Size = new System.Drawing.Size(167, 22);
@@ -247,12 +218,61 @@
             // korisnickoImeTextBox
             // 
             this.korisnickoImeTextBox.Location = new System.Drawing.Point(172, 159);
-            this.korisnickoImeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.korisnickoImeTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.korisnickoImeTextBox.MaxLength = 45;
             this.korisnickoImeTextBox.Name = "korisnickoImeTextBox";
             this.korisnickoImeTextBox.Size = new System.Drawing.Size(167, 22);
             this.korisnickoImeTextBox.TabIndex = 37;
-            this.korisnickoImeTextBox.Leave += new System.EventHandler(this.korisnickoImeTextBox_Leave);
+            // 
+            // oibLabel
+            // 
+            oibLabel.AutoSize = true;
+            oibLabel.Location = new System.Drawing.Point(132, 66);
+            oibLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            oibLabel.Name = "oibLabel";
+            oibLabel.Size = new System.Drawing.Size(35, 17);
+            oibLabel.TabIndex = 28;
+            oibLabel.Text = "OIB:";
+            // 
+            // imeLabel
+            // 
+            imeLabel.AutoSize = true;
+            imeLabel.Location = new System.Drawing.Point(129, 98);
+            imeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            imeLabel.Name = "imeLabel";
+            imeLabel.Size = new System.Drawing.Size(34, 17);
+            imeLabel.TabIndex = 29;
+            imeLabel.Text = "Ime:";
+            // 
+            // prezimeLabel
+            // 
+            prezimeLabel.AutoSize = true;
+            prezimeLabel.Location = new System.Drawing.Point(103, 130);
+            prezimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            prezimeLabel.Name = "prezimeLabel";
+            prezimeLabel.Size = new System.Drawing.Size(63, 17);
+            prezimeLabel.TabIndex = 30;
+            prezimeLabel.Text = "Prezime:";
+            // 
+            // LozinkaLabel
+            // 
+            LozinkaLabel.AutoSize = true;
+            LozinkaLabel.Location = new System.Drawing.Point(103, 194);
+            LozinkaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            LozinkaLabel.Name = "LozinkaLabel";
+            LozinkaLabel.Size = new System.Drawing.Size(61, 17);
+            LozinkaLabel.TabIndex = 36;
+            LozinkaLabel.Text = "Lozinka:";
+            // 
+            // KorisnickoImeLabel
+            // 
+            KorisnickoImeLabel.AutoSize = true;
+            KorisnickoImeLabel.Location = new System.Drawing.Point(60, 162);
+            KorisnickoImeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            KorisnickoImeLabel.Name = "KorisnickoImeLabel";
+            KorisnickoImeLabel.Size = new System.Drawing.Size(103, 17);
+            KorisnickoImeLabel.TabIndex = 35;
+            KorisnickoImeLabel.Text = "Korisničko ime:";
             // 
             // frmOsoba
             // 
@@ -281,10 +301,34 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovZaposlenik);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(1920, 1030);
             this.Name = "frmOsoba";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmZaposlenik";
+            this.Controls.SetChildIndex(this.NaslovZaposlenik, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.oibTextBox, 0);
+            this.Controls.SetChildIndex(oibLabel, 0);
+            this.Controls.SetChildIndex(this.imeTextBox, 0);
+            this.Controls.SetChildIndex(imeLabel, 0);
+            this.Controls.SetChildIndex(this.prezimeTextBox, 0);
+            this.Controls.SetChildIndex(prezimeLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeOib, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeIme, 0);
+            this.Controls.SetChildIndex(this.UpozorenjePrezime, 0);
+            this.Controls.SetChildIndex(this.korisnickoImeTextBox, 0);
+            this.Controls.SetChildIndex(KorisnickoImeLabel, 0);
+            this.Controls.SetChildIndex(this.lozinkaTextBox, 0);
+            this.Controls.SetChildIndex(LozinkaLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeKorIme, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeLozinka, 0);
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
