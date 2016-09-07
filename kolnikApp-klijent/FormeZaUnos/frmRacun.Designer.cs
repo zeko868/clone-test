@@ -42,7 +42,28 @@
             this.label1 = new System.Windows.Forms.Label();
             datum_izdavanjaLabel = new System.Windows.Forms.Label();
             izdavateljLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // datum_izdavanjaLabel
             // 
@@ -145,7 +166,7 @@
             // 
             this.placenoCheckBox.AutoSize = true;
             this.placenoCheckBox.Location = new System.Drawing.Point(129, 103);
-            this.placenoCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.placenoCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.placenoCheckBox.Name = "placenoCheckBox";
             this.placenoCheckBox.Size = new System.Drawing.Size(15, 14);
             this.placenoCheckBox.TabIndex = 32;
@@ -181,9 +202,26 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRacun);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmRacun";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRacun";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovRacun, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.datum_izdavanjaDateTimePicker, 0);
+            this.Controls.SetChildIndex(datum_izdavanjaLabel, 0);
+            this.Controls.SetChildIndex(this.izdavateljComboBox, 0);
+            this.Controls.SetChildIndex(izdavateljLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeDatumIzdavanja, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeIzdavatelj, 0);
+            this.Controls.SetChildIndex(this.placenoCheckBox, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

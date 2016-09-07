@@ -22,8 +22,15 @@ namespace kolnikApp_klijent.FormeZaUnos
         public frmZaposlen() : base(false)
         {
             InitializeComponent();
-            zaposlenikComboBox.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                                             select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
+
+            poduzeceComboBox.DataSource =
+                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                 select ((poduzece)poduzeceObj).naziv).ToArray();
+            poduzeceComboBox.SelectedIndex = -1;
+
+            zaposlenikComboBox.DataSource = 
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             zaposlenikComboBox.SelectedIndex = -1;
         }
 
@@ -38,6 +45,8 @@ namespace kolnikApp_klijent.FormeZaUnos
             poduzeceComboBox.SelectedIndex = -1;
             datum_pocetkaDateTimePicker.Value = DateTime.Now;
             datum_zavrsetkaDateTimePicker.Value = DateTime.Now;
+            radno_mjestoComboBox.SelectedIndex = -1;
+            UpozorenjeRadnoMjesto.Hide();
             UpozorenjePoduzece.Hide();
             UpozorenjeRazlikaDatuma.Hide();
             UpozorenjeZaposlenik.Hide();
@@ -78,40 +87,15 @@ namespace kolnikApp_klijent.FormeZaUnos
             {
                 popuniLabeleUpozorenja(UpozorenjePoduzece);
             }
-          
-            if(zaposlenikComboBox.SelectedIndex == -1 && poduzeceComboBox.SelectedIndex == -1 && provjeriIspravnostDatuma())
+            if(radno_mjestoComboBox.SelectedIndex == -1)
+            {
+                popuniLabeleUpozorenja(UpozorenjeRadnoMjesto);
+            }          
+            if(radno_mjestoComboBox.SelectedIndex != -1 && zaposlenikComboBox.SelectedIndex == -1 && poduzeceComboBox.SelectedIndex == -1 && provjeriIspravnostDatuma())
             {
                 //pohrani podatke u klasu i pošalji u BP
                 this.Close();
             }
-        }
-
-        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpozorenjeZaposlenik.Hide();
-            if (zaposlenikComboBox.SelectedValue != null) { 
-            string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
-            string[] PoduzeceUKojemRadi = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                                           from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
-                                           from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                           where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
-                                                 ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
-                                                 ((osoba)zaposlenikObj).ime == ImeIPrezime[0] &&
-                                                 ((osoba)zaposlenikObj).prezime == ImeIPrezime[1] &&
-                                                 ((zaposlen)zaposlenObj).datum_zavrsetka == null
-                                           select ((poduzece)poduzeceObj).naziv).ToArray();
-
-            string[] SvaPoduzeca = (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                    select ((poduzece)poduzeceObj).naziv).ToArray();
-            var Filtrirano = SvaPoduzeca.Except(PoduzeceUKojemRadi);
-            poduzeceComboBox.DataSource = Filtrirano.ToList();
-            poduzeceComboBox.SelectedIndex = -1;
-        }
-        }
-
-        private void poduzeceComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpozorenjePoduzece.Hide();
         }
 
         private void datum_pocetkaDateTimePicker_ValueChanged(object sender, EventArgs e)
@@ -137,6 +121,48 @@ namespace kolnikApp_klijent.FormeZaUnos
             else
             {
                 UpozorenjeRazlikaDatuma.Show();
+            }
+        }
+
+        private void napraviDataSourceZaRadnoMjesto()
+        {
+            string[] ImeIPrezime = zaposlenikComboBox.SelectedValue.ToString().Split(' ');
+            string[] radnaMjestaZaposlenika =
+                     (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                      join zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                      on ((radno_mjesto)rmObj).id equals ((zaposlen)zaposlenObj).radno_mjesto
+                      join osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                      on ((zaposlen)zaposlenObj).zaposlenik equals ((osoba)osobaObj).oib
+                      join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                      on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
+                      where ((osoba)osobaObj).ime == ImeIPrezime[0] &&
+                            ((osoba)osobaObj).prezime == ImeIPrezime[1] &&
+                            ((zaposlen)zaposlenObj).datum_zavrsetka == null &&
+                            ((poduzece)poduzeceObj).naziv == poduzeceComboBox.SelectedValue.ToString()
+                      select ((radno_mjesto)rmObj).naziv).ToArray();
+            string[] svaRadnaMjesta =
+                (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 select ((radno_mjesto)rmObj).naziv).ToArray();
+
+            radno_mjestoComboBox.DataSource = svaRadnaMjesta.Except(radnaMjestaZaposlenika).ToList();
+            radno_mjestoComboBox.SelectedIndex = -1;
+        }
+
+        private void zaposlenikComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjeZaposlenik.Hide();
+            if (zaposlenikComboBox.SelectedValue != null && poduzeceComboBox.SelectedValue != null)
+            {
+                napraviDataSourceZaRadnoMjesto();
+            }
+        }
+
+        private void poduzeceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpozorenjePoduzece.Hide();
+            if (zaposlenikComboBox.SelectedValue != null && poduzeceComboBox.SelectedValue != null)
+            {
+                napraviDataSourceZaRadnoMjesto();
             }
         }
     }

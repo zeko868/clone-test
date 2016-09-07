@@ -19,7 +19,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
-        public frmRacunUpdate(DataGridViewRow PodatkovniRedak) : base(false)
+        public frmRacunUpdate(DataGridViewRow PodatkovniRedak, DataGridViewRow DodatniRedak) : base(false)
         {
             InitializeComponent();
             izdavateljComboBox.DataSource =

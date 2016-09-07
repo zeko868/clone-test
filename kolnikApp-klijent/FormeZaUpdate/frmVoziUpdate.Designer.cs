@@ -59,15 +59,15 @@
             // 
             // Minimize
             // 
-            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            this.Minimize.Location = new System.Drawing.Point(402, 0);
             // 
             // RestoreDown
             // 
-            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            this.RestoreDown.Location = new System.Drawing.Point(443, 0);
             // 
             // CloseButton
             // 
-            this.CloseButton.Location = new System.Drawing.Point(363, 0);
+            this.CloseButton.Location = new System.Drawing.Point(485, 0);
             // 
             // datum_zavrsetkaLabel
             // 

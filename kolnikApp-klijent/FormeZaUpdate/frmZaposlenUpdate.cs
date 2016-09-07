@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
@@ -18,13 +19,36 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
-        public frmZaposlenUpdate(DataGridViewRow PodatkovniRedak) : base(false)
+        public frmZaposlenUpdate(DataGridViewRow PodatkovniRedak, DataGridViewRow DodatniRedak) : base(false)
         {
             InitializeComponent();
-            zaposlenikComboBox.SelectedItem = PodatkovniRedak.Cells["zaposlenik"].Value;
-            poduzeceComboBox.SelectedItem = PodatkovniRedak.Cells["poduzece"].Value;
-            datum_pocetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_pocetka"].Value;
-            datum_zavrsetkaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_zavrsetka"].Value;
+            zaposlenikComboBox.DataSource =
+                (from osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime).ToArray();
+            zaposlenikComboBox.SelectedText = DodatniRedak.Cells["ime"].Value.ToString() + " " + DodatniRedak.Cells["prezime"].Value.ToString();
+
+            radno_mjestoComboBox.DataSource=
+                (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 select ((radno_mjesto)rmObj).naziv).ToArray();
+
+            radno_mjestoComboBox.SelectedItem = DodatniRedak.Cells["radno_mjesto"].Value;
+
+            poduzeceComboBox.DataSource =
+                (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                 select ((poduzece)poduzeceObj).naziv).ToArray();
+            poduzeceComboBox.SelectedItem = PodatkovniRedak.Cells["naziv"].Value;
+            poduzeceComboBox.Enabled = false;
+
+            datum_pocetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_pocetka"].Value;
+            if(DodatniRedak.Cells["datum_zavrsetka"].Value == null)
+            {
+                datum_zavrsetkaDateTimePicker.Checked = false;
+            }
+            else
+            {
+                datum_zavrsetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_zavrsetka"].Value;
+            }
+           
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
