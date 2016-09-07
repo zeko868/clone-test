@@ -73,7 +73,14 @@ namespace kolnikApp_klijent
                                 valuesOfSelectedRowBeforeRefreshing2 = new List<string>();
                                 for (byte i = 0; i < additionalDgv.ColumnCount; i++)
                                 {
-                                    valuesOfSelectedRowBeforeRefreshing2.Add(additionalDgv[i, indexOfSelectedRowBeforeRefreshing2].Value.ToString());
+                                    if(additionalDgv[i, indexOfSelectedRowBeforeRefreshing2].Value == null)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        valuesOfSelectedRowBeforeRefreshing2.Add(additionalDgv[i, indexOfSelectedRowBeforeRefreshing2].Value.ToString());
+                                    }                                    
                                 }
                             }
                         }
@@ -405,7 +412,7 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 default:
-                    mainDgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
+                    mainDgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName].ToList();
                     break;
             }
             switch (tableName)

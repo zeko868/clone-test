@@ -67,6 +67,21 @@ namespace kolnikApp_klijent.FormeZaUnos
             return IspravanDatum;
         }
 
+        private string nadjiVozaca()
+        {
+            string[] imeVozaca = vozacComboBox.SelectedValue.ToString().Split(' ');
+            string[] oibVozaca =
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 join zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                 on ((osoba)zaposlenikObj).oib equals ((zaposlen)zaposlenObj).zaposlenik
+                 join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                 on ((zaposlen)zaposlenObj).radno_mjesto equals ((radno_mjesto)rmObj).id
+                 where ((radno_mjesto)rmObj).naziv == "vozač" &&
+                       ((osoba)zaposlenikObj).ime== imeVozaca[0] && ((osoba)zaposlenikObj).prezime == imeVozaca[1]
+                 select ((osoba)zaposlenikObj).oib).ToArray();
+            return oibVozaca[0];
+        }
+
         private void GumbPotvrda_Click(object sender, EventArgs e)
         {
             if (vozacComboBox.SelectedIndex == -1)
@@ -79,7 +94,29 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if (vozacComboBox.SelectedIndex != -1 && voziloComboBox.SelectedIndex != -1 && provjeriIspravnostDatuma())
             {
-                //spremiti podatke u klasu i poslati u BP
+                vozi newInstance;
+                if (datum_zavrsetkaDateTimePicker.Checked)
+                {
+                    newInstance = new vozi
+                    {
+                        vozilo = voziloComboBox.SelectedValue.ToString(),
+                        vozac = nadjiVozaca(),
+                        datum_pocetka = datum_pocetkaDateTimePicker.Value,
+                        datum_zavrsetka = datum_zavrsetkaDateTimePicker.Value
+                    };
+                }
+                else
+                {
+                    newInstance = new vozi
+                    {
+                        vozilo = voziloComboBox.SelectedValue.ToString(),
+                        vozac = nadjiVozaca(),
+                        datum_pocetka = datum_pocetkaDateTimePicker.Value,
+                    };
+                }
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+                
                 this.Close();
             }
                 

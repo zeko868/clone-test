@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -87,7 +88,14 @@ namespace kolnikApp_klijent.FormeZaUnos
             float VarijablaZaProvjeru = 0;
             if (float.TryParse(jedinicna_cijenaTextBox.Text, out VarijablaZaProvjeru) && nazivTextBox.Text != "" && jedinicna_cijenaTextBox.Text != "")
             {
-                //pohrani podatke u klasu i pošalji na server
+                artikl noviArtikl = new artikl
+                {
+                    naziv = nazivTextBox.Text,
+                    jedinicna_cijena = int.Parse(jedinicna_cijenaTextBox.Text)
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(noviArtikl), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+
                 this.Close();
             }      
         }

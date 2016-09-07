@@ -40,7 +40,28 @@
             this.UpozorenjeJedinicnaCijena = new System.Windows.Forms.Label();
             nazivLabel = new System.Windows.Forms.Label();
             jedinicna_cijenaLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // nazivLabel
             // 
@@ -159,9 +180,24 @@
             this.Controls.Add(this.jedinicna_cijenaTextBox);
             this.Controls.Add(nazivLabel);
             this.Controls.Add(this.nazivTextBox);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmArtikl";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmArtikl";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.nazivTextBox, 0);
+            this.Controls.SetChildIndex(nazivLabel, 0);
+            this.Controls.SetChildIndex(this.jedinicna_cijenaTextBox, 0);
+            this.Controls.SetChildIndex(jedinicna_cijenaLabel, 0);
+            this.Controls.SetChildIndex(this.NaslovArtikl, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeNaziv, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeJedinicnaCijena, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

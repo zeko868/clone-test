@@ -83,7 +83,39 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if(radno_mjestoComboBox.SelectedIndex != -1 && naziv_tabliceComboBox.SelectedIndex != -1 && oznacenaBarJednaOpcija())
             {
-                //pohrani podatke u klasu i pošalji u BP
+                string[] ime = naziv_tabliceComboBox.SelectedValue.ToString().Split(' ');
+                string imeTablice = "";
+                for (int i = 0; i < ime.Length; i++)
+                {
+                    imeTablice += ime[i].First().ToString().ToLower() + ime[i].Substring(1);
+                    if(i+1 != ime.Length)
+                    {
+                        imeTablice += "_";
+                    }
+                }
+
+                byte dopusteneOperacije = 0;
+                for (int i = 0; i < operacijeCheckedListBox.Items.Count; i++)
+                {
+                    if(operacijeCheckedListBox.GetItemCheckState(i) == CheckState.Checked)
+                    {
+                        dopusteneOperacije += (byte)Math.Pow(2, i);
+                    }
+                }
+
+                var idRadnoMjesto = (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                     where ((radno_mjesto)rmObj).naziv == radno_mjestoComboBox.SelectedValue.ToString()
+                                     select ((radno_mjesto)rmObj).id).ToArray();
+ 
+                tablicna_privilegija newInstance = new tablicna_privilegija
+                {
+                    radno_mjesto = idRadnoMjesto[0],
+                    naziv_tablice = imeTablice,
+                    operacija = dopusteneOperacije
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
             
@@ -114,7 +146,7 @@ namespace kolnikApp_klijent.FormeZaUnos
                 string[] ImaPravo = (from tablicna_privilegijaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablicna_privilegija"]
                                      from radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
                                      where ((tablicna_privilegija)tablicna_privilegijaObj).radno_mjesto == ((radno_mjesto)radno_mjestoObj).id &&
-                                           ((radno_mjesto)radno_mjestoObj).naziv == radno_mjestoComboBox.SelectedValue.ToString()
+                                           ((radno_mjesto)radno_mjestoObj).naziv == radno_mjestoComboBox.SelectedItem.ToString()
                                      select ((tablicna_privilegija)tablicna_privilegijaObj).naziv_tablice).ToArray();
 
                 IEnumerable<string> RazlikaSviIRadnik = tablice.Except(ImaPravo);

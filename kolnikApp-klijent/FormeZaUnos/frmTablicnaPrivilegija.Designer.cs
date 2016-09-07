@@ -44,7 +44,28 @@
             radno_mjestoLabel = new System.Windows.Forms.Label();
             naziv_tabliceLabel = new System.Windows.Forms.Label();
             operacijaLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // radno_mjestoLabel
             // 
@@ -200,9 +221,27 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovTablicaPrivilegija);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmTablicnaPrivilegija";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmTablicaPrivilegija";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovTablicaPrivilegija, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.radno_mjestoComboBox, 0);
+            this.Controls.SetChildIndex(radno_mjestoLabel, 0);
+            this.Controls.SetChildIndex(this.naziv_tabliceComboBox, 0);
+            this.Controls.SetChildIndex(naziv_tabliceLabel, 0);
+            this.Controls.SetChildIndex(operacijaLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeRadnoMjesto, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeNazivTablice, 0);
+            this.Controls.SetChildIndex(this.operacijeCheckedListBox, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeCheckbox, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

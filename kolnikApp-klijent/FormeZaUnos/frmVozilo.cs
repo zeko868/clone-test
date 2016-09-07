@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -61,7 +62,15 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if(registracijski_brojTextBox.Text != "" && proizvodjacTextBox.Text != "" && modelTextBox.Text != "")
             {
-                //pohrani podatke u klasu i prenesi u BP
+                vozilo newInstance = new vozilo
+                {
+                    registracijski_broj = registracijski_brojTextBox.Text,
+                    proizvodjac = proizvodjacTextBox.Text,
+                    model = modelTextBox.Text
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

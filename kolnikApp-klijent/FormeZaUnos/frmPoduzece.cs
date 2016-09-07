@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -95,7 +96,15 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if (IspravanOib && nazivTextBox.Text != "" && adresaTextBox.Text != "" && ibanTextBox.Text != "")
             {
-                //staviti podatke u klasu i postati u BP
+                poduzece newInstance = new poduzece
+                {
+                    oib = oibTextBox.Text,
+                    naziv = nazivTextBox.Text,
+                    adresa = adresaTextBox.Text,
+                    iban = ibanTextBox.Text
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

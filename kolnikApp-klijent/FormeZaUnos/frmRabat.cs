@@ -24,12 +24,24 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
             artiklComboBox.DataSource =
                 (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
-                 select ((artikl)artiklObj).naziv).ToArray();
+                 select new
+                 {
+                     naziv = ((artikl)artiklObj).naziv,
+                     sifra = ((artikl)artiklObj).id
+                 }).ToArray();
+            artiklComboBox.DisplayMember = "naziv";
+            artiklComboBox.ValueMember = "sifra";
             artiklComboBox.SelectedIndex = -1;
 
             poslovni_partnerComboBox.DataSource =
                 (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 select ((poduzece)poduzeceObj).naziv).ToArray();
+                 select new
+                 {
+                     naziv = ((poduzece)poduzeceObj).naziv,
+                     sifra = ((poduzece)poduzeceObj).oib
+                 }).ToArray();
+            poslovni_partnerComboBox.DisplayMember = "naziv";
+            poslovni_partnerComboBox.ValueMember = "sifra";
             poslovni_partnerComboBox.SelectedIndex = -1;
         }
 
@@ -81,7 +93,14 @@ namespace kolnikApp_klijent.FormeZaUnos
             float VarijablaZaProvjeru = 0;
             if (artiklComboBox.SelectedIndex != -1 && poslovni_partnerComboBox.SelectedIndex != -1 && popustTextBox.Text != "" && float.TryParse(popustTextBox.Text,out VarijablaZaProvjeru))
             {
-                //pohraniti podatke u klase i poslati u BP
+                rabat newInstance = new rabat
+                {
+                    artikl = int.Parse(artiklComboBox.SelectedValue.ToString()),
+                    poslovni_partner = poslovni_partnerComboBox.SelectedValue.ToString(),
+                    popust = int.Parse(popustTextBox.Text)
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
             

@@ -24,12 +24,23 @@ namespace kolnikApp_klijent.FormeZaUnos
             InitializeComponent();
             izdavateljComboBox.DataSource =
                 (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 select ((poduzece)poduzeceObj).naziv).ToArray();
+                 select new {
+                     naziv = ((poduzece)poduzeceObj).naziv,
+                     sifra = ((poduzece)poduzeceObj).oib
+                 }).ToArray();
+            izdavateljComboBox.DisplayMember = "naziv";
+            izdavateljComboBox.ValueMember = "sifra";
             izdavateljComboBox.SelectedIndex = -1;
 
             artiklComboBox.DataSource =
                 (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
-                 select ((artikl)artiklObj).naziv).ToArray();
+                 select new
+                 {
+                     naziv = ((artikl)artiklObj).naziv,
+                     sifra = ((artikl)artiklObj).id
+                 }).ToArray();
+            artiklComboBox.DisplayMember = "naziv";
+            artiklComboBox.ValueMember = "sifra";
             artiklComboBox.SelectedIndex = -1;
 
             voziComboBox.DataSource =
@@ -38,8 +49,13 @@ namespace kolnikApp_klijent.FormeZaUnos
                  on ((vozi)voziObj).vozilo equals ((vozilo)voziloObj).registracijski_broj
                  join osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                  on ((vozi)voziObj).vozac equals ((osoba)osobaObj).oib
-                 where ((vozi)voziObj).datum_zavrsetka == null                 
-                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((vozi)voziObj).vozilo + ")").ToArray();
+                 where ((vozi)voziObj).datum_zavrsetka == null
+                 select new {
+                     naziv = ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((vozi)voziObj).vozilo + ")",
+                     sifra = ((vozi)voziObj).id
+                 }).ToArray();
+            voziComboBox.DisplayMember = "naziv";
+            voziComboBox.ValueMember = "sifra";
             voziComboBox.SelectedIndex = -1;
 
             izdavateljComboBox.DataSource =
@@ -51,7 +67,12 @@ namespace kolnikApp_klijent.FormeZaUnos
                  join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
                  on ((zaposlen)zaposlenObj).radno_mjesto equals ((radno_mjesto)rmObj).id
                  where ((radno_mjesto)rmObj).naziv == "naručitelj" && ((zaposlen)zaposlenObj).datum_zavrsetka == null
-                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((poduzece)poduzeceObj).naziv + ")").ToArray();
+                 select new {
+                     naziv=((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime + " (" + ((poduzece)poduzeceObj).naziv + ")",
+                     sifra=((osoba)osobaObj).oib
+                 }).ToArray();
+            izdavateljComboBox.DisplayMember = "naziv";
+            izdavateljComboBox.ValueMember = "sifra";
             izdavateljComboBox.SelectedIndex = -1;
         }
 
@@ -108,8 +129,19 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if(provjeriIspravnostDatuma() && izdavateljComboBox.SelectedIndex != -1 && voziComboBox.SelectedIndex != -1 && artiklComboBox.SelectedIndex != -1 && kolicinaTextBox.Text != "")
             {
-                //pohraniti podatke u klasu i poslati u BP
-                this.Close();
+                narudzbenica_bitumenske_mjesavine newInstance = new narudzbenica_bitumenske_mjesavine
+                {
+                    datum_izdavanja = datum_izdavanjaDateTimePicker.Value,
+                    datum_potrazivanja = datum_potrazivanjaDateTimePicker.Value,
+                    izdavatelj = izdavateljComboBox.SelectedValue.ToString(),
+                    artikl = int.Parse(artiklComboBox.SelectedValue.ToString()),
+                    vozi = int.Parse(voziComboBox.SelectedValue.ToString()),
+                    kolicina = int.Parse(kolicinaTextBox.Text)
+                };
+            string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+            sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+
+            this.Close();
             }            
         }
 

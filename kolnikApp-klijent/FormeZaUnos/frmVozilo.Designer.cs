@@ -44,7 +44,28 @@
             registracijski_brojLabel = new System.Windows.Forms.Label();
             proizvodjacLabel = new System.Windows.Forms.Label();
             modelLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // registracijski_brojLabel
             // 
@@ -195,9 +216,27 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovVozilo);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmVozilo";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVozilo";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovVozilo, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.registracijski_brojTextBox, 0);
+            this.Controls.SetChildIndex(registracijski_brojLabel, 0);
+            this.Controls.SetChildIndex(this.proizvodjacTextBox, 0);
+            this.Controls.SetChildIndex(proizvodjacLabel, 0);
+            this.Controls.SetChildIndex(this.modelTextBox, 0);
+            this.Controls.SetChildIndex(modelLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeRegistracijskiBroj, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeProizvodac, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeModel, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
