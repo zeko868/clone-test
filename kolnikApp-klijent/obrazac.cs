@@ -41,7 +41,7 @@ namespace kolnikApp_klijent
             additionalDgv.ReadOnly = true;
             additionalDgv.RowHeadersVisible = false;
             additionalDgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            additionalDgv.ColumnWidthChanged += PodaciIzTablica_ColumnWidthChanged;
+            //additionalDgv.ColumnWidthChanged += PodaciIzTablica_ColumnWidthChanged;
             PanelZaSadrzaj.Controls.Add(additionalDgv);
         }
 
@@ -471,10 +471,11 @@ namespace kolnikApp_klijent
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
                 Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
                 OznaciGumb(GumbMenija);
-                FillDgvWithContent(GumbMenija.Tag.ToString());
-                AutomaticallyResizeColumns(ref mainDgvObj);
                 NaslovTablice.Text = GumbMenija.Text;
                 NaslovTablice.Tag = GumbMenija.Tag;
+                FillDgvWithContent(GumbMenija.Tag.ToString());
+                AutomaticallyResizeColumns(ref mainDgvObj);
+                
             }          
         }
 
@@ -615,10 +616,10 @@ namespace kolnikApp_klijent
         }
 
         //ovo služi kada se ručno promijeni širina stupca DGV-u, pa da se ne pojave horizontalni klizači
-        private void PodaciIzTablica_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
+        /*private void PodaciIzTablica_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
             ((DataGridView)sender).Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        }
+        }*/
 
         private void PodaciIzTablica_RowEnter(object sender, DataGridViewCellEventArgs e)
         {

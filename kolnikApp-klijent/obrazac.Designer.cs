@@ -355,7 +355,7 @@
             this.mainDgvObj.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mainDgvObj.Size = new System.Drawing.Size(724, 514);
             this.mainDgvObj.TabIndex = 4;
-            this.mainDgvObj.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
+            //this.mainDgvObj.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
             this.mainDgvObj.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PodaciIzTablica_RowEnter);
             // 
             // Separator
