@@ -593,6 +593,10 @@ namespace kolnikApp_klijent
                     }
                     FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak, addSelektiraniRedak);
                 }
+                else if (additionalDgv.Visible)
+                {
+                    return;
+                }
                 else
                 {
                     FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak);
