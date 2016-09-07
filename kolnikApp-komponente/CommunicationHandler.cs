@@ -40,7 +40,7 @@ namespace kolnikApp_komponente
             {
                 ClientsAddressesList.addressList = new List<ClientsAddress>();
                 Thread HeartbeatCheckingThreadHandle = new Thread(new ThreadStart(CheckIfAnyUserHasTimedOut));
-                HeartbeatCheckingThreadHandle.Start();
+                //HeartbeatCheckingThreadHandle.Start();
             }
         }
 

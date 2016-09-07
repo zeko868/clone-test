@@ -47,7 +47,7 @@
             this.Header = new System.Windows.Forms.Panel();
             this.ImeKorisnika = new System.Windows.Forms.Label();
             this.PanelZaSadrzaj = new System.Windows.Forms.Panel();
-            this.PodaciIzTablica = new System.Windows.Forms.DataGridView();
+            this.mainDgvObj = new System.Windows.Forms.DataGridView();
             this.Separator = new System.Windows.Forms.Label();
             this.NaslovTablice = new System.Windows.Forms.Label();
             this.controlBox.SuspendLayout();
@@ -63,13 +63,13 @@
             this.LijeviIzbornik.SuspendLayout();
             this.Header.SuspendLayout();
             this.PanelZaSadrzaj.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PodaciIzTablica)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDgvObj)).BeginInit();
             this.SuspendLayout();
             // 
             // controlBox
             // 
             this.controlBox.Controls.Add(this.ImeKorisnika);
-            this.controlBox.Size = new System.Drawing.Size(752, 33);
+            this.controlBox.Size = new System.Drawing.Size(748, 33);
             this.controlBox.Controls.SetChildIndex(this.CloseButton, 0);
             this.controlBox.Controls.SetChildIndex(this.RestoreDown, 0);
             this.controlBox.Controls.SetChildIndex(this.Minimize, 0);
@@ -77,21 +77,21 @@
             // 
             // Minimize
             // 
-            this.Minimize.Location = new System.Drawing.Point(632, 0);
+            this.Minimize.Location = new System.Drawing.Point(628, 0);
             // 
             // RestoreDown
             // 
-            this.RestoreDown.Location = new System.Drawing.Point(673, 0);
+            this.RestoreDown.Location = new System.Drawing.Point(669, 0);
             // 
             // CloseButton
             // 
-            this.CloseButton.Location = new System.Drawing.Point(715, 0);
+            this.CloseButton.Location = new System.Drawing.Point(711, 0);
             // 
             // LogoutButton
             // 
             this.LogoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LogoutButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LogoutButton.Location = new System.Drawing.Point(551, 36);
+            this.LogoutButton.Location = new System.Drawing.Point(547, 36);
             this.LogoutButton.Margin = new System.Windows.Forms.Padding(4);
             this.LogoutButton.Name = "LogoutButton";
             this.LogoutButton.Size = new System.Drawing.Size(72, 31);
@@ -187,7 +187,6 @@
             this.LogoSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.LogoSlika.TabIndex = 0;
             this.LogoSlika.TabStop = false;
-            this.LogoSlika.MouseDown += titleBar_MouseDown;
             // 
             // KolnikAppHelp
             // 
@@ -258,10 +257,10 @@
             this.LijeviIzbornik.Controls.Add(this.MeniPanel);
             this.LijeviIzbornik.Controls.Add(this.LogoSlika);
             this.LijeviIzbornik.Dock = System.Windows.Forms.DockStyle.Left;
-            this.LijeviIzbornik.Location = new System.Drawing.Point(0, 0);
+            this.LijeviIzbornik.Location = new System.Drawing.Point(2, 2);
             this.LijeviIzbornik.Margin = new System.Windows.Forms.Padding(4);
             this.LijeviIzbornik.Name = "LijeviIzbornik";
-            this.LijeviIzbornik.Size = new System.Drawing.Size(285, 672);
+            this.LijeviIzbornik.Size = new System.Drawing.Size(285, 668);
             this.LijeviIzbornik.TabIndex = 12;
             // 
             // MeniPanel
@@ -271,7 +270,7 @@
             this.MeniPanel.Location = new System.Drawing.Point(0, 143);
             this.MeniPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MeniPanel.Name = "MeniPanel";
-            this.MeniPanel.Size = new System.Drawing.Size(285, 496);
+            this.MeniPanel.Size = new System.Drawing.Size(285, 492);
             this.MeniPanel.TabIndex = 1;
             // 
             // Header
@@ -290,10 +289,10 @@
             this.Header.Controls.Add(this.UpdateSlika);
             this.Header.Controls.Add(this.controlBox);
             this.Header.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Header.Location = new System.Drawing.Point(285, 0);
+            this.Header.Location = new System.Drawing.Point(287, 2);
             this.Header.Margin = new System.Windows.Forms.Padding(4);
             this.Header.Name = "Header";
-            this.Header.Size = new System.Drawing.Size(752, 132);
+            this.Header.Size = new System.Drawing.Size(748, 132);
             this.Header.TabIndex = 13;
             this.Header.Controls.SetChildIndex(this.controlBox, 0);
             this.Header.Controls.SetChildIndex(this.UpdateSlika, 0);
@@ -315,7 +314,7 @@
             this.ImeKorisnika.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ImeKorisnika.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ImeKorisnika.ForeColor = System.Drawing.Color.White;
-            this.ImeKorisnika.Location = new System.Drawing.Point(551, 9);
+            this.ImeKorisnika.Location = new System.Drawing.Point(547, 9);
             this.ImeKorisnika.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.ImeKorisnika.Name = "ImeKorisnika";
             this.ImeKorisnika.Size = new System.Drawing.Size(69, 20);
@@ -331,7 +330,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PanelZaSadrzaj.BackColor = System.Drawing.Color.LightSlateGray;
-            this.PanelZaSadrzaj.Controls.Add(this.PodaciIzTablica);
+            this.PanelZaSadrzaj.Controls.Add(this.mainDgvObj);
             this.PanelZaSadrzaj.Controls.Add(this.Separator);
             this.PanelZaSadrzaj.Controls.Add(this.NaslovTablice);
             this.PanelZaSadrzaj.Location = new System.Drawing.Point(297, 143);
@@ -340,24 +339,24 @@
             this.PanelZaSadrzaj.Size = new System.Drawing.Size(724, 514);
             this.PanelZaSadrzaj.TabIndex = 5;
             // 
-            // PodaciIzTablica
+            // mainDgvObj
             // 
-            this.PodaciIzTablica.AllowUserToAddRows = false;
-            this.PodaciIzTablica.AllowUserToDeleteRows = false;
-            this.PodaciIzTablica.AllowUserToResizeRows = false;
-            this.PodaciIzTablica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PodaciIzTablica.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PodaciIzTablica.Location = new System.Drawing.Point(0, 0);
-            this.PodaciIzTablica.Margin = new System.Windows.Forms.Padding(4);
-            this.PodaciIzTablica.MultiSelect = false;
-            this.PodaciIzTablica.Name = "PodaciIzTablica";
-            this.PodaciIzTablica.ReadOnly = true;
-            this.PodaciIzTablica.RowHeadersVisible = false;
-            this.PodaciIzTablica.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.PodaciIzTablica.Size = new System.Drawing.Size(724, 514);
-            this.PodaciIzTablica.TabIndex = 4;
-            this.PodaciIzTablica.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
-            this.PodaciIzTablica.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PodaciIzTablica_RowEnter);
+            this.mainDgvObj.AllowUserToAddRows = false;
+            this.mainDgvObj.AllowUserToDeleteRows = false;
+            this.mainDgvObj.AllowUserToResizeRows = false;
+            this.mainDgvObj.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.mainDgvObj.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainDgvObj.Location = new System.Drawing.Point(0, 0);
+            this.mainDgvObj.Margin = new System.Windows.Forms.Padding(4);
+            this.mainDgvObj.MultiSelect = false;
+            this.mainDgvObj.Name = "mainDgvObj";
+            this.mainDgvObj.ReadOnly = true;
+            this.mainDgvObj.RowHeadersVisible = false;
+            this.mainDgvObj.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.mainDgvObj.Size = new System.Drawing.Size(724, 514);
+            this.mainDgvObj.TabIndex = 4;
+            this.mainDgvObj.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
+            this.mainDgvObj.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PodaciIzTablica_RowEnter);
             // 
             // Separator
             // 
@@ -392,6 +391,7 @@
             this.Controls.Add(this.PanelZaSadrzaj);
             this.KolnikAppHelp.SetHelpNavigator(this, System.Windows.Forms.HelpNavigator.Topic);
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(1920, 1030);
             this.MinimumSize = new System.Drawing.Size(741, 442);
             this.Name = "obrazac";
             this.KolnikAppHelp.SetShowHelp(this, true);
@@ -415,7 +415,7 @@
             this.Header.PerformLayout();
             this.PanelZaSadrzaj.ResumeLayout(false);
             this.PanelZaSadrzaj.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PodaciIzTablica)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDgvObj)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -442,6 +442,6 @@
         private System.Windows.Forms.Panel PanelZaSadrzaj;
         private System.Windows.Forms.Label Separator;
         private System.Windows.Forms.Label NaslovTablice;
-        private System.Windows.Forms.DataGridView PodaciIzTablica;
+        private System.Windows.Forms.DataGridView mainDgvObj;
     }
 }

@@ -59,6 +59,10 @@ namespace kolnikApp_klijent
                 }
                 else
                 {
+                    foreach (string entityName in DataHandler.entityNamesWithReferencesToBelongingDataStores.Keys)
+                    {
+                        DataHandler.entityNamesWithReferencesToBelongingDataStores[entityName].ListChanged -= ProcessChanges;
+                    }
                     CloseLoginWindowAndStartMainOne();
                 }
             }

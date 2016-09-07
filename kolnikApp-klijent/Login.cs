@@ -60,6 +60,7 @@ namespace kolnikApp_klijent
             else
             {
                 MessageBox.Show("Pogrešno uneseni podaci za prijavu ili je već netko s navedenim korisničkim imenom već prijavljen!");
+                DataHandler.UserLoginState = (byte)DataHandler.LoginState.waiting;
             }
 
         }

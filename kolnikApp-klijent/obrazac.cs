@@ -22,6 +22,10 @@ namespace kolnikApp_klijent
 
     {
         private DataGridView additionalDgv = new DataGridView();
+        //popis svih tablica kojima korisnik ima pravo pristupati
+        string[] tablice;
+        //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
+        String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         public obrazac() : base()
         {
@@ -41,23 +45,111 @@ namespace kolnikApp_klijent
             PanelZaSadrzaj.Controls.Add(additionalDgv);
         }
 
-        void ProcessChanges (object obj, ListChangedEventArgs e)
+        void ProcessChanges(object obj, ListChangedEventArgs e)
         {
             if (DataHandler.ChangesCommited)
             {
-                Console.Beep(300,300);
-                //refresh controls and perform queries on lists in which data is stored
-                //mislim da gdje je direkt BindingList objekt dodijeljen kao DataSource da nije potrebno refreshati
-                //nakon primitka novih podataka
-                //ako se vrši LINQ upit nad njima, tada je potrebno ponovno izvršiti LINQ upit nad ažuriranim lokalnim
-                //kolekcijama
+                Console.Beep(300, 300);
+                int indexOfSelectedRowBeforeRefreshing = -1;
+                List<string> valuesOfSelectedRowBeforeRefreshing = null;
+                int indexOfSelectedRowBeforeRefreshing2 = -1;
+                List<string> valuesOfSelectedRowBeforeRefreshing2 = null;
+
+                if (mainDgvObj.DataSource != null)
+                {
+                    if (mainDgvObj.SelectedRows.Count > 0)
+                    {
+                        indexOfSelectedRowBeforeRefreshing = mainDgvObj.SelectedRows[0].Index;
+                        valuesOfSelectedRowBeforeRefreshing = new List<string>();
+                        for (byte i = 0; i < mainDgvObj.ColumnCount; i++)
+                        {
+                            valuesOfSelectedRowBeforeRefreshing.Add(mainDgvObj[i, indexOfSelectedRowBeforeRefreshing].Value.ToString());
+                        }
+                        if (additionalDgv.DataSource != null)
+                        {
+                            if (additionalDgv.SelectedRows.Count > 0)
+                            {
+                                indexOfSelectedRowBeforeRefreshing2 = additionalDgv.SelectedRows[0].Index;
+                                valuesOfSelectedRowBeforeRefreshing2 = new List<string>();
+                                for (byte i = 0; i < additionalDgv.ColumnCount; i++)
+                                {
+                                    valuesOfSelectedRowBeforeRefreshing2.Add(additionalDgv[i, indexOfSelectedRowBeforeRefreshing2].Value.ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+                if (NaslovTablice.Tag != null)
+                {
+                    mainDgvObj.ClearSelection();
+                    additionalDgv.ClearSelection();
+                    mainDgvObj.Invoke((MethodInvoker)delegate
+                    {
+                        FillDgvWithContent(NaslovTablice.Tag.ToString());
+                        AutomaticallyResizeColumns(ref mainDgvObj);
+                    });
+                    if (indexOfSelectedRowBeforeRefreshing != -1)
+                    {
+                        bool previouslySelectedRecordFound = false;
+                        int i;
+                        for (i = 0; i < mainDgvObj.RowCount && !previouslySelectedRecordFound; i++)
+                        {
+                            previouslySelectedRecordFound = true;
+                            for (byte j = 0; j < mainDgvObj.ColumnCount; j++)
+                            {
+                                if (mainDgvObj[j, i].ToString() != valuesOfSelectedRowBeforeRefreshing[j])
+                                {
+                                    previouslySelectedRecordFound = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (previouslySelectedRecordFound)
+                        {
+                            mainDgvObj.Rows[i].Selected = true;
+                        }
+                        else
+                        {
+                            if (indexOfSelectedRowBeforeRefreshing < mainDgvObj.RowCount)
+                            {
+                                mainDgvObj.Rows[indexOfSelectedRowBeforeRefreshing].Selected = true;
+                            }
+                            else
+                            {
+                                indexOfSelectedRowBeforeRefreshing2 = -1;
+                            }
+                        }
+                        if (indexOfSelectedRowBeforeRefreshing2 != -1)
+                        {
+                            previouslySelectedRecordFound = false;
+                            for (i = 0; i < additionalDgv.RowCount && !previouslySelectedRecordFound; i++)
+                            {
+                                previouslySelectedRecordFound = true;
+                                for (byte j = 0; j < additionalDgv.ColumnCount; j++)
+                                {
+                                    if (additionalDgv[j, i].ToString() != valuesOfSelectedRowBeforeRefreshing2[j])
+                                    {
+                                        previouslySelectedRecordFound = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (previouslySelectedRecordFound)
+                            {
+                                additionalDgv.Rows[i].Selected = true;
+                            }
+                            else
+                            {
+                                if (indexOfSelectedRowBeforeRefreshing2 < additionalDgv.RowCount)
+                                {
+                                    additionalDgv.Rows[indexOfSelectedRowBeforeRefreshing2].Selected = true;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
-
-        //popis svih tablica kojima korisnik ima pravo pristupati
-        string[] tablice;
-        //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
-        String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
         //Event handler za klik na ikonicu "Help"
         private void HelpSlika_Click(object sender, EventArgs e)
@@ -113,7 +205,7 @@ namespace kolnikApp_klijent
             //dinamički se stvaraju gumbi na temelju broja tablica kojima korisnik ima pravo pristupa
             for (int i = 0; i < tablice.Length; i++)
             {              
-               if (tablice[i] != "korisnicki_racun") { 
+                if (tablice[i] != "korisnicki_racun") { 
                     Button GumbMenija = new Button();
                     GumbMenija.Name = tablice[i];
                     //šalje se ime tablice na "uljepšavanje"
@@ -133,11 +225,12 @@ namespace kolnikApp_klijent
                 {
                     PomakZbogTabliceManje += 1;
                 }
+                DataHandler.entityNamesWithReferencesToBelongingDataStores[tablice[i]].ListChanged += ProcessChanges;
             }
         }
 
         //sve gumbe resetiramo na početni dizajn, označvamo kliknuti gumb
-        private void oznaciGumb(object sender)
+        private void OznaciGumb(object sender)
         {
             foreach (Control Gumb in this.MeniPanel.Controls)
             {
@@ -168,12 +261,12 @@ namespace kolnikApp_klijent
             }
         }
 
-        private void ContentOfDGV(string tableName, ref DataGridView dgvObj)
+        private void FillDgvWithContent(string tableName)
         {
             switch (tableName)
             {
                 case "rabat":
-                    dgvObj.DataSource = (from rabatObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["rabat"]
+                    mainDgvObj.DataSource = (from rabatObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["rabat"]
                                 join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
                                 on ((rabat)rabatObj).artikl equals ((artikl)artiklObj).id
                                 join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
@@ -187,7 +280,7 @@ namespace kolnikApp_klijent
                 case "osoba":
                     if (DataHandler.entityNamesWithReferencesToBelongingDataStores.ContainsKey("korisnicki_racun"))
                     {
-                        dgvObj.DataSource =
+                        mainDgvObj.DataSource =
                             (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                              join korisnicki_racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
                              on ((osoba)zaposlenikObj).oib equals ((korisnicki_racun)korisnicki_racunObj).zaposlenik
@@ -204,7 +297,7 @@ namespace kolnikApp_klijent
                     }
                     else
                     {
-                        dgvObj.DataSource =
+                        mainDgvObj.DataSource =
                             (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                              select new
                              {
@@ -215,7 +308,7 @@ namespace kolnikApp_klijent
                     }
                     break;
                 case "tablicna_privilegija":
-                    dgvObj.DataSource =
+                    mainDgvObj.DataSource =
                         (from tablicna_privilegijaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablicna_privilegija"]
                          join radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
                          on ((tablicna_privilegija)tablicna_privilegijaObj).radno_mjesto equals ((radno_mjesto)radno_mjestoObj).id
@@ -227,7 +320,7 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 case "narudzbenica_bitumenske_mjesavine":
-                    dgvObj.DataSource =
+                    mainDgvObj.DataSource =
                         (from narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
                          join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
                          on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
@@ -255,7 +348,7 @@ namespace kolnikApp_klijent
                          ).ToArray();
                     break;
                 case "proizvodni_nalog":
-                    dgvObj.DataSource =
+                    mainDgvObj.DataSource =
                         (from nalogObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["proizvodni_nalog"]
                          join narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
                          on ((proizvodni_nalog)nalogObj).narudzbenica equals ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id
@@ -273,7 +366,7 @@ namespace kolnikApp_klijent
                          ).ToArray();
                     break;
                 case "otpremnica":
-                    dgvObj.DataSource =
+                    mainDgvObj.DataSource =
                         (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
                          join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                          on ((otpremnica)otpremnicaObj).otpremitelj equals ((osoba)zaposlenikObj).oib
@@ -293,13 +386,13 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 case "zaposlen":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];                  
+                    mainDgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"];                  
                     break;
                 case "vozi":
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];                  
+                    mainDgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"];                  
                     break;
                 case "racun":
-                    dgvObj.DataSource =
+                    mainDgvObj.DataSource =
                         (from racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["racun"]
                          join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                          on ((racun)racunObj).izdavatelj equals ((osoba)zaposlenikObj).oib
@@ -312,7 +405,7 @@ namespace kolnikApp_klijent
                          }).ToArray();
                     break;
                 default:
-                    dgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
+                    mainDgvObj.DataSource = DataHandler.entityNamesWithReferencesToBelongingDataStores[tableName];
                     break;
             }
             switch (tableName)
@@ -320,12 +413,12 @@ namespace kolnikApp_klijent
                 case "vozi":
                 case "zaposlen":
                 case "racun":
-                    dgvObj.Dock = DockStyle.None;
+                    mainDgvObj.Dock = DockStyle.None;
                     AdjustDGVsWhenTheyAreNotDocked();
                     additionalDgv.Visible = true;
                     break;
                 default:
-                    dgvObj.Dock = DockStyle.Fill;
+                    mainDgvObj.Dock = DockStyle.Fill;
                     additionalDgv.Visible = false;
                     break;
             }
@@ -354,32 +447,32 @@ namespace kolnikApp_klijent
         //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
         private void ButtonClick1(object sender, EventArgs e)
         {
-            PodaciIzTablica.ClearSelection();
+            mainDgvObj.ClearSelection();
             additionalDgv.DataSource = null;
             Button Gumb = sender as Button;
-            oznaciGumb(sender);
+            OznaciGumb(sender);
             if (NaslovTablice.Text != "Dobro došli!" && Gumb.Text != NaslovTablice.Text)
             {
                 StogZaVracanjeUnatrag.Push(NaslovTablice.Tag.ToString());
             }
             NaslovTablice.Text = Gumb.Text;
             NaslovTablice.Tag = Gumb.Tag;
-            ContentOfDGV(Gumb.Tag.ToString(), ref PodaciIzTablica);
-            AutomaticallyResizeColumns(ref PodaciIzTablica);
+            FillDgvWithContent(Gumb.Tag.ToString());
+            AutomaticallyResizeColumns(ref mainDgvObj);
         }
 
         //vraćamo se unatrag za jednu "stranicu"
         private void NatragSlika_Click(object sender, EventArgs e)
         {
-            PodaciIzTablica.ClearSelection();
+            mainDgvObj.ClearSelection();
             additionalDgv.DataSource = null;
             if(StogZaVracanjeUnatrag.Count > 0)
             {
                 string ImeStranice = StogZaVracanjeUnatrag.Pop();
                 Button GumbMenija = (Button)this.MeniPanel.Controls.Find(ImeStranice, false).FirstOrDefault();
-                oznaciGumb(GumbMenija);
-                ContentOfDGV(GumbMenija.Tag.ToString(), ref PodaciIzTablica);
-                AutomaticallyResizeColumns(ref PodaciIzTablica);
+                OznaciGumb(GumbMenija);
+                FillDgvWithContent(GumbMenija.Tag.ToString());
+                AutomaticallyResizeColumns(ref mainDgvObj);
                 NaslovTablice.Text = GumbMenija.Text;
                 NaslovTablice.Tag = GumbMenija.Tag;
             }          
@@ -483,8 +576,8 @@ namespace kolnikApp_klijent
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
             DataGridViewRow SelektiraniRedak=null;
-            if (PodaciIzTablica.SelectedRows.Count != 0) {
-                foreach (DataGridViewRow Red in PodaciIzTablica.SelectedRows)
+            if (mainDgvObj.SelectedRows.Count != 0) {
+                foreach (DataGridViewRow Red in mainDgvObj.SelectedRows)
                 {
                    SelektiraniRedak = Red;
                 }                
@@ -535,7 +628,7 @@ namespace kolnikApp_klijent
                                                where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik && 
                                                      ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
                                                      ((radno_mjesto)radnoMjestoObj).id == ((zaposlen)zaposlenObj).radno_mjesto &&
-                                                     ((zaposlen)zaposlenObj).poduzece == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                     ((zaposlen)zaposlenObj).poduzece == mainDgvObj[0, e.RowIndex].Value.ToString()
                                                select new
                                                {
                                                    OIB= ((osoba)zaposlenikObj).oib,
@@ -552,7 +645,7 @@ namespace kolnikApp_klijent
                                                 from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                                                 where ((vozi)voziObj).vozac == ((osoba)zaposlenikObj).oib &&
                                                       ((vozi)voziObj).vozilo == ((vozilo)voziloObj).registracijski_broj &&
-                                                      ((vozi)voziObj).vozilo == PodaciIzTablica[0, e.RowIndex].Value.ToString()
+                                                      ((vozi)voziObj).vozilo == mainDgvObj[0, e.RowIndex].Value.ToString()
                                                 select new
                                                 {
                                                     OIB = ((osoba)zaposlenikObj).oib,
@@ -575,7 +668,7 @@ namespace kolnikApp_klijent
                          on ((vozi)voziObj).vozac equals ((osoba)vozacObj).oib
                          join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
                          on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
-                         where ((otpremnica)otpremnicaObj).racun == int.Parse(PodaciIzTablica[0, e.RowIndex].Value.ToString())
+                         where ((otpremnica)otpremnicaObj).racun == int.Parse(mainDgvObj[0, e.RowIndex].Value.ToString())
                          select new
                          {
                              narudzbenica = ((otpremnica)otpremnicaObj).nalog.ToString() + " - " + ((osoba)vozacObj).ime + " " + ((osoba)vozacObj).prezime + " (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")",
@@ -593,11 +686,11 @@ namespace kolnikApp_klijent
 
         private void AdjustDGVsWhenTheyAreNotDocked()
         {
-            PodaciIzTablica.Height = additionalDgv.Height = (int)(PanelZaSadrzaj.Height * 0.48);
-            additionalDgv.Top = PodaciIzTablica.Height + (int)(PanelZaSadrzaj.Height * 0.04);
-            additionalDgv.Width = PodaciIzTablica.Width = PanelZaSadrzaj.Width;
-            additionalDgv.Left = PodaciIzTablica.Left;
-            AutomaticallyResizeColumns(ref PodaciIzTablica);
+            mainDgvObj.Height = additionalDgv.Height = (int)(PanelZaSadrzaj.Height * 0.48);
+            additionalDgv.Top = mainDgvObj.Height + (int)(PanelZaSadrzaj.Height * 0.04);
+            additionalDgv.Width = mainDgvObj.Width = PanelZaSadrzaj.Width;
+            additionalDgv.Left = mainDgvObj.Left;
+            AutomaticallyResizeColumns(ref mainDgvObj);
             AutomaticallyResizeColumns(ref additionalDgv);
         }
 

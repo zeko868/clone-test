@@ -623,26 +623,29 @@ namespace kolnikApp_komponente
                 }
                 if (action != 'R')
                 {
-                    try
+                    if (!isClientSide)
                     {
-                        dataContextInstance.SubmitChanges();
+                        try
+                        {
+                            dataContextInstance.SubmitChanges();
 
-                        ConstructBaseOfMessageContentForSending(XMLData, address);
-                    }
-                    catch (Exception ex)
-                    {
-                        string successIdentifier = "success";
-                        if (!ex.Message.StartsWith(successIdentifier))
-                        {
-                            HasErrorOccurred = true;
-                            ErrorInfo = ex.Message;
-                            EntityOnWhichErrorRefers = "pogreska_o_podatkovnom_zahtjevu";
+                            ConstructBaseOfMessageContentForSending(datagroup.ToString(SaveOptions.DisableFormatting), address);
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            ConstructBaseOfMessageContentForSending(XMLData, address);
-                            string changesPerformedByTrigger = ex.Message.Substring(successIdentifier.Length);
-                            ResponseForSending += changesPerformedByTrigger;
+                            string successIdentifier = "success";
+                            if (!ex.Message.StartsWith(successIdentifier))
+                            {
+                                HasErrorOccurred = true;
+                                ErrorInfo = ex.Message;
+                                EntityOnWhichErrorRefers = "pogreska_o_podatkovnom_zahtjevu";
+                            }
+                            else
+                            {
+                                ConstructBaseOfMessageContentForSending(XMLData, address);
+                                string changesPerformedByTrigger = ex.Message.Substring(successIdentifier.Length);
+                                ResponseForSending += changesPerformedByTrigger;
+                            }
                         }
                     }
                 }
@@ -652,7 +655,7 @@ namespace kolnikApp_komponente
             {
                 if (sendToAll)
                 {
-                    IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => !x.EndPoint.Equals(address)).Select(x => x.EndPoint).ToArray();
+                    IPAddressesOfDestinations = ClientsAddressesList.addressList.Select(x => x.EndPoint).ToArray();
                 }
                 else
                 {
@@ -692,6 +695,129 @@ namespace kolnikApp_komponente
                                                           select grp.Key).Where(x => x.naziv_tablice.Equals()).Select(x => x.EndPoint).ToArray();*/
         }
 
+        private bool AreObjectsEqual(object obj, object obj2)
+        {
+            if (obj == null && obj2 == null)
+            {
+                return true;
+            }
+            else if (obj == null || obj2 == null)
+            {
+                return false;
+            }
+            else if (obj.GetType() != obj2.GetType())
+            {
+                return false;
+            }
+
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                if (!prop.GetValue(obj).Equals(prop.GetValue(obj2)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private object GetObjectFromList(object needle, BindingList<object> list)
+        {
+            foreach (var elem in list)
+            {
+                if (AreObjectsEqual(needle, elem))
+                {
+                    return elem;
+                }
+            }
+            return null;
+        }
+
+        private int CompareObjectsAlphabetically(object obj1, object obj2)
+        {
+            foreach (var prop in obj1.GetType().GetProperties())
+            {
+                string val1 = prop.GetValue(obj1).ToString();
+                string val2 = prop.GetValue(obj2).ToString();
+                if (Regex.IsMatch(val1, @"^\d+") && Regex.IsMatch(val2, @"^\d+")) {
+                    long numericVal1 = long.Parse(Regex.Match(val1, @"^\d+").Value);
+                    long numericVal2 = long.Parse(Regex.Match(val2, @"^\d+").Value);
+                    if (numericVal1 != numericVal2)
+                    {
+                        return numericVal1 > numericVal2 ? 1 : -1;
+                    }
+                }
+                int strCmpResult = String.Compare(val1, val2);
+                if (strCmpResult != 0)
+                {
+                    return strCmpResult > 0 ? 1 : -1;
+                }
+            }
+            return 0;
+        }
+
+        private int GetAppropriatePositionInListForInsertion(object obj, BindingList<object> list)
+        {
+            int listSize = list.Count();
+            if (listSize == 0)
+            {
+                return 0;
+            }
+            else if (listSize == 1)
+            {
+                if (CompareObjectsAlphabetically(obj, list[0]) > 0) {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                int startPointOfAnalyzedRange = 0;
+                int endPointOfAnalyzedRange = listSize - 1;
+                int insertionIndex = 0;
+                bool endLoop = false;
+                while (startPointOfAnalyzedRange <= endPointOfAnalyzedRange)
+                {
+                    insertionIndex = (endPointOfAnalyzedRange + startPointOfAnalyzedRange) >> 1;
+                    switch (CompareObjectsAlphabetically(obj, list[insertionIndex]))
+                    {
+                        case 0:
+                            endLoop = true;
+                            break;
+                        case 1:
+                            startPointOfAnalyzedRange = insertionIndex + 1;
+                            break;
+                        default:
+                            endPointOfAnalyzedRange = insertionIndex - 1;
+                            break;
+                    }
+                    if (endLoop)
+                    {
+                        break;
+                    }
+                }
+
+                if (insertionIndex <= 0)
+                {
+                    insertionIndex = 0;
+                }
+                else if (insertionIndex >= listSize)
+                {
+                    insertionIndex = listSize;
+                }
+                else
+                {
+                    if (CompareObjectsAlphabetically(list[insertionIndex], obj) == -1)
+                    {
+                        insertionIndex++;
+                    }
+                }
+                return insertionIndex;
+            }
+        }
+
         public void StoreReceivedDataIntoFormsLists(char action, object obj, object oldObjIfUpdate = null, bool lastElement = false)
         {
             if (lastElement)
@@ -704,14 +830,19 @@ namespace kolnikApp_komponente
                 switch (action)
                 {
                     case 'C':
-                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Insert(GetAppropriatePositionInListForInsertion(obj, entityNamesWithReferencesToBelongingDataStores[objectTypename]), obj);
                         break;
                     case 'D':
-                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(obj);
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(GetObjectFromList(oldObjIfUpdate, entityNamesWithReferencesToBelongingDataStores[objectTypename]));
                         break;
                     case 'U':
-                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(oldObjIfUpdate);
-                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Add(obj);
+                        ChangesCommited = false;
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(GetObjectFromList(oldObjIfUpdate, entityNamesWithReferencesToBelongingDataStores[objectTypename]));
+                        if (lastElement)
+                        {
+                            ChangesCommited = true;
+                        }
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Insert(GetAppropriatePositionInListForInsertion(obj, entityNamesWithReferencesToBelongingDataStores[objectTypename]), obj);
                         break;
                 }
             }
