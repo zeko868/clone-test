@@ -35,18 +35,39 @@
             this.UpozorenjeDatumi = new System.Windows.Forms.Label();
             this.UpozorenjeVozac = new System.Windows.Forms.Label();
             this.UpozorenjeVozilo = new System.Windows.Forms.Label();
-            this.datum_zavrsetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.vozacComboBox = new System.Windows.Forms.ComboBox();
             this.voziloComboBox = new System.Windows.Forms.ComboBox();
             this.GumbIzlaz = new System.Windows.Forms.Button();
             this.GumbPotvrda = new System.Windows.Forms.Button();
             this.NaslovVozi = new System.Windows.Forms.Label();
+            this.datum_pocetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.datum_zavrsetkaDateTimePicker = new System.Windows.Forms.DateTimePicker();
             datum_zavrsetkaLabel = new System.Windows.Forms.Label();
             datum_pocetkaLabel = new System.Windows.Forms.Label();
             vozacLabel = new System.Windows.Forms.Label();
             voziloLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // datum_zavrsetkaLabel
             // 
@@ -116,23 +137,6 @@
             this.UpozorenjeVozilo.Text = "label1";
             this.UpozorenjeVozilo.Visible = false;
             // 
-            // datum_zavrsetkaDateTimePicker
-            // 
-            this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
-            this.datum_zavrsetkaDateTimePicker.Name = "datum_zavrsetkaDateTimePicker";
-            this.datum_zavrsetkaDateTimePicker.ShowCheckBox = true;
-            this.datum_zavrsetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
-            this.datum_zavrsetkaDateTimePicker.TabIndex = 44;
-            this.datum_zavrsetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_zavrsetkaDateTimePicker_ValueChanged);
-            // 
-            // datum_pocetkaDateTimePicker
-            // 
-            this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
-            this.datum_pocetkaDateTimePicker.Name = "datum_pocetkaDateTimePicker";
-            this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
-            this.datum_pocetkaDateTimePicker.TabIndex = 43;
-            this.datum_pocetkaDateTimePicker.ValueChanged += new System.EventHandler(this.datum_pocetkaDateTimePicker_ValueChanged);
-            // 
             // vozacComboBox
             // 
             this.vozacComboBox.FormattingEnabled = true;
@@ -181,6 +185,21 @@
             this.NaslovVozi.TabIndex = 33;
             this.NaslovVozi.Text = "Dodjela vozila vozaču";
             // 
+            // datum_pocetkaDateTimePicker
+            // 
+            this.datum_pocetkaDateTimePicker.Location = new System.Drawing.Point(129, 105);
+            this.datum_pocetkaDateTimePicker.Name = "datum_pocetkaDateTimePicker";
+            this.datum_pocetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
+            this.datum_pocetkaDateTimePicker.TabIndex = 48;
+            // 
+            // datum_zavrsetkaDateTimePicker
+            // 
+            this.datum_zavrsetkaDateTimePicker.Location = new System.Drawing.Point(129, 131);
+            this.datum_zavrsetkaDateTimePicker.Name = "datum_zavrsetkaDateTimePicker";
+            this.datum_zavrsetkaDateTimePicker.ShowCheckBox = true;
+            this.datum_zavrsetkaDateTimePicker.Size = new System.Drawing.Size(137, 20);
+            this.datum_zavrsetkaDateTimePicker.TabIndex = 49;
+            // 
             // frmVoziUpdate
             // 
             this.AcceptButton = this.GumbPotvrda;
@@ -189,13 +208,13 @@
             this.CancelButton = this.GumbIzlaz;
             this.ClientSize = new System.Drawing.Size(404, 261);
             this.ControlBox = false;
+            this.Controls.Add(this.datum_zavrsetkaDateTimePicker);
+            this.Controls.Add(this.datum_pocetkaDateTimePicker);
             this.Controls.Add(this.UpozorenjeDatumi);
             this.Controls.Add(this.UpozorenjeVozac);
             this.Controls.Add(this.UpozorenjeVozilo);
             this.Controls.Add(datum_zavrsetkaLabel);
-            this.Controls.Add(this.datum_zavrsetkaDateTimePicker);
             this.Controls.Add(datum_pocetkaLabel);
-            this.Controls.Add(this.datum_pocetkaDateTimePicker);
             this.Controls.Add(vozacLabel);
             this.Controls.Add(this.vozacComboBox);
             this.Controls.Add(voziloLabel);
@@ -203,9 +222,28 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovVozi);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmVoziUpdate";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmVoziUpdate";
+            this.Controls.SetChildIndex(this.NaslovVozi, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.voziloComboBox, 0);
+            this.Controls.SetChildIndex(voziloLabel, 0);
+            this.Controls.SetChildIndex(this.vozacComboBox, 0);
+            this.Controls.SetChildIndex(vozacLabel, 0);
+            this.Controls.SetChildIndex(datum_pocetkaLabel, 0);
+            this.Controls.SetChildIndex(datum_zavrsetkaLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeVozilo, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeVozac, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeDatumi, 0);
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.datum_pocetkaDateTimePicker, 0);
+            this.Controls.SetChildIndex(this.datum_zavrsetkaDateTimePicker, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,12 +254,12 @@
         private System.Windows.Forms.Label UpozorenjeDatumi;
         private System.Windows.Forms.Label UpozorenjeVozac;
         private System.Windows.Forms.Label UpozorenjeVozilo;
-        private System.Windows.Forms.DateTimePicker datum_zavrsetkaDateTimePicker;
-        private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
         private System.Windows.Forms.ComboBox vozacComboBox;
         private System.Windows.Forms.ComboBox voziloComboBox;
         private System.Windows.Forms.Button GumbIzlaz;
         private System.Windows.Forms.Button GumbPotvrda;
         private System.Windows.Forms.Label NaslovVozi;
+        private System.Windows.Forms.DateTimePicker datum_pocetkaDateTimePicker;
+        private System.Windows.Forms.DateTimePicker datum_zavrsetkaDateTimePicker;
     }
 }

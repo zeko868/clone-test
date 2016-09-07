@@ -89,7 +89,6 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             UpozorenjeVozilo.Hide();
             if (voziloComboBox.SelectedValue != null) { 
-            //string[] ImeIPrezime = vozacComboBox.SelectedValue.ToString().Split(' ');
             string[] VozaciKojiVozeVozilo = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                                              from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
                                              from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
@@ -100,6 +99,11 @@ namespace kolnikApp_klijent.FormeZaUnos
                                              select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
 
             string[] SviVozaci = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                                  join zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                                  on ((osoba)zaposlenikObj).oib equals ((zaposlen)zaposlenObj).zaposlenik
+                                  join rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                  on ((zaposlen)zaposlenObj).radno_mjesto equals ((radno_mjesto)rmObj).id
+                                  where ((radno_mjesto)rmObj).naziv == "vozač"
                                   select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             var Filtrirano = SviVozaci.Except(VozaciKojiVozeVozilo);
             vozacComboBox.DataSource = Filtrirano.ToList();
