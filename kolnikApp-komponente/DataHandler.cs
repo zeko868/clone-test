@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.Linq;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.IO.Ports;
@@ -81,6 +82,7 @@ namespace kolnikApp_komponente
         public static Dictionary<string, BindingList<object>> entityNamesWithReferencesToBelongingDataStores = null;
         public static List<string> entityNamesForButtons = new List<string>();
         static List<Dictionary<string, object>> entityRelationships = null;
+        static List<Dictionary<string, object>> entityAutoIncrementColumns = null;
 
         public enum Operations
         {
@@ -327,7 +329,9 @@ namespace kolnikApp_komponente
                         Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
                         for (int i = 0; i < reader.FieldCount; i++)
+                        {
                             dictionary.Add(reader.GetName(i), reader.GetValue(i));
+                        }
 
                         retVal.Add(dictionary);
                     }
@@ -355,6 +359,7 @@ namespace kolnikApp_komponente
 
             var datagroups = doc.Element("data").Elements();
             bool isAvailabilityCheck = false;
+            Nullable<int> generatedId = null;
             foreach (var datagroup in datagroups)
             {
                 char action = datagroup.Attribute("action").Value[0];
@@ -532,7 +537,10 @@ namespace kolnikApp_komponente
                     case "tablica":
                         if (!isClientSide)
                         {
-                            var entityRelationships = DataHandler.entityRelationships == null ? DataHandler.entityRelationships = GetNonEntityQueryResult("SELECT * FROM prikazi_sve_ovisnosti_medju_tablicama;") : DataHandler.entityRelationships;
+                            if (entityRelationships == null)
+                            {
+                                entityRelationships = GetNonEntityQueryResult("SELECT * FROM prikazi_sve_ovisnosti_medju_tablicama;");
+                            }
                             var buttonEntities = GetListOfAccessibleEntityTypes(address);
                             var otherEntities = entityRelationships.Where(x => buttonEntities.Contains(x["FK_Table"].ToString())).Select(x => x["PK_Table"].ToString()).Except(buttonEntities);
                             Dictionary<string, string> atributes = new Dictionary<string, string>();
@@ -561,6 +569,26 @@ namespace kolnikApp_komponente
                     default:
                         if (isClientSide || IsUserPrivilegedToDoAnAction(address, entityName, action))
                         {
+                            if (entityAutoIncrementColumns == null)
+                            {
+                                entityAutoIncrementColumns = GetNonEntityQueryResult(@"SELECT OBJECT_NAME(object_id) as ""table"", name as ""column"" FROM sys.identity_columns WHERE OBJECT_SCHEMA_NAME(object_id)='dbo';");
+                            }
+                            if (!isClientSide && action == 'C' && entityAutoIncrementColumns.Any(x => x["table"].ToString() == entityName))
+                            {
+                                object objWithAutoIncProp = null;
+                                var type = Assembly.GetExecutingAssembly().GetTypes().SingleOrDefault(t => t.Name == entityName);
+                                var ctors = type.GetConstructors();
+                                objWithAutoIncProp = ctors[0].Invoke(new object[] { });
+                                AssignObjectsProperties(objWithAutoIncProp, datagroup.Elements().First());
+                                dataContextInstance.GetTable(type).InsertOnSubmit(objWithAutoIncProp);
+                                dataContextInstance.SubmitChanges();
+
+                                string propName = entityAutoIncrementColumns.Where(x => x["table"].ToString() == entityName).Select(x => x["column"]).First().ToString();
+
+                                generatedId = (int)type.GetProperty(propName).GetValue(objWithAutoIncProp);
+                                ConstructBaseOfMessageContentForSending(AddHeaderInfoToXMLDatagroup(ConvertObjectsToXMLData(objWithAutoIncProp), 'C'));
+                                continue;
+                            }
                             foreach (var redak in datagroup.Elements())
                             {
                                 object sth = null;
@@ -575,6 +603,13 @@ namespace kolnikApp_komponente
                                         object oldValIfUpdating = null;
 
                                         AssignObjectsProperties(sth, redak);
+                                        if (generatedId.HasValue)
+                                        {
+                                            if (type.Name == "otpremnica")
+                                            {
+                                                type.GetProperty("racun").SetValue(sth, generatedId.Value);
+                                            }
+                                        }
                                         if (action == 'U')
                                         {
                                             oldValIfUpdating = ctors[0].Invoke(new object[] { });
@@ -629,7 +664,18 @@ namespace kolnikApp_komponente
                         {
                             dataContextInstance.SubmitChanges();
 
-                            ConstructBaseOfMessageContentForSending(datagroup.ToString(SaveOptions.DisableFormatting), address);
+                            if (generatedId.HasValue)
+                            {
+                                if (entityName == "otpremnica")
+                                {
+                                    ConstructBaseOfMessageContentForSending(datagroup.ToString(SaveOptions.DisableFormatting).Replace("<racun old=\"\"></racun>", "<racun old=\"\">" + generatedId.Value.ToString() + "</racun>"));
+                                }
+                                generatedId = null;
+                            }
+                            else
+                            {
+                                ConstructBaseOfMessageContentForSending(datagroup.ToString(SaveOptions.DisableFormatting));
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -642,7 +688,7 @@ namespace kolnikApp_komponente
                             }
                             else
                             {
-                                ConstructBaseOfMessageContentForSending(XMLData, address);
+                                ConstructBaseOfMessageContentForSending(datagroup.ToString(SaveOptions.DisableFormatting));
                                 string changesPerformedByTrigger = ex.Message.Substring(successIdentifier.Length);
                                 ResponseForSending += changesPerformedByTrigger;
                             }
@@ -677,22 +723,10 @@ namespace kolnikApp_komponente
             return String.Join("", SHA1.Create().ComputeHash(System.Text.Encoding.UTF8.GetBytes(password.ToCharArray())).Select(x => String.Format("{0:X}", x)));
         }
 
-        private void ConstructBaseOfMessageContentForSending(string XMLData, System.Net.IPEndPoint senderIP)
+        private void ConstructBaseOfMessageContentForSending(string XMLData)
         {
             ResponseForSending += XMLData;
             sendToAll = true;
-            //select zaposlen.zaposlenik,tablicna_privilegija.naziv_tablice from zaposlen
-            //join tablicna_privilegija on zaposlen.radno_mjesto = tablicna_privilegija.radno_mjesto
-            //group by zaposlen.zaposlenik, tablicna_privilegija.naziv_tablice having count(*) > 0;
-            /*            IPAddressesOfOtherDestinations = (from ip_adresar in ClientsAddressesList.addressList
-                                                          join zaposlen in dataContextInstance.zaposlens
-                                                          on ip_adresar.Oib equals zaposlen.zaposlenik
-                                                          join tablicna_privilegija in dataContextInstance.tablicna_privilegijas
-                                                          on zaposlen.radno_mjesto equals tablicna_privilegija.radno_mjesto
-                                                          where !ip_adresar.EndPoint.Equals(senderIP)
-                                                          group ip_adresar by new { ip_adresar.EndPoint, tablicna_privilegija.naziv_tablice } into grp
-                                                          where grp.Count() > 0
-                                                          select grp.Key).Where(x => x.naziv_tablice.Equals()).Select(x => x.EndPoint).ToArray();*/
         }
 
         private bool AreObjectsEqual(object obj, object obj2)
@@ -736,6 +770,21 @@ namespace kolnikApp_komponente
         {
             foreach (var prop in obj1.GetType().GetProperties())
             {
+                if (prop.GetValue(obj1) == null && prop.GetValue(obj2) == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    if (prop.GetValue(obj1) == null)
+                    {
+                        return -1;
+                    }
+                    if (prop.GetValue(obj2) == null)
+                    {
+                        return 1;
+                    }
+                }
                 string val1 = prop.GetValue(obj1).ToString();
                 string val2 = prop.GetValue(obj2).ToString();
                 if (Regex.IsMatch(val1, @"^\d+") && Regex.IsMatch(val2, @"^\d+")) {
@@ -957,7 +1006,10 @@ namespace kolnikApp_komponente
                         str += info.GetValue(oldObj).ToString();
                     }
                     str += "\">";
-                    str += info.GetValue(newObj).ToString();
+                    if (info.GetValue(newObj) != null)
+                    {
+                        str += info.GetValue(newObj).ToString();
+                    }
                     str += "</" + info.Name + ">";
                 }
             }

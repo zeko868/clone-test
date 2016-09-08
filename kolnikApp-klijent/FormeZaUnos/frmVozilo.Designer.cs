@@ -44,32 +44,63 @@
             registracijski_brojLabel = new System.Windows.Forms.Label();
             proizvodjacLabel = new System.Windows.Forms.Label();
             modelLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(3, 2);
+            this.controlBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.controlBox.Size = new System.Drawing.Size(533, 41);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(373, 0);
+            this.Minimize.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Minimize.Size = new System.Drawing.Size(44, 38);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(427, 0);
+            this.RestoreDown.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.RestoreDown.Size = new System.Drawing.Size(44, 38);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(483, 0);
+            this.CloseButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.CloseButton.Size = new System.Drawing.Size(44, 38);
             // 
             // registracijski_brojLabel
             // 
             registracijski_brojLabel.AutoSize = true;
-            registracijski_brojLabel.Location = new System.Drawing.Point(36, 54);
+            registracijski_brojLabel.Location = new System.Drawing.Point(48, 66);
+            registracijski_brojLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             registracijski_brojLabel.Name = "registracijski_brojLabel";
-            registracijski_brojLabel.Size = new System.Drawing.Size(92, 13);
+            registracijski_brojLabel.Size = new System.Drawing.Size(123, 17);
             registracijski_brojLabel.TabIndex = 25;
             registracijski_brojLabel.Text = "Registracijski broj:";
             // 
             // proizvodjacLabel
             // 
             proizvodjacLabel.AutoSize = true;
-            proizvodjacLabel.Location = new System.Drawing.Point(59, 80);
+            proizvodjacLabel.Location = new System.Drawing.Point(79, 98);
+            proizvodjacLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             proizvodjacLabel.Name = "proizvodjacLabel";
-            proizvodjacLabel.Size = new System.Drawing.Size(64, 13);
+            proizvodjacLabel.Size = new System.Drawing.Size(82, 17);
             proizvodjacLabel.TabIndex = 26;
             proizvodjacLabel.Text = "Proizvođač:";
             // 
             // modelLabel
             // 
             modelLabel.AutoSize = true;
-            modelLabel.Location = new System.Drawing.Point(85, 106);
+            modelLabel.Location = new System.Drawing.Point(113, 130);
+            modelLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             modelLabel.Name = "modelLabel";
-            modelLabel.Size = new System.Drawing.Size(39, 13);
+            modelLabel.Size = new System.Drawing.Size(50, 17);
             modelLabel.TabIndex = 27;
             modelLabel.Text = "Model:";
             // 
@@ -77,17 +108,19 @@
             // 
             this.NaslovVozilo.AutoSize = true;
             this.NaslovVozilo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NaslovVozilo.Location = new System.Drawing.Point(12, 9);
+            this.NaslovVozilo.Location = new System.Drawing.Point(16, 11);
+            this.NaslovVozilo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.NaslovVozilo.Name = "NaslovVozilo";
-            this.NaslovVozilo.Size = new System.Drawing.Size(78, 26);
+            this.NaslovVozilo.Size = new System.Drawing.Size(94, 31);
             this.NaslovVozilo.TabIndex = 12;
             this.NaslovVozilo.Text = "Vozilo";
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 144);
+            this.GumbReset.Location = new System.Drawing.Point(349, 177);
+            this.GumbReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
+            this.GumbReset.Size = new System.Drawing.Size(100, 28);
             this.GumbReset.TabIndex = 24;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
@@ -96,9 +129,10 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 144);
+            this.GumbIzlaz.Location = new System.Drawing.Point(241, 177);
+            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbIzlaz.Name = "GumbIzlaz";
-            this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
+            this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
             this.GumbIzlaz.TabIndex = 23;
             this.GumbIzlaz.Text = "Cancel";
             this.GumbIzlaz.UseVisualStyleBackColor = true;
@@ -106,9 +140,10 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 144);
+            this.GumbPotvrda.Location = new System.Drawing.Point(133, 177);
+            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbPotvrda.Name = "GumbPotvrda";
-            this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
+            this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
             this.GumbPotvrda.TabIndex = 22;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
@@ -116,28 +151,31 @@
             // 
             // registracijski_brojTextBox
             // 
-            this.registracijski_brojTextBox.Location = new System.Drawing.Point(129, 51);
+            this.registracijski_brojTextBox.Location = new System.Drawing.Point(172, 63);
+            this.registracijski_brojTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.registracijski_brojTextBox.MaxLength = 8;
             this.registracijski_brojTextBox.Name = "registracijski_brojTextBox";
-            this.registracijski_brojTextBox.Size = new System.Drawing.Size(127, 20);
+            this.registracijski_brojTextBox.Size = new System.Drawing.Size(168, 22);
             this.registracijski_brojTextBox.TabIndex = 26;
             this.registracijski_brojTextBox.Leave += new System.EventHandler(this.registracijski_brojTextBox_Leave);
             // 
             // proizvodjacTextBox
             // 
-            this.proizvodjacTextBox.Location = new System.Drawing.Point(129, 77);
+            this.proizvodjacTextBox.Location = new System.Drawing.Point(172, 95);
+            this.proizvodjacTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.proizvodjacTextBox.MaxLength = 45;
             this.proizvodjacTextBox.Name = "proizvodjacTextBox";
-            this.proizvodjacTextBox.Size = new System.Drawing.Size(127, 20);
+            this.proizvodjacTextBox.Size = new System.Drawing.Size(168, 22);
             this.proizvodjacTextBox.TabIndex = 27;
             this.proizvodjacTextBox.Leave += new System.EventHandler(this.proizvodjacTextBox_Leave);
             // 
             // modelTextBox
             // 
-            this.modelTextBox.Location = new System.Drawing.Point(129, 103);
+            this.modelTextBox.Location = new System.Drawing.Point(172, 127);
+            this.modelTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modelTextBox.MaxLength = 45;
             this.modelTextBox.Name = "modelTextBox";
-            this.modelTextBox.Size = new System.Drawing.Size(127, 20);
+            this.modelTextBox.Size = new System.Drawing.Size(168, 22);
             this.modelTextBox.TabIndex = 28;
             this.modelTextBox.Leave += new System.EventHandler(this.modelTextBox_Leave);
             // 
@@ -145,9 +183,10 @@
             // 
             this.UpozorenjeRegistracijskiBroj.AutoSize = true;
             this.UpozorenjeRegistracijskiBroj.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeRegistracijskiBroj.Location = new System.Drawing.Point(262, 51);
+            this.UpozorenjeRegistracijskiBroj.Location = new System.Drawing.Point(349, 63);
+            this.UpozorenjeRegistracijskiBroj.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeRegistracijskiBroj.Name = "UpozorenjeRegistracijskiBroj";
-            this.UpozorenjeRegistracijskiBroj.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeRegistracijskiBroj.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeRegistracijskiBroj.TabIndex = 30;
             this.UpozorenjeRegistracijskiBroj.Text = "label1";
             this.UpozorenjeRegistracijskiBroj.Visible = false;
@@ -156,9 +195,10 @@
             // 
             this.UpozorenjeProizvodac.AutoSize = true;
             this.UpozorenjeProizvodac.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeProizvodac.Location = new System.Drawing.Point(262, 77);
+            this.UpozorenjeProizvodac.Location = new System.Drawing.Point(349, 95);
+            this.UpozorenjeProizvodac.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeProizvodac.Name = "UpozorenjeProizvodac";
-            this.UpozorenjeProizvodac.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeProizvodac.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeProizvodac.TabIndex = 31;
             this.UpozorenjeProizvodac.Text = "label1";
             this.UpozorenjeProizvodac.Visible = false;
@@ -167,9 +207,10 @@
             // 
             this.UpozorenjeModel.AutoSize = true;
             this.UpozorenjeModel.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeModel.Location = new System.Drawing.Point(262, 103);
+            this.UpozorenjeModel.Location = new System.Drawing.Point(349, 127);
+            this.UpozorenjeModel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeModel.Name = "UpozorenjeModel";
-            this.UpozorenjeModel.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeModel.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeModel.TabIndex = 32;
             this.UpozorenjeModel.Text = "label1";
             this.UpozorenjeModel.Visible = false;
@@ -177,10 +218,10 @@
             // frmVozilo
             // 
             this.AcceptButton = this.GumbPotvrda;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(404, 261);
+            this.ClientSize = new System.Drawing.Size(539, 321);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeModel);
             this.Controls.Add(this.UpozorenjeProizvodac);
@@ -195,9 +236,29 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovVozilo);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximumSize = new System.Drawing.Size(2560, 1268);
             this.Name = "frmVozilo";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Text = "frmVozilo";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovVozilo, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.registracijski_brojTextBox, 0);
+            this.Controls.SetChildIndex(registracijski_brojLabel, 0);
+            this.Controls.SetChildIndex(this.proizvodjacTextBox, 0);
+            this.Controls.SetChildIndex(proizvodjacLabel, 0);
+            this.Controls.SetChildIndex(this.modelTextBox, 0);
+            this.Controls.SetChildIndex(modelLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeRegistracijskiBroj, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeProizvodac, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeModel, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

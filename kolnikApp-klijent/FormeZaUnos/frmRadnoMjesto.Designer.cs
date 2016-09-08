@@ -36,14 +36,43 @@
             this.nazivTextBox = new System.Windows.Forms.TextBox();
             this.UpozorenjeNaziv = new System.Windows.Forms.Label();
             nazivLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(3, 2);
+            this.controlBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.controlBox.Size = new System.Drawing.Size(533, 41);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(373, 0);
+            this.Minimize.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Minimize.Size = new System.Drawing.Size(44, 38);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(427, 0);
+            this.RestoreDown.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.RestoreDown.Size = new System.Drawing.Size(44, 38);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(483, 0);
+            this.CloseButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.CloseButton.Size = new System.Drawing.Size(44, 38);
             // 
             // nazivLabel
             // 
             nazivLabel.AutoSize = true;
-            nazivLabel.Location = new System.Drawing.Point(88, 54);
+            nazivLabel.Location = new System.Drawing.Point(117, 66);
+            nazivLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             nazivLabel.Name = "nazivLabel";
-            nazivLabel.Size = new System.Drawing.Size(37, 13);
+            nazivLabel.Size = new System.Drawing.Size(47, 17);
             nazivLabel.TabIndex = 19;
             nazivLabel.Text = "Naziv:";
             // 
@@ -51,17 +80,19 @@
             // 
             this.NaslovRadnoMjesto.AutoSize = true;
             this.NaslovRadnoMjesto.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.NaslovRadnoMjesto.Location = new System.Drawing.Point(12, 9);
+            this.NaslovRadnoMjesto.Location = new System.Drawing.Point(16, 11);
+            this.NaslovRadnoMjesto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.NaslovRadnoMjesto.Name = "NaslovRadnoMjesto";
-            this.NaslovRadnoMjesto.Size = new System.Drawing.Size(159, 26);
+            this.NaslovRadnoMjesto.Size = new System.Drawing.Size(193, 31);
             this.NaslovRadnoMjesto.TabIndex = 9;
             this.NaslovRadnoMjesto.Text = "Radno mjesto";
             // 
             // GumbReset
             // 
-            this.GumbReset.Location = new System.Drawing.Point(262, 90);
+            this.GumbReset.Location = new System.Drawing.Point(349, 111);
+            this.GumbReset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbReset.Name = "GumbReset";
-            this.GumbReset.Size = new System.Drawing.Size(75, 23);
+            this.GumbReset.Size = new System.Drawing.Size(100, 28);
             this.GumbReset.TabIndex = 18;
             this.GumbReset.Text = "Reset";
             this.GumbReset.UseVisualStyleBackColor = true;
@@ -70,9 +101,10 @@
             // GumbIzlaz
             // 
             this.GumbIzlaz.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.GumbIzlaz.Location = new System.Drawing.Point(181, 90);
+            this.GumbIzlaz.Location = new System.Drawing.Point(241, 111);
+            this.GumbIzlaz.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbIzlaz.Name = "GumbIzlaz";
-            this.GumbIzlaz.Size = new System.Drawing.Size(75, 23);
+            this.GumbIzlaz.Size = new System.Drawing.Size(100, 28);
             this.GumbIzlaz.TabIndex = 17;
             this.GumbIzlaz.Text = "Cancel";
             this.GumbIzlaz.UseVisualStyleBackColor = true;
@@ -80,9 +112,10 @@
             // 
             // GumbPotvrda
             // 
-            this.GumbPotvrda.Location = new System.Drawing.Point(100, 90);
+            this.GumbPotvrda.Location = new System.Drawing.Point(133, 111);
+            this.GumbPotvrda.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GumbPotvrda.Name = "GumbPotvrda";
-            this.GumbPotvrda.Size = new System.Drawing.Size(75, 23);
+            this.GumbPotvrda.Size = new System.Drawing.Size(100, 28);
             this.GumbPotvrda.TabIndex = 16;
             this.GumbPotvrda.Text = "Ok";
             this.GumbPotvrda.UseVisualStyleBackColor = true;
@@ -90,10 +123,11 @@
             // 
             // nazivTextBox
             // 
-            this.nazivTextBox.Location = new System.Drawing.Point(129, 51);
+            this.nazivTextBox.Location = new System.Drawing.Point(172, 63);
+            this.nazivTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nazivTextBox.MaxLength = 45;
             this.nazivTextBox.Name = "nazivTextBox";
-            this.nazivTextBox.Size = new System.Drawing.Size(100, 20);
+            this.nazivTextBox.Size = new System.Drawing.Size(132, 22);
             this.nazivTextBox.TabIndex = 20;
             this.nazivTextBox.Leave += new System.EventHandler(this.nazivTextBox_Leave);
             // 
@@ -101,9 +135,10 @@
             // 
             this.UpozorenjeNaziv.AutoSize = true;
             this.UpozorenjeNaziv.BackColor = System.Drawing.Color.Khaki;
-            this.UpozorenjeNaziv.Location = new System.Drawing.Point(235, 51);
+            this.UpozorenjeNaziv.Location = new System.Drawing.Point(313, 63);
+            this.UpozorenjeNaziv.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UpozorenjeNaziv.Name = "UpozorenjeNaziv";
-            this.UpozorenjeNaziv.Size = new System.Drawing.Size(35, 13);
+            this.UpozorenjeNaziv.Size = new System.Drawing.Size(46, 17);
             this.UpozorenjeNaziv.TabIndex = 30;
             this.UpozorenjeNaziv.Text = "label1";
             this.UpozorenjeNaziv.Visible = false;
@@ -111,10 +146,10 @@
             // frmRadnoMjesto
             // 
             this.AcceptButton = this.GumbPotvrda;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.GumbIzlaz;
-            this.ClientSize = new System.Drawing.Size(404, 261);
+            this.ClientSize = new System.Drawing.Size(539, 321);
             this.ControlBox = false;
             this.Controls.Add(this.UpozorenjeNaziv);
             this.Controls.Add(nazivLabel);
@@ -123,9 +158,23 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRadnoMjesto);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MaximumSize = new System.Drawing.Size(2560, 1268);
             this.Name = "frmRadnoMjesto";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Text = "frmRadnoMjesto";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovRadnoMjesto, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.GumbReset, 0);
+            this.Controls.SetChildIndex(this.nazivTextBox, 0);
+            this.Controls.SetChildIndex(nazivLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeNaziv, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -24,7 +24,7 @@ namespace kolnikApp_klijent
         private bool initialState;
         private bool isDialogWindow;
         private Rectangle dimensionsBeforeMaximizing;
-        protected ApstraktnaForma(bool fullControlBox)
+        protected ApstraktnaForma(bool fullControlBox = true)
         {
             InitializeComponent();
             if (!fullControlBox)

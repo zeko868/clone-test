@@ -46,11 +46,15 @@ namespace kolnikApp_klijent
         {
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
 
-            while (DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting)
+            for (int i = 0; i < 10 && DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting; i++)
             {
-                ;
+                Thread.Sleep(200);
             }
-            if (DataHandler.UserLoginState == (byte)DataHandler.LoginState.success)
+            if (DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting)
+            {
+                MessageBox.Show("Pogreška sa kontaktiranjem poslužitelja. Provjerite jeste li spojeni na mrežu ili je li poslužitelj dostupan");
+            }
+            else if (DataHandler.UserLoginState == (byte)DataHandler.LoginState.success)
             {
                 this.Hide();
                 glavnaForma newForm = new glavnaForma();
