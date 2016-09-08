@@ -776,7 +776,7 @@ namespace kolnikApp_komponente
                     {
                         if (((DateTime)prop.GetValue(obj)).Date != ((DateTime)prop.GetValue(obj2)).Date)
                         {
-                            return false;
+                            //return false;
                         }
                     }
                     else if (!prop.GetValue(obj).Equals(prop.GetValue(obj2)))
