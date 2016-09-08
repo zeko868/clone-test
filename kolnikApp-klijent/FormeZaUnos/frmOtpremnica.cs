@@ -63,7 +63,12 @@ namespace kolnikApp_klijent.FormeZaUnos
                  join radno_mjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
                  on ((zaposlen)zaposlenObj).radno_mjesto equals ((radno_mjesto)radno_mjestoObj).id 
                  where ((radno_mjesto)radno_mjestoObj).naziv == "otpremitelj" && ((zaposlen)zaposlenObj).datum_zavrsetka == null
-                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
+                 select new {
+                    naziv=((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime,
+                    sifra=((osoba)zaposlenikObj).oib
+                    }).ToArray();
+            izdavateljComboBox.DisplayMember = "naziv";
+            izdavateljComboBox.ValueMember = "sifra";
             izdavateljComboBox.SelectedIndex = -1;
         }
 
@@ -101,7 +106,15 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if(narudzbenicaComboBox.SelectedIndex != -1  &&   izdavateljComboBox.SelectedIndex != -1)
             {
-                //popuniti klasu podacima i poslati u BP
+                string[] narudzbenica = narudzbenicaComboBox.SelectedItem.ToString().Split('-');
+                otpremnica newInstance = new otpremnica
+                {
+                    nalog = int.Parse(narudzbenica[0]),
+                    datum_otpreme = datum_otpremeDateTimePicker.Value,
+                    otpremitelj = izdavateljComboBox.SelectedValue.ToString()
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
             

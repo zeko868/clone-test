@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUnos
 {
@@ -50,7 +51,12 @@ namespace kolnikApp_klijent.FormeZaUnos
             }
             if (nazivTextBox.Text != "")
             {
-                //spremi podatke u klasu i pošalji u BP
+                radno_mjesto newInstance = new radno_mjesto
+                {
+                    naziv = nazivTextBox.Text
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(newInstance), 'C');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }
