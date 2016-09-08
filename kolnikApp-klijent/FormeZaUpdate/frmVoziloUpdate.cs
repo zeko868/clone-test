@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
@@ -18,9 +19,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        vozilo oldInstance;
         public frmVoziloUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
+            oldInstance = new vozilo
+            {
+                registracijski_broj = PodatkovniRedak.Cells["registracijski_broj"].Value.ToString(),
+                proizvodjac = PodatkovniRedak.Cells["proizvodjac"].Value.ToString(),
+                model = PodatkovniRedak.Cells["model"].Value.ToString()
+            };
+
             registracijski_brojTextBox.Text = PodatkovniRedak.Cells["registracijski_broj"].Value.ToString();
             proizvodjacTextBox.Text = PodatkovniRedak.Cells["proizvodjac"].Value.ToString();
             modelTextBox.Text = PodatkovniRedak.Cells["model"].Value.ToString();
@@ -54,7 +63,15 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
             if (registracijski_brojTextBox.Text != "" && proizvodjacTextBox.Text != "" && modelTextBox.Text != "")
             {
-                //pohrani podatke u klasu i prenesi u BP
+                vozilo newInstance = new vozilo
+                {
+                    registracijski_broj = registracijski_brojTextBox.Text,
+                    proizvodjac = proizvodjacTextBox.Text,
+                    model = modelTextBox.Text
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

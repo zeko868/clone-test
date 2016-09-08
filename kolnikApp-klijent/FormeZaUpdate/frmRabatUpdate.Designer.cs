@@ -43,7 +43,28 @@
             poslovni_partnerLabel = new System.Windows.Forms.Label();
             artiklLabel = new System.Windows.Forms.Label();
             popustLabel = new System.Windows.Forms.Label();
+            this.controlBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).BeginInit();
             this.SuspendLayout();
+            // 
+            // controlBox
+            // 
+            this.controlBox.Location = new System.Drawing.Point(2, 2);
+            this.controlBox.Size = new System.Drawing.Size(400, 33);
+            // 
+            // Minimize
+            // 
+            this.Minimize.Location = new System.Drawing.Point(280, 0);
+            // 
+            // RestoreDown
+            // 
+            this.RestoreDown.Location = new System.Drawing.Point(321, 0);
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.Location = new System.Drawing.Point(363, 0);
             // 
             // poslovni_partnerLabel
             // 
@@ -182,9 +203,26 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovRabat);
+            this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmRabatUpdate";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmRabatUpdate";
+            this.Controls.SetChildIndex(this.controlBox, 0);
+            this.Controls.SetChildIndex(this.NaslovRabat, 0);
+            this.Controls.SetChildIndex(this.GumbPotvrda, 0);
+            this.Controls.SetChildIndex(this.GumbIzlaz, 0);
+            this.Controls.SetChildIndex(this.popustTextBox, 0);
+            this.Controls.SetChildIndex(popustLabel, 0);
+            this.Controls.SetChildIndex(this.artiklComboBox, 0);
+            this.Controls.SetChildIndex(artiklLabel, 0);
+            this.Controls.SetChildIndex(this.poslovni_partnerComboBox, 0);
+            this.Controls.SetChildIndex(poslovni_partnerLabel, 0);
+            this.Controls.SetChildIndex(this.UpozorenjeArtikl, 0);
+            this.Controls.SetChildIndex(this.UpozorenjePoslovniPartner, 0);
+            this.Controls.SetChildIndex(this.UpozorenjePopust, 0);
+            this.controlBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Minimize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RestoreDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseButton)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

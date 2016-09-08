@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
@@ -18,8 +19,14 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        radno_mjesto oldInstance;
         public frmRadnoMjestoUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
+            oldInstance = new radno_mjesto
+            {
+                 id=int.Parse(PodatkovniRedak.Cells["id"].Value.ToString()),
+                 naziv=PodatkovniRedak.Cells["naziv"].Value.ToString()
+            };
             InitializeComponent();
             nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();
         }
@@ -44,7 +51,15 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
             if (nazivTextBox.Text != "")
             {
-                //spremi podatke u klasu i pošalji u BP
+                radno_mjesto newInstance = new radno_mjesto
+                {
+                    id = oldInstance.id,
+                    naziv = nazivTextBox.Text
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+
                 this.Close();
             }
         }

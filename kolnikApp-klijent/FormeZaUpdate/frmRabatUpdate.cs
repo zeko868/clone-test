@@ -19,10 +19,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        rabat oldInstance;
         public frmRabatUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
 
+            oldInstance = new rabat
+            {
+                artikl = nadjiArtikl(PodatkovniRedak.Cells["artikl"].Value.ToString()),
+                poslovni_partner = PodatkovniRedak.Cells["poslovni_partner"].Value.ToString(),
+                popust = decimal.Parse(PodatkovniRedak.Cells["popust"].Value.ToString())
+            };
             artiklComboBox.DataSource =
                 (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
                  select ((artikl)artiklObj).naziv).ToArray();
@@ -35,6 +42,14 @@ namespace kolnikApp_klijent.FormeZaUpdate
             popustTextBox.Text = PodatkovniRedak.Cells["popust"].Value.ToString();
         }
 
+        private int nadjiArtikl(string key)
+        {
+            var artikl =
+                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                 where ((artikl)artiklObj).naziv == key
+                 select ((artikl)artiklObj).id).ToArray();
+            return artikl[0];
+        }
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -73,7 +88,15 @@ namespace kolnikApp_klijent.FormeZaUpdate
             float VarijablaZaProvjeru = 0;
             if (artiklComboBox.SelectedIndex != -1 && poslovni_partnerComboBox.SelectedIndex != -1 && popustTextBox.Text != "" && float.TryParse(popustTextBox.Text, out VarijablaZaProvjeru))
             {
-                //pohraniti podatke u klase i poslati u BP
+                rabat newInstance = new rabat
+                {
+                    artikl = nadjiArtikl(artiklComboBox.SelectedValue.ToString()),
+                    poslovni_partner = poslovni_partnerComboBox.SelectedValue.ToString(),
+                    popust = decimal.Parse(popustTextBox.Text)
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
 

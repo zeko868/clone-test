@@ -19,17 +19,10 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
-        class PodaciZaOldInstance
-        {
-            public int artikl { get; set; }
-            public int vozi { get; set; }
-            public string izdavatelj { get; set; }
-        }
         otpremnica oldInstance = null;
         public frmOtpremnicaUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
-            PodaciZaOldInstance objekt = new PodaciZaOldInstance();
             string []kljuc = PodatkovniRedak.Cells["narudzbenica"].Value.ToString().Split(' ');
             oldInstance = new otpremnica
             {

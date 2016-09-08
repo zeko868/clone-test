@@ -19,10 +19,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        proizvodni_nalog oldInstance = null;
         public frmProizvodniNalogUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
-
+            string [] narudzbenica= PodatkovniRedak.Cells["narudzbenica"].Value.ToString().Split(' ');
+            oldInstance = new proizvodni_nalog
+            {
+                narudzbenica = int.Parse(narudzbenica[0]),
+                datum_izdavanja = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value,
+                izdavatelj = nadjiIzdavatelja(PodatkovniRedak.Cells["izdavatelj"].Value.ToString()),
+                temperatura = int.Parse(PodatkovniRedak.Cells["temperatura"].Value.ToString()),
+            };
             datum_izdavanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value;
 
             izdavateljComboBox.DataSource =
@@ -36,6 +44,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
                  select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
             izdavateljComboBox.SelectedItem = PodatkovniRedak.Cells["izdavatelj"].Value;
 
+            temperaturaTextBox.Text = PodatkovniRedak.Cells["temperatura"].Value.ToString();
             narudzbenicaComboBox.DataSource=
                 (from narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
                 join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
@@ -43,7 +52,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 select ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id.ToString() + " - " + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).datum_potrazivanja + " (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")").ToArray();
             narudzbenicaComboBox.SelectedItem = PodatkovniRedak.Cells["narudzbenica"].Value;
         }
-
+        
+        private string nadjiIzdavatelja(string key)
+        {
+            string []ime = key.Split(' ');
+            var izdavatelj =
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 where ((osoba)zaposlenikObj).ime==ime[0] && ((osoba)zaposlenikObj).prezime==ime[1]
+                 select ((osoba)zaposlenikObj).oib).ToArray();
+            return izdavatelj[0];
+        }
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -82,7 +100,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
             int VarijablaZaProvjeru = 0;
             if (int.TryParse(temperaturaTextBox.Text, out VarijablaZaProvjeru) && temperaturaTextBox.Text != "" && izdavateljComboBox.SelectedIndex != -1 && narudzbenicaComboBox.SelectedIndex != -1)
             {
-                //spremi podatke u klasu i pošalji u BP
+                string[] id = narudzbenicaComboBox.SelectedValue.ToString().Split(' ');
+                proizvodni_nalog newInstance = new proizvodni_nalog
+                {
+                    narudzbenica = int.Parse(id[0]),
+                    datum_izdavanja = datum_izdavanjaDateTimePicker.Value,
+                    izdavatelj = nadjiIzdavatelja(izdavateljComboBox.SelectedValue.ToString()),
+                    temperatura = int.Parse(temperaturaTextBox.Text)
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+
                 this.Close();
             }
         }
