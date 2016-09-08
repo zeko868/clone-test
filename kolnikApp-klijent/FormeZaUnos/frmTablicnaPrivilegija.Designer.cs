@@ -52,7 +52,6 @@
             // 
             // controlBox
             // 
-<<<<<<< HEAD
             this.controlBox.Location = new System.Drawing.Point(3, 2);
             this.controlBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.controlBox.Size = new System.Drawing.Size(533, 41);
@@ -74,7 +73,6 @@
             this.CloseButton.Location = new System.Drawing.Point(483, 0);
             this.CloseButton.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CloseButton.Size = new System.Drawing.Size(44, 38);
-=======
             this.controlBox.Location = new System.Drawing.Point(2, 2);
             this.controlBox.Size = new System.Drawing.Size(400, 33);
             // 
@@ -89,7 +87,6 @@
             // CloseButton
             // 
             this.CloseButton.Location = new System.Drawing.Point(363, 0);
->>>>>>> origin/master
             // 
             // radno_mjestoLabel
             // 
@@ -257,15 +254,12 @@
             this.Controls.Add(this.GumbIzlaz);
             this.Controls.Add(this.GumbPotvrda);
             this.Controls.Add(this.NaslovTablicaPrivilegija);
-<<<<<<< HEAD
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximumSize = new System.Drawing.Size(2560, 1268);
             this.Name = "frmTablicnaPrivilegija";
             this.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-=======
             this.MaximumSize = new System.Drawing.Size(1280, 984);
             this.Name = "frmTablicnaPrivilegija";
->>>>>>> origin/master
             this.Text = "frmTablicaPrivilegija";
             this.Controls.SetChildIndex(this.controlBox, 0);
             this.Controls.SetChildIndex(this.NaslovTablicaPrivilegija, 0);
