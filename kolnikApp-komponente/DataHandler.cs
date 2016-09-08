@@ -198,7 +198,11 @@ namespace kolnikApp_komponente
                     {
                         if (i == 0)
                         {
-                            if ((info.GetValue(sth) == null && info.GetValue(oldValIfUpdating) == null) || info.GetValue(sth).Equals(info.GetValue(oldValIfUpdating)))
+                            if ((info.GetValue(sth) == null && info.GetValue(oldValIfUpdating) == null))
+                            {
+                                continue;
+                            }
+                            else if ((info.GetValue(sth) != null && info.GetValue(oldValIfUpdating) != null) && info.GetValue(sth).Equals(info.GetValue(oldValIfUpdating)))
                             {
                                 continue;
                             }
@@ -216,6 +220,15 @@ namespace kolnikApp_komponente
                             switch (info.PropertyType.Name)
                             {
                                 case "DateTime":
+                                    if (i == 1) //ovaj način se vrši jer je razlika u formatu zapisa u bazi i objekata u .netu (u bp s milisekundama, tu ne)
+                                    {
+                                        break;  //pretpostavka da datum nije PK (jedinstvena značajka zapisa)
+                                    }
+                                    else
+                                    {
+                                        commandForUpdatingRecord += info.Name + "='" + info.GetValue(obj).ToString() + "'" + delimiter;
+                                    }
+                                    break;
                                 case "String":
                                     commandForUpdatingRecord += info.Name + "='" + info.GetValue(obj).ToString() + "'" + delimiter;
                                     break;
@@ -248,7 +261,10 @@ namespace kolnikApp_komponente
                     string commandForUpdatingRecord = GenerateCommandForUpdatingRecord(tip, sth, oldValIfUpdating);
                     try
                     {
-                        dataContextInstance.ExecuteCommand(commandForUpdatingRecord);
+                        if (commandForUpdatingRecord != ";")
+                        {
+                            dataContextInstance.ExecuteCommand(commandForUpdatingRecord);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -746,9 +762,27 @@ namespace kolnikApp_komponente
 
             foreach (var prop in obj.GetType().GetProperties())
             {
-                if (!prop.GetValue(obj).Equals(prop.GetValue(obj2)))
+                if (prop.GetValue(obj) == null && prop.GetValue(obj2) == null)
+                {
+                    continue;
+                }
+                else if (prop.GetValue(obj) == null || prop.GetValue(obj2) == null)
                 {
                     return false;
+                }
+                else
+                {
+                    if (prop.PropertyType.Name == "DateTime")
+                    {
+                        if (((DateTime)prop.GetValue(obj)).Date != ((DateTime)prop.GetValue(obj2)).Date)
+                        {
+                            return false;
+                        }
+                    }
+                    else if (!prop.GetValue(obj).Equals(prop.GetValue(obj2)))
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

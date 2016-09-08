@@ -46,9 +46,9 @@ namespace kolnikApp_klijent
         {
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
 
-            for (int i = 0; i < 10 && DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting; i++)
+            while (DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting)
             {
-                Thread.Sleep(200);
+                ;
             }
             if (DataHandler.UserLoginState == (byte)DataHandler.LoginState.waiting)
             {

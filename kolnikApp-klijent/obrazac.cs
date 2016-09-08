@@ -592,7 +592,7 @@ namespace kolnikApp_klijent
                 string ImeForme = pretvoriUImeForme("Update");
                 Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
                 Form FormaZaUpdate=null;
-                if(additionalDgv.SelectedRows.Count != 0)
+                if(additionalDgv.SelectedRows.Count != 0 && NaslovTablice.Tag.ToString() != "racun")
                 {
                     DataGridViewRow addSelektiraniRedak = null;
                     foreach (DataGridViewRow addRed in additionalDgv.SelectedRows)
@@ -600,10 +600,6 @@ namespace kolnikApp_klijent
                         addSelektiraniRedak = addRed;
                     }
                     FormaZaUpdate = (Form)Activator.CreateInstance(Tipforme, SelektiraniRedak, addSelektiraniRedak);
-                }
-                else if (additionalDgv.Visible)
-                {
-                    return;
                 }
                 else
                 {
