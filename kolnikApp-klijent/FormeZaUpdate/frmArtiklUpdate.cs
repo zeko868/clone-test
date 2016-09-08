@@ -11,6 +11,9 @@ using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
+    /// <summary>
+    /// Klasa za prikaz forme za modifikaciju artikala
+    /// </summary>
     public partial class frmArtiklUpdate :
 #if DEBUG
             PosrednaFormaZaDebugVerziju
@@ -19,7 +22,13 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        /// <summary>
+        /// Inicijalni mijenjani artikl
+        /// </summary>
         artikl oldInstance = null;
+        /// <summary>
+        ///Kreira formu za modifikaciju artikala koja je naslijeđena od roditeljske forme sa definiranim svojstvima dizajna
+        /// </summary>
         public frmArtiklUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
@@ -33,11 +42,20 @@ namespace kolnikApp_klijent.FormeZaUpdate
             jedinicna_cijenaTextBox.Text = PodatkovniRedak.Cells["jedinicna_cijena"].Value.ToString();
         }
 
+        /// <summary>
+        /// Zatvaranje forme pritiskom na naslijeđenu tipku za zatvaranje prozora
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Prikaz pogrešaka koje su se dogodile kod (ne)unosa podataka u kontrole
+        /// </summary>
+        /// <param name="LabelaUpozorenja"></param>
         private void popuniLabeleUpozorenja(Label LabelaUpozorenja)
         {
             string TekstUpozorenja = "Polje mora biti popunjeno";
@@ -45,6 +63,11 @@ namespace kolnikApp_klijent.FormeZaUpdate
             LabelaUpozorenja.Show();
         }
 
+        /// <summary>
+        /// Prikaži potencijalnu pogrešku prilikom napuštanja kontrole
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nazivTextBox_Leave(object sender, EventArgs e)
         {
             if (nazivTextBox.Text == "")
@@ -57,6 +80,11 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
         }
 
+        /// <summary>
+        /// Prikaži potencijalnu pogrešku prilikom napuštanja kontrole
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void jedinicna_cijenaTextBox_Leave(object sender, EventArgs e)
         {
             float VarijablaZaProvjeru = 0;
@@ -75,6 +103,11 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
         }
 
+        /// <summary>
+        /// Pokušaj slanja podataka poslužitelju ukoliko su ispravni
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GumbPotvrda_Click(object sender, EventArgs e)
         {
             if (jedinicna_cijenaTextBox.Text == "")

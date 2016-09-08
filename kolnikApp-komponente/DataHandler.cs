@@ -21,10 +21,19 @@ using System.Xml.Serialization;
 
 namespace kolnikApp_komponente
 {
+    /// <summary>
+    /// Klasa za rad s podacima, te za komunikaciju s bazom podataka
+    /// </summary>
     public class DataHandler : IDisposable
     {
+        /// <summary>
+        /// Šalju li se svima podaci za slanje
+        /// </summary>
         private bool sendToAll = false;
 
+        /// <summary>
+        /// Stanja koja se mogu pojaviti prilikom pokušaja prijave u sustav
+        /// </summary>
         public enum LoginState
         {
             waiting = 0,
@@ -32,9 +41,19 @@ namespace kolnikApp_komponente
             success = 2
         }
 
+        /// <summary>
+        /// Trenutno stanje korisnika tokom pokušaja prijave u sustav
+        /// </summary>
         public static volatile byte UserLoginState;
 
+        /// <summary>
+        /// Jesu li sve promjene učinjene nad bazom
+        /// </summary>
         private static volatile bool changesCommited = false;
+
+        /// <summary>
+        /// Jesu li sve promjene učinjene nad bazom
+        /// </summary>
         public static bool ChangesCommited
         {
             get
@@ -53,8 +72,14 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Podaci prijavljenog korisnika
+        /// </summary>
         private static osoba loggedUser;
 
+        /// <summary>
+        /// Podaci prijavljenog korisnika
+        /// </summary>
         public static osoba LoggedUser
         {
             get
@@ -67,25 +92,70 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Temperatura koja se iščituje putem temperaturnog senzora s Arduino mikrokontrolera
+        /// </summary>
         public static volatile int Temperatura = 0;
 
+        /// <summary>
+        /// Port i frekvencija na kojem aplikacija osluškuje i kontaktira spojeni Arduino mikrokontroler radi serijske komunikacije
+        /// </summary>
         public static SerialPort ArduinoPort;
 
+        /// <summary>
+        /// Instanca podatkovnog konteksta
+        /// </summary>
         private DataClasses1DataContext dataContextInstance;
 
+        /// <summary>
+        /// Da li se pojavila pogreška prilikom rada s podacima ili njihove pohrane
+        /// </summary>
         public bool HasErrorOccurred = false;
+        /// <summary>
+        /// Opis potencijalno pojavljene pogreške
+        /// </summary>
         public string ErrorInfo = null;
+        /// <summary>
+        /// Naziv vrste entiteta kod kojeg se je pojavila pogreška
+        /// </summary>
         public string EntityOnWhichErrorRefers = null;
+        /// <summary>
+        /// Je li trenutno primljena poruka zapravo samo potvrda na prethodno zatraženi zahtje
+        /// </summary>
         public bool IsConfirmationOfPreviousRequest = false;
+        /// <summary>
+        /// Šalje li se zapravo odgovor klijentu tek kada Arduino mikrokontroler izvrši obradu i pošalje odgovor
+        /// </summary>
         public bool SendWhenMessageWillBeReceivedFromMicrocontroller = false;
+        /// <summary>
+        /// Sadržaj za slanje
+        /// </summary>
         public string ResponseForSending;
+        /// <summary>
+        /// Lista odredišta na koje se treba poruka slati
+        /// </summary>
         public System.Net.IPEndPoint[] IPAddressesOfDestinations = null;
 
+        /// <summary>
+        /// Kolekcija svih vrsta entiteta dostupnih korisniku za korištenje kao i liste svih instanci svakoga
+        /// </summary>
         public static Dictionary<string, BindingList<object>> entityNamesWithReferencesToBelongingDataStores = null;
+        /// <summary>
+        /// Lista svih naziva entiteta koji su korisniku služe za formiranje tipki za pristup karticama za pregled i rad s podacima
+        /// </summary>
         public static List<string> entityNamesForButtons = new List<string>();
+        /// <summary>
+        /// Kolekcija svih odnosa među vrstama entiteta (temelje se na postojanju  referencijalnog integriteta među tablicama)
+        /// </summary>
         static List<Dictionary<string, object>> entityRelationships = null;
+        /// <summary>
+        /// Kolekcija tablica i njihovih atributa koji sadrže AutoIncrement svojstvo
+        /// </summary>
         static List<Dictionary<string, object>> entityAutoIncrementColumns = null;
 
+        /// <summary>
+        /// Operacije koje korisnik može posjedovati nad radom s instancama određene vrste entiteta
+        /// </summary>
         public enum Operations
         {
             C = 1,
@@ -94,24 +164,11 @@ namespace kolnikApp_komponente
             D = 8
         }
 
-        public static Nullable<T> TypeToNullableType<T>(string s) where T : struct
-        {
-            Nullable<T> result = new Nullable<T>();
-            try
-            {
-                if (!string.IsNullOrEmpty(s) && s.Trim().Length > 0)
-                {
-                    TypeConverter conv = TypeDescriptor.GetConverter(typeof(T));
-                    result = (T)conv.ConvertFrom(s);
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Pojavila se pogreška prilikom pokušaja pretvorbe u Nullable tip.");
-            }
-            return result;
-        }
-
+        /// <summary>
+        /// Provjerava da li je proslijeđeni objekt zapravo kolekcija drugih objekata
+        /// </summary>
+        /// <param name="variable">Objekt čiji se tip želi ispitati</param>
+        /// <returns>Istina ako je objekt kolekcija, inače laž</returns>
         private static bool IsCollection(object variable)
         {
             return variable.GetType().GetInterfaces().Any(
@@ -120,6 +177,11 @@ namespace kolnikApp_komponente
             );
         }
 
+        /// <summary>
+        /// Serijalizira objekte u tekst XML formata
+        /// </summary>
+        /// <param name="instance">Objekt (može biti i kolekcija objekata) koji je potrebno serijalizirati</param>
+        /// <returns>Tekst koji predočava serijalizirani objekt</returns>
         public static string ConvertObjectsToXMLData(object instance)
         {
             MemoryStream stream1 = new MemoryStream();
@@ -148,34 +210,66 @@ namespace kolnikApp_komponente
             return Regex.Replace(xmlOutput.Replace("xmlns:z=\"http://schemas.microsoft.com/2003/10/Serialization/\"", "").Replace(" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\" ", "").Replace(" i:nil=\"true\"", ""), @" z:Id=""i\d+""", "");
         }
 
+        /// <summary>
+        /// Dodaje roditeljski element svim serijaliziranim podacima jer na najvišoj razini DOM-a može biti samo jedan čvor
+        /// </summary>
+        /// <param name="XMLData">Serijalizirani podaci koji se žele omotati roditeljskim elementom</param>
+        /// <returns>Serijalizirani podaci zajedno s omotačem</returns>
         public static string AddWrapperOverXMLDatagroups(string XMLData)
         {
             return "<data>" + XMLData + "</data>";
         }
 
+        /// <summary>
+        /// Dodaje operaciju koja definira što treba sa serijaliziranim objektima učiniti
+        /// </summary>
+        /// <param name="XMLData">Serijalizirani podaci</param>
+        /// <param name="action">Operacija koja se treba učiniti nad serijaliziranim podacima (može biti slovo C, R, U ili D)</param>
+        /// <returns>Serijalizirane podatke zajedno s oznakom operacije za koju su namijenjeni</returns>
         public static string AddHeaderInfoToXMLDatagroup(string XMLData, char action = 'R')
         {
             return "<datagroup action=\"" + action + "\">" + XMLData + "</datagroup>";
         }
 
+        /// <summary>
+        /// Stvara serijaliziran sadržaj entiteta čija klasa službeno ne postoji
+        /// </summary>
+        /// <param name="tagName">Naziv vrste entiteta</param>
+        /// <param name="value">Vrijednost entiteta</param>
+        /// <param name="attributes">Dodatni atributi koji će po XML standardu biti dodijeljeni uz sam čvor</param>
+        /// <returns>Serijalizirani podaci proslijeđenog entiteta</returns>
         private static string ConvertNonObjectDataIntoXMLData(string tagName, string value = null, Dictionary<string,string> attributes = null)
         {
             return "<" + tagName + (attributes!=null?String.Join("", attributes.Select(x => " " + x.Key + "=\"" + x.Value + "\"")):"") + ">" + (value==null?"":value) + "</" + tagName + ">";
         }
 
+        /// <summary>
+        /// Kreira sadržaj poruke za testiranje prisutnosti korisnika
+        /// </summary>
+        /// <returns>Sadržaj poruke za testiranje prisutnosti korisnika</returns>
         public string CreateMessageForAvailabilityChecking()
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("provjeri_dostupnost")));
         }
+
+        /// <summary>
+        /// Kreira sadržaj poruke koji obuhvaća poruku o pogrešci koja se dogodila tokom rada s podacima
+        /// </summary>
+        /// <returns>Sadržaj poruke s pogreškom koja se dogodila</returns>
         public string ConstructErrorMessageContent()
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData(EntityOnWhichErrorRefers, ErrorInfo)));
         }
 
+        /// <summary>
+        /// Kreira sadržaj poruke za zahtjev temperature mjerene bitumenske mješavine
+        /// </summary>
+        /// <returns>Sadržaj poruke za zahtjev temperature</returns>
         public static string ConstructTemperatureRequest()
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature"), 'R'));
         }
+
         private string GenerateCommandForUpdatingRecord(Type tip, object sth, object oldValIfUpdating)
         {
             string commandForUpdatingRecord = "UPDATE " + tip.Name;

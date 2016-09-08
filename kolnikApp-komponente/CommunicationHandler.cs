@@ -13,19 +13,55 @@ using System.Threading.Tasks;
 
 namespace kolnikApp_komponente
 {
+    /// <summary>
+    /// Klasa koja sadrži podlogu za jednostavnu mrežnu komunikaciju putem UDP-a
+    /// </summary>
     public class CommunicationHandler
     {
+        /// <summary>
+        /// Mrežna utičnica koja osluškuje mrežni promet
+        /// </summary>
         private static Socket netSocket;
+        /// <summary>
+        /// Objekt za asinkronu mrežnu komunikaciju
+        /// </summary>
         private static SocketAsyncEventArgs netSocketServerArgs;
+        /// <summary>
+        /// Spremnik za pohranu primljenog sadržaja putem mreže
+        /// </summary>
         private static byte[] netSocketBuffer;
+        /// <summary>
+        /// Stanje koje identificira da li je riječ o serverskoj aplikaciji ili klijentskoj
+        /// </summary>
         private bool isServer;
+        /// <summary>
+        /// Objekt za postizanje međusobnog isključavanja kod višedretvenosti (najčešće kod asinkronih operacija)
+        /// </summary>
         private static object thisLock = new object();
+        /// <summary>
+        /// Tvornički predviđen port na kojem bi aplikacija osluškivala mrežni promet i koristila za slanje
+        /// </summary>
         private const ushort defaultPortNumber = 8087;
+        /// <summary>
+        /// Vremenski period između 2 testiranja prisutnosti korisnika
+        /// </summary>
         private const int intervalLengthBetweenTimeoutChecksInMsec = 30000;
+        /// <summary>
+        /// Vremenski period nakon kojeg se korisnici smatraju neaktivnima (dropped out) ako ne odgovore na test prisutnosti
+        /// </summary>
         private const short numOfMsecToWaitForTimeoutResponse = 2000;
+        /// <summary>
+        /// Broj pokušaja slanja prethodno prvotno poslane poruke za koju nije primljen odgovor
+        /// </summary>
         private const byte numOfRepeatsOfTimeoutChecksIfClientDoesNotResponse = 3;
+        /// <summary>
+        /// Adresa poslužitelja kojem se šalju zahtjevi za rad s podacima na strani korisnika
+        /// </summary>
         private IPEndPoint serverAddress = null;
 
+        /// <summary>
+        /// Inicijalizira osnovna svojstva za uobičajenu komunikaciju putem UDP-a
+        /// </summary>
         private void InitializeObjectsForIPv4NetworkCommunication()
         {
             netSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
@@ -44,6 +80,11 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Konvertira hostname (URI) odredišta u IP adresu korištenjem DNS protokola
+        /// </summary>
+        /// <param name="hostname">Hostname (URI) odredišta</param>
+        /// <returns>IP adresa koju je vratio DNS server</returns>
         private IPAddress GetIPFromHostnameViaDNS(string hostname)
         {
             IPHostEntry hostEntry;
@@ -60,11 +101,19 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Provjera da li je proslijeđena IPv4 adresa valjana
+        /// </summary>
+        /// <param name="ipAddress">IPv4 adresa</param>
+        /// <returns></returns>
         private bool IsValidIPAddress(string ipAddress)
         {
             return Regex.IsMatch(ipAddress, @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
         }
 
+        /// <summary>
+        /// Ispituje da li je koji korisnik u međuvremenu neregularno odjavljen od servera
+        /// </summary>
         private void CheckIfAnyUserHasTimedOut()
         {
             string checkAvailabilityMessageContent;
@@ -91,6 +140,13 @@ namespace kolnikApp_komponente
                 Thread.Sleep(intervalLengthBetweenTimeoutChecksInMsec - numOfMsecToWaitForTimeoutResponse);
             }
         }
+
+        /// <summary>
+        /// konstruktor klase za rad s prijenosom podataka
+        /// </summary>
+        /// <param name="isServer">Je li aplikacija serverska ili klijentska</param>
+        /// <param name="remoteServerIdentifier">IPv4 adresa ili hostname (URI) računala vlastitog računala</param>
+        /// <param name="portNum">Port sa kojeg će se slati poruke putem mreže i sa kojeg će se on osluškivati</param>
         public CommunicationHandler(bool isServer = true, string remoteServerIdentifier = null, ushort portNum = defaultPortNumber)
         {
             this.isServer = isServer;
@@ -140,6 +196,11 @@ namespace kolnikApp_komponente
             netSocket.ReceiveMessageFromAsync(netSocketServerArgs);
         }
 
+        /// <summary>
+        /// Asinkrono upravlja primljenim podacima
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void netSocketServerArgs_Completed(object sender, SocketAsyncEventArgs e)
         {
             if (netSocketServerArgs.LastOperation == SocketAsyncOperation.ReceiveMessageFrom)
@@ -184,12 +245,22 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Šalje specifičnu poruku na definirano odredište koristeći inicijalno definiranu mrežnu utičnicu
+        /// </summary>
+        /// <param name="message">Sadržaj za slanje</param>
+        /// <param name="destinationIPAddress">Odredište na koje se poruka šalje</param>
         private static void MessageSend(string message, EndPoint destinationIPAddress)
         {
             netSocketBuffer = UTF8Encoding.UTF8.GetBytes(message);
             netSocket.SendTo(netSocketBuffer, destinationIPAddress);
         }
 
+        /// <summary>
+        /// Upravlja podacima zaprimljenim putem serijske komunikacije
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public static void DataThroughSerialCommunicationHasBeenReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string primljenaPoruka = ((SerialPort)sender).ReadLine();
@@ -218,6 +289,9 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Šalje zahtjev za dohvaćanje svih podataka svih vrsti entiteta kojima pošiljatelj ima pristup
+        /// </summary>
         public void SendRequestForSendingUsedData()
         {
             using (DataHandler obj = new DataHandler())
@@ -226,18 +300,31 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Šalje podatke za prijavu u sustav
+        /// </summary>
+        /// <param name="userIdentity">OIB korisnika ili korisničko ime</param>
+        /// <param name="password">Pripadajuća lozinka za navedeni korisnički račun</param>
+        /// <param name="isIdentityUsername">Je li riječ o OIB-u ili korisničkom imenu</param>
         public void SendLoginCredentials(string userIdentity, string password, bool isIdentityUsername)
         {
             DataHandler instance = new DataHandler();
             MessageSend(instance.ConstructLoginMessageContent(userIdentity, password, isIdentityUsername), serverAddress);
         }
 
+        /// <summary>
+        /// Šalje zahtjev za odjavom sa poslužitelja
+        /// </summary>
         public void SendLogoutRequest()
         {
             DataHandler instance = new DataHandler();
             MessageSend(instance.ConstructLogoutMessageContent(), serverAddress);
         }
 
+        /// <summary>
+        /// Šalje proslijeđeni serijalizirani sadržaj poslužitelju
+        /// </summary>
+        /// <param name="serializedData">Serijalizirani sadržaj (ovdje se koristi XML standard)</param>
         public void SendSerializedData(string serializedData)
         {
             MessageSend(serializedData, serverAddress);
