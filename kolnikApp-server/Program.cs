@@ -56,6 +56,7 @@ namespace kolnikApp_server
             {
                 arduinoPort.Open();
                 arduinoPort.DataReceived += CommunicationHandler.DataThroughSerialCommunicationHasBeenReceived;
+                DataHandler.ArduinoPort = arduinoPort;
             }
             catch (Exception ex)
             {
@@ -77,6 +78,8 @@ namespace kolnikApp_server
                         try
                         {
                             arduinoPort.Open();
+
+                            DataHandler.ArduinoPort = arduinoPort;
                         }
                         catch (Exception e)
                         {

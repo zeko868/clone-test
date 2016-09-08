@@ -67,7 +67,9 @@ namespace kolnikApp_komponente
             }
         }
 
-        public static SerialPort arduinoPort;
+        public static volatile int Temperatura = 0;
+
+        public static SerialPort ArduinoPort;
 
         private DataClasses1DataContext dataContextInstance;
 
@@ -168,6 +170,11 @@ namespace kolnikApp_komponente
         public string ConstructErrorMessageContent()
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData(EntityOnWhichErrorRefers, ErrorInfo)));
+        }
+
+        public static string ConstructTemperatureRequest()
+        {
+            return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature"), 'R'));
         }
         private string GenerateCommandForUpdatingRecord(Type tip, object sth, object oldValIfUpdating)
         {
@@ -395,7 +402,7 @@ namespace kolnikApp_komponente
                     case "senzor_temperature":
                         if (!isClientSide)
                         {
-                            if (arduinoPort != null)
+                            if (ArduinoPort != null)
                             {
                                 if (IsUserPrivilegedToDoAnAction(address, "otpremnica", 'C') || IsUserPrivilegedToDoAnAction(address, "otpremnica", 'U'))
                                 {
@@ -413,7 +420,15 @@ namespace kolnikApp_komponente
                         }
                         else
                         {
-
+                            int temperatura;
+                            if (int.TryParse(datagroup.Elements().First().Value, out temperatura)) {
+                                Temperatura = temperatura;
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show(datagroup.Elements().First().Value);
+                                Temperatura = -1;
+                            }
                         }
                         break;
                     case "pristiglo_vozilo":
@@ -971,7 +986,7 @@ namespace kolnikApp_komponente
                     EntityOnWhichErrorRefers = "senzor_temperature";
                 }
                 string oibIdentifier = "OIB=";
-                string oibPrimatelja = primljenaPoruka.Substring(primljenaPoruka.IndexOf(oibIdentifier) + oibIdentifier.Length);
+                string oibPrimatelja = primljenaPoruka.Substring(primljenaPoruka.IndexOf(oibIdentifier) + oibIdentifier.Length).TrimEnd();
                 IPAddressesOfDestinations = ClientsAddressesList.addressList.Where(x => x.Oib == oibPrimatelja).Select(x => x.EndPoint).ToArray();
                 if (HasErrorOccurred)
                 {
@@ -995,7 +1010,7 @@ namespace kolnikApp_komponente
         {
             try
             {
-                arduinoPort.WriteLine("temperatura&OIB=" + oibZahtjevatelja);
+                ArduinoPort.WriteLine("temperatura&OIB=" + oibZahtjevatelja);
             }
             catch
             {

@@ -242,6 +242,11 @@ namespace kolnikApp_komponente
         {
             MessageSend(serializedData, serverAddress);
         }
+
+        public void SendRequestForGettingTemperatura()
+        {
+            MessageSend(DataHandler.ConstructTemperatureRequest(), serverAddress);
+        }
     }
 
 }

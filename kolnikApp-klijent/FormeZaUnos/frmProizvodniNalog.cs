@@ -152,5 +152,23 @@ namespace kolnikApp_klijent.FormeZaUnos
         {
             izdavateljComboBox.Hide();
         }
+
+        private void btnDohvatiTemperaturu_Click(object sender, EventArgs e)
+        {
+            sockObj.SendRequestForGettingTemperatura();
+            while (DataHandler.Temperatura == 0)
+            {
+                ;
+            }
+            if (DataHandler.Temperatura == -1)
+            {
+                DataHandler.Temperatura = 0;
+            }
+            else
+            {
+                temperaturaTextBox.Text = DataHandler.Temperatura.ToString();
+                DataHandler.Temperatura = 0;
+            }
+        }
     }
 }
