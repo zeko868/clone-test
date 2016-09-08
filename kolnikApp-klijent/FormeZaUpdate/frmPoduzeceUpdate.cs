@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
@@ -18,9 +19,17 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        poduzece oldInstance = null;
         public frmPoduzeceUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
+            oldInstance = new poduzece
+            {
+                oib = PodatkovniRedak.Cells["oib"].Value.ToString(),
+                naziv = PodatkovniRedak.Cells["naziv"].Value.ToString(),
+                adresa = PodatkovniRedak.Cells["adresa"].Value.ToString(),
+                iban = PodatkovniRedak.Cells["iban"].Value.ToString()
+            };
             oibTextBox.Text = PodatkovniRedak.Cells["oib"].Value.ToString();
             nazivTextBox.Text= PodatkovniRedak.Cells["naziv"].Value.ToString();
             adresaTextBox.Text= PodatkovniRedak.Cells["adresa"].Value.ToString();
@@ -88,7 +97,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
             if (IspravanOib && nazivTextBox.Text != "" && adresaTextBox.Text != "" && ibanTextBox.Text != "")
             {
-                //staviti podatke u klasu i postati u BP
+                poduzece newInstance = new poduzece
+                {
+                    oib = oibTextBox.Text,
+                    naziv = nazivTextBox.Text,
+                    adresa = adresaTextBox.Text,
+                    iban = ibanTextBox.Text
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

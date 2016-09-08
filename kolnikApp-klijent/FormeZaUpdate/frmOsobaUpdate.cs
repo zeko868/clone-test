@@ -117,7 +117,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
             {
                 popuniLabeleUpozorenja(UpozorenjeKorIme);
             }
-            //što je s lozinkom???
             if (IspravanOib && imeTextBox.Text != "" && prezimeTextBox.Text != "")
             {
                 korisnicki_racun newAccountInstance = null;

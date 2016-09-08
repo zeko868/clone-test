@@ -19,10 +19,25 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        class PodaciZaOldInstance
+        {
+            public int artikl { get; set; }
+            public int vozi { get; set; }
+            public string izdavatelj { get; set; }
+        }
+        otpremnica oldInstance = null;
         public frmOtpremnicaUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
-
+            PodaciZaOldInstance objekt = new PodaciZaOldInstance();
+            string []kljuc = PodatkovniRedak.Cells["narudzbenica"].Value.ToString().Split(' ');
+            oldInstance = new otpremnica
+            {
+                nalog = int.Parse(kljuc[0]),
+                datum_otpreme = datum_otpremeDateTimePicker.Value,
+                otpremitelj = nadjiIzdavatelja(PodatkovniRedak.Cells["izdavatelj"].Value.ToString()),
+                racun = nadjiRacun(int.Parse(kljuc[0]))
+            };
             narudzbenicaComboBox.DataSource=
                 (from nalogObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["proizvodni_nalog"]
                  join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
@@ -52,6 +67,25 @@ namespace kolnikApp_klijent.FormeZaUpdate
             datum_otpremeDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_otpreme"].Value;
         }
 
+        private int? nadjiRacun(int kljuc)
+        {
+            var racun =
+                (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
+                 where ((otpremnica)otpremnicaObj).nalog == kljuc
+                 select ((otpremnica)otpremnicaObj).racun).ToArray();
+            return racun[0];
+        }
+        private string nadjiIzdavatelja(string podatak)
+        {
+            string[] imeIzdavatelja = podatak.Split(' ');
+            string[] izdavatelj =
+                (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
+                 join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 on ((otpremnica)otpremnicaObj).otpremitelj equals ((osoba)zaposlenikObj).oib
+                 where ((osoba)zaposlenikObj).ime == imeIzdavatelja[0] && ((osoba)zaposlenikObj).prezime == imeIzdavatelja[1]
+                 select ((osoba)zaposlenikObj).oib).ToArray();
+            return izdavatelj[0];
+        }
         private void GumbIzlaz_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -77,7 +111,16 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
             if (narudzbenicaComboBox.SelectedIndex != -1 && izdavateljComboBox.SelectedIndex != -1)
             {
-                //popuniti klasu podacima i poslati u BP
+                otpremnica newInstance = new otpremnica
+                {
+                    nalog = oldInstance.nalog,
+                    otpremitelj = nadjiIzdavatelja(izdavateljComboBox.SelectedValue.ToString()),
+                    datum_otpreme = datum_otpremeDateTimePicker.Value,
+                    racun = oldInstance.racun
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
 

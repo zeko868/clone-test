@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using kolnikApp_komponente;
 
 namespace kolnikApp_klijent.FormeZaUpdate
 {
@@ -18,12 +19,18 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        artikl oldInstance = null;
         public frmArtiklUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
+            oldInstance = new artikl
+            {
+                id = int.Parse(PodatkovniRedak.Cells["id"].Value.ToString()),
+                naziv = PodatkovniRedak.Cells["naziv"].Value.ToString(),
+                jedinicna_cijena = decimal.Parse(PodatkovniRedak.Cells["jedinicna_cijena"].Value.ToString())
+            };
             nazivTextBox.Text = PodatkovniRedak.Cells["naziv"].Value.ToString();
             jedinicna_cijenaTextBox.Text = PodatkovniRedak.Cells["jedinicna_cijena"].Value.ToString();
-
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -82,7 +89,15 @@ namespace kolnikApp_klijent.FormeZaUpdate
             float VarijablaZaProvjeru = 0;
             if (float.TryParse(jedinicna_cijenaTextBox.Text, out VarijablaZaProvjeru) && nazivTextBox.Text != "" && jedinicna_cijenaTextBox.Text != "")
             {
-                //pohrani podatke u klasu i pošalji na server
+                
+                artikl newInstance = new artikl
+                {
+                    id = oldInstance.id,
+                    naziv = nazivTextBox.Text,
+                    jedinicna_cijena = decimal.Parse(jedinicna_cijenaTextBox.Text)
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }

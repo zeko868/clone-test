@@ -19,9 +19,29 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
+        class PodaciZaOldInstance
+        {
+            public int artikl { get; set; }
+            public int vozi { get; set; }
+            public string izdavatelj { get; set; }
+        }
+
+        narudzbenica_bitumenske_mjesavine oldInstance = null;
         public frmNarudzbenicaBitumenskeMjesavineUpdate(DataGridViewRow PodatkovniRedak) : base(false)
         {
             InitializeComponent();
+            PodaciZaOldInstance objekt = new PodaciZaOldInstance();
+            dohvatiPodatke(int.Parse(PodatkovniRedak.Cells["id_narudzbenica"].Value.ToString()));
+            oldInstance = new narudzbenica_bitumenske_mjesavine
+            {
+                id = int.Parse(PodatkovniRedak.Cells["id_narudzbenica"].Value.ToString()),
+                datum_izdavanja = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value,
+                datum_potrazivanja = (DateTime)PodatkovniRedak.Cells["datum_potrazivanja"].Value,
+                izdavatelj = objekt.izdavatelj,
+                artikl = objekt.artikl,
+                vozi = objekt.vozi,
+                kolicina = decimal.Parse(PodatkovniRedak.Cells["kolicina"].Value.ToString())
+            };
             datum_izdavanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_izdavanja"].Value;
             datum_potrazivanjaDateTimePicker.Value = (DateTime)PodatkovniRedak.Cells["datum_potrazivanja"].Value;
 
@@ -53,6 +73,19 @@ namespace kolnikApp_klijent.FormeZaUpdate
             voziComboBox.SelectedItem = PodatkovniRedak.Cells["vozi"].Value;
 
             kolicinaTextBox.Text = PodatkovniRedak.Cells["kolicina"].Value.ToString();
+        }
+
+        private void dohvatiPodatke(int key)
+        {
+            var podaci =
+                (from narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                 where ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id == key
+                 select new PodaciZaOldInstance
+                 {
+                     artikl = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl,
+                     vozi = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).vozi,
+                     izdavatelj = ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).izdavatelj
+                 }).ToArray();
         }
 
         private void GumbIzlaz_Click(object sender, EventArgs e)
@@ -93,11 +126,53 @@ namespace kolnikApp_klijent.FormeZaUpdate
             }
             if (provjeriIspravnostDatuma() && izdavateljComboBox.SelectedIndex != -1 && voziComboBox.SelectedIndex != -1 && artiklComboBox.SelectedIndex != -1 && kolicinaTextBox.Text != "")
             {
-                //pohraniti podatke u klasu i poslati u BP
+                narudzbenica_bitumenske_mjesavine newInstance = new narudzbenica_bitumenske_mjesavine
+                {
+                    id=oldInstance.id,
+                    datum_izdavanja = datum_izdavanjaDateTimePicker.Value,
+                    datum_potrazivanja = datum_potrazivanjaDateTimePicker.Value,
+                    izdavatelj = nadjiIzdavatelja(),
+                    artikl = nadjiartikl(),
+                    vozi = nadjivozi(),
+                    kolicina = decimal.Parse(kolicinaTextBox.Text.ToString())
+                };
+
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }
-
+        private string nadjiIzdavatelja()
+        {
+            string[] imeIzdavatelja = izdavateljComboBox.SelectedValue.ToString().Split(' ');
+            var izdavatelj =
+                (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 where ((osoba)zaposlenikObj).ime == imeIzdavatelja[0] && ((osoba)zaposlenikObj).prezime == imeIzdavatelja[1]
+                 select ((osoba)zaposlenikObj).oib).ToArray();
+            return izdavatelj[0];
+        }
+        private int nadjiartikl()
+        {
+            var artikl =
+                (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                 where ((artikl)artiklObj).naziv == artiklComboBox.SelectedValue.ToString()
+                 select ((artikl)artiklObj).id).ToArray();
+            return artikl[0];
+        }
+        private int nadjivozi()
+        {
+            string[] podniz = voziComboBox.SelectedValue.ToString().Split('(');
+            string[] imeVozaca = podniz[0].Split(' ');
+            string[] registracija = podniz[1].Split(')');
+            var vozi =
+                (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                 join zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                 on ((vozi)voziObj).vozac equals ((osoba)zaposlenikObj).oib
+                 where ((vozi)voziObj).vozilo == registracija[0] &&
+                       ((osoba)zaposlenikObj).ime == imeVozaca[0] && ((osoba)zaposlenikObj).prezime == imeVozaca[1]
+                 select ((vozi)voziObj).id).ToArray();
+            return vozi[0];
+        }
         private void datum_izdavanjaDateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             if (provjeriIspravnostDatuma())
