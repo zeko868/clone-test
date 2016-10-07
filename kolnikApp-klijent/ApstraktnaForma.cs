@@ -12,30 +12,75 @@ using System.Windows.Forms;
 
 namespace kolnikApp_klijent
 {
+    /// <summary>
+    /// Klasa koja je nasljeđivana od svih ostalih korištenih korisnički definiranih formi u aplikaciji čime se postiže definiranje svojstava i dizajna svih formi s jednog mjesta
+    /// </summary>
     public abstract class ApstraktnaForma : Form
     {
+        /// <summary>
+        /// Mrežna utičnica putem koje se vrši mrežna komunikacija
+        /// </summary>
         static protected CommunicationHandler sockObj = null;
+
+        /// <summary>
+        /// Okvir s kontrolama unutar kojeg se nalaze tipke za manipulaciju s formom
+        /// </summary>
         protected Panel controlBox;
+
+        /// <summary>
+        /// Slika koja predstavlja tipku za minimizaciju forme
+        /// </summary>
         protected PictureBox Minimize;
+
+        /// <summary>
+        /// Slika koja predstavlja tipku za maksimizaciju/normalizaciju forme
+        /// </summary>
         protected PictureBox RestoreDown;
+
+        /// <summary>
+        /// Slika koja predstavlja tipku za zatvaranje forme
+        /// </summary>
         protected PictureBox CloseButton;
+
+        /// <summary>
+        /// Je li trenutna forma trenutno maksimizirana (s obzirom da ne koriste klasični okviri formi iz samog Windows operacijskog sustava, maksimizacija formi kojeg pruža API OS-a ne daje prihvatljiv efekt koji bi zadovoljavao kriterij maksimiziranja nego se postiže vlastitom implementacijom
+        /// </summary>
         private bool isMaximized;
+
+        /// <summary>
+        /// Je li trenutnoj formi moguće mijenjati veličinu (važi za maksimizirane forme kao i za forme koje ne sadrže kompletni okvir s kontrolama, tj. tipku za maksimizaciju/normalizaciju)
+        /// </summary>
         private bool isResizable;
+
+        /// <summary>
+        /// Je li trenutno stanje forme nepromijenjeno od samog početka pojave trenutne forme
+        /// </summary>
         private bool initialState;
-        private bool isDialogWindow;
+
+        /// <summary>
+        /// Dimenzije forme prije maksimiziranja forme (kako bi se kasnije klikom tipke za normalizaciju forma mogla poprimiti posljednje korištene dimenzije)
+        /// </summary>
         private Rectangle dimensionsBeforeMaximizing;
+
+        /// <summary>
+        /// Konstruktor bazne korisnički definirane klase forme gdje se definira hoće li forme sadržavati klasičan okvir s kontrolama
+        /// </summary>
+        /// <param name="fullControlBox">Istina ukoliko forma treba sadržava tipke za minimizaciju, maksimizaciju/normalizaciju i zatvaranje; inače sadrži samo tipku za zatvaranje forme</param>
         protected ApstraktnaForma(bool fullControlBox = true)
         {
             InitializeComponent();
             if (!fullControlBox)
             {
                 isResizable = false;
-                isDialogWindow = true;
                 RestoreDown.Visible = false;
                 Minimize.Visible = false;
             }
         }
 
+        /// <summary>
+        /// Konstruktor bazne korisnički definirane klase forme gdje se definira mrežna utičnica putem koje će se vršiti mrežna komunikacija
+        /// </summary>
+        /// <param name="sockObj">Mrežna utičnica putem koje se vrši mrežna komunikacija u svim ostalim formama naslijeđenim od bazne</param>
         protected ApstraktnaForma(CommunicationHandler sockObj)
         {
             if (ApstraktnaForma.sockObj == null)
@@ -45,7 +90,12 @@ namespace kolnikApp_klijent
             InitializeComponent();
         }
 
-        private void FormHasBeenActivated(object sender, EventArgs e)
+        /// <summary>
+        /// Prilagođava maksimizirani prozor zaslonu ukoliko tokom izvođenja aplikacije se promijeni rezolucija zaslona
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChangeDefinitionOfMaximizedState(object sender, EventArgs e)
         {
             this.MaximumSize = new Size(Screen.FromControl(this).WorkingArea.Width, Screen.FromControl(this).WorkingArea.Height);
             if (isMaximized)
@@ -54,6 +104,9 @@ namespace kolnikApp_klijent
             }
         }
 
+        /// <summary>
+        /// Maksimizira formu preko cijelog zaslona
+        /// </summary>
         public void MaximizeWindow()
         {
             this.SetDesktopLocation(0, 0);
@@ -61,6 +114,9 @@ namespace kolnikApp_klijent
             this.Width = this.MaximumSize.Width;
         }
 
+        /// <summary>
+        /// Definira inicijalna stilska i druga svojstva alocirane forme
+        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ApstraktnaForma));
@@ -148,22 +204,35 @@ namespace kolnikApp_klijent
             this.isMaximized = false;
             this.initialState = true;
             this.isResizable = true;
-            this.isDialogWindow = false;
+
+            Microsoft.Win32.SystemEvents.DisplaySettingsChanged += new System.EventHandler(this.ChangeDefinitionOfMaximizedState);
         }
 
-        //zatvaranje aplikacije klikom na "X"
+        /// <summary>
+        /// Zatvara prozor klikom na sliku za zatvaranje prozora
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        //minimiziranje aplikacije klikom na "_"
+        /// <summary>
+        /// Minimizira prozor klikom na sliku za minimizaciju prozora
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Minimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        //stavljanje aplikacije u "window" mode
+        /// <summary>
+        /// Maksimizira ili pak normalizira prozor klikom na sliku za maksimizaciju/normalizaciju prozora
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RestoreDown_Click(object sender, EventArgs e)
         {
             if (isMaximized)
@@ -198,9 +267,11 @@ namespace kolnikApp_klijent
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
-
-        //omogućavanje micanje forme po ekranu ako smo pozicionirani na formi
-        //i držimo pritisnutu tipku miša 
+        /// <summary>
+        /// Omogućuje micanje forme po ekranu ako smo pozicionirani na formi i držimo pritisnutu lijevu tipku miša jer nakon odbacivanja klasičnog okvira formi iz Windows OS-a nije moguće vršiti navedenu operaciju
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void titleBar_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -221,6 +292,11 @@ namespace kolnikApp_klijent
             }
         }
 
+        /// <summary>
+        /// Pohranjuje veličinu dijela zaslona koji se može iskoristiti za maksimizaciju forme nakon što se očita
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ApstraktnaForma_Load(object sender, EventArgs e)
         {
             this.MaximumSize = new Size(Screen.FromControl(this).WorkingArea.Width, Screen.FromControl(this).WorkingArea.Height);
@@ -236,6 +312,9 @@ namespace kolnikApp_klijent
             HTBOTTOMLEFT = 16,
             HTBOTTOMRIGHT = 17;
 
+        /// <summary>
+        /// Širina granice u pikselima oko ruba prozora na kojeg je moguće kliknuti u svrhi mijenjanja veličine forme
+        /// </summary>
         const int resizableBorderWidth = 10;
 
         new Rectangle Top { get { return new Rectangle(0, 0, this.ClientSize.Width, resizableBorderWidth); } }
@@ -249,6 +328,10 @@ namespace kolnikApp_klijent
         Rectangle BottomRight { get { return new Rectangle(this.ClientSize.Width - resizableBorderWidth, this.ClientSize.Height - resizableBorderWidth, resizableBorderWidth, resizableBorderWidth); } }
 
 
+        /// <summary>
+        /// Nadjačana metoda za renderiranje formi, konkretno za definiranje rubova čijim povlačenjem je moguće mijenjati veličinu forme jer nakon odbacivanja klasičnog okvira formi iz Windows OS-a nije moguće vršiti navedenu operaciju
+        /// </summary>
+        /// <param name="message">Poruka koja se šalje jezgri operacijskog sustava</param>
         protected override void WndProc(ref Message message)
         {
             base.WndProc(ref message);

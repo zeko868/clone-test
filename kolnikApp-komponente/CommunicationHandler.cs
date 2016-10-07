@@ -207,6 +207,11 @@ namespace kolnikApp_komponente
             {
                 string receivedContent = UTF8Encoding.UTF8.GetString(netSocketServerArgs.Buffer, 0, e.BytesTransferred);
                 netSocket.ReceiveMessageFromAsync(netSocketServerArgs);
+                if (receivedContent == String.Empty)
+                {
+                    System.Windows.Forms.MessageBox.Show("Poslužitelj je trenutno nedostupan!");
+                    return;
+                }
                 DataHandler dataHandlerInstance = new DataHandler();
                 string response;
                 lock (thisLock)

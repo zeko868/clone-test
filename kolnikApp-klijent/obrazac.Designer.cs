@@ -173,8 +173,8 @@
             this.NatragSlika.TabIndex = 1;
             this.NatragSlika.TabStop = false;
             this.NatragSlika.Click += new System.EventHandler(this.NatragSlika_Click);
-            this.NatragSlika.MouseEnter += new System.EventHandler(this.HomeSlika_MouseEnter);
-            this.NatragSlika.MouseLeave += new System.EventHandler(this.HomeSlika_MouseLeave);
+            this.NatragSlika.MouseEnter += new System.EventHandler(this.BackSlika_MouseEnter);
+            this.NatragSlika.MouseLeave += new System.EventHandler(this.BackSlika_MouseLeave);
             // 
             // LogoSlika
             // 
@@ -356,7 +356,7 @@
             this.mainDgvObj.Size = new System.Drawing.Size(724, 514);
             this.mainDgvObj.TabIndex = 4;
             //this.mainDgvObj.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
-            this.mainDgvObj.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PodaciIzTablica_RowEnter);
+            this.mainDgvObj.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.HandleDataRepresentationInAdditionalDgvAfterRowSelectInMainDgv);
             // 
             // Separator
             // 

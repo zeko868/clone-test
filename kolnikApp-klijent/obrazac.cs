@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 
 namespace kolnikApp_klijent
 {
+    /// <summary>
+    /// Klasa za prikaz glavne forme namijenjene za prikaz i rad s podacima
+    /// </summary>
     public partial class obrazac :
 #if DEBUG
             PosrednaFormaZaDebugVerziju
@@ -21,12 +24,24 @@ namespace kolnikApp_klijent
 #endif
 
     {
+        /// <summary>
+        /// Kontrola za prikaz detalja (podstavaka) vezanih uz odabranu stavku iz glavne kontrole iste namjene
+        /// </summary>
         private DataGridView additionalDgv = new DataGridView();
-        //popis svih tablica kojima korisnik ima pravo pristupati
+
+        /// <summary>
+        /// Popis svih tablica kojima korisnik ima pravo pristupati
+        /// </summary>
         string[] tablice;
-        //string u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi .exe datoteka
+
+        /// <summary>
+        /// Znakovni niz u koji se sprema put do izvršnog direktorija aplikacije gdje se nalazi izvršna datoteka
+        /// </summary>
         String exeDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
 
+        /// <summary>
+        /// Konstruktor glavne forme namijenjene za prikaz i rad s podacima
+        /// </summary>
         public obrazac() : base()
         {
             this.tablice = DataHandler.entityNamesForButtons.ToArray();
@@ -45,6 +60,11 @@ namespace kolnikApp_klijent
             PanelZaSadrzaj.Controls.Add(additionalDgv);
         }
 
+        /// <summary>
+        /// Obrađuje informacije o dodanim, promijenjenim i obrisanim zapisima te te promjene pohranjuje u kolekcijama u memoriji i iskazuje u tablicama
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
         void ProcessChanges(object obj, ListChangedEventArgs e)
         {
             if (DataHandler.ChangesCommited)
@@ -158,7 +178,11 @@ namespace kolnikApp_klijent
             }
         }
 
-        //Event handler za klik na ikonicu "Help"
+        /// <summary>
+        /// Funkcija koja se izvodi nakon što korisnik klikne na ikonicu "Help"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HelpSlika_Click(object sender, EventArgs e)
         {
             //koristimo exeDirectory gdje je spremljena putanja i dodajemo naziv help file-a 
@@ -166,7 +190,11 @@ namespace kolnikApp_klijent
             Help.ShowHelp(this, HelpFilepath);     
         }
 
-        //funkcija koja vraća uljepšani naziv za ime tablice koje je prosljeđeno
+        /// <summary>
+        /// Vraća tekst za prikaz na tipci za prikaz instanci entiteta proslijeđenog naziva/šifre
+        /// </summary>
+        /// <param name="NazivTablice">Naziv tablice, odnosno entiteta</param>
+        /// <returns>"Uljepšani" naziv tablice koji će biti prikazan korisniku</returns>
         private string UrediImeGumba(string NazivTablice)
         {
             string PravoIme = "";
@@ -206,6 +234,11 @@ namespace kolnikApp_klijent
             return PravoIme;
         }
 
+        /// <summary>
+        /// Definira niz postavke nakon što se sama forma očita do kraja
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void obrazac_Load(object sender, EventArgs e)
         {
             int PomakZbogTabliceManje = 0;
@@ -224,7 +257,7 @@ namespace kolnikApp_klijent
                     GumbMenija.BackColor = Color.Black;
                     GumbMenija.ForeColor = Color.White;
                     GumbMenija.FlatStyle = FlatStyle.Flat;
-                    GumbMenija.Click += new EventHandler(ButtonClick1);
+                    GumbMenija.Click += new EventHandler(ClickOnButtonFromButtonList);
 
                     this.MeniPanel.Controls.Add(GumbMenija);
                 }
@@ -236,38 +269,62 @@ namespace kolnikApp_klijent
             }
         }
 
-        //sve gumbe resetiramo na početni dizajn, označvamo kliknuti gumb
-        private void OznaciGumb(object sender)
+        /// <summary>
+        /// Resetira sve gumbe na početni dizajn, a označava gumb sa tekstom jednakim onom proslijeđenom
+        /// </summary>
+        /// <param name="kontrola">Kontrola (tipka) kojoj se želi promijetiti dizajn (tj. boja)</param>
+        private void OznaciGumb(object kontrola)
         {
             foreach (Control Gumb in this.MeniPanel.Controls)
             {
                 Gumb.ForeColor = Color.White;
             }
-            Button Gumbic = sender as Button;
+            Button Gumbic = kontrola as Button;
             Gumbic.ForeColor = Color.Orange;
         }
 
-        //inicijalizacija stoga za omogućavanje povratka unatrag kroz aplikaciju
+        /// <summary>
+        /// Stog za pohranu prethodno promatranih vrsta entiteta te povratak unatrag kroz aplikaciju
+        /// </summary>
         Stack<string> StogZaVracanjeUnatrag = new Stack<string>();
 
+        /// <summary>
+        /// Prilagođava širinu stupaca unutar tablice za prikaz podataka samim podacima pri čemu zadnji stupac dobiva na korištenje preostali prostor
+        /// </summary>
+        /// <param name="dgvObj">Kontrola za prikaz podataka za koju je potrebno prilagoditi širine stupaca</param>
         private void AutomaticallyResizeColumns(ref DataGridView dgvObj)
         {
-            for (int i = 0; i < dgvObj.Columns.Count; i++)
+            if (dgvObj.Columns.Count > 0)
             {
-                if (i == dgvObj.Columns.Count -1)
-                {
-                    dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
-                else
+                for (int i = 0; i < dgvObj.Columns.Count; i++)
                 {
                     dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                    int widthCol = dgvObj.Columns[i].Width;
+                    dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    dgvObj.Columns[i].Width = widthCol;
                 }
-                int widthCol = dgvObj.Columns[i].Width;
-                dgvObj.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                dgvObj.Columns[i].Width = widthCol;
+                int widthOfVerticalScrollBar = SystemInformation.VerticalScrollBarWidth;
+                const byte widthToRemoveToPossiblyAvoidHorizontalScrollbars = 3;
+                int availableWidthToStretchLastColumn = dgvObj.Width - dgvObj.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) - widthToRemoveToPossiblyAvoidHorizontalScrollbars;
+                if (dgvObj.Controls.OfType<VScrollBar>().First().Visible)
+                {
+                    availableWidthToStretchLastColumn -= widthOfVerticalScrollBar;
+                    if (!dgvObj.Controls.OfType<HScrollBar>().First().Visible)
+                    {
+                        
+                    }
+                }
+                if (availableWidthToStretchLastColumn > 0)
+                {
+                    dgvObj.Columns[dgvObj.Columns.Count - 1].Width += availableWidthToStretchLastColumn;
+                }
             }
         }
 
+        /// <summary>
+        /// Popunjava tablicu sa instancama vrste entiteta čiji naziv je identičan proslijeđenom znakovnom nizu
+        /// </summary>
+        /// <param name="tableName">Naziv vrste entiteta čije instance se žele prikazati u tablici</param>
         private void FillDgvWithContent(string tableName)
         {
             switch (tableName)
@@ -431,6 +488,11 @@ namespace kolnikApp_klijent
             }
         }
 
+        /// <summary>
+        /// Vraća pune nazive kratica C, R, U i D operacija za proslijeđeni niz kratica
+        /// </summary>
+        /// <param name="mixOfOperations">Niz kratica operacija</param>
+        /// <returns>Niz punih naziva operacija pripadajućih proslijeđenom nizu kratica</returns>
         IEnumerable<string> GetListOfOperationNames(byte mixOfOperations)
         {
             if (Convert.ToBoolean(mixOfOperations & (byte)DataHandler.Operations.C))
@@ -451,8 +513,12 @@ namespace kolnikApp_klijent
             }
         }
 
-        //dodajemo naziv prethodne "stranice" na stog i promijenimo na novu "stranicu"
-        private void ButtonClick1(object sender, EventArgs e)
+        /// <summary>
+        /// Dodaje naziv prethodne stranice (promatrane vrste entiteta) na stog i mijenja podnaslov forme (tj. naslov tablice) na naziv ekvivalentan tekstu sadržanom u kliknutoj tipci
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClickOnButtonFromButtonList(object sender, EventArgs e)
         {
             mainDgvObj.ClearSelection();
             additionalDgv.DataSource = null;
@@ -468,7 +534,11 @@ namespace kolnikApp_klijent
             AutomaticallyResizeColumns(ref mainDgvObj);
         }
 
-        //vraćamo se unatrag za jednu "stranicu"
+        /// <summary>
+        /// Vraća na pregled tablicu entiteta prethodno pregledavane vrste entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NatragSlika_Click(object sender, EventArgs e)
         {
             mainDgvObj.ClearSelection();
@@ -486,87 +556,148 @@ namespace kolnikApp_klijent
             }          
         }
 
-        //prikazivanje i skrivanje naziva ikona
-        private void HomeSlika_MouseEnter(object sender, EventArgs e)
+        /// <summary>
+        /// Prikazuje tekst tipke s ikonicom za vraćanje na prethodnu stranicu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaPocetna.Show();
         }
 
-        private void HomeSlika_MouseLeave(object sender, EventArgs e)
+        /// <summary>
+        /// Sakriva tekst tipke s ikonicom za vraćanje na prethodnu stranicu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BackSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaPocetna.Hide();
         }
 
+        /// <summary>
+        /// Prikazuje tekst tipke s ikonicom za kreiranje nove instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaNovi.Show();
         }
 
+        /// <summary>
+        /// Sakriva tekst tipke s ikonicom za kreiranje nove instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaNovi.Hide();
         }
 
+        /// <summary>
+        /// Prikazuje tekst tipke s ikonicom za modificiranje označene instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaUpdate.Show();
         }
 
+        /// <summary>
+        /// Sakriva tekst tipke s ikonicom za modificiranje označene instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaUpdate.Hide();
         }
 
+        /// <summary>
+        /// Prikazuje tekst tipke s ikonicom za brisanje označene instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaIzbrisi.Show();
         }
 
+        /// <summary>
+        /// Sakriva tekst tipke s ikonicom za brisanje označene instance entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaIzbrisi.Hide();
         }
 
+        /// <summary>
+        /// Prikazuje tekst tipke s ikonicom za otvaranje prozora za pomoć
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HelpSlika_MouseEnter(object sender, EventArgs e)
         {
             LabelaPomoc.Show();
         }
 
+        /// <summary>
+        /// Sakriva tekst tipke s ikonicom za otvaranje prozora za pomoć
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HelpSlika_MouseLeave(object sender, EventArgs e)
         {
             LabelaPomoc.Hide();
         }
-        //kraj prikazivanja i skrivanja naziva ikona
 
-        //funkcija koja iz naziva tablice stvara ime forme i stavlja ga u string
-        private string pretvoriUImeForme(string vrsta)
+        /// <summary>
+        /// Vraća iz naziva trenutne vrste entiteta (odnosno naziva tablice) ime forme za rad s instancama navedene vrste entiteta
+        /// </summary>
+        /// <param name="operacija">Naziv operacije koja se želi izvesti nad kolekcijom instanci entiteta/označenog entiteta ("Update" ako se želi dohvatiti naziv forme za ažuriranje; inače se dohvaća naziv forme za dodavanje)</param>
+        /// <returns>Naziv forme za vršenje definirane operacije nad trenutno prikazanom vrstom entiteta</returns>
+        private string VratiImeFormeZaRadSTrenutnomVrstomEntiteta(string operacija)
         {            
             string ImeForme = "frm";
             char Separator = '_';
             string[] dijelovi = NaslovTablice.Tag.ToString().Split(Separator);
-            foreach (var item in dijelovi)
+            foreach (var dio in dijelovi)
             {
-                ImeForme += item.First().ToString().ToUpper() + item.Substring(1);
+                ImeForme += dio.First().ToString().ToUpper() + dio.Substring(1);
             }
-            if (vrsta == "Update")
+            if (operacija == "Update")
             {
                 ImeForme += "Update";
             }
             return ImeForme;
         }
-        //otvaranje nove forme za "Create" na temelju dobivenog imena
+
+        /// <summary>
+        /// Otvara novu formu za unos (Create) novog entiteta trenutno promatrane vrste entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateSlika_Click(object sender, EventArgs e)
         {
             if (NaslovTablice.Text != "Dobro došli!")
             {
-                string ImeForme = pretvoriUImeForme("Create");
+                string ImeForme = VratiImeFormeZaRadSTrenutnomVrstomEntiteta("Create");
                 Type TipForme = Type.GetType("kolnikApp_klijent.FormeZaUnos." + ImeForme);
                 Form nextForm2 = (Form)Activator.CreateInstance(TipForme);
                 nextForm2.ShowDialog();
             }
         }
 
-        //vidljivost gumba logout
+        /// <summary>
+        /// Pokazuje ili sakriva tipku za odjavu iz sustava klikom na naziv samog prijavljenog korisnika
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImeKorisnika_Click(object sender, EventArgs e)
         {
             if (LogoutButton.Visible)
@@ -580,7 +711,11 @@ namespace kolnikApp_klijent
             }            
         }
 
-        //otvaranje nove forme za "Update" na temelju dobivenog imena
+        /// <summary>
+        /// Otvara novu formu za ažuriranje (Update) novog entiteta trenutno promatrane vrste entiteta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
             DataGridViewRow SelektiraniRedak=null;
@@ -589,7 +724,7 @@ namespace kolnikApp_klijent
                 {
                    SelektiraniRedak = Red;
                 }                
-                string ImeForme = pretvoriUImeForme("Update");
+                string ImeForme = VratiImeFormeZaRadSTrenutnomVrstomEntiteta("Update");
                 Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
                 Form FormaZaUpdate=null;
                 if(additionalDgv.SelectedRows.Count != 0 && NaslovTablice.Tag.ToString() != "racun")
@@ -611,20 +746,23 @@ namespace kolnikApp_klijent
 
         }
 
-        //logout
+        /// <summary>
+        /// Odjavljuje se sa sustava te ponovno pokreće aplikaciju (tj. dio za prijavu u sustav)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogoutButton_Click(object sender, EventArgs e)
         {
             sockObj.SendLogoutRequest();
             Application.Restart();
         }
 
-        //ovo služi kada se ručno promijeni širina stupca DGV-u, pa da se ne pojave horizontalni klizači
-        /*private void PodaciIzTablica_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
-        {
-            ((DataGridView)sender).Columns.GetLastColumn(DataGridViewElementStates.Visible, DataGridViewElementStates.None).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-        }*/
-
-        private void PodaciIzTablica_RowEnter(object sender, DataGridViewCellEventArgs e)
+        /// <summary>
+        /// Ispunjava sadržaj sekundarne tablice ovisno o odabranom zapisu iz primarne tablice
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HandleDataRepresentationInAdditionalDgvAfterRowSelectInMainDgv(object sender, DataGridViewCellEventArgs e)
         {
             switch (NaslovTablice.Tag.ToString())
             {
@@ -687,11 +825,19 @@ namespace kolnikApp_klijent
             }
         }
 
+        /// <summary>
+        /// Brine se za promjenu veličina tablica za prikaz podataka prilikom mijenjanja veličine cjelokupne forme
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void obrazac_Resize(object sender, EventArgs e)
         {
             AdjustDGVsWhenTheyAreNotDocked();
         }
 
+        /// <summary>
+        /// Definira margine tablica za prikaz podataka kao i njihove veličine u odnosu na cjelokupnu veličinu forme na kojoj se nalaze te adaptacija širina stupaca unutar tablice ovisno o novoj širini tablica
+        /// </summary>
         private void AdjustDGVsWhenTheyAreNotDocked()
         {
             mainDgvObj.Height = additionalDgv.Height = (int)(PanelZaSadrzaj.Height * 0.48);
@@ -702,16 +848,31 @@ namespace kolnikApp_klijent
             AutomaticallyResizeColumns(ref additionalDgv);
         }
 
+        /// <summary>
+        /// Sakriva tipku za odjavu sa sustava
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LogoutButton_Leave(object sender, EventArgs e)
         {
             LogoutButton.Hide();
         }
 
+        /// <summary>
+        /// Odjavljuje se sa sustava nakon što korisnik zatvori glavnu formu, a ujedno i cjelokupnu aplikaciju
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void obrazac_FormClosing(object sender, FormClosingEventArgs e)
         {
             sockObj.SendLogoutRequest();
         }
 
+        /// <summary>
+        /// Brine se da se naziv korisnika nalazi nužno u gornjem desnom kutu pokraj tipke za minimiziranje prozora (slično bi se dalo postići i korištenjem Alignment opcije Right, ali tada bi morala biti isključena opcija AutoSize što bi ujedno rezultiralo potrebnim definiranjem širine oznake (labela) što nije moguće unaprijed odrediti)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImeKorisnika_Resize(object sender, EventArgs e)
         {
             int distanceDifference = ImeKorisnika.Right - Minimize.Left;

@@ -12,6 +12,9 @@ using System.Threading;
 
 namespace kolnikApp_klijent
 {
+    /// <summary>
+    /// Klasa za prikaz forme s trakom za učitavanje pri čemu se u pozadini vrši dohvaćanje podataka (kako vrsti entiteta s kojima korisnik smije raditi, tako i svim instancama dozvoljenih vrsti entiteta)
+    /// </summary>
     public partial class glavnaForma :
 #if DEBUG
             PosrednaFormaZaDebugVerziju
@@ -20,6 +23,9 @@ namespace kolnikApp_klijent
 #endif
 
     {
+        /// <summary>
+        /// Konstruktor navedene klase pri čemu se ujedno kreira spremnik za pohranu naziva vrsti entiteta s kojima korisnik može raditi kao i što se šalje zahtjev za njihovim dohvaćanjem
+        /// </summary>
         public glavnaForma() : base()
         {
             InitializeComponent();
@@ -30,6 +36,11 @@ namespace kolnikApp_klijent
             sockObj.SendRequestForSendingUsedData();
         }
 
+        /// <summary>
+        /// Obrađuje niz podataka zaprimljenih od poslužitelja
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="e"></param>
         void ProcessChanges(object obj, ListChangedEventArgs e)
         {
             if (DataHandler.ChangesCommited)
@@ -44,7 +55,7 @@ namespace kolnikApp_klijent
                     if (DataHandler.entityNamesWithReferencesToBelongingDataStores["tablica"].Count == 0)
                     {
                         DataHandler.entityNamesWithReferencesToBelongingDataStores.Remove("tablica");
-                        CloseLoginWindowAndStartMainOne();
+                        CloseLoadingWindowAndStartMainOne();
                     }
                     else
                     {
@@ -63,17 +74,15 @@ namespace kolnikApp_klijent
                     {
                         DataHandler.entityNamesWithReferencesToBelongingDataStores[entityName].ListChanged -= ProcessChanges;
                     }
-                    CloseLoginWindowAndStartMainOne();
+                    CloseLoadingWindowAndStartMainOne();
                 }
             }
         }
 
-        private void formaObrazac_FormClosed(object sender, FormClosedEventArgs e)
-        {
-        this.Close();
-        }
-
-        private void CloseLoginWindowAndStartMainOne()
+        /// <summary>
+        /// Sakriva trenutni prozor, otvara glavni prozor za rad s podacima te definira da prilkom zatvaranja glavnom prozora se zatvara ujedno i ovaj prozor
+        /// </summary>
+        private void CloseLoadingWindowAndStartMainOne()
         {
             BeginInvoke((MethodInvoker)delegate
             {

@@ -27,7 +27,7 @@ namespace kolnikApp_komponente.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=31.147.204.119\\PISERVER,1433;Initial Catalog=16001_DB;Persist Securit" +
-            "y Info=True;User ID=16001_User;Password=eY4PSzGY")]
+            "y Info=True;User ID=16001_User;Password=eY4PSzGY;Connect Timeout=2")]
         public string _16001_DBConnectionString {
             get {
                 return ((string)(this["_16001_DBConnectionString"]));

@@ -37,14 +37,16 @@ namespace kolnikApp_komponente
         public enum LoginState
         {
             waiting = 0,
-            error = 1,
-            success = 2
+            success = 1,
+            invalidCredentials = 2,
+            dbInaccessible = 4,
+            accountInUse = 8
         }
 
         /// <summary>
         /// Trenutno stanje korisnika tokom pokušaja prijave u sustav
         /// </summary>
-        public static volatile byte UserLoginState;
+        public static volatile LoginState UserLoginState;
 
         /// <summary>
         /// Jesu li sve promjene učinjene nad bazom
@@ -165,6 +167,16 @@ namespace kolnikApp_komponente
         }
 
         /// <summary>
+        /// Stanje u kojem se nalazi konstruiranje Update SQL naredbe
+        /// </summary>
+        private enum UpdateCommandPart
+        {
+            Assign = 1,
+            Compare = 2,
+            Finish = 3
+        }
+
+        /// <summary>
         /// Provjerava da li je proslijeđeni objekt zapravo kolekcija drugih objekata
         /// </summary>
         /// <param name="variable">Objekt čiji se tip želi ispitati</param>
@@ -270,40 +282,47 @@ namespace kolnikApp_komponente
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("senzor_temperature"), 'R'));
         }
 
-        private string GenerateCommandForUpdatingRecord(Type tip, object sth, object oldValIfUpdating)
+        /// <summary>
+        /// Konstruira UPDATE SQL naredbu kojom se zamijeniti stari zapis s novim
+        /// </summary>
+        /// <param name="type">Tip objekta nad kojim se radi (tj. kojeg su sljedeća 2 parametra)</param>
+        /// <param name="newObj">Instanca entiteta čije vrijednosti će zamijeniti stare vrijednosti mijenjane instance</param>
+        /// <param name="oldObj">Instanca entiteta koja se mijenja</param>
+        /// <returns>Sastavljena SQL Update naredba za izvršavanje ažuriranja zapisa u bazi s navedenim vrijednostima atributa</returns>
+        private string GenerateCommandForUpdatingRecord(Type type, object newObj, object oldObj)
         {
-            string commandForUpdatingRecord = "UPDATE " + tip.Name;
+            string commandForUpdatingRecord = "UPDATE " + type.Name;
             bool recordHasNotBeenChanged = true;
-            for (int i = 0; i < 2; i++)
+            for (UpdateCommandPart currState = UpdateCommandPart.Assign; !currState.HasFlag(UpdateCommandPart.Finish); currState++)
             {
-                object obj;
+                object currObjWorkingWith;
                 string delimiter;
                 string operatorForNull;
-                if (i == 0)
+                if (currState.HasFlag(UpdateCommandPart.Assign))
                 {
                     commandForUpdatingRecord += " SET ";
-                    obj = sth;
+                    currObjWorkingWith = newObj;
                     delimiter = ",";
                     operatorForNull = "=";
                 }
                 else
                 {
                     commandForUpdatingRecord += " WHERE ";
-                    obj = oldValIfUpdating;
+                    currObjWorkingWith = oldObj;
                     delimiter = " AND ";
                     operatorForNull = " IS ";
                 }
-                foreach (PropertyInfo info in tip.GetProperties())
+                foreach (PropertyInfo info in type.GetProperties())
                 {
                     if (info.CanWrite)
                     {
-                        if (i == 0)
+                        if (currState.HasFlag(UpdateCommandPart.Assign))
                         {
-                            if ((info.GetValue(sth) == null && info.GetValue(oldValIfUpdating) == null))
+                            if ((info.GetValue(newObj) == null && info.GetValue(oldObj) == null))
                             {
                                 continue;
                             }
-                            else if ((info.GetValue(sth) != null && info.GetValue(oldValIfUpdating) != null) && info.GetValue(sth).Equals(info.GetValue(oldValIfUpdating)))
+                            else if ((info.GetValue(newObj) != null && info.GetValue(oldObj) != null) && info.GetValue(newObj).Equals(info.GetValue(oldObj)))
                             {
                                 continue;
                             }
@@ -312,7 +331,7 @@ namespace kolnikApp_komponente
                                 recordHasNotBeenChanged = false;
                             }
                         }
-                        if (info.GetValue(obj) == null)
+                        if (info.GetValue(currObjWorkingWith) == null)
                         {
                             commandForUpdatingRecord += info.Name + operatorForNull + "null" + delimiter;
                         }
@@ -321,20 +340,20 @@ namespace kolnikApp_komponente
                             switch (info.PropertyType.Name)
                             {
                                 case "DateTime":
-                                    if (i == 1) //ovaj način se vrši jer je razlika u formatu zapisa u bazi i objekata u .netu (u bp s milisekundama, tu ne)
+                                    if (currState.HasFlag(UpdateCommandPart.Compare)) //ovaj način se vrši jer je razlika u formatu zapisa u bazi i objekata u .netu (u bp s milisekundama, tu ne)
                                     {
                                         break;  //pretpostavka da datum nije PK (jedinstvena značajka zapisa)
                                     }
                                     else
                                     {
-                                        commandForUpdatingRecord += info.Name + "='" + info.GetValue(obj).ToString() + "'" + delimiter;
+                                        commandForUpdatingRecord += info.Name + "='" + info.GetValue(currObjWorkingWith).ToString() + "'" + delimiter;
                                     }
                                     break;
                                 case "String":
-                                    commandForUpdatingRecord += info.Name + "='" + info.GetValue(obj).ToString() + "'" + delimiter;
+                                    commandForUpdatingRecord += info.Name + "='" + info.GetValue(currObjWorkingWith).ToString() + "'" + delimiter;
                                     break;
                                 default:
-                                    commandForUpdatingRecord += info.Name + "=" + info.GetValue(obj) + delimiter;
+                                    commandForUpdatingRecord += info.Name + "=" + info.GetValue(currObjWorkingWith) + delimiter;
                                     break;
                             }
                         }
@@ -349,17 +368,23 @@ namespace kolnikApp_komponente
             return commandForUpdatingRecord;
         }
         
-        private void PutRecordProcessingCommandInExecutionQueue(char action, object sth, object oldValIfUpdating)
+        /// <summary>
+        /// Izvodi proslijeđenu SQL operaciju nad proslijeđenim zapisom
+        /// </summary>
+        /// <param name="action">SQL operacija koju je potrebno izvesti nad operandom (zapisom/objektom)</param>
+        /// <param name="mainObj">Operand na kojeg se odnosi izvođenje operacije</param>
+        /// <param name="oldValIfUpdating">Dodatni operand koji je obvezan ukoliko se vrši izvođenje Update SQL naredbe</param>
+        private void PutRecordProcessingCommandInExecutionQueue(char action, object mainObj, object oldValIfUpdating = null)
         {
-            Type tip = sth.GetType();
-            var tableInDataContext = dataContextInstance.GetTable(tip);
+            Type type = mainObj.GetType();
+            var tableInDataContext = dataContextInstance.GetTable(type);
             switch (action)
             {
                 case 'C':
-                    tableInDataContext.InsertOnSubmit(sth);
+                    tableInDataContext.InsertOnSubmit(mainObj);
                     break;
                 case 'U':
-                    string commandForUpdatingRecord = GenerateCommandForUpdatingRecord(tip, sth, oldValIfUpdating);
+                    string commandForUpdatingRecord = GenerateCommandForUpdatingRecord(type, mainObj, oldValIfUpdating);
                     try
                     {
                         if (commandForUpdatingRecord != ";")
@@ -373,49 +398,68 @@ namespace kolnikApp_komponente
                     }
                     break;
                 case 'D':
-                    tableInDataContext.Attach(sth);
-                    tableInDataContext.DeleteOnSubmit(sth);
+                    tableInDataContext.Attach(mainObj);
+                    tableInDataContext.DeleteOnSubmit(mainObj);
                     break;
             }
         }
 
-        private void AssignObjectsProperties(object a, XElement KeyValuePairsOfEntity, bool assignOldValues = false)
+        /// <summary>
+        /// Dodjeljuje vrijednosti objektu na temelju zaprimljenog serijaliziranog objekta u XML formatu
+        /// </summary>
+        /// <param name="instance">Objekt (instanciran, ali najčešće neinicijaliziran) kojem se dodijeljuju vrijednosti</param>
+        /// <param name="keyValuePairsOfEntity">Niz čvorova (s atributima instance entiteta) čije vrijednosti se dodijeljuju proslijeđenom objektu</param>
+        /// <param name="assignOldValues">Da li se iščitavaju iz čvorova prijašnje vrijednosti atributa (vrijednosti atributa 'old') ili pak sadašnje (vrijednosti XML elementa)</param>
+        private void AssignObjectsProperties(object instance, XElement keyValuePairsOfEntity, bool assignOldValues = false)
         {
-            foreach (var KeyValuePair in KeyValuePairsOfEntity.Elements())
+            foreach (var keyValuePair in keyValuePairsOfEntity.Elements())
             {
                 if (assignOldValues)
                 {
-                    SetProperty(a, KeyValuePair.Name.LocalName, KeyValuePair.Attribute("old").Value);
+                    SetProperty(instance, keyValuePair.Name.LocalName, keyValuePair.Attribute("old").Value);
                 }
                 else
                 {
-                    SetProperty(a, KeyValuePair.Name.LocalName, KeyValuePair.Value);
+                    SetProperty(instance, keyValuePair.Name.LocalName, keyValuePair.Value);
                 }
             }
         }
-        private void SetProperty(object p, string propName, object value)
+
+        /// <summary>
+        /// Dodjeljuje navedenom objektu proslijeđenu vrijednost atributu s proslijeđenim nazivom
+        /// </summary>
+        /// <param name="instance">Instanca entiteta kojem se dodjeljuje vrijednost</param>
+        /// <param name="propName">Naziv atributa kojem se dodjeljuje vrijednost</param>
+        /// <param name="value">Vrijednost koja se dodjeljuje atributu s proslijeđenim nazivom</param>
+        private void SetProperty(object instance, string propName, object value)
         {
-            Type t = p.GetType();
-            foreach (PropertyInfo info in t.GetProperties())
+            Type type = instance.GetType();
+            foreach (PropertyInfo info in type.GetProperties())
             {
                 if (info.Name == propName && info.CanWrite)
                 {
                     if (value.Equals(""))
                     {
-                        info.SetValue(p, null);
+                        info.SetValue(instance, null);
                     }
                     else
                     {
-                        TypeConverter conv = TypeDescriptor.GetConverter(info.PropertyType);
-                        info.SetValue(p, conv.ConvertFrom(value));
+                        TypeConverter converter = TypeDescriptor.GetConverter(info.PropertyType);
+                        info.SetValue(instance, converter.ConvertFrom(value));
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Provjerava da li je korisnik koji je poslao zahtjev za rad s podacima privilegiran za izvršenje definirane operacije nad definiranom tipu entiteta
+        /// </summary>
+        /// <param name="address">IP adresa i port korisnika od kojeg je zaprimljen zahtjev</param>
+        /// <param name="entityName">Naziv tipa entiteta nad čijim instancama se želi vršiti zatražena operacija</param>
+        /// <param name="action">Oznaka operacije koja se želi primijeniti nad instancama tipa entiteta čiji je naziv proslijeđen</param>
+        /// <returns></returns>
         public bool IsUserPrivilegedToDoAnAction(System.Net.IPEndPoint address, string entityName, char action)
         {
-
             IEnumerable<byte> userRights = from ip_adresar in ClientsAddressesList.addressList
             join zaposlen in dataContextInstance.zaposlens
             on ip_adresar.Oib equals zaposlen.zaposlenik
@@ -431,6 +475,11 @@ namespace kolnikApp_komponente
             return ((Operations)userRights.First()).HasFlag((Operations)Enum.Parse(typeof(Operations), action.ToString()));
         }
 
+        /// <summary>
+        /// Dohvaća rezultate upita u listu rječnika (asocijativnih listi) radi dohvaćanja podataka za koje ne postoji definirani tip/klasa
+        /// </summary>
+        /// <param name="query">Znakovni niz koji predstavlja SQL upit koji je potrebno izvršiti</param>
+        /// <returns>Lista rječnika (asocijativnih listi) koja predstavlja redove rezultata SQL upita</returns>
         private List<Dictionary<string, object>> GetNonEntityQueryResult(string query)
         {
             List<Dictionary<string, object>> retVal = new List<Dictionary<string, object>>();
@@ -457,6 +506,11 @@ namespace kolnikApp_komponente
             return retVal;
         }
 
+        /// <summary>
+        /// Dohvaća sve vrste entiteta na čije instance korisnik može primijeniti neku od operaciju
+        /// </summary>
+        /// <param name="address">IP adresa i port korisnika za kojeg se želi ispitati dostupnost operacija</param>
+        /// <returns>Lista naziva vrsta entiteta na čije instance korisnik može primijeniti neku od operacija</returns>
         private List<string> GetListOfAccessibleEntityTypes(System.Net.IPEndPoint address)
         {
             return (from ip_adresar in ClientsAddressesList.addressList
@@ -470,6 +524,12 @@ namespace kolnikApp_komponente
                                             select tablicna_privilegija.naziv_tablice).ToList();
         }
 
+        /// <summary>
+        /// Tumači sadržaj zaprimljene poruke, te pritom izvršava definiranu operaciju nad priloženim serijaliziranim zapisima (instancama entiteta)
+        /// </summary>
+        /// <param name="XMLData">Sadržaj zaprimljene poruke koji je potrebno interpretirati</param>
+        /// <param name="address">IP adresa i port pošiljatelja zaprimljene poruke</param>
+        /// <param name="isClientSide">Da li je aplikacija koja je pozvala funkciju iz ovog modula poslužiteljska ili klijentska</param>
         public void InterpretXMLData(string XMLData, System.Net.IPEndPoint address, bool isClientSide = true)
         {
             XDocument doc = XDocument.Parse(XMLData);
@@ -482,7 +542,7 @@ namespace kolnikApp_komponente
                 char action = datagroup.Attribute("action").Value[0];
                 if (datagroup.Elements().Count() == 0)
                 {
-                    if (datagroups.Count() == 1)
+                    if (datagroups.Last() == datagroup)
                     {
                         entityNamesWithReferencesToBelongingDataStores["tablica"].Add("tmp");
                         DataHandler.ChangesCommited = true;
@@ -557,32 +617,38 @@ namespace kolnikApp_komponente
                         if (!isClientSide)
                         {
                             XElement prijavaPodaci = datagroup.Element("prijava");
-                            var queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
-                                                              join osoba in dataContextInstance.osobas
-                                                              on korisnicki_racun.zaposlenik equals osoba.oib
-                                                              where
-                                                              (
-                                                                  korisnicki_racun.korisnicko_ime.Equals(prijavaPodaci.Element("korisnicko_ime").Value)
-                                                                  || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
-                                                              )
-                                                              select new { osoba , korisnicki_racun.lozinka });
                             bool userWithProvidedUsernameOrOibExists = false;
+                            IList<dynamic> queryResult = null;
                             try
                             {
-                                userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count());
+                                queryResult = (from korisnicki_racun in dataContextInstance.korisnicki_racuns
+                                                   join osoba in dataContextInstance.osobas
+                                                   on korisnicki_racun.zaposlenik equals osoba.oib
+                                                   where
+                                                   (
+                                                       korisnicki_racun.korisnicko_ime.Equals(prijavaPodaci.Element("korisnicko_ime").Value)
+                                                       || korisnicki_racun.zaposlenik.Equals(prijavaPodaci.Element("oib").Value)
+                                                   )
+                                                   select new { osoba, korisnicki_racun.lozinka }).ToArray();
                             }
                             catch
                             {
-                                System.Windows.Forms.MessageBox.Show("Server with database does not reply.");
+                                HasErrorOccurred = true;
+                                ErrorInfo = "db-inaccessible";
+                                EntityOnWhichErrorRefers = "prijava";
+                                IPAddressesOfDestinations = new System.Net.IPEndPoint[1];
+                                IPAddressesOfDestinations[0] = address;
+                                return;
                             }
-                            
+                            userWithProvidedUsernameOrOibExists = Convert.ToBoolean(queryResult.Count);
+
                             if (userWithProvidedUsernameOrOibExists && HashPasswordUsingSHA1Algorithm(prijavaPodaci.Element("lozinka").Value) == queryResult.First().lozinka.TrimEnd(' '))
                             {
-                                string userOib = queryResult.First().osoba.oib;
+                                string userOib = queryResult[0].osoba.oib;
                                 if (ClientsAddressesList.CheckIfUserWithCertainOibIsAlreadyLoggedIn(userOib))
                                 {
                                     HasErrorOccurred = true;
-                                    ErrorInfo = "Korisnik sa navedenim OIB-om je već prijavljen!";
+                                    ErrorInfo = "account-in-use";
                                     EntityOnWhichErrorRefers = entityName;
                                 }
                                 else
@@ -596,14 +662,14 @@ namespace kolnikApp_komponente
                             else
                             {
                                 HasErrorOccurred = true;
-                                ErrorInfo = "Unijeli ste pogrešne podatke za prijavu.";
+                                ErrorInfo = "invalid-credentials";
                                 EntityOnWhichErrorRefers = entityName;
                             }
                         }
                         else
                         {
                             XElement infoAboutLoginAttempt = datagroup.Element("prijava");
-                            if (datagroup.Element("prijava").Attribute("success") != null)
+                            if (infoAboutLoginAttempt.Attribute("success") != null)
                             {
                                 LoggedUser = new osoba()
                                 {
@@ -611,12 +677,23 @@ namespace kolnikApp_komponente
                                     ime = infoAboutLoginAttempt.Element("osoba").Element("ime").Value,
                                     prezime = infoAboutLoginAttempt.Element("osoba").Element("prezime").Value
                                 };
-                                UserLoginState = (byte)LoginState.success;
+                                UserLoginState = LoginState.success;
                                 IsConfirmationOfPreviousRequest = true;
                             }
                             else
                             {
-                                UserLoginState = (byte)LoginState.error;
+                                switch (infoAboutLoginAttempt.Value)
+                                {
+                                    case "invalid-credentials":
+                                        UserLoginState = LoginState.invalidCredentials;
+                                        break;
+                                    case "db-inaccessible":
+                                        UserLoginState = LoginState.dbInaccessible;
+                                        break;
+                                    case "account-in-use":
+                                        UserLoginState = LoginState.accountInUse;
+                                        break;
+                                }
                             }
                         }
                         break;
@@ -843,17 +920,32 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Kriptira proslijeđenu lozinku koristeći SHA1 algoritam sažimanja
+        /// </summary>
+        /// <param name="password">Lozinka u čitljivom obliku koju je potrebno kriptirati</param>
+        /// <returns>Kriptirana lozinka</returns>
         public static string HashPasswordUsingSHA1Algorithm(string password)
         {
             return String.Join("", SHA1.Create().ComputeHash(System.Text.Encoding.UTF8.GetBytes(password.ToCharArray())).Select(x => String.Format("{0:X}", x)));
         }
 
+        /// <summary>
+        /// Dodaje sadržaj sa svim zapisima koji su prethodno dodani, izbrisani ili izmijenjeni u bazi podataka na postojeći sadržaj poruke za slanje
+        /// </summary>
+        /// <param name="XMLData">Sadržaj sa svim zapisima koji su prethodno dodani, izbrisani ili izmijenjeni u bazi podataka</param>
         private void ConstructBaseOfMessageContentForSending(string XMLData)
         {
             ResponseForSending += XMLData;
             sendToAll = true;
         }
 
+        /// <summary>
+        /// Ispituje da li su uspoređivani objekti jednaki, odnosno da li uspoređivane instance entiteta posjeduju jednake vrijednosti svih atributa
+        /// </summary>
+        /// <param name="obj">Prvi objekt (instanca entiteta) koji se uspoređuje</param>
+        /// <param name="obj2">Drugi objekt (instanca entiteta) koji se uspoređuje</param>
+        /// <returns>Logička istina ukoliko se proslijeđeni objekti (instance entiteta) podudaraju</returns>
         private bool AreObjectsEqual(object obj, object obj2)
         {
             if (obj == null && obj2 == null)
@@ -897,7 +989,13 @@ namespace kolnikApp_komponente
             return true;
         }
 
-        private object GetObjectFromList(object needle, BindingList<object> list)
+        /// <summary>
+        /// Dohvaća element liste s identičnim vrijednostima atributa kao što posjeduje proslijeđeni pretraživani objekt sa svojim (definiranim) vrijednostima
+        /// </summary>
+        /// <param name="needle">Objekt s (definiranim) vrijednostima atributa kojim se pretražuje element liste s identičnim vrijednostima atributa</param>
+        /// <param name="list">Lista u kojoj se traži navedeni element</param>
+        /// <returns>Pronađeni element unutar proslijeđene liste</returns>
+        private object GetObjectFromList(object needle, IList<object> list)
         {
             foreach (var elem in list)
             {
@@ -909,7 +1007,106 @@ namespace kolnikApp_komponente
             return null;
         }
 
-        private int CompareObjectsAlphabetically(object obj1, object obj2)
+        /// <summary>
+        /// Uspoređuje dva proslijeđena znakovna niza pri čemu se vodi računa da se numerički znakovi unutar njih uspoređuju kao brojevi (tako je rb102 a > rb10 a, a po klasičnoj usporedbi znakova bi važilo suprotno)
+        /// </summary>
+        /// <param name="s1">Prvi znakovni izraz kojeg treba usporediti</param>
+        /// <param name="s2">Drugi znakovni izraz kojeg treba usporediti</param>
+        /// <returns>-1 ako je prvi izraz alfanumerički prije drugog, 0 ako su jednaki, a 1 ako je prvi izraz alfanumerički poslije drugog</returns>
+        private short CompareValuesNumericallyIfPossible(string s1, string s2)
+        {
+            short len1 = (short)s1.Length;
+            short len2 = (short)s2.Length;
+            short marker1 = 0;
+            short marker2 = 0;
+
+            // Walk through two the strings with two markers.
+            while (marker1 < len1 && marker2 < len2)
+            {
+                char ch1 = s1[marker1];
+                char ch2 = s2[marker2];
+
+                // Some buffers we can build up characters in for each chunk.
+                char[] space1 = new char[len1];
+                short loc1 = 0;
+                char[] space2 = new char[len2];
+                short loc2 = 0;
+
+                // Walk through all following characters that are digits or
+                // characters in BOTH strings starting at the appropriate marker.
+                // Collect char arrays.
+                do
+                {
+                    space1[loc1++] = ch1;
+                    marker1++;
+
+                    if (marker1 < len1)
+                    {
+                        ch1 = s1[marker1];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                } while (char.IsDigit(ch1) == char.IsDigit(space1[0]));
+
+                do
+                {
+                    space2[loc2++] = ch2;
+                    marker2++;
+
+                    if (marker2 < len2)
+                    {
+                        ch2 = s2[marker2];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                } while (char.IsDigit(ch2) == char.IsDigit(space2[0]));
+
+                // If we have collected numbers, compare them numerically.
+                // Otherwise, if we have strings, compare them alphabetically.
+                string str1 = new string(space1);
+                string str2 = new string(space2);
+
+                int result;
+
+                if (char.IsDigit(space1[0]) && char.IsDigit(space2[0]))
+                {
+                    try
+                    {
+                        long thisNumericChunk = long.Parse(str1);
+                        long thatNumericChunk = long.Parse(str2);
+                        result = thisNumericChunk.CompareTo(thatNumericChunk);
+                    }
+                    catch
+                    {
+                        double thisNumericChunk = double.Parse(str1);
+                        double thatNumericChuck = double.Parse(str2);
+                        result = thisNumericChunk.CompareTo(thatNumericChuck);
+                    }
+                }
+                else
+                {
+                    result = str1.CompareTo(str2);
+                }
+
+                if (result != 0)
+                {
+                    return (short)Math.Sign(result);
+                }
+            }
+            return (short)Math.Sign(len1 - len2);
+        }
+
+        /// <summary>
+        /// Uspoređuje proslijeđene objekte promatrajući njihove vrijednosti atributa - ukoliko vrijednosti atributa su znakovni nizovi koji sadrže brojke, brojke se iz njih izvlače i uspoređuju numerički
+        /// </summary>
+        /// <param name="obj1">Prvi objekt (instanca entiteta) koji se uspoređuje</param>
+        /// <param name="obj2">Drugi objekt (instanca entiteta) koji se uspoređuje</param>
+        /// <returns>-1 ako je prvi objekt alfanumerički prije drugog, 0 ako su jednaki, a 1 ako je prvi objekt alfanumerički poslije drugog</returns>
+        private short CompareObjectsAlphanumerically(object obj1, object obj2)
         {
             foreach (var prop in obj1.GetType().GetProperties())
             {
@@ -930,24 +1127,22 @@ namespace kolnikApp_komponente
                 }
                 string val1 = prop.GetValue(obj1).ToString();
                 string val2 = prop.GetValue(obj2).ToString();
-                if (Regex.IsMatch(val1, @"^\d+") && Regex.IsMatch(val2, @"^\d+")) {
-                    long numericVal1 = long.Parse(Regex.Match(val1, @"^\d+").Value);
-                    long numericVal2 = long.Parse(Regex.Match(val2, @"^\d+").Value);
-                    if (numericVal1 != numericVal2)
-                    {
-                        return numericVal1 > numericVal2 ? 1 : -1;
-                    }
-                }
-                int strCmpResult = String.Compare(val1, val2);
-                if (strCmpResult != 0)
+                short result = CompareValuesNumericallyIfPossible(val1, val2);
+                if (result != 0)
                 {
-                    return strCmpResult > 0 ? 1 : -1;
+                    return result;
                 }
             }
             return 0;
         }
 
-        private int GetAppropriatePositionInListForInsertion(object obj, BindingList<object> list)
+        /// <summary>
+        /// Vraća prikladnu poziciju na koju treba smjestiti proslijeđeni objekt u navedenu listu
+        /// </summary>
+        /// <param name="obj">Objekt koji se želi smjestiti</param>
+        /// <param name="list">Lista u koju se smješta objekt</param>
+        /// <returns>Pozicija (indeks) u listi na koju je potrebno pohraniti proslijeđeni objekt</returns>
+        private int GetAppropriatePositionInListForInsertion(object obj, IList<object> list)
         {
             int listSize = list.Count();
             if (listSize == 0)
@@ -956,7 +1151,7 @@ namespace kolnikApp_komponente
             }
             else if (listSize == 1)
             {
-                if (CompareObjectsAlphabetically(obj, list[0]) > 0) {
+                if (CompareObjectsAlphanumerically(obj, list[0]) > 0) {
                     return 1;
                 }
                 else
@@ -973,7 +1168,7 @@ namespace kolnikApp_komponente
                 while (startPointOfAnalyzedRange <= endPointOfAnalyzedRange)
                 {
                     insertionIndex = (endPointOfAnalyzedRange + startPointOfAnalyzedRange) >> 1;
-                    switch (CompareObjectsAlphabetically(obj, list[insertionIndex]))
+                    switch (CompareObjectsAlphanumerically(obj, list[insertionIndex]))
                     {
                         case 0:
                             endLoop = true;
@@ -1001,7 +1196,7 @@ namespace kolnikApp_komponente
                 }
                 else
                 {
-                    if (CompareObjectsAlphabetically(list[insertionIndex], obj) == -1)
+                    if (CompareObjectsAlphanumerically(list[insertionIndex], obj) == -1)
                     {
                         insertionIndex++;
                     }
@@ -1010,6 +1205,13 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Pohranjuje, briše ili modificira proslijeđeni objekt u listu globalnog rječnika namijenjenu za pohranu instanci entiteta ekvivalentnih tipu navedenog objekta
+        /// </summary>
+        /// <param name="action">Operacija koju je potrebno izvršiti s proslijeđenim objektom nad listom u memoriji</param>
+        /// <param name="obj">Objekt s kojim se djeluje na listu u memoriji</param>
+        /// <param name="oldObjIfUpdate">Objekt sa starim vrijednostima ukoliko je riječ o operaciji modificiranja</param>
+        /// <param name="lastElement">Istina ukoliko je riječ o zadnjoj obradi iz zaprimljenog odgovora (čime je potrebno okinuti događaj kako bi se promjene ažurirale na prezentacijskom sloju)</param>
         public void StoreReceivedDataIntoFormsLists(char action, object obj, object oldObjIfUpdate = null, bool lastElement = false)
         {
             if (lastElement)
@@ -1040,11 +1242,22 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Kreira sadržaj poruke sa zahtjevom za slanje svih instanci svih vrsti entiteta koji su dostupni za pošiljatelja
+        /// </summary>
+        /// <returns>Sadržaj poruke s navedenim zahtjevom</returns>
         public string ConstructMessageWithRequestForSendingInstancesOfUsedEntities()
         {
             return AddWrapperOverXMLDatagroups(String.Join("", entityNamesWithReferencesToBelongingDataStores.Keys.Select(x => AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData(x), 'R'))));
         }
 
+        /// <summary>
+        /// Kreira sadržaj poruke s podacima za prijavu u sustav
+        /// </summary>
+        /// <param name="identity">Korisničko ime ili broj OIB-a</param>
+        /// <param name="password">Lozinka za prijavu u sustav s navedenim korisničkim imenom/OIB-om</param>
+        /// <param name="isIdentityUsername">Istina ukoliko prvi parametar predstavlja korisničko ime; inače neistina</param>
+        /// <returns>Sadržaj poruke s podacima za prijavu u sustav</returns>
         public string ConstructLoginMessageContent(string identity, string password, bool isIdentityUsername)
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("prijava",
@@ -1054,16 +1267,27 @@ namespace kolnikApp_komponente
                 )));
         }
 
+        /// <summary>
+        /// Kreira sadržaj za odjavu iz sustava (preporučljivo kako bi odmah bila moguća prijava s tim istim korisničkim računom)
+        /// </summary>
+        /// <returns>Sadržaj poruke sa zahtjevom za odjavu iz sustava</returns>
         public string ConstructLogoutMessageContent()
         {
             return AddWrapperOverXMLDatagroups(AddHeaderInfoToXMLDatagroup(ConvertNonObjectDataIntoXMLData("odjava")));
         }
 
+        /// <summary>
+        /// Instancira objekt DataHandler klase pri čemu se definiraju kulturološke značajke Sjedinjenih Američkih Država
+        /// </summary>
         public DataHandler()
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         }
 
+        /// <summary>
+        /// Obrađuje podatke zaprimljene putem serijske komunikacije (tj. od strane mikrokontrolera)
+        /// </summary>
+        /// <param name="primljenaPoruka">Sadržaj poruke koja je pristigla (tj. koju je mikrokontroler poslao)</param>
         public void ProcessReceivedDataOverSerialCommunication(string primljenaPoruka)
         {
             if (primljenaPoruka.StartsWith("TMP"))
@@ -1100,6 +1324,10 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Pokušava poslati mikrokontroleru putem serijske komunikacije zahtjev za iščitavanjem temperature
+        /// </summary>
+        /// <param name="oibZahtjevatelja"></param>
         private void PosaljiZahtjevZaIscitavanjemTemperatureBitumenskeMjesavine(string oibZahtjevatelja)
         {
             try
@@ -1114,6 +1342,9 @@ namespace kolnikApp_komponente
             }
         }
 
+        /// <summary>
+        /// Pokušava inicijalizirati podatkovni kontekst kako bi bio moguć daljnji rad s podacima iz baze podataka
+        /// </summary>
         public void InitializeDataContext()
         {
             try
@@ -1125,16 +1356,29 @@ namespace kolnikApp_komponente
                 Console.WriteLine(e.Message);
             }
         }
+
+        /// <summary>
+        /// Oslobađa do sada korišteni podatkovni kontekst
+        /// </summary>
         public void ClearCurrentDataContext()
         {
             dataContextInstance.Dispose();
         }
 
+        /// <summary>
+        /// Oslobađa resurse zauzete od oslobađanog/uništavanog objekta (poziva se i ujedno je nužna ukoliko se objekt klase instancira pomoću using bloka)
+        /// </summary>
         void IDisposable.Dispose()
         {
-
+            //throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Serijalizira objekt koji treba ažurirati zajedno sa objektom koji predstavlja stanje nakon ažuriranja
+        /// </summary>
+        /// <param name="oldObj">Objekt prije ažuriranja</param>
+        /// <param name="newObj">Objekt poslije ažuriranja</param>
+        /// <returns>Tekst koji predstavlja serijalizirane objekte (objekt prije i objekt nakon modificiranja)</returns>
         public static string SerializeUpdatedObject(object oldObj, object newObj)
         {
             string entityName = oldObj.GetType().Name;

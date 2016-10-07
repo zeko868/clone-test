@@ -12,7 +12,7 @@ namespace kolnikApp_klijent
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Inicijalizacija osnovnih komponenata i pokretanje grafičkog sučelja (tj. forme za prijavu)
         /// </summary>
         [STAThread]
         static void Main(string[] parameters)
