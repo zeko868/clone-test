@@ -398,7 +398,14 @@ namespace kolnikApp_komponente
                     }
                     break;
                 case 'D':
-                    tableInDataContext.Attach(mainObj);
+                    try
+                    {
+                        tableInDataContext.Attach(mainObj);
+                    }
+                    catch
+                    {
+
+                    }
                     tableInDataContext.DeleteOnSubmit(mainObj);
                     break;
             }
@@ -1227,7 +1234,7 @@ namespace kolnikApp_komponente
                         entityNamesWithReferencesToBelongingDataStores[objectTypename].Insert(GetAppropriatePositionInListForInsertion(obj, entityNamesWithReferencesToBelongingDataStores[objectTypename]), obj);
                         break;
                     case 'D':
-                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(GetObjectFromList(oldObjIfUpdate, entityNamesWithReferencesToBelongingDataStores[objectTypename]));
+                        entityNamesWithReferencesToBelongingDataStores[objectTypename].Remove(GetObjectFromList(obj, entityNamesWithReferencesToBelongingDataStores[objectTypename]));
                         break;
                     case 'U':
                         ChangesCommited = false;

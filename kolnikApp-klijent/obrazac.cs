@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using kolnikApp_komponente;
 using System.Runtime.InteropServices;
+using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace kolnikApp_klijent
 {
@@ -718,7 +720,7 @@ namespace kolnikApp_klijent
         /// <param name="e"></param>
         private void UpdateSlika_Click(object sender, EventArgs e)
         {
-            DataGridViewRow SelektiraniRedak=null;
+            DataGridViewRow SelektiraniRedak = null;
             if (mainDgvObj.SelectedRows.Count != 0) {
                 foreach (DataGridViewRow Red in mainDgvObj.SelectedRows)
                 {
@@ -726,9 +728,13 @@ namespace kolnikApp_klijent
                 }                
                 string ImeForme = VratiImeFormeZaRadSTrenutnomVrstomEntiteta("Update");
                 Type Tipforme = Type.GetType("kolnikApp_klijent.FormeZaUpdate." + ImeForme);
-                Form FormaZaUpdate=null;
-                if(additionalDgv.SelectedRows.Count != 0 && NaslovTablice.Tag.ToString() != "racun")
+                Form FormaZaUpdate = null;
+                if (additionalDgv.Visible && NaslovTablice.Tag.ToString() != "racun")
                 {
+                    if (additionalDgv.SelectedRows.Count == 0)
+                    {
+                        return;
+                    }
                     DataGridViewRow addSelektiraniRedak = null;
                     foreach (DataGridViewRow addRed in additionalDgv.SelectedRows)
                     {
@@ -880,6 +886,173 @@ namespace kolnikApp_klijent
             {
                 ImeKorisnika.Left = ImeKorisnika.Left - distanceDifference;
             }
+        }
+
+        /// <summary>
+        /// Briše trenutno označeni entitet iz primarne tablice ukoliko samo ona postoji, a u supronom označeni entitet iz sekundarne tablice
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteSlika_Click(object sender, EventArgs e)
+        {
+            if (additionalDgv.Visible)
+            {
+                if (additionalDgv.SelectedRows.Count > 0)
+                {
+                    List<object> result = ReturnObjectsThatAreContainedInSelectedEntities(mainDgvObj.SelectedRows[0], additionalDgv.SelectedRows[0]);
+                    string dataForSending;
+                    if (result.Count == 1)
+                    {
+                        dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(result.First()), 'D');
+                    }
+                    else
+                    {
+                        dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(result), 'D');
+                    }
+                    sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (mainDgvObj.SelectedRows.Count > 0)
+                {
+                    List<object> result = ReturnObjectsThatAreContainedInSelectedEntities(mainDgvObj.SelectedRows[0]);
+                    string dataForSending;
+                    if (result.Count == 1)
+                    {
+                        dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(result.First()), 'D');
+                    }
+                    else
+                    {
+                        dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.ConvertObjectsToXMLData(result), 'D');
+                    }
+                    sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
+        private List<object> ReturnObjectsThatAreContainedInSelectedEntities(DataGridViewRow selectedRowFromPrimary, DataGridViewRow selectedRowFromSecondary = null)
+        {
+            List<object> objectsToReturn = new List<object>();
+            switch (NaslovTablice.Tag.ToString())
+            {
+                case "artikl":
+                    objectsToReturn.Add(
+                        (from artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
+                         where ((artikl)artiklObj).id == int.Parse(selectedRowFromPrimary.Cells[0].Value.ToString())
+                         select (artikl)artiklObj).First()
+                    );
+                    break;
+                case "narudzbenica_bitumenske_mjesavine":
+                    objectsToReturn.Add(
+                        (from narudzbenicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["narudzbenica_bitumenske_mjesavine"]
+                        where ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).id == int.Parse(selectedRowFromPrimary.Cells[0].Value.ToString())
+                         select (narudzbenica_bitumenske_mjesavine)narudzbenicaObj).First()
+                    );
+                    break;
+                case "osoba":
+                    List<korisnicki_racun> userAccount = (from korisnickiRacunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["korisnicki_racun"]
+                     where ((korisnicki_racun)korisnickiRacunObj).zaposlenik == selectedRowFromPrimary.Cells[0].Value.ToString()
+                                                          select (korisnicki_racun)korisnickiRacunObj).ToList();
+                    if (userAccount.Count > 0)
+                    {
+                        objectsToReturn.Add(userAccount[0]);
+                    }
+                    objectsToReturn.Add(
+                        (from osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                         where ((osoba)osobaObj).oib == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         select (osoba)osobaObj).First()
+                    );
+                    break;
+                case "otpremnica":
+                    objectsToReturn.Add(
+                        (from otpremnicaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["otpremnica"]
+                         where ((otpremnica)otpremnicaObj).nalog == int.Parse(Regex.Match(selectedRowFromPrimary.Cells[0].Value.ToString(), @"^\d+").Value)
+                         select (otpremnica)otpremnicaObj).First()
+                    );
+                    break;
+                case "poduzece":
+                    objectsToReturn.Add(
+                        (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                         where ((poduzece)poduzeceObj).oib == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         select (poduzece)poduzeceObj).First()
+                    );
+                    break;
+                case "proizvodni_nalog":
+                    objectsToReturn.Add(
+                        (from nalogObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["proizvodni_nalog"]
+                         where ((proizvodni_nalog)nalogObj).narudzbenica == int.Parse(Regex.Match(selectedRowFromPrimary.Cells[0].Value.ToString(), @"^\d+").Value)
+                         select (proizvodni_nalog)nalogObj).First()
+                    );
+                    break;
+                case "rabat":
+                    objectsToReturn.Add(
+                        (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                         where ((poduzece)poduzeceObj).naziv == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         join rabatObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["rabat"]
+                         on ((poduzece)poduzeceObj).oib equals ((rabat)rabatObj).poslovni_partner
+                         select (otpremnica)rabatObj).First()
+                    );
+                    break;
+                case "racun":
+                    objectsToReturn.Add(
+                        (from racunObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["racun"]
+                         where ((racun)racunObj).id == int.Parse(selectedRowFromPrimary.Cells[0].Value.ToString())
+                         select (otpremnica)racunObj).First()
+                    );
+                    break;
+                case "radno_mjesto":
+                    objectsToReturn.Add(
+                        (from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                         where ((radno_mjesto)radnoMjestoObj).id == int.Parse(selectedRowFromPrimary.Cells[0].Value.ToString())
+                         select (radno_mjesto)radnoMjestoObj).First()
+                    );
+                    break;
+                case "tablicna_privilegija":
+                    objectsToReturn.Add(
+                        (from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                         where ((radno_mjesto)radnoMjestoObj).naziv == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         join tablicnaPrivilegijaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["tablicna_privilegija"]
+                         on ((radno_mjesto)radnoMjestoObj).id equals ((tablicna_privilegija)tablicnaPrivilegijaObj).radno_mjesto
+                         where ((tablicna_privilegija)tablicnaPrivilegijaObj).naziv_tablice == selectedRowFromPrimary.Cells[1].Value.ToString()
+                         select (tablicna_privilegija)tablicnaPrivilegijaObj).First()
+                    );
+                    break;
+                case "vozi":
+                    objectsToReturn.Add(
+                        (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
+                         where ((vozi)voziObj).vozilo == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         && ((vozi)voziObj).vozac == selectedRowFromSecondary.Cells[0].Value.ToString()
+                         && ((vozi)voziObj).datum_pocetka.ToString() == selectedRowFromSecondary.Cells[3].Value.ToString()
+                         select (vozi)voziObj).First()
+                    );
+                    break;
+                case "vozilo":
+                    objectsToReturn.Add(
+                        (from voziloObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozilo"]
+                         where ((vozilo)voziloObj).registracijski_broj == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         select ((vozilo)voziloObj)).First()
+                    );
+                    break;
+                case "zaposlen":
+                    objectsToReturn.Add(
+                        (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                         where ((zaposlen)zaposlenObj).poduzece == selectedRowFromPrimary.Cells[0].Value.ToString()
+                         && ((zaposlen)zaposlenObj).zaposlenik == selectedRowFromSecondary.Cells[0].Value.ToString()
+                         && ((zaposlen)zaposlenObj).datum_pocetka.ToString() == selectedRowFromSecondary.Cells[3].Value.ToString()
+                         select (zaposlen)zaposlenObj).First()
+                    );
+                    break;
+            }
+            return objectsToReturn;
         }
     }
 }

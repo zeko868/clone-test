@@ -70,6 +70,7 @@ namespace kolnikApp_klijent
                 MessageBox.Show("Niste unijeli sve podatke za prijavu u sustav");
                 return;
             }
+            DataHandler.UserLoginState = DataHandler.LoginState.waiting;
             sockObj.SendLoginCredentials(textBox1.Text, textBox2.Text, loginUsingUsername);
 
             long loginAttemptTime = DateTime.Now.Ticks;

@@ -113,6 +113,7 @@
             this.DeleteSlika.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.DeleteSlika.TabIndex = 10;
             this.DeleteSlika.TabStop = false;
+            this.DeleteSlika.Click += new System.EventHandler(this.DeleteSlika_Click);
             this.DeleteSlika.MouseEnter += new System.EventHandler(this.DeleteSlika_MouseEnter);
             this.DeleteSlika.MouseLeave += new System.EventHandler(this.DeleteSlika_MouseLeave);
             // 
@@ -355,7 +356,6 @@
             this.mainDgvObj.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mainDgvObj.Size = new System.Drawing.Size(724, 514);
             this.mainDgvObj.TabIndex = 4;
-            //this.mainDgvObj.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PodaciIzTablica_ColumnWidthChanged);
             this.mainDgvObj.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.HandleDataRepresentationInAdditionalDgvAfterRowSelectInMainDgv);
             // 
             // Separator
