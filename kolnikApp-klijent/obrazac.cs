@@ -142,6 +142,11 @@ namespace kolnikApp_klijent
                             if (indexOfSelectedRowBeforeRefreshing < mainDgvObj.RowCount)
                             {
                                 mainDgvObj.Rows[indexOfSelectedRowBeforeRefreshing].Selected = true;
+                                additionalDgv.Invoke((MethodInvoker)delegate
+                                {
+                                    FillDataInAdditionalDgv(indexOfSelectedRowBeforeRefreshing);
+                                });
+                                
                             }
                             else
                             {
@@ -764,32 +769,41 @@ namespace kolnikApp_klijent
         }
 
         /// <summary>
-        /// Ispunjava sadržaj sekundarne tablice ovisno o odabranom zapisu iz primarne tablice
+        /// Ispunjava sadržaj sekundarne tablice ovisno o zapisu iz primarne tablice čiji redak je korisnik upravo označio
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void HandleDataRepresentationInAdditionalDgvAfterRowSelectInMainDgv(object sender, DataGridViewCellEventArgs e)
         {
+            FillDataInAdditionalDgv(e.RowIndex);
+        }
+
+        /// <summary>
+        /// Ispunjava sadržaj sekundarne tablice ovisno o zapisu iz primarne tablice koji se nalazi u retku čiji indeks je proslijeđen
+        /// </summary>
+        /// <param name="rowIndex">Indeks retka na kojem se nalazi zapis na temelju kojeg se ispunjava sekundarna tablica s podacima za prikaz</param>
+        private void FillDataInAdditionalDgv(int rowIndex)
+        {
             switch (NaslovTablice.Tag.ToString())
             {
                 case "zaposlen":
-                    additionalDgv.DataSource =(from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                                               from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
-                                               from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                                               from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                                               where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik && 
-                                                     ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
-                                                     ((radno_mjesto)radnoMjestoObj).id == ((zaposlen)zaposlenObj).radno_mjesto &&
-                                                     ((zaposlen)zaposlenObj).poduzece == mainDgvObj[0, e.RowIndex].Value.ToString()
-                                               select new
-                                               {
-                                                   OIB= ((osoba)zaposlenikObj).oib,
-                                                   Ime= ((osoba)zaposlenikObj).ime,
-                                                   Prezime= ((osoba)zaposlenikObj).prezime,
-                                                   datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
-                                                   datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka,
-                                                   radno_mjesto = ((radno_mjesto)radnoMjestoObj).naziv
-                                               }).ToArray();
+                    additionalDgv.DataSource = (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                                                from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                                                from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                                from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                                where ((osoba)zaposlenikObj).oib == ((zaposlen)zaposlenObj).zaposlenik &&
+                                                      ((poduzece)poduzeceObj).oib == ((zaposlen)zaposlenObj).poduzece &&
+                                                      ((radno_mjesto)radnoMjestoObj).id == ((zaposlen)zaposlenObj).radno_mjesto &&
+                                                      ((zaposlen)zaposlenObj).poduzece == mainDgvObj[0, rowIndex].Value.ToString()
+                                                select new
+                                                {
+                                                    OIB = ((osoba)zaposlenikObj).oib,
+                                                    Ime = ((osoba)zaposlenikObj).ime,
+                                                    Prezime = ((osoba)zaposlenikObj).prezime,
+                                                    datum_pocetka = ((zaposlen)zaposlenObj).datum_pocetka,
+                                                    datum_zavrsetka = ((zaposlen)zaposlenObj).datum_zavrsetka,
+                                                    radno_mjesto = ((radno_mjesto)radnoMjestoObj).naziv
+                                                }).ToArray();
                     break;
                 case "vozi":
                     additionalDgv.DataSource = (from voziObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["vozi"]
@@ -797,12 +811,12 @@ namespace kolnikApp_klijent
                                                 from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
                                                 where ((vozi)voziObj).vozac == ((osoba)zaposlenikObj).oib &&
                                                       ((vozi)voziObj).vozilo == ((vozilo)voziloObj).registracijski_broj &&
-                                                      ((vozi)voziObj).vozilo == mainDgvObj[0, e.RowIndex].Value.ToString()
+                                                      ((vozi)voziObj).vozilo == mainDgvObj[0, rowIndex].Value.ToString()
                                                 select new
                                                 {
                                                     OIB = ((osoba)zaposlenikObj).oib,
                                                     Ime = ((osoba)zaposlenikObj).ime,
-                                                    Prezime = ((osoba)zaposlenikObj).prezime,                                                    
+                                                    Prezime = ((osoba)zaposlenikObj).prezime,
                                                     datum_pocetka = ((vozi)voziObj).datum_pocetka,
                                                     datum_zavrsetka = ((vozi)voziObj).datum_zavrsetka
                                                 }).ToArray();
@@ -820,7 +834,7 @@ namespace kolnikApp_klijent
                          on ((vozi)voziObj).vozac equals ((osoba)vozacObj).oib
                          join artiklObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["artikl"]
                          on ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).artikl equals ((artikl)artiklObj).id
-                         where ((otpremnica)otpremnicaObj).racun == int.Parse(mainDgvObj[0, e.RowIndex].Value.ToString())
+                         where ((otpremnica)otpremnicaObj).racun == int.Parse(mainDgvObj[0, rowIndex].Value.ToString())
                          select new
                          {
                              narudzbenica = ((otpremnica)otpremnicaObj).nalog.ToString() + " - " + ((osoba)vozacObj).ime + " " + ((osoba)vozacObj).prezime + " (" + ((narudzbenica_bitumenske_mjesavine)narudzbenicaObj).kolicina.ToString() + " tona " + ((artikl)artiklObj).naziv + ")",
