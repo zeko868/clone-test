@@ -40,7 +40,6 @@ namespace kolnikApp_klijent.FormeZaUpdate
                   select ((radno_mjesto)rmObj).naziv).ToArray();
 
             datum_pocetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_pocetka"].Value;
-            datum_zavrsetkaDateTimePicker.Checked = false;
             int idOfWorkingPlace = (from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
                                     where ((radno_mjesto)radnoMjestoObj).naziv == DodatniRedak.Cells[5].Value.ToString()
                                     select ((radno_mjesto)radnoMjestoObj).id).First();
@@ -55,10 +54,13 @@ namespace kolnikApp_klijent.FormeZaUpdate
             if (DodatniRedak.Cells["datum_zavrsetka"].Value == null)
             {
                 oldInstance.datum_zavrsetka = null;
+                datum_zavrsetkaDateTimePicker.Checked = false;
             }
             else
             {
                 oldInstance.datum_zavrsetka = (DateTime)DodatniRedak.Cells["datum_zavrsetka"].Value;
+                datum_zavrsetkaDateTimePicker.Checked = true;
+                datum_zavrsetkaDateTimePicker.Value = oldInstance.datum_zavrsetka.Value;
             }
         }
 
@@ -165,7 +167,7 @@ namespace kolnikApp_klijent.FormeZaUpdate
                     zaposlenik = employeeId,
                     radno_mjesto = workingPlaceId,
                     datum_pocetka = datum_pocetkaDateTimePicker.Value,
-                    datum_zavrsetka = datum_zavrsetkaDateTimePicker.Value
+                    datum_zavrsetka = datum_zavrsetkaDateTimePicker.Checked ? new Nullable<DateTime>(datum_zavrsetkaDateTimePicker.Value) : null
                 };
                 string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
                 sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
