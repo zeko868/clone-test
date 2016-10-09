@@ -19,24 +19,11 @@ namespace kolnikApp_klijent.FormeZaUpdate
 #endif
 
     {
-        class PodaciZaOldInstance
-        {
-            public int artikl { get; set; }
-            public int vozi { get; set; }
-            public string izdavatelj { get; set; }
-        }
 
         zaposlen oldInstance;
         public frmZaposlenUpdate(DataGridViewRow PodatkovniRedak, DataGridViewRow DodatniRedak) : base(false)
         {
             InitializeComponent();
-            PodaciZaOldInstance objekt = new PodaciZaOldInstance();
-            //dohvatiPodatke(DodatniRedak);
-            zaposlenikComboBox.DataSource =
-                (from osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                 select ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime).ToArray();
-            zaposlenikComboBox.SelectedText = DodatniRedak.Cells["ime"].Value.ToString() + " " + DodatniRedak.Cells["prezime"].Value.ToString();
-
             radno_mjestoComboBox.SelectedItem = DodatniRedak.Cells["radno_mjesto"].Value;
 
             poduzeceComboBox.DataSource =
@@ -45,45 +32,46 @@ namespace kolnikApp_klijent.FormeZaUpdate
             poduzeceComboBox.SelectedItem = PodatkovniRedak.Cells["naziv"].Value;
             poduzeceComboBox.Enabled = false;
 
-            radno_mjestoComboBox.DataSource =
-                (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
-                 select ((radno_mjesto)rmObj).naziv).ToArray();
+            zaposlenikComboBox.SelectedItem = DodatniRedak.Cells[1].Value + " " + DodatniRedak.Cells[2].Value;
+            string[] workingPlacesNamesOfForeignEmployees = { "vozač", "naručitelj"};
+            radno_mjestoComboBox.DataSource = poduzeceComboBox.SelectedValue.ToString() == "Kolnik d.o.o" ? workingPlacesNamesOfForeignEmployees :
+                 (from rmObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                  where workingPlacesNamesOfForeignEmployees.Contains(((radno_mjesto)rmObj).naziv)
+                  select ((radno_mjesto)rmObj).naziv).ToArray();
 
             datum_pocetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_pocetka"].Value;
-            if(DodatniRedak.Cells["datum_zavrsetka"].Value == null)
+            datum_zavrsetkaDateTimePicker.Checked = false;
+            int idOfWorkingPlace = (from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                    where ((radno_mjesto)radnoMjestoObj).naziv == DodatniRedak.Cells[5].Value.ToString()
+                                    select ((radno_mjesto)radnoMjestoObj).id).First();
+            oldInstance = new zaposlen
             {
-                datum_zavrsetkaDateTimePicker.Checked = false;
-                /*oldInstance = new zaposlen
-                {
-                    zaposlenik= nesto,
-                    poduzece= nesto,
-                    radno_mjesto= nesto,
-                    datum_pocetka= (DateTime)DodatniRedak.Cells["datum_pocetka"].Value,
-                };*/
+                id = GetIdentityOfEmployeeRole(DodatniRedak.Cells[0].Value.ToString(), PodatkovniRedak.Cells[0].Value.ToString(), idOfWorkingPlace, (DateTime)DodatniRedak.Cells[3].Value),
+                zaposlenik= DodatniRedak.Cells[0].Value.ToString(),
+                poduzece= PodatkovniRedak.Cells[0].Value.ToString(),
+                radno_mjesto= idOfWorkingPlace,
+                datum_pocetka = (DateTime)DodatniRedak.Cells["datum_pocetka"].Value
+            };
+            if (DodatniRedak.Cells["datum_zavrsetka"].Value == null)
+            {
+                oldInstance.datum_zavrsetka = null;
             }
             else
             {
-                datum_zavrsetkaDateTimePicker.Value = (DateTime)DodatniRedak.Cells["datum_zavrsetka"].Value;
+                oldInstance.datum_zavrsetka = (DateTime)DodatniRedak.Cells["datum_zavrsetka"].Value;
             }
-           
         }
 
-        /*private void dohvatiPodatke(DataGridViewRow DodatniRedak)
+        private int GetIdentityOfEmployeeRole(string oibZaposlenik, string oibPoduzece, int radnoMjesto, DateTime datumPocetka)
         {
-            var podaci =
-                (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
-                 join osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                 on ((zaposlen)zaposlenObj).zaposlenik equals ((osoba)osobaObj).oib
-                 join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
-                 on ((zaposlen)zaposlenObj) equals ((poduzece)poduzeceObj).oib
-                 where ((narudzbenica_bitumenske_mjesavine)zaposlenObj).id == key
-                 select new PodaciZaOldInstance
-                 {
-                     artikl = ((narudzbenica_bitumenske_mjesavine)zaposlenObj).artikl,
-                     vozi = ((narudzbenica_bitumenske_mjesavine)zaposlenObj).vozi,
-                     izdavatelj = ((narudzbenica_bitumenske_mjesavine)zaposlenObj).izdavatelj
-                 }).ToArray();
-        }*/
+            return (from zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
+                    where ((zaposlen)zaposlenObj).poduzece == oibPoduzece
+                    && ((zaposlen)zaposlenObj).zaposlenik == oibZaposlenik
+                    && ((zaposlen)zaposlenObj).radno_mjesto == radnoMjesto
+                    && ((zaposlen)zaposlenObj).datum_pocetka == datumPocetka
+                    select ((zaposlen)zaposlenObj).id
+                    ).First();
+        }
 
         private void napraviDataSourceZaRadnoMjesto()
         {
@@ -158,9 +146,29 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 popuniLabeleUpozorenja(UpozorenjePoduzece);
             }
 
-            if (zaposlenikComboBox.SelectedIndex == -1 && poduzeceComboBox.SelectedIndex == -1 && provjeriIspravnostDatuma())
+            if (zaposlenikComboBox.SelectedIndex != -1 && poduzeceComboBox.SelectedIndex != -1 && provjeriIspravnostDatuma())
             {
-                //pohrani podatke u klasu i pošalji u BP
+                string companyId = (from poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
+                                 where ((poduzece)poduzeceObj).naziv == poduzeceComboBox.SelectedValue.ToString()
+                                 select ((poduzece)poduzeceObj).oib).First();
+                int workingPlaceId = (from radnoMjestoObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["radno_mjesto"]
+                                      where ((radno_mjesto)radnoMjestoObj).naziv == radno_mjestoComboBox.SelectedValue.ToString()
+                                      select ((radno_mjesto)radnoMjestoObj).id).First();
+                string employeeId = (from osobaObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
+                                    where ((osoba)osobaObj).ime + " " + ((osoba)osobaObj).prezime == zaposlenikComboBox.SelectedValue.ToString()
+                                    select ((osoba)osobaObj).oib).First();
+
+                zaposlen newInstance = new zaposlen
+                {
+                    id = oldInstance.id,
+                    poduzece = companyId,
+                    zaposlenik = employeeId,
+                    radno_mjesto = workingPlaceId,
+                    datum_pocetka = datum_pocetkaDateTimePicker.Value,
+                    datum_zavrsetka = datum_zavrsetkaDateTimePicker.Value
+                };
+                string dataForSending = DataHandler.AddHeaderInfoToXMLDatagroup(DataHandler.SerializeUpdatedObject(oldInstance, newInstance), 'U');
+                sockObj.SendSerializedData(DataHandler.AddWrapperOverXMLDatagroups(dataForSending));
                 this.Close();
             }
         }
@@ -181,21 +189,10 @@ namespace kolnikApp_klijent.FormeZaUpdate
                 on ((osoba)zaposlenikObj).oib equals ((zaposlen)zaposlenObj).zaposlenik
                 join poduzeceObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["poduzece"]
                 on ((zaposlen)zaposlenObj).poduzece equals ((poduzece)poduzeceObj).oib
-                where ((poduzece)poduzeceObj).naziv == poduzeceComboBox.SelectedValue.ToString() &&
-                      ((zaposlen)zaposlenObj).datum_zavrsetka == null
+                where ((poduzece)poduzeceObj).naziv == poduzeceComboBox.SelectedValue.ToString()
                 select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
 
-                string[] sveOsobe=
-                    (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                     select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
-
-                var ZaposleneOsobe =
-                    (from zaposlenikObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["osoba"]
-                    join zaposlenObj in DataHandler.entityNamesWithReferencesToBelongingDataStores["zaposlen"]
-                    on ((osoba)zaposlenikObj).oib equals ((zaposlen)zaposlenObj).zaposlenik                    
-                    select ((osoba)zaposlenikObj).ime + " " + ((osoba)zaposlenikObj).prezime).ToArray();
-
-                zaposlenikComboBox.DataSource = sveOsobe.Except(ZaposleneOsobe).Union(osobePoduzeca).ToArray();
+                zaposlenikComboBox.DataSource = osobePoduzeca;
                 zaposlenikComboBox.SelectedIndex = -1;
             }
             if (zaposlenikComboBox.SelectedValue != null && poduzeceComboBox.SelectedValue != null)

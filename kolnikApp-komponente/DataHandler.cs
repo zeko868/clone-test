@@ -337,7 +337,16 @@ namespace kolnikApp_komponente
                         }
                         else
                         {
-                            switch (info.PropertyType.Name)
+                            string typeName;
+                            if (info.PropertyType.IsGenericType && info.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                            {
+                                typeName = info.PropertyType.GetGenericArguments()[0].Name;
+                            }
+                            else
+                            {
+                                typeName = info.PropertyType.Name;
+                            }
+                            switch (typeName)
                             {
                                 case "DateTime":
                                     if (currState.HasFlag(UpdateCommandPart.Compare)) //ovaj način se vrši jer je razlika u formatu zapisa u bazi i objekata u .netu (u bp s milisekundama, tu ne)
