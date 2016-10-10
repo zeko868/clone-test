@@ -799,7 +799,19 @@ namespace kolnikApp_komponente
                                 objWithAutoIncProp = ctors[0].Invoke(new object[] { });
                                 AssignObjectsProperties(objWithAutoIncProp, datagroup.Elements().First());
                                 dataContextInstance.GetTable(type).InsertOnSubmit(objWithAutoIncProp);
-                                dataContextInstance.SubmitChanges();
+                                try
+                                {
+                                    dataContextInstance.SubmitChanges();
+                                }
+                                catch (Exception e)
+                                {
+                                    HasErrorOccurred = true;
+                                    ErrorInfo = e.Message;
+                                    EntityOnWhichErrorRefers = "pogreska_o_podatkovnom_zahtjevu";
+                                    IPAddressesOfDestinations = new System.Net.IPEndPoint[1];
+                                    IPAddressesOfDestinations[0] = address;
+                                    return;
+                                }
 
                                 string propName = entityAutoIncrementColumns.Where(x => x["table"].ToString() == entityName).Select(x => x["column"]).First().ToString();
 
